@@ -1,0 +1,29 @@
+/*------------------------统计数据-------------------------------------*/
+html { overflow-x:hidden; }
+body{font-family:"微软雅黑";font-weight:bold;}
+input{outline: none;}
+.t-f-d1{overflow:hidden;}
+.t-f-d1-img{  width: 66px;height: 66px;border-radius: 2px;float: left;  border-radius: 50%;}
+.t-f-d1-left-p{  float: left;margin-top: 49px;font-size: 16px;margin-left: 10px;}
+.t-f-d1-right-p{  float: right;font-size: 16px;margin-top: 49px;margin-right: 11px;}
+.t-f-d1-right-img{float: right;margin-top: 50px;margin-right: 40px;}
+.t-f-d2{  padding: 10px 15px;background: #e5f0f2}
+.t-f-d2-h4	{  margin: 0;line-height: 1.42857143;}
+.t-f-ul1{list-style: none; padding: 0; overflow: hidden;margin-top: 27px; margin-bottom:17px;}
+.t-f-ul1 li{float: left;width: 155px;text-align: center;}
+.t-f-d3{  padding: 3px 15px;background: #e5f0f2}
+.t-f-d3-h4	{  margin: 0;line-height: 1.42857143;}
+.t-f-ul1-p{font-size: 26px; font-family: Bold; color:#09aeb0 }
+.t-f-ul1-p1{color:#808080 }
+.table1{  margin-top: 27px;}
+table{border: none; }
+td{border: none;text-align: center;height: 45px;}
+tr{height: 45px;}
+.bjcolor1{color: black; font-size: 14px;}
+.bjcolor{color:#808080;font-size: 13px; font-family: "Microsoft YaHei";  font-weight: normal;}
+.bjcolors{border-bottom: 1px dashed #808080}
+.t-f-d5{overflow: hidden}
+.t-f-d6{float: left;}
+.t-f-d7{float: right; overflow: hidden;}
+.t-f-d7-p{float: left; cursor: pointer; margin-right: 15px;color: #09aeb0}
+.t-f-d7-input{float: left; width: 40px; height: 25px;margin-right: 15px;}

@@ -1,0 +1,1822 @@
+/*body*/
+#top-bar {
+  width: 100%;
+  height: 50px;
+  background-color: #09aeb0;
+
+  .top-bar-logo {
+    height: 50px;
+    padding: 7px;
+    position: relative;
+
+    img {
+      width: 36px;
+      height: 36px;
+    }
+    span {
+      position: absolute;
+      left: 47px;
+      top: 13px;
+      font-weight: normal;
+      color: #fff;
+      font-size: 18px;
+    }
+  }
+}
+#main-container {
+  //body-left
+  #left-navigation {
+    background: #fff;
+    width: 291px;
+    position: absolute;
+    left: 0;
+    border-right: 1px solid #dee8e9;
+    overflow: hidden !important;
+
+    //顶部盒子
+    .header-box-yy {
+      width: 290px;
+      height: 80px;
+      background: #fff;
+      position: relative;
+      border-bottom: 1px solid #e5eeec;
+
+      //头像盒子
+      #user_menu {
+        font-size: 16px;
+        font-weight: 900;
+        color: white;
+        width: 180px;
+        height: 80px;
+        float: left;
+        cursor: pointer;
+        background: #fff;
+        border-top: 2px solid #fff;
+        padding: 20px 0 20px 20px;
+
+        //客服信息盒子－相对定位
+        .menuDropdown {
+          height: 40px;
+          margin: 0;
+          position: relative;
+
+          //图片
+          #current_user_avatar {
+            width: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 12px;
+            float: left;
+
+            //img
+            .member_image {
+              width: 40px;
+              height: 40px;
+            }
+          }
+          //客服名称
+          #current_user_name {
+            color: #000;
+            // font-size: 16px;
+            font-size: 13px;
+            font-weight: 900;
+            font-family: 'Lato', sans-serif;
+            position: absolute;
+            left: 53px;
+            top: 3px;
+            line-height: 16px;
+
+          }
+          //客服类型
+          #connection_style {
+            position: absolute;
+            left: 53px;
+            bottom: 2px;
+            font-size: 12px;
+            color: #999;
+
+          }
+          //在线图标
+          #connection_icon {
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            top: 30px;
+            left: 30px;
+
+          }
+        }
+        //下拉条
+        .status-user {
+          min-width: 66px;
+          width: 66px;
+          left: 52px;
+          top: 68px;
+          height: 92px;
+          border: 1px solid #09aeb0;
+          padding: 0;
+
+          li {
+            padding: 0;
+            height: 30px;
+            line-height: 30px;
+            color: #555555;
+            font-size: 12px;
+
+            .user-icon-offine {
+              background-image: url("../img/offline.png");
+              background-repeat: no-repeat;
+              padding: 1px 0px 1px 16px;
+              font-size: 12px;
+            }
+            .user-icon-busy {
+              background-image: url("../img/busy.png");
+              background-repeat: no-repeat;
+              padding: 1px 0px 1px 16px;
+              font-size: 12px;
+            }
+            .user-icon-online {
+              background-image: url("../img/online.png");
+              background-repeat: no-repeat;
+              padding: 1px 0px 1px 16px;
+              font-size: 12px;
+            }
+          }
+          li:hover {
+            background-color: #dbf3f3;
+            color: #555555;
+            font-size: 12px;
+          }
+        }
+
+        //排队人数
+        a {
+          float: right;
+        }
+      }
+      //主动邀请
+      .joinBox-yy {
+        position: absolute;
+        left: 182px;
+        top: 32px;
+        float: right;
+
+        #openOtherUser {
+          font-size: 22px;
+          color: #a4b2b3;
+          text-decoration: none;
+          i {
+            background: url("../assets/images/newChat1.png");
+            width: 25px;
+            height: 20px;
+            background-position: -40px -110px;
+            display: inline-block;
+          }
+          i:hover {
+            background: url("../assets/images/newChat1.png");
+            width: 25px;
+            height: 20px;
+            background-position: -72px -110px;
+            display: inline-block;
+          }
+          span {
+            font-size: 12px;
+          }
+        }
+        #waitNum {
+          display: inline-block;
+          cursor: pointer;
+        }
+      }
+    }
+
+    //列表盒子
+    .mainNav {
+      background: #fff;
+      //列表＋tab
+      li {
+        border-top: 0;
+        background-color: #fff;
+
+        //[input_radio]在线会话／历史记录
+        #main_tab {
+          //li盒子
+          li {
+            clear: none;
+
+            a {
+              font-size: 12px;
+              width: 145px;
+              height: 40px;
+              line-height: 40px;
+              text-align: center;
+              background-color: #eff4f5;
+              padding: 0;
+              color: #a9b7b8;
+              border: 0;
+
+            }
+          }
+          li.active {
+            a {
+              color: #606061;
+              background-color: #fff;
+            }
+          }
+        }
+        //列表box
+        .tab-content {
+          background-color: #fff;
+          .tab-pane {
+            padding: 0;
+          }
+          //在线会话
+          #chatonline {
+            //在线
+            #users {
+              overflow: hidden;
+              margin: 0;
+              padding: 0;
+              //每条消息的内容
+              li {
+                width: 290px;
+                height: 80px;
+
+                .user {
+                  height: 80px;
+                  padding: 20px 0;
+                  position: relative;
+                  border-bottom: 1px solid #e5eeec;
+                  color: #000;
+
+                  //电脑
+                  .fa-laptop {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #60adf6;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+
+                    .newIcon {
+                      background: url("../assets/images/newChat1.png");
+                      width: 28px;
+                      height: 28px;
+                      display: inline-block;
+                      background-position: -104px -242px;
+                      margin-top: 6px;
+
+                    }
+                  }
+                  .fa-laptop:before {
+                    content: '';
+                  }
+                  //微博
+                  .fa-weibo {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #e87962;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+                    font-size: 20px;
+                  }
+                  //移动
+                  .fa-mobile {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #f0a465;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+
+                    .newIcon {
+                      background: url("../assets/images/newChat1.png");
+                      width: 28px;
+                      height: 28px;
+                      display: inline-block;
+                      background-position: -44px -242px;
+                      margin-top: 8px;
+
+                    }
+                  }
+                  .fa-mobile:before {
+                    content: '';
+                  }
+                  //APP
+                  .fa-code {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #5adbf8;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+
+                    .newIcon {
+                      background: url("../assets/images/newChat1.png");
+                      width: 28px;
+                      height: 28px;
+                      display: inline-block;
+                      background-position: -164px -242px;
+                      margin-top: 8px;
+
+                    }
+                  }
+                  .fa-code:before {
+                    content: '';
+                  }
+                  //微信
+                  .fa-weixin {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #57b74e;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+
+                    .newIcon {
+                      background: url("../assets/images/newChat1.png");
+                      width: 28px;
+                      height: 28px;
+                      display: inline-block;
+                      background-position: -224px -242px;
+                      margin-top: 8px;
+
+                    }
+                  }
+                  .fa-weixin:before {
+                    content: '';
+                  }
+                  //APP
+                  .uname {
+                    display: block;
+                    height: 15px;
+                    line-height: 15px;
+                    position: absolute;
+                    left: 70px;
+                    top: 25px;
+                  }
+                  //最后消息
+                  .lastMsg {
+                    display: block;
+                    height: 15px;
+                    line-height: 15px;
+                    position: absolute;
+                    left: 70px;
+                    top: 45px;
+                    color: #ccc;
+                  }
+                  //数量泡泡
+                  .badge {
+                    position: absolute;
+                    color: #fff;
+                    left: 46px;
+                    right: auto;
+                    top: 18px;
+                    height: 13px;
+                    line-height: 13px;
+                    border-radius: 60px;
+                    background-color: #ee5c5a;
+                  }
+                  //删除按钮
+                  .user-del {
+                    display: block;
+                    position: absolute;
+                    right: 10px;
+                    top: 30px;
+                    width: 20px;
+                    height: 20px;
+                    line-height: 20px;
+                    color: #c6c9c9;
+                    font-size: 20px;
+                    font-weight: 100;
+
+                    .newIcon {
+                      display: inline-block;
+                      background: url("../assets/images/newChat1.png");
+                      width: 20px;
+                      height: 20px;
+                      background-position: -96px -172px;
+                    }
+                    .newIcon:hover {
+                      display: inline-block;
+                      background: url("../assets/images/newChat1.png");
+                      width: 20px;
+                      height: 20px;
+                      background-position: -132px -172px;
+                    }
+                  }
+                  //tag 提示
+                  .ohide {
+
+                  }
+                }
+                .user:hover {
+                  .ohide {
+                    display: none;
+                  }
+                }
+                //覆盖原有hover
+                a:hover{
+                  background-color:#eef6f4;
+                  color:#000;
+                  -webkit-transition: all 0.3s ease-in-out;
+                  -moz-transition: all 0.3s ease-in-out;
+                  -o-transition: all 0.3s ease-in-out;
+                  transition: all 0.3s ease-in-out;
+                }
+                a.active{
+                  background-color:#eef6f4;
+                  color:#000;
+                  -webkit-transition: all 0.3s ease-in-out;
+                  -moz-transition: all 0.3s ease-in-out;
+                  -o-transition: all 0.3s ease-in-out;
+                  transition: all 0.3s ease-in-out;
+                }
+              }
+              }
+            //离线
+            #offlineUser {
+              //每条消息的内容
+              li {
+                width: 290px;
+                height: 80px;
+
+                .user {
+                  height: 80px;
+                  padding: 20px 0;
+                  position: relative;
+                  border-bottom: 1px solid #e5eeec;
+                  //电脑
+                  .fa-laptop {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #d8dbda;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+
+                    .newIcon {
+                      background: url("../assets/images/newChat1.png");
+                      width: 28px;
+                      height: 28px;
+                      display: inline-block;
+                      background-position: -104px -242px;
+                      margin-top: 6px;
+
+                    }
+                  }
+                  .fa-laptop:before {
+                    content: '';
+                  }
+                  //微博
+                  .fa-weibo {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #d8dbda;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+                    font-size: 20px;
+                  }
+                  //移动
+                  .fa-mobile {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #d8dbda;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+
+                    .newIcon {
+                      background: url("../assets/images/newChat1.png");
+                      width: 28px;
+                      height: 28px;
+                      display: inline-block;
+                      background-position: -44px -242px;
+                      margin-top: 8px;
+
+                    }
+                  }
+                  .fa-mobile:before {
+                    content: '';
+                  }
+                  //APP
+                  .fa-code {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #d8dbda;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+
+                    .newIcon {
+                      background: url("../assets/images/newChat1.png");
+                      width: 28px;
+                      height: 28px;
+                      display: inline-block;
+                      background-position: -164px -242px;
+                      margin-top: 8px;
+
+                    }
+                  }
+                  .fa-code:before {
+                    content: '';
+                  }
+                  //微信
+                  .fa-weixin {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #d8dbda;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 40px;
+                    margin-right: 0;
+                    position: absolute;
+                    left: 20px;
+
+                    .newIcon {
+                      background: url("../assets/images/newChat1.png");
+                      width: 28px;
+                      height: 28px;
+                      display: inline-block;
+                      background-position: -224px -242px;
+                      margin-top: 8px;
+
+                    }
+                  }
+                  .fa-weixin:before {
+                    content: '';
+                  }
+                  .uname {
+                    display: block;
+                    height: 15px;
+                    line-height: 15px;
+                    position: absolute;
+                    left: 70px;
+                    top: 25px;
+                  }
+                  //最后消息
+                  .lastMsg {
+                    display: block;
+                    height: 15px;
+                    line-height: 15px;
+                    position: absolute;
+                    left: 70px;
+                    top: 45px;
+
+                  }
+                  //数量泡泡
+                  .badge {
+                    position: absolute;
+                    color: #fff;
+                    left: 46px;
+                    right: auto;
+                    top: 18px;
+                    height: 13px;
+                    line-height: 13px;
+                    border-radius: 5px;
+                    background-color: #ee5c5a;
+                  }
+                  //删除按钮
+                  .user-del {
+                    display: block;
+                    position: absolute;
+                    right: 10px;
+                    top: 30px;
+                    width: 20px;
+                    height: 20px;
+                    line-height: 20px;
+                    color: #c6c9c9;
+                    font-size: 20px;
+                    font-weight: 100;
+
+                    .newIcon {
+                      display: inline-block;
+                      background: url("../assets/images/newChat1.png");
+                      width: 20px;
+                      height: 20px;
+                      background-position: -96px -172px;
+                    }
+                    .newIcon:hover {
+                      display: inline-block;
+                      background: url("../assets/images/newChat1.png");
+                      width: 20px;
+                      height: 20px;
+                      background-position: -132px -172px;
+                    }
+                  }
+                  //tag 提示
+                  .ohide {
+
+                  }
+                }
+                .user:hover {
+                  .ohide {
+                    display: none;
+                  }
+                }
+                //覆盖原有hover
+                a:hover{
+                  background-color:#eef6f4;
+                  color:#000;
+                  -webkit-transition: all 0.3s ease-in-out;
+                  -moz-transition: all 0.3s ease-in-out;
+                  -o-transition: all 0.3s ease-in-out;
+                  transition: all 0.3s ease-in-out;
+                }
+                a.active{
+                  background-color:#eef6f4;
+                  color:#000;
+                  -webkit-transition: all 0.3s ease-in-out;
+                  -moz-transition: all 0.3s ease-in-out;
+                  -o-transition: all 0.3s ease-in-out;
+                  transition: all 0.3s ease-in-out;
+                }
+              }
+            }
+          }
+          //历史会话
+          #history {
+            //radio-box
+            .radio-box-yy {
+              padding: 15px 30px;
+              height: 48px;
+              line-height: 18px;
+              width: 290px;
+              text-align: center;
+              border-bottom: 1px solid #e5eeec;
+
+              label {
+                // padding-left: 18px;
+                padding-right: 0;
+                // margin-left: 8px;
+                font-size: 14px;
+
+                input  {
+                  margin-top: 2px;
+                }
+              }
+            }
+            //列表盒子
+            .leftScroll {
+              overflow-y: hidden;
+              padding: 0;
+              //padding: 10px 0 0 0;
+              outline: none;
+              height: 549px;
+
+              ul {
+                //每条消息的内容
+                li {
+                  width: 290px;
+                  height: 80px;
+
+                  .user {
+                    height: 80px;
+                    padding: 20px 0;
+                    position: relative;
+                    border-bottom: 1px solid #e5eeec;
+                    color: #d8dbda;
+                    //电脑
+                    .fa-laptop {
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      background-color: #d8dbda;
+                      color: #fff;
+                      text-align: center;
+                      line-height: 40px;
+                      margin-right: 0;
+                      position: absolute;
+                      left: 20px;
+
+                      .newIcon {
+                        background: url("../assets/images/newChat1.png");
+                        width: 28px;
+                        height: 28px;
+                        display: inline-block;
+                        background-position: -104px -242px;
+                        margin-top: 6px;
+
+                      }
+                    }
+                    .fa-laptop:before {
+                      content: '';
+                    }
+                    //微博
+                    .fa-weibo {
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      background-color: #d8dbda;
+                      color: #fff;
+                      text-align: center;
+                      line-height: 40px;
+                      margin-right: 0;
+                      position: absolute;
+                      left: 20px;
+                      font-size: 20px;
+                    }
+                    //移动
+                    .fa-mobile {
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      background-color: #d8dbda;
+                      color: #fff;
+                      text-align: center;
+                      line-height: 40px;
+                      margin-right: 0;
+                      position: absolute;
+                      left: 20px;
+
+                      .newIcon {
+                        background: url("../assets/images/newChat1.png");
+                        width: 28px;
+                        height: 28px;
+                        display: inline-block;
+                        background-position: -44px -242px;
+                        margin-top: 8px;
+
+                      }
+                    }
+                    .fa-mobile:before {
+                      content: '';
+                    }
+                    //APP
+                    .fa-code {
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      background-color: #d8dbda;
+                      color: #fff;
+                      text-align: center;
+                      line-height: 40px;
+                      margin-right: 0;
+                      position: absolute;
+                      left: 20px;
+
+                      .newIcon {
+                        background: url("../assets/images/newChat1.png");
+                        width: 28px;
+                        height: 28px;
+                        display: inline-block;
+                        background-position: -164px -242px;
+                        margin-top: 8px;
+
+                      }
+                    }
+                    .fa-code:before {
+                      content: '';
+                    }
+                    //微信
+                    .fa-weixin {
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      background-color: #d8dbda;
+                      color: #fff;
+                      text-align: center;
+                      line-height: 40px;
+                      margin-right: 0;
+                      position: absolute;
+                      left: 20px;
+
+                      .newIcon {
+                        background: url("../assets/images/newChat1.png");
+                        width: 28px;
+                        height: 28px;
+                        display: inline-block;
+                        background-position: -224px -242px;
+                        margin-top: 8px;
+
+                      }
+                    }
+                    .fa-weixin:before {
+                      content: '';
+                    }
+                    //移动
+                    //微信
+                    //APP
+                    .uname {
+                      display: block;
+                      height: 15px;
+                      line-height: 15px;
+                      position: absolute;
+                      left: 70px;
+                      top: 25px;
+                    }
+                    //最后消息
+                    .oldLastMsg {
+                      display: block;
+                      height: 15px;
+                      line-height: 15px;
+                      position: absolute;
+                      left: 70px;
+                      top: 45px;
+
+                    }
+                    //时间
+                    .badge {
+                      position: absolute;
+                      color: #d9dcdb;
+                      right: 0;
+                      top: 18px;
+                      height: 13px;
+                      line-height: 13px;
+                      border-radius: 5px;
+                      background-color: transparent;
+                    }
+                    //删除按钮
+                    .user-del {
+                      display: block;
+                      position: absolute;
+                      right: 10px;
+                      top: 30px;
+                      width: 20px;
+                      height: 20px;
+                      line-height: 20px;
+                      color: #c6c9c9;
+                      font-size: 20px;
+                      font-weight: 100;
+                    }
+                    //tag 提示
+                    .ohide {
+
+                    }
+                  }
+                  .user:hover {
+                    .ohide {
+                      display: none;
+                    }
+                    .badge {
+                      color: #000;
+                    }
+                  }
+                  //覆盖原有hover
+                  a:hover{
+                    background-color:#eef6f4;
+                    color:#000;
+                    -webkit-transition: all 0.3s ease-in-out;
+                    -moz-transition: all 0.3s ease-in-out;
+                    -o-transition: all 0.3s ease-in-out;
+                    transition: all 0.3s ease-in-out;
+                  }
+                  a.active{
+                    background-color:#eef6f4;
+                    color:#000;
+                    -webkit-transition: all 0.3s ease-in-out;
+                    -moz-transition: all 0.3s ease-in-out;
+                    -o-transition: all 0.3s ease-in-out;
+                    transition: all 0.3s ease-in-out;
+                  }
+                }
+              }
+            }
+          }
+          //黑名单
+          #blacklist {
+
+          }
+        }
+      }
+    }
+  }
+  //body-right
+  #min-wrapper {
+    min-height: 100%;
+    padding-top: 0px;
+    background: #fff;
+    padding-left: 291px;
+
+    //主体区
+    #main-content {
+      min-height: 100%;
+      padding-top: 0px;
+      background: white;
+      height: 100%;
+      min-width: 860px;
+
+      .container-fluid {
+        //消息列表
+        #chatlist {
+          //对话框所有包括
+          .chat {
+
+            //顶部header
+            .clearfix {
+              height: 52px;
+              border-bottom: 1px solid #e6eeec;
+              background-color: #fff;
+
+              //header 星标 拉黑 转接
+              .addButton {
+                height: 52px;
+                line-height: 52px;
+                float: right;
+                margin-right: 30px;
+                padding-left: 30px;
+                border-left: 1px solid #e6eeec;
+
+                //按钮
+                .goOut {
+                  margin: 0 28px 0 0;
+                  font-size: 16px;
+                  text-decoration: none;
+                  font-weight: normal;
+                  color: #a4b2b3;
+
+                  //图标
+                  .fa {
+                    color: #a4b2b3;
+                    font-size: 20px;
+                    margin-right: 3px;
+
+                  }
+                  .fa-star {
+                    color: #eead56;
+                  }
+                }
+                .deldestar {
+                  color: #eead56;
+                }
+              }
+
+              //用户信息
+              .chat_user_title {
+                display: none;
+              }
+            }
+            //聊天区
+            .scrollBoxParent {
+              width: 100%;
+              height: 380px;
+              overflow: hidden;
+              outline: none;
+              background-color: #f5f9fa;
+
+              .scrollBox {
+                padding: 30px;
+                //系统消息
+                .systeamText {
+                  color: #0d81c0;
+                  font-size: 12px;
+                  text-align: center;
+                  background: #e6eef0;
+                  display: inline-block;
+                  margin: 0 auto;
+                  padding: 2px 15px;
+                  border-radius: 2px;
+                }
+                //工单客服下的每条消息
+                .workOrderCus {
+                  //客服说话
+                  .fr {
+                    float: right;
+                  }
+                  //头像
+                  .msg_user {
+                    width: 42px;
+                    height: 42px;
+
+                    .msg_user_img {
+                      width: 100%;
+                      height: 100%;
+                    }
+                  };
+                  //消息盒子
+                  .msgContBox {
+                    margin-right: 20px;
+                    max-width: 68%;
+
+                    //时间
+                    .msg_time {
+                      float: right;
+                    }
+                    //暂时不显示
+                    .msg_name {
+                      display: none;
+                    }
+                    .msgBg {
+                      background-color: #97e6dc;
+                      line-height: 16px;
+                      padding: 14px;
+                      border-radius: 4px;
+                      margin-top: 15px;
+                      position: relative;
+                      .angleLeft {
+
+                      }
+                      .angleRight {
+                          width: 0;
+                          border-style: solid;
+                          border-color: transparent #97e6dc;
+                          top: 12px;
+                          content: "";
+                          position: absolute;
+                          border-width: 0px 0px 12px 12px;
+                          right: -10px;
+                      }
+                      //文本内容
+                      .msg_content {
+                        margin: 0;
+                        padding: 6px 0px;
+                        font-size: 14px;
+                        line-height: 16px;
+                        p {
+                          margin: 0;
+                        }
+                      }
+                    }
+                  }
+                }
+                //用户
+                .userCus {
+                  //用户
+                  .fl {
+                    float: left;
+                  }
+                  //头像
+                  .msg_user {
+                    width: 42px;
+                    height: 42px;
+
+                    .msg_user_img {
+                      width: 100%;
+                      height: 100%;
+                    }
+                  };
+                  //消息盒子
+                  .msgContBox {
+                    margin-left: 5px;
+                    max-width: 68%;
+
+                    //时间
+                    .msg_time {
+                      float: left;
+                    }
+                    //暂时不显示
+                    .msg_name {
+                      display: none;
+                    }
+                    .msgBg {
+                      background-color: #fff;
+                      line-height: 16px;
+                      padding: 14px;
+                      border-radius: 4px;
+                      margin-top: 15px;
+                      position: relative;
+                      border: 1px solid #dce5e5;
+
+                      .angleLeft {
+                        width: 11px;
+                        height: 10px;
+                        background: url("../img/leftangle.png");
+                        top: 12px;
+                        position: absolute;
+                        left: -10px;
+                      }
+                      .angleRight {
+                        width: 0;
+                        border-style: solid;
+                        border-color: transparent #97e6dc;
+                        top: 12px;
+                        content: "";
+                        position: absolute;
+                        border-width: 0 0 12px 12px;
+                        right: -10px;
+                      }
+                      //文本内容
+                      .msg_content {
+                        margin: 0;
+                        font-size: 14px;
+                        line-height: 16px;
+                      }
+                    }
+                  }
+                }
+                //下划线
+                .day_divider {
+                  background: #f5f9fa;
+                  margin: 1.5rem 0;
+                  line-height: 1.2rem;
+                  font-size: 1rem;
+                  font-family: 'Lato', sans-serif;
+                  color: #555459;
+                  font-weight: 900;
+                  text-align: center;
+                  cursor: default;
+                  clear: both;
+                  position: relative;
+                  margin-top: 10px;
+                }
+                //日期
+                .day_divider_label {
+                  background: #f5f9fa;
+                  padding: 0 1rem;
+                  display: inline-block;
+                  margin: 0 auto;
+                  position: relative;
+                }
+              }
+            }
+            //底部
+            .botTextBox {
+              width: 100%;
+              position: absolute;
+              bottom: 0;
+              min-height: 190px;
+              background-color: #fff;
+              border-top: 1px solid #e6eeec;
+              outline: none;
+
+              //上传图片
+              .picButton {
+                position: absolute;
+                left: 20px;
+                top: 20px;
+              }
+              //表情按钮
+              .faceButton {
+                position: absolute;
+                left: 60px;
+                top: 20px;
+
+              }
+              //链接
+              .linkButton {
+                position: absolute;
+                left: 60px;
+                top: 20px;
+              }
+              //文字输入区
+              .msg-send-input {
+                background-color: #fff;
+                margin-top: 55px;
+                height: 120px;
+                min-height: 130px;
+                resize: none;
+                border: 0;
+
+              }
+              //发送按钮
+              .sendBtn {
+                position: absolute;
+                right: 11px;
+                bottom: 11px;
+                width: 80px;
+                height: 38px;
+                background-color: #09aeb0;
+                color: #fff;
+                text-align: center;
+                line-height: 38px;
+                font-size: 16px;
+                border: 0;
+                border-radius: 3px;
+
+              }
+            }
+          }
+          //右侧
+          .right {
+            padding: 0;
+            float: right;
+
+            .rightBox {
+
+              //新增顶部
+              .panel-header-other {
+                height: 52px;
+                background-color: #eef6f4;
+                padding: 10px 27px;
+                overflow: hidden;
+                border-left: 1px solid #e6eeec;
+                cursor: pointer;
+
+                .otherItem {
+                  position: relative;
+                  width: 40px;
+                  height: 32px;
+                  float: left;
+                  margin-right: 50px;
+
+                  .fa-align-left {
+                    position: absolute;
+                    left: 10px;
+                    top: 0;
+                    font-size: 20px;
+                    color: #a2b3b3;
+                  }
+                  span {
+                    position: absolute;
+                    left: 10px;
+                    top: 20px;
+                    color: #a2b3b3;
+                  }
+                }
+              }
+              //身体
+              .panel-body {
+                //tab导航
+                .nav-tabs {
+                  border-left: 1px solid #e6eeec;
+                  background-color: #eef6f4;
+                  border-bottom: 0;
+
+                  li {
+                    height: 52px;
+                    width: 25%;
+                    cursor: pointer;
+
+                    .ifList {
+
+                      li {
+                        width: 100%;
+                        height: 25px;
+
+                        a {
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          text-align: center;
+                          padding: 0;
+                          line-height: 25px;
+                        }
+                      }
+                    }
+
+                    a {
+                      width: 100%;
+                      height: 100%;
+                      display: block;
+                      text-align: center;
+                      padding : 8px;
+                      border: 0;
+                      background-color: #eef6f4;
+
+                      i {
+                        font-size: 16px;
+                        display: block;
+                        color: #a5b2b3;
+                      }
+                      span {
+                        display: block;
+                        color: #a4b2b3;
+                        font-weight: normal;
+                        font-size: 13px;
+                      }
+                    }
+                  }
+                  li.active {
+                    a {
+                      border: 0;
+                      background-color: #fff;
+                    }
+                  }
+                  li:hover {
+                    a {
+                      border: 0;
+                      background-color: #e4eded;
+                    }
+                  }
+                }
+                //内容区
+                .tab-content {
+                  .tab-pane {
+                    padding: 26px 20px;
+
+                    //标题：用户信息
+                    h4 {
+                      font-size: 14px;
+                      font-weight: 500;
+                    }
+                    //信息ul
+                    ul {
+                      padding: 0;
+                      //每条列表
+                      li {
+                        margin-left: 0;
+                        //小标题
+                        .userTypeName {
+                          color: #8d8d8d;
+                          font-size: 14px;
+                          line-height: 14px;
+                          display: inline-block;
+                        }
+                        //输入框
+                        .userInp {
+                          color: #333;
+                          border: 0;
+                          font-size: 14px;
+                        }
+                        //备注
+                        .remark {
+                          background-color: #fff;
+                          width: 90%;
+                          height: 106px;
+                          font-size: 14px;
+                          resize: none;
+                          margin-left: 0;
+                          border: 1px solid #ccc;
+                        }
+                        span {
+                          color: #f90;
+                          margin-left: 10px;
+                          display: none;
+                        }
+                      }
+                    }
+                  }
+                  .tab-home-yy {
+                    height: 100%;
+                    padding: 40px 0 40px 0;
+
+                    .rightQuick {
+                      .rightQuickLeft {
+                        min-width: 94px;
+                        li {
+                          border-left: 2px solid #fff;
+                          color: #555556;
+                          font-size: 14px;
+                          font-weight:bold;
+                        }
+                        li:hover {
+                          background-color: #eff4f5;
+                          color: #555556;
+                          border-left: 2px solid #09aeb0;
+                        }
+                        .active {
+                          background-color: #eef6f4;
+                          color: #555556;
+                          border-left: 2px solid #09aeb0;
+                        }
+                      }
+                      .rightQuickRight {
+                        min-width: 189px;
+                        li {
+                          .quickClick {
+                            color: #555556;
+                            font-size: 14px;
+                            border: 0;
+                          }
+                          .quickClick:hover {
+                            background-color: #eef6f4;
+                            font-size: 14px;
+                            color: #555556;
+                          }
+                        }
+                      }
+                    }
+                  }
+                  //快捷回复
+                  #messagesuser {
+                    .quickBtnP {
+                      #shortcut {
+                        display: block;
+                        width: 100%;
+                        text-align: center;
+                        padding: 0;
+                        height: 40px;
+                        line-height: 40px;
+                        color: #09aeb0;
+                        font-size: 16px;
+                        border-top: 1px solid #e5eeec;
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        background-color: #fff;
+                        border-left: 1px solid #e5eeec;
+                        z-index: 2;
+                      }
+                      #shortcut:hover {
+                        color: #09aeb0;
+                        background-color: #f5f9fa;
+                      }
+                    }
+                  }
+                  //智能回复
+                  #homeuser {
+                    //内容
+                    .homeUserBox {
+                      padding: 0;
+                    }
+                    //搜索输入框
+                    #quickSerch {
+                      border-radius: 0;
+                      width: 100%;
+                    }
+                    #quickSerch:focus {
+                      width: 100%;
+                    }
+                    //搜索按钮
+                    #quickSerchBtn {
+                      display: none;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          //历史
+          #hchat {
+            background-color: #f5f9fa;
+          }
+        }
+      }
+    }
+  }
+}
+/*dialog*/
+.dialogBox {
+  display: none;
+}
+//弹出层
+.bootbox {
+  .modal-dialog {
+    //内容
+    .modal-content {
+      border-radius: 1px;
+    }
+    //header
+    .modal-header {
+      height: 54px;
+      border-bottom: 1px solid #38bfbe;
+      background-color: #f4fdfb;
+      padding: 18px 30px;
+
+      .modal-title {
+        line-height: 18px;
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+      }
+      .bootbox-close-button {
+        margin: 0;
+        line-height: 18px;
+        color: #09b1af;
+        opacity: 1;
+      }
+    }
+    //body
+    .modal-body {
+      padding: 0;
+      text-align: center;
+      .bootbox-body {
+        //主动邀请
+        .reqTableBox {
+          padding: 52px 54px;
+          .waitClass {
+            .th2 {
+              width: 30%;
+            }
+          }
+          .reqMenuBox {
+            .fl {
+              float: left;
+              //排队中按钮
+              .ls-light-green-btn {
+                background-color: #fff;
+                width: 128px;
+                height: 34px;
+                border: 1px solid #09aeb0;
+                text-align: center;
+                line-height: 34px;
+                font-size: 16px;
+                color: #09aeb0;
+                padding: 0;
+                margin: 0;
+                margin-right: 20px;
+                outline :none;
+
+              }
+              .ls-red-btn {
+                background-color: #09aeb0;
+                width: 128px;
+                height: 34px;
+                border: 1px solid #09aeb0;
+                text-align: center;
+                line-height: 34px;
+                font-size: 16px;
+                color: #fff;
+                padding: 0;
+                margin: 0;
+                font-weight: normal;
+                margin-right: 20px;
+                outline: none;
+
+              }
+            }
+            .fr {
+              float: right;
+              margin-top: 10px;
+              .reaRefBtn {
+                padding-left: 20px;
+                width: 50px;
+                height: 20px;
+                display: inline-block;
+                background: url(../img/reqRefNow.png) no-repeat;
+                vertical-align: middle;
+                line-height: 20px;
+                font-size: 14px;
+                color: #09b1af;
+
+              }
+            }
+          }
+          .table {
+            //thead
+            .reqTableTh {
+              border-top: 1px solid #ccc;
+              tr {
+                th {
+                  font-size: 14px;
+                  font-weight: normal;
+                }
+                .th2 {
+                  width: 20%;
+                }
+                .th21 {
+                  width: 30%;
+                }
+                .th3 {
+                  width: 30%;
+                }
+                .th4 {
+                  width: 20%;
+                }
+                .th5 {
+                  width: 20%;
+                }
+                .th51 {
+                  width: 20%;
+                }
+                .th6 {
+                  width: 10%;
+                }
+              }
+            }
+            //tbody
+            .reqDomBox {
+              text-align: left;
+              .reqBtns {
+                color: #09aeb0;
+                font-size: 14px;
+                font-weight: normal;
+                margin: 0;
+              }
+            }
+            //foot
+            .reqBottom {
+              //跳转
+              .reqGoNumber {
+                color: #09aeb0;
+                font-size: 14px;
+                font-weight: normal;
+                margin: 0;
+              }
+              //下一页
+              .reaNextBtn {
+                color: #09aeb0;
+                font-size: 14px;
+                font-weight: normal;
+                margin: 0;
+              }
+              //上一页
+              .reaPrevBtn {
+                color: #09aeb0;
+                font-size: 14px;
+                font-weight: normal;
+                margin: 0;
+              }
+            }
+          }
+        }
+        //转接列表
+        .listBox {
+          padding: 52px 54px;
+
+          .list-group {
+            //引入模版
+            table {
+              thead {
+                tr {
+                  border-bottom: 1px solid #ccc;
+                  th {
+                    border: 0;
+                    height: 50px;
+                    line-height: 50px;
+                    font-size: 14px;
+                    text-align: center;
+                    padding: 0;
+                  }
+                }
+              }
+              tbody {
+                tr {
+                  border-bottom: 1px solid #ccc;
+                  td {
+                    border: 0;
+                    height: 50px;
+                    line-height: 50px;
+                    font-size: 14px;
+                    text-align: center;
+                    padding: 0;
+                  }
+                  .glyphicon-ok-sign {
+                    color: #65ef71;
+                  }
+                  .glyphicon-minus-sign {
+                    color: #ed5c5c;
+                  }
+                  .redClass {
+                    color: #ed5c5c;
+                  }
+                }
+              }
+            }
+          }
+        }
+        //快捷回复弹出
+        .quickBox {
+          .quickLeft {
+            height: 300px;
+            text-align: left;
+            border-right: 1px solid #ccc;
+            .quickList {
+              border-left: 2px solid #fff;
+            }
+            .quickList:hover{
+              background-color: #eef6f4;
+              border-left: 2px solid #09aeb0;
+              color: #000;
+              input {
+                background-color: #eef6f4;
+                color: #000;
+              }
+              a {
+                color: #000;
+              }
+            }
+            //选中项
+            .quickActive {
+              background-color: #eef6f4;
+              border-left: 2px solid #09aeb0;
+              color: #000;
+              a {
+                color: #000;
+              }
+
+              input {
+                background-color:#eef6f4;
+                color: #000;
+              }
+            }
+            //新增按钮
+            .quickBtn {
+
+            }
+          }
+          .quickRight {
+            height: 300px;
+            text-align: left;
+            padding: 0;
+            .reply {
+              .replyList {
+                .quickList {
+                  border-top: 0;
+                  a {
+                    color: #000;
+                  }
+                }
+                .quickList:hover {
+                  background-color: #eef6f4;
+                  color: #000;
+                  input {
+                    background-color: #eef6f4;
+                    color: #000;
+                  }
+                  a {
+                    color: #000;
+                  }
+                }
+                //选中项
+                .quickActive {
+                  background-color: #eef6f4;
+                  border-left: 2px solid #09aeb0;
+                  color: #000;
+                  a {
+                    color: #000;
+                  }
+
+                  input {
+                    background-color: #eef6f4;
+                    color: #000;
+                  }
+                }
+                .rightQuick {
+
+                }
+              }
+            }
+          }
+        }
+        //关闭列表
+        .offDyy {
+          padding: 50px 30px;
+          text-align: center;
+          font-size: 16px;
+        }
+      }
+    }
+    //foot
+    .modal-footer {
+      text-align: center;
+      border: 0;
+      padding: 0;
+      margin-bottom: 50px;
+
+      .btn-danger {
+        background-color: #fff;
+        width: 120px;
+        height: 40px;
+        border: 1px solid #09aeb0;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        color: #09aeb0;
+        padding: 0;
+        margin: 0;
+        margin-right: 20px;
+        outline :none;
+      }
+      .btn-success {
+        background-color: #09aeb0;
+        width: 120px;
+        height: 40px;
+        border: 1px solid #09aeb0;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        color: #fff;
+        padding: 0;
+        margin: 0;
+        font-weight: normal;
+        outline: none;
+      }
+    }
+  }
+}
+
+#main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent .scrollBox .workOrderCus .msgReplyErrorDefault {
+  background: url("../assets/images/newChat1.png");
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-position: -38px -895px;
+}
+
+#main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent .scrollBox .workOrderCus .msgReplyErrorActive {
+  background: url("../assets/images/newChat1.png");
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-position: -76px -895px;
+}
