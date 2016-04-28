@@ -1,0 +1,21 @@
+{
+  "name": "sobot_fe",
+  "version": "1.0.0",
+  "description": "聊天页人工客服工作台项目",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@101.200.200.21:31013/SobotFe/ChatAdmins.git"
+  },
+  "author": "sobot_fe",
+  "license": "ISC",
+  "devDependencies":{
+  	"gulp":"^3.9.0",
+	"requiredir":"^1.0.7",
+	"gulp-browserify":"^0.5.1",
+	"gulp-notify":"^2.2.0"
+  }
+}
