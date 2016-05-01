@@ -1,6 +1,6 @@
 (function(node) {
 	var core = require('./Core/core.js')();
-	console.log(core);
+	var LeftSide = require('./leftside/index.js');
 	var Promise = require('./util/promise.js');
 	var parseDOM = function() {
 	};
@@ -9,7 +9,7 @@
 	};
 
 	var initPlugins = function() {
-
+		LeftSide($("section#left-navigation")[0],core,window);
 	};
 
 	var init = function() {

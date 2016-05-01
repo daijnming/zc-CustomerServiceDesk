@@ -92,9 +92,17 @@ function Core(window) {
 				}
 			});
 		}).then(function(value,promise) {
+			$(document.body).trigger("core.onload",[global]);
 			getMessage();
 		});
 	};
+
+	var getGlobal = function(){
+		return global;
+	};
+
+
+
 	var parseDOM = function() {
 	};
 
@@ -115,7 +123,12 @@ function Core(window) {
 		initPlugins();
 	};
 
+
+
 	init();
+
+	that.getQueryParam = getQueryParam;
+	that.getGlobal = getGlobal;
 	return that;
 }
 
