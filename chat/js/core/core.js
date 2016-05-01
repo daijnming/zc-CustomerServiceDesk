@@ -3,7 +3,7 @@ function Core(window) {
 	var token = '';
 	var queryParam;
 	var Promise = require('../util/promise.js');
-
+	var global = {};
 	var basicInfoHandler = function(value,promise) {
 		token = value.token || window.sessionStorage.getItem('temp-id');
 		promise.resolve({});
@@ -36,6 +36,23 @@ function Core(window) {
 		}
 		return param;
 	};
+
+	var getMessage = function() {
+		$.ajax({
+			'url' : '/chat/admin/msg.action',
+			'dataType' : "json",
+			'type' : "get",
+			'data' : {
+				'puid' : global.puid,
+				'uid' : global.id
+			}
+		}).success(function(ret){
+			console.log('success',ret)
+		}).fail(function(ret,err){
+			console.log('fail',ret,err);
+		});
+		setTimeout(getMessage,2000);
+	};
 	var initBasicInfo = function() {
 		Promise.when(function() {
 			var promise = new Promise();
@@ -67,7 +84,15 @@ function Core(window) {
 					'token' : token
 				}
 			}).done(function(ret) {
+				if(ret.status == 1) {
+					for(var el in ret) {
+						global[el] = ret[el];
+					}
+					promise.resolve(ret);
+				}
 			});
+		}).then(function(value,promise) {
+			getMessage();
 		});
 	};
 	var parseDOM = function() {
@@ -78,6 +103,9 @@ function Core(window) {
 
 	var initPlugins = function() {
 		queryParam = getQueryParam();
+		for(var el in queryParam) {
+			global[el] = queryParam[el];
+		}
 		initBasicInfo();
 	};
 
