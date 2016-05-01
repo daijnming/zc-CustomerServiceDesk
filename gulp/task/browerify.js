@@ -6,5 +6,5 @@ gulp.task('browserify',function(){
 	pipe(browserify({
 		'insertGlobals':false
 	})).
-	pipe(gulp.dest(config.baseDir+'dist/js'));
+	pipe(gulp.dest(config.baseDir+'dest/js'));
 });
