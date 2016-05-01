@@ -1,4 +1,6 @@
 function LeftSide(node,core,window){
+
+	
 	var parseDOM = function(){
 
 	};
