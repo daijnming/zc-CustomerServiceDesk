@@ -4,6 +4,8 @@ function Core(window) {
 	var queryParam;
 	var Promise = require('../util/promise.js');
 	var global = {};
+
+	
 	var basicInfoHandler = function(value,promise) {
 		token = value.token || window.sessionStorage.getItem('temp-id');
 		promise.resolve({});
@@ -53,6 +55,7 @@ function Core(window) {
 		});
 		setTimeout(getMessage,2000);
 	};
+
 	var initBasicInfo = function() {
 		Promise.when(function() {
 			var promise = new Promise();
@@ -71,7 +74,8 @@ function Core(window) {
 				});
 			});
 			return promise;
-		}).then(basicInfoHandler,basicInfoHandler).then(function(value,promise) {
+		}).then(basicInfoHandler,basicInfoHandler)
+		.then(function(value,promise) {
 			$.ajax({
 				'url' : '/chat/admin/connect.action',
 				'dataType' : 'json',
