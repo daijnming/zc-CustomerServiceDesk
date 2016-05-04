@@ -1,5 +1,5 @@
 (function(node) {
-	var core = require('./Core/core.js')();
+	var core = require('./Core/core.js')(window);
 	var LeftSide = require('./leftside/index.js');
 	var Promise = require('./util/promise.js');
 	var parseDOM = function() {

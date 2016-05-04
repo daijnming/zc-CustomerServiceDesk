@@ -2,10 +2,11 @@ function Core(window) {
 	var that = {};
 	var token = '';
 	var queryParam;
+	var polling = require('./socket/json.js');
 	var Promise = require('../util/promise.js');
+	var socket;
 	var global = {};
 
-	
 	var basicInfoHandler = function(value,promise) {
 		token = value.token || window.sessionStorage.getItem('temp-id');
 		promise.resolve({});
@@ -40,20 +41,7 @@ function Core(window) {
 	};
 
 	var getMessage = function() {
-		$.ajax({
-			'url' : '/chat/admin/msg.action',
-			'dataType' : "json",
-			'type' : "get",
-			'data' : {
-				'puid' : global.puid,
-				'uid' : global.id
-			}
-		}).success(function(ret){
-			console.log('success',ret)
-		}).fail(function(ret,err){
-			console.log('fail',ret,err);
-		});
-		setTimeout(getMessage,2000);
+		socket.start();
 	};
 
 	var initBasicInfo = function() {
@@ -74,8 +62,7 @@ function Core(window) {
 				});
 			});
 			return promise;
-		}).then(basicInfoHandler,basicInfoHandler)
-		.then(function(value,promise) {
+		}).then(basicInfoHandler,basicInfoHandler).then(function(value,promise) {
 			$.ajax({
 				'url' : '/chat/admin/connect.action',
 				'dataType' : 'json',
@@ -101,16 +88,26 @@ function Core(window) {
 		});
 	};
 
-	var getGlobal = function(){
+	var getGlobal = function() {
 		return global;
 	};
-
-
 
 	var parseDOM = function() {
 	};
 
 	var bindListener = function() {
+	};
+
+	var socketFactory = function() {
+		if(window.WebSocket && false) {
+
+		} else {
+			socket = new polling(global);
+		}
+
+		socket.on("receive", function(value) {
+			$(document.body).trigger('core.receive',value);
+		});
 	};
 
 	var initPlugins = function() {
@@ -119,6 +116,7 @@ function Core(window) {
 			global[el] = queryParam[el];
 		}
 		initBasicInfo();
+		socketFactory();
 	};
 
 	var init = function() {
@@ -126,8 +124,6 @@ function Core(window) {
 		bindListener();
 		initPlugins();
 	};
-
-
 
 	init();
 
