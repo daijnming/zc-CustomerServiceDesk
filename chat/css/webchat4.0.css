@@ -1,4 +1,8 @@
 /*body*/
+body,html{
+	height:100%;
+	width:100%;
+}
 .mr {
   margin-left: 10px;
   margin-right: 0px;
@@ -1130,6 +1134,7 @@
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right {
   padding: 0;
   float: right;
+  height:100%;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-header-other {
   height: 52px;
@@ -1750,6 +1755,7 @@
 .chatCont{
   background: url("../assets/images/noSession.png") no-repeat;
   background-position:33% 43%;
+  height:100%;
 }
 #clientSystems a:link {color: #a4b2b3} /* 未访问的链接 */
 #clientSystems a:visited {color: #a4b2b3} /* 已访问的链接 */
