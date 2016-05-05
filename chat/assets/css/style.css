@@ -9039,3 +9039,9 @@ hr.footer-border {
 	position:fixed; 
 	background-color:rgba(99,99,99,0.7);
 }
+.bootbox .modal-dialog .modal-content .modal-body{
+   min-height:120px;
+}
+.bootbox.modal.fade.in{
+    opacity:0;
+}
