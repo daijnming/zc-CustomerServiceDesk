@@ -79,7 +79,11 @@ function Core(window) {
 					for(var el in ret) {
 						global[el] = ret[el];
 					}
+					$(".js-loading-layer").hide();
 					promise.resolve(ret);
+				}else if(ret.status == -2){
+					alert('登录失败');
+					window.close();
 				}
 			});
 		}).then(function(value,promise) {
