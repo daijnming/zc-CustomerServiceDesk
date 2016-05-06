@@ -1705,7 +1705,8 @@ body,html{
   text-align: center;
   border: 0;
   padding: 0;
-  margin-bottom: 50px;
+  margin-top:20px;
+  margin-bottom: 30px;
 }
 .bootbox .modal-dialog .modal-footer .btn-danger {
   background-color: #fff;

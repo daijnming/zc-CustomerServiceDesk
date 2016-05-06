@@ -81,7 +81,7 @@ function Core(window) {
 					}
 					$(".js-loading-layer").hide();
 					promise.resolve(ret);
-				}else if(ret.status == -2){
+				} else if(ret.status == -2) {
 					alert('登录失败');
 					window.close();
 				}
