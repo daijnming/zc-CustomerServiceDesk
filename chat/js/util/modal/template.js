@@ -19,10 +19,10 @@ var zcModalOuter = ''+
                 
             '</div>'+
             '<div class="modal-footer">'+
-                '<button class="btn btn-default js-cancel-btn">'+
+                '<button class="btn btn-danger js-cancel-btn">'+
                     '{{=it.cancelText || "取消"}}'+
                 '</button>'+
-                '<button class="btn btn-primary">'+
+                '<button class="btn btn-success js-ok-btn">'+
                     '{{=it.okText || "确定"}}'+
                 '</button>'+
             '</div>'+
@@ -31,7 +31,14 @@ var zcModalOuter = ''+
 '</div>'+
 '';
 
-template.zcModalOuter = zcModalOuter
+var zcAlertTemplate = ''+
+    '<div class="modal-alert-content">'+
+        '<p class="large">{{=it.text}}</p>'+
+        '<p>{{=it.info}}</p>'+
+    '</div>'+
+'';
+template.zcAlertTemplate= zcAlertTemplate;
+template.zcModalOuter = zcModalOuter;
 template.zcShadowLayer=zcShadowLayer;
 
 module.exports = template;

@@ -9,13 +9,8 @@
 	var parseDOM = function() {
 	};
 
-	var bindListener = function() {
-		$(window).on("resize", function(e) {
-			var height = ($(window).outerHeight());
-			$("#main-container").height($(window).outerHeight());
-			$("#chatlist").height(height);
-		});
-	};
+    var parseDOM = function() {
+    };
 
 	var initPlugins = function() {
 		var height = ($(window).outerHeight());
@@ -24,13 +19,20 @@
 		LeftSide($("section#left-navigation")[0],core,window);
 		RightSide($('.rightBox'),core,window);
 	};
+    var bindListener = function() {
+        $(window).on("resize", function(e) {
+            var height = ($(window).outerHeight());
+            $("#main-container").height($(window).outerHeight());
+            $("#chatlist").height(height);
+        });
+    };
 
-	var init = function() {
-		parseDOM();
-		bindListener();
-		initPlugins();
-	};
+    var init = function() {
+        parseDOM();
+        bindListener();
+        initPlugins();
+    };
 
-	init();
+    init();
 
 })(document.body);
