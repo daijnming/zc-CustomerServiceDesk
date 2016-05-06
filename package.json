@@ -12,11 +12,12 @@
   },
   "author": "sobot_fe",
   "license": "ISC",
-  "devDependencies":{
-  	"gulp":"^3.9.0",
-	"requiredir":"^1.0.7",
-	"gulp-browserify":"^0.5.1",
-	"gulp-notify":"^2.2.0",
-	"gulp-watch":"^4.3.5"
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-watch": "^4.3.5",
+    "mustache": "^2.2.1",
+    "requiredir": "^1.0.7"
   }
 }
