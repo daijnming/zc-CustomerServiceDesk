@@ -9045,3 +9045,13 @@ hr.footer-border {
 .bootbox.modal.fade.in{
     opacity:0;
 }
+.modal-alert-content{
+    padding:25px; 
+}
+.modal-alert-content p{
+    font-size:17px;
+    font-weight:bold;
+}
+.modal-alert-content p.large{
+    font-size:20px;
+}
