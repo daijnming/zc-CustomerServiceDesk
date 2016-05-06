@@ -1,6 +1,7 @@
 (function(node) {
 	var core = require('./Core/core.js')(window);
 	var LeftSide = require('./leftside/index.js');
+	var RightSide = require('./rightside/index.js');
 	var Promise = require('./util/promise.js');
 	var Modal = require('./util/modal/dialog.js');
 	var dialog = new Modal();
@@ -21,6 +22,7 @@
 		$("#main-container").height($(window).outerHeight());
 		$("#chatlist").height(height);
 		LeftSide($("section#left-navigation")[0],core,window);
+		RightSide($('.rightBox'),core,window);
 	};
 
 	var init = function() {

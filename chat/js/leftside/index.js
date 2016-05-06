@@ -40,4 +40,3 @@ function LeftSide(node,core,window) {
 };
 
 module.exports = LeftSide;
-
