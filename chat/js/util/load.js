@@ -28,7 +28,7 @@ var load = function(url) {
             setTimeout(function() {
                 promise.resolve(data);
             },0);
-            return promise();
+            return promise;
         });
     }
 
