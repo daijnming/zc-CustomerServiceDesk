@@ -20,7 +20,6 @@ function LeftSide(node,core,window) {
     };
 
     var getDefaultChatList = function() {
-        console.log(global);
         $.ajax({
             'url' : '/chat/admin/getAdminChats.action',
             'dataType' : 'json',
@@ -29,13 +28,17 @@ function LeftSide(node,core,window) {
                 'uid' : global.id
             }
         }).success(function(ret) {
-            console.log(ret);
-            loadFile.load(global.baseUrl + 'views/leftside/chatlist.html').then(function(value) {
-                var _html = doT.template(value)({
-                    'list' : ret.userList
+            if(ret.userList.length > 0) {
+                loadFile.load(global.baseUrl + 'views/leftside/chatlist.html').then(function(value) {
+                    var _html = doT.template(value)({
+                        'list' : ret.userList
+                    });
+                    $(node).find(".js-users-list").html(_html);
                 });
-                $(node).find(".js-users-list").html(_html);
-            });
+            } else {
+                var height = $(node).outerHeight();
+                $(node).find(".js-chatonline").addClass("noOnline");
+            }
         });
     };
 

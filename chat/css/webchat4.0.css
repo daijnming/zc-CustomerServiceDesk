@@ -211,29 +211,29 @@ body,html{
   background-color: #f2f7f7;
   border-bottom: solid 3px #09aeb0;
 }
-#main-container #left-navigation .mainNav li .tab-content {
+#main-container #left-navigation   .tab-content {
   background-color: #f2f7f7;
 }
-#main-container #left-navigation .mainNav li .tab-content .tab-pane {
+#main-container #left-navigation   .tab-content .tab-pane {
   padding: 0;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users {
+#main-container #left-navigation   .tab-content #chatonline #users {
   overflow: hidden;
   margin: 0;
   padding: 0;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li {
   width: 290px;
   height: 80px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user {
+#main-container #left-navigation .mainNav .tab-content #chatonline #users li .user {
   height: 80px;
   padding: 20px 0;
   position: relative;
   border-bottom: 1px solid #ebeff0;
   color: #000;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-laptop {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-laptop {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -245,7 +245,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-laptop .newIcon {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-laptop .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -253,10 +253,10 @@ body,html{
   background-position: -104px -242px;
   margin-top: 6px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-laptop:before {
+#main-container #left-navigation .mainNav .tab-content #chatonline #users li .user .fa-laptop:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-weibo {
+#main-container #left-navigation .mainNav .tab-content #chatonline #users li .user .fa-weibo {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -269,7 +269,7 @@ body,html{
   left: 20px;
   font-size: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-mobile {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-mobile {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -281,7 +281,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-mobile .newIcon {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-mobile .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -289,10 +289,10 @@ body,html{
   background-position: -44px -242px;
   margin-top: 8px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-mobile:before {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-mobile:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-code {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-code {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -304,7 +304,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-code .newIcon {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-code .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -312,10 +312,10 @@ body,html{
   background-position: -164px -242px;
   margin-top: 8px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-code:before {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-code:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-weixin {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-weixin {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -327,7 +327,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-weixin .newIcon {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-weixin .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -335,10 +335,10 @@ body,html{
   background-position: -224px -242px;
   margin-top: 8px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .fa-weixin:before {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .fa-weixin:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .uname {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .uname {
   display: block;
   height: 15px;
   line-height: 15px;
@@ -346,7 +346,7 @@ body,html{
   left: 70px;
   top: 25px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .lastMsg {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .lastMsg {
   display: block;
   height: 15px;
   line-height: 15px;
@@ -355,7 +355,7 @@ body,html{
   top: 45px;
   color: #ccc;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .badge {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .badge {
   position: absolute;
   color: #fff;
   left: 46px;
@@ -367,7 +367,7 @@ body,html{
   border-radius: 60px;
   background-color: #ee5c5a;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .user-del {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .user-del {
   display: block;
   position: absolute;
   right: 10px;
@@ -379,24 +379,24 @@ body,html{
   font-size: 20px;
   font-weight: 100;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .user-del .newIcon {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .user-del .newIcon {
   display: inline-block;
   background: url("../assets/images/newChat1.png");
   width: 20px;
   height: 20px;
   background-position: -96px -172px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user .user-del .newIcon:hover {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user .user-del .newIcon:hover {
   display: inline-block;
   background: url("../assets/images/newChat1.png");
   width: 20px;
   height: 20px;
   background-position: -132px -172px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li .user:hover .ohide {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li .user:hover .ohide {
   display: none;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li a:hover {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li a:hover {
   background-color: #eef6f4;
   color: #000;
   -webkit-transition: all 0.3s ease-in-out;
@@ -405,7 +405,7 @@ body,html{
   transition: all 0.3s ease-in-out;
 }
 
-#main-container #left-navigation .mainNav li .tab-content #chatonline #users li a.active {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #users li a.active {
 
   background-color: #d8ebea;
   border-left: solid 3px #09aeb0;
@@ -415,17 +415,17 @@ body,html{
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li {
   width: 290px;
   height: 80px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user {
   height: 80px;
   padding: 20px 0;
   position: relative;
   border-bottom: 1px solid #e5eeec;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-laptop {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-laptop {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -437,7 +437,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-laptop .newIcon {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-laptop .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -445,10 +445,10 @@ body,html{
   background-position: -104px -242px;
   margin-top: 6px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-laptop:before {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-laptop:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-weibo {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-weibo {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -461,7 +461,7 @@ body,html{
   left: 20px;
   font-size: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-mobile {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-mobile {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -473,7 +473,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-mobile .newIcon {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-mobile .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -481,10 +481,10 @@ body,html{
   background-position: -44px -242px;
   margin-top: 8px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-mobile:before {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-mobile:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-code {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-code {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -496,7 +496,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-code .newIcon {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-code .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -504,10 +504,10 @@ body,html{
   background-position: -164px -242px;
   margin-top: 8px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-code:before {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-code:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-weixin {
+#main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-weixin {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -519,7 +519,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-weixin .newIcon {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li .user .fa-weixin .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -527,10 +527,10 @@ body,html{
   background-position: -224px -242px;
   margin-top: 8px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .fa-weixin:before {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li .user .fa-weixin:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .uname {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li .user .uname {
   display: block;
   height: 15px;
   line-height: 15px;
@@ -538,7 +538,7 @@ body,html{
   left: 70px;
   top: 25px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .lastMsg {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li .user .lastMsg {
   display: block;
   height: 15px;
   line-height: 15px;
@@ -546,7 +546,7 @@ body,html{
   left: 70px;
   top: 45px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .badge {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li .user .badge {
   position: absolute;
   color: #fff;
   left: 46px;
@@ -557,7 +557,7 @@ body,html{
   border-radius: 5px;
   background-color: #ee5c5a;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .user-del {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li .user .user-del {
   display: block;
   position: absolute;
   right: 10px;
@@ -569,24 +569,24 @@ body,html{
   font-size: 20px;
   font-weight: 100;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .user-del .newIcon {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li .user .user-del .newIcon {
   display: inline-block;
   background: url("../assets/images/newChat1.png");
   width: 20px;
   height: 20px;
   background-position: -96px -172px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user .user-del .newIcon:hover {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li .user .user-del .newIcon:hover {
   display: inline-block;
   background: url("../assets/images/newChat1.png");
   width: 20px;
   height: 20px;
   background-position: -132px -172px;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li .user:hover .ohide {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li .user:hover .ohide {
   display: none;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li a:hover {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li a:hover {
   background-color: #eef6f4;
   color: #000;
   -webkit-transition: all 0.3s ease-in-out;
@@ -594,7 +594,7 @@ body,html{
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-#main-container #left-navigation .mainNav li .tab-content #chatonline #offlineUser li a.active {
+#main-container #left-navigation   .tab-content #chatonline #offlineUser li a.active {
   background-color: #eef6f4;
   color: #000;
   -webkit-transition: all 0.3s ease-in-out;
@@ -602,7 +602,7 @@ body,html{
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .radio-box-yy {
+#main-container #left-navigation   .tab-content #history .radio-box-yy {
   padding: 15px 30px;
   height: 48px;
   line-height: 18px;
@@ -610,33 +610,33 @@ body,html{
   text-align: center;
   border-bottom: 1px solid #e5eeec;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .radio-box-yy label {
+#main-container #left-navigation   .tab-content #history .radio-box-yy label {
   /*padding-left: 18px;*/
   padding-right: 0;
   /*margin-left: 8px;*/
   font-size: 14px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .radio-box-yy label input {
+#main-container #left-navigation   .tab-content #history .radio-box-yy label input {
   margin-top: 2px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll {
+#main-container #left-navigation   .tab-content #history .leftScroll {
   overflow-y: hidden;
   padding: 0;
   outline: none;
   height: 549px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li {
   width: 290px;
   height: 80px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user {
   height: 80px;
   padding: 20px 0;
   position: relative;
   border-bottom: 1px solid #e5eeec;
   color: #ccc;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-laptop {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-laptop {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -648,7 +648,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-laptop .newIcon {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-laptop .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -656,10 +656,10 @@ body,html{
   background-position: -104px -242px;
   margin-top: 6px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-laptop:before {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-laptop:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-weibo {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-weibo {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -672,7 +672,7 @@ body,html{
   left: 20px;
   font-size: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-mobile {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-mobile {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -684,7 +684,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-mobile .newIcon {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-mobile .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -692,10 +692,10 @@ body,html{
   background-position: -44px -242px;
   margin-top: 8px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-mobile:before {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-mobile:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-code {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-code {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -707,7 +707,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-code .newIcon {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-code .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -715,10 +715,10 @@ body,html{
   background-position: -164px -242px;
   margin-top: 8px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-code:before {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-code:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-weixin {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-weixin {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -730,7 +730,7 @@ body,html{
   position: absolute;
   left: 20px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-weixin .newIcon {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-weixin .newIcon {
   background: url("../assets/images/newChat1.png");
   width: 28px;
   height: 28px;
@@ -738,10 +738,10 @@ body,html{
   background-position: -224px -242px;
   margin-top: 8px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .fa-weixin:before {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-weixin:before {
   content: '';
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .uname {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .uname {
   display: block;
   height: 15px;
   line-height: 15px;
@@ -750,7 +750,7 @@ body,html{
   left: 70px;
   top: 25px;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .oldLastMsg {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .oldLastMsg {
   display: block;
   height: 15px;
   line-height: 15px;
@@ -759,7 +759,7 @@ body,html{
   top: 45px;
   color: #ccc;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .badge {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .badge {
   position: absolute;
   color: #d9dcdb;
   right: 0;
@@ -769,7 +769,7 @@ body,html{
   border-radius: 5px;
   background-color: transparent;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user .user-del {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user .user-del {
   display: block;
   position: absolute;
   right: 10px;
@@ -781,13 +781,13 @@ body,html{
   font-size: 20px;
   font-weight: 100;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user:hover .ohide {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user:hover .ohide {
   display: none;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li .user:hover .badge {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li .user:hover .badge {
   color: #000;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li a:hover {
+#main-container #left-navigation   .tab-content #history .leftScroll ul li a:hover {
   background-color: #eef6f4;
   color: #000;
   -webkit-transition: all 0.3s ease-in-out;
@@ -795,7 +795,7 @@ body,html{
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-#main-container #left-navigation .mainNav li .tab-content #history .leftScroll ul li a.active {
+#main-container #left-navigation  .tab-content #history .leftScroll ul li a.active {
   background-color: #eef6f4;
   color: #000;
   border-left: solid 3px #09aeb0;
@@ -1749,8 +1749,9 @@ body,html{
   background: url("../assets/images/noStarList.png") no-repeat;
   background-position:center 27.5%;
 }
-#chatonline.noOnline{
+.noOnline{
   background: url("../assets/images/noOnlinePerson.png") no-repeat;
+  background-color:#F7FAFA;
   background-position:center 34%;
 }
 .chatCont{
