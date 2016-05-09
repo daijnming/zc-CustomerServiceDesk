@@ -1,7 +1,7 @@
 (function(node) {
     var core = require('./Core/core.js')(window);
     var LeftSide = require('./leftside/index.js');
-    var RightSide = require('./rightside/index.js');
+    var RightSide = require('./rightside/main.js');
     var Promise = require('./util/promise.js');
     var Modal = require('./util/modal/dialog.js');
     var fileLoader = require('./util/load.js')();

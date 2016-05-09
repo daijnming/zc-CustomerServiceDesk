@@ -33,6 +33,7 @@ function LeftSide(node,core,window) {
                     var _html = doT.template(value)({
                         'list' : ret.userList
                     });
+                    console.log(ret.userList)
                     $(node).find(".js-users-list").html(_html);
                 });
             } else {
