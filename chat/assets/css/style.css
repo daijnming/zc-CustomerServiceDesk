@@ -9036,7 +9036,7 @@ hr.footer-border {
 	height:100%;
 	top:0px;
 	left:0px;
-	position:fixed; 
+	position:fixed;
 	background-color:rgba(99,99,99,0.7);
 }
 .bootbox .modal-dialog .modal-content .modal-body{
@@ -9046,7 +9046,7 @@ hr.footer-border {
     opacity:0;
 }
 .modal-alert-content{
-    padding:25px; 
+    padding:25px;
 }
 .modal-alert-content p{
     font-size:17px;

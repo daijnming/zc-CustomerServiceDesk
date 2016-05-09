@@ -402,7 +402,7 @@ ul.mainNav  .tab-content{
 .bootbox .listBox #addList .col-sm-4 .oHide{display: none;}
 .bootbox .listBox .list-group .list-group-item .onLineNum{color: #f90;}
 
-.rightBox{overflow:scroll;height:100%;border-left:1px solid #e3dfd8;}
+.rightBox{overflow:scroll;height:100%;border-left: 1px solid #dee8e9;}
 .rightBox .panel-body{padding: 0;min-height:100px;}
 .rightBox .tab-border.tab-content{border-bottom: 0;height: 100%;}
 /*.rightBox .tab-content #profileuser li{list-style: none;  margin-left: -35px;margin-bottom: 10px;}*/
@@ -458,10 +458,9 @@ ul.mainNav  .tab-content{
 .rightQuick .rightQuickLeft li:hover,.rightQuick .rightQuickLeft .active{background-color: #25B2A2; color: #fff;}
 
 .rightQuick .rightQuickRight{padding: 0;}
-.rightQuick .rightQuickRight li{display: none;overflow: hidden;}
+.rightQuick .rightQuickRight li{display: none;overflow: hidden;text-indent: 1em;border-bottom: 1px dashed #ccc;padding: 7px 10px;line-height: 1.8em;text-decoration: none;color: #333;}
 .rightQuick .rightQuickRight li.active{display: block;}
-.rightQuick .rightQuickRight li .quickClick{text-indent: 1em;border-bottom: 1px dashed #ccc;padding: 7px 10px;line-height: 1.8em;display: block;text-decoration: none;color: #333;overflow: hidden;}
-.rightQuick .rightQuickRight li .quickClick:hover{background-color: #6CD3C8; color: #fff;}
+.rightQuick .rightQuickRight li:hover{background-color: #6CD3C8; color: #fff;}
 
 #messagesuser #shortcut{display: block;width: 100%;text-align: right;padding-right: 20px;text-decoration: none;line-height: 30px;height: 30px;color: #333;}
 #messagesuser .quickBtnP{margin: 0;padding: 0;}

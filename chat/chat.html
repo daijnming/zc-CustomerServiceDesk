@@ -34,8 +34,9 @@
 	<link href="assets/css/responsive.css" rel="stylesheet">
 	<link href="css/webchat.css?v=151027" rel="stylesheet">
 	<link href="css/webchat4.0.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/rightside.css" charset="utf-8">
 
-	
+
 	<!-- 初始化emoji -->
 	<script src="http://cdn.bootcss.com/twemoji/1.4.1/twemoji.min.js"></script>
 </head>
@@ -216,15 +217,18 @@
 									<span>其他</span>
 								</div>
 							</div>
-							<div class="panel-body" style="display: block;">
+							<div class="js-panel-body panel-body" style="display: block;">
 								<!-- Nav tabs -->
-								<ul class="nav nav-tabs icon-tab">
-									<li class="active"><a href="#0" id="goProfileuser" data-toggle="tab"><i class="fa fa-user1"></i> <span>客户资料</span></a></li>
-									<li class=""><a href="#0" id="goMessage" data-toggle="tab"><i class="glyphicon glyphicon-comment1"></i> <span>快捷回复</span></a></li>
-									<li class=""><a href="#0" id="gotoQuick" data-toggle="tab"><i class="fa fa-comments-o1"></i> <span>智能回复</span></a></li>
-									<li class="" style="display: none"><a id="ordersearch" href="javascript:;" data-toggle="tab"><i class="fa fa-file-text1"></i> <span>工单查询</span></a></li>
-									<li class="dropdown clearfix hide" id="clientSystems" >
-										<a class=" dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+								<ul class="js-nav-tabs nav nav-tabs icon-tab">
+									<!--客户资料-->
+									<li class="active"><a href="#0" id="goProfileuser" oData='profileuser' data-toggle="tab"><i class="js-fa-user fa fa-user1"></i> <span>客户资料</span></a></li>
+									<!--快捷回复-->
+									<li class=""><a href="#0" id="goMessage" oData='messagesuser' data-toggle="tab"><i class="js-glyphicon-comment glyphicon glyphicon-comment1"></i> <span>快捷回复</span></a></li>
+									<!--智能回复-->
+									<li class=""><a href="#0" id="gotoQuick" oData='homeuser' data-toggle="tab"><i class="js-fa-comments-o fa fa-comments-o1"></i> <span>智能回复</span></a></li>
+									<!--自定义菜单-->
+									<li class="dropdown clearfix hide" id="clientSystems" oData='clientSystem'>
+										<a class="js-dropdown-toggle dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
 											<i class="fa fa-navicon1"></i> <span>客户系统</span>
 											<span style="display: none" class="caret"></span>
 										</a>
@@ -234,8 +238,9 @@
 									</li>
 								</ul>
 								<!-- Tab panes -->
-								<div class="tab-content tab-border">
-									<div class="tab-pane fade active in" id="profileuser">
+								<div class="js-tab-content tab-content tab-border" style="border:0;">
+										<!--客户资料-->
+									<div class="js-tab-pane tab-pane fade active in" id="profileuser">
 										<h4>访问信息</h4>
 										<ul>
 											<li>
@@ -315,27 +320,29 @@
 										</ul>
 
 									</div>
-
-									<div class="tab-pane fade tab-home-yy" id="messagesuser">
+										<!--快捷回复-->
+									<div class="js-tab-pane tab-pane fade tab-home-yy" id="messagesuser">
 										<div class="rightQuick row">
-											<div class="col-md-4 col-xs-4 rightQuickLeft">
+											<div class="col-md-4 col-xs-4 rightQuickLeft js-rightQuickLeft">
 												<ul>
+
 												</ul>
 											</div>
-											<div class="col-md-8 col-xs-8 rightQuickRight">
+											<div class="col-md-8 col-xs-8 rightQuickRight js-rightQuickLRight">
 												<ul>
+												
 												</ul>
 											</div>
 										</div>
 										<div class="quickBtnP">
-											<a href="javascript:;" id="shortcut">
+											<a href="javascript:;" class="js-shortcut" id="shortcut">
 												<i class="fa fa-cog"></i>
 												<span>设置快捷回复内容</span>
 											</a>
 										</div>
 									</div>
-
-									<div class="tab-pane fade" id="homeuser">
+										<!--智能回复-->
+									<div class="js-tab-pane tab-pane fade" id="homeuser">
 										<p><input type="text" id="quickSerch" placeholder="搜索"><a href="javascript:;" id="quickSerchBtn">搜索</a></p>
 										<div class="homeUserBox">
 											<p class="robotHideBtn"><a href="javascript:;">&lt;返回</a></p>
@@ -351,7 +358,8 @@
 											</div>
 										</div>
 									</div>
-									<div class="tab-pane fade" id="clientSystem" style="padding: 0px">
+										<!--自定义菜单-->
+									<div class="js-tab-pane tab-pane fade" id="clientSystem" style="padding: 0px">
 										<iframe id="clientSysIframe" style="border:0;height:100%;width:100%" scrolling="show"></iframe>
 									</div>
 								</div>
@@ -632,7 +640,6 @@
         </div>
     </div> -->
 </div>
-
 
 
 <script src="assets/jslib/jquery-1.8.3.min.js"></script>

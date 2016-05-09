@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+    body{
+      margin: 0;
+      padding: 0;
+      font-family:"microsoft yahei";
+      font-size: 16px;
+    }
+    ul{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    #btn{
+      z-index: 100;
+    }
+      .zc-short-shadow{
+        margin: 0;
+        padding: 0;
+        width:100%;
+        height: 100%;
+        position: absolute;
+        background-color: #ddd;
+        opacity: 0.5;
+        z-index: 10000;
+      }
+    .zc-short-shadow  .content{
+        width:60%;
+        margin: 0 auto;
+        margin-top: 100px;
+      }
+      .zc-short-shadow .title{
+        width:100%;
+        height: 50px;
+        border-bottom: 1px solid #38bfbe;
+        line-height: 50px;
+        background: #f4fdfb;
+
+      }
+      .zc-short-shadow .title span{
+        margin-left: 10px;
+      }
+      .zc-short-shadow .title i{
+        display: block;
+        float: right;
+        margin-right: 20px;
+      }
+      .zc-short-shadow .quickContent{
+        width:100%;
+        height: 400px;
+        background-color: #fff;
+        position: relative;
+      }
+      .zc-short-shadow .quickContent .quickLeft{
+        float: left;
+        width: 35%;
+        height: 100%;
+        border-right: 1px solid #ccc;
+      }
+      .zc-short-shadow .quickContent .quickRight{
+        float: left;
+        width:64.8%;
+        height: 100%;
+      }
+      .zc-short-shadow .content .quickContent .leftContent{
+
+        width:100%;
+        height: 370px;
+        overflow: scroll;
+      }
+      .zc-short-shadow .content .quickContent .rightContent{
+
+        width:100%;
+        height: 370px;
+        overflow: scroll;
+      }
+      .zc-short-shadow .content .quickContent a{
+        position: absolute;;
+        bottom: 0;
+        display: inline-block;
+        height: 30px;
+        text-align: center;
+        color:#428bca;
+        text-decoration:none;
+        font-family: 'Armata', sans-serif;
+        line-height: 30px;
+        border-top: 1px solid #ccc;
+      }
+      .zc-short-shadow .content .quickContent .quickLeft a{
+          width:35%;
+      }
+      .zc-short-shadow .content .quickContent .quickRight a{
+          width:65%;
+      }
+      .zc-short-shadow .content .quickContent  ul li.active{
+          background-color: #ccc;
+      }
+      .zc-short-shadow .content .quickContent  ul li.activeLine{
+          background-color: #ccc;
+      }
+      .zc-short-shadow .content .quickContent  .detalBar input.active{
+        background-color: #ccc;
+      }
+      .zc-short-shadow .content .quickContent  .detalBar input.activeLine{
+        background-color: #ccc;
+      }
+        .zc-short-shadow .content .quickContent  .detalBar input{
+          display: inline-block;
+          width: 70%;
+          padding-left: 10px;
+          height: 30px;
+          font-size: 14px;
+          border: 0;
+        }
+        .zc-short-shadow .content .quickContent  .detalBar span{
+          display: none;
+          float: right;
+          margin-right: 10px;
+          font-size: 12px;
+          color:#38bfbe;
+          cursor: pointer;
+          line-height: 30px;
+        }
+        .zc-short-shadow .content .quickContent  .detalBar:hover span{
+            display: block;
+        }
+    </style>
+
+  </head>
+  <body>
+  <div class="zc-short-shadow">
+    <div class="content">
+        <div class="js-title title">
+        <span>快捷回复</span>
+        <i>X</i>
+        </div>
+        <div class="js-quickContent quickContent">
+          <div class="js-quickLeft quickLeft">
+            <div class="js-leftContent leftContent">
+              <ul>
+                <li class="detalBar" oData="t1">
+                  <input type="text" value="11111">
+                      <span>删除</span>
+                      <span>置顶</span>
+                </li>
+                <li class="detalBar" oData="t2">
+                  <input type="text" value="2222">
+                      <span>删除</span>
+                      <span>置顶</span>
+                </li>
+                <li class="detalBar" oData="t3">
+                  <input type="text" value="33333">
+                      <span>删除</span>
+                      <span>置顶</span>
+                </li>
+                <li class="detalBar" oData="t4">
+                  <input type="text" value="44444">
+                      <span>删除</span>
+                      <span>置顶</span>
+                </li>
+                <li class="detalBar" oData="t5">
+                  <input type="text" value="5555">
+                      <span>删除</span>
+                      <span>置顶</span>
+                </li>
+              </ul>
+            </div>
+            <a href="#" class="js-addNewGroup" id="addNewGroup">+添加新分组</a>
+          </div>
+          <div class="js-quickRight quickRight">
+            <div class="js-rightContent rightContent">
+              <ul>
+                <li class="detalBar" oData="3">
+                  <input type="text" value="33333">
+                      <span>删除</span>
+                      <span>置顶</span>
+                </li>
+                <li class="detalBar" oData="3">
+                  <input type="text" value="33333">
+                      <span>删除</span>
+                      <span>置顶</span>
+                </li>
+              </ul>
+            </div>
+            <a href="#" class="js-addNewRep" id="addNewRep">+添加新回复</a>
+          </div>
+        </div>
+    </div>
+  </div>
+  <button type="button" id="btn">弹 窗</button>
+  <script src="../../assets/jslib/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      //eg test::
+
+      var msg ={
+        t1:['aaaaaa','bbbbb','ccccc','ddddd','eeeeee'],
+        t2:['asdf','adf','adf','asdf','adsddd'],
+        t3:['234','234','23423','354','54435'],
+        t4:['9','6','1','2','4'],
+        t5:['1212','2323','3434','4545','5656'],
+        t6:['ttt','ttt']
+      };
+
+
+      var node = $('.zc-short-shadow');
+      /***/
+      var oLeftUl = $(node).find('.js-leftContent ul');
+      var oRightUl = $(node).find('.js-rightContent ul');
+      var oAddNewRep = $(node).find('.js-addNewRep');
+      var oAddNewGroup = $(node).find('.js-addNewGroup');
+      var oSpace= $(node).find('.js-title');
+      var oLeftInput = $(oLeftUl).find('input');
+      var oRightInput = $(oRightUl).find('input');
+        //添加左边分组
+        $(oAddNewGroup).on('click',function(){
+          var oListInput = $($(oLeftUl).find('li')[$(oLeftUl).find('li').length-1]);
+          console.log(oListInput);
+          if($(oLeftUl).find('li').length > 0){
+            if(!$(oListInput).find('input').val()){
+              $(oListInput).remove();
+            }else{
+              var oHtml = '<li class="detalBar"><input type="text" placeholder="请输入..." ><span onclick="onDel(this)">删除</span><span onclick="onUp(this)">置顶</span></li>';
+              $(oLeftUl).append(oHtml);
+              $(oLeftUl).find('input').focus();
+            }
+          }else{
+            var oHtml = '<li class="detalBar"><input type="text" placeholder="请输入..." ><span onclick="onDel(this)">删除</span><span onclick="onUp(this)">置顶</span></li>';
+            $(oLeftUl).append(oHtml);
+            $(oLeftUl).find('input').focus();
+          }
+        });
+
+        //添加右边回复
+        $(oAddNewRep).on('click',function(){
+            console.log('addNewRep');
+        });
+        //点击空白处
+        $(oSpace).on('click',function(evn){
+          //如果存在有未输入的input 则要删除
+          // console.log(evn);
+          var oListInput = $($(oLeftUl).find('li')[$(oLeftUl).find('li').length-1]);
+            if(!$(oListInput).find('input').val())$(oListInput).remove();
+        });
+        //TODO 左侧鼠标移动 背景
+        $(oLeftUl).on('mouseover','li',function(){
+            $(this).addClass('active').siblings('li').removeClass('active');
+            $(this).find('input').addClass('active').parent('li').siblings('li').find('input').removeClass('active');
+        })
+        //鼠标移出 背景
+        .on('mouseleave','li',function(){
+            $(this).removeClass('active');
+            $(this).find('input').removeClass('active').blur();
+        })
+        //鼠标点击事件
+        .on('click','li',function(){
+         $(this).addClass('activeLine').siblings('li').removeClass('activeLine');
+          $(this).find('input').addClass('activeLine').parent('li').siblings('li').find('input').removeClass('activeLine');
+
+          //清空右侧回复
+          $(oRightUl).find('li').remove('li');
+            for(var el in msg){
+              if($(this).attr('oData')==el){
+                  for(var i=0;i<msg[el].length;i++){
+                    var oRightHtml =  '<li class="detalBar"><input type="text" placeholder="请输入..." value="'+msg[el][i]+'" ><span onclick="onDetalDel(this)">删除</span><span onclick="onDetalUp(this)">置顶</span></li>';
+                    $(oRightUl).append(oRightHtml);
+                  }
+              }
+            }
+        });
+        //TODO 右侧鼠标移动
+        $(oRightUl).on('mouseover','li',function(){
+            $(this).addClass('active').siblings('li').removeClass('active');
+            $(this).find('input').addClass('active').parent('li').siblings('li').find('input').removeClass('active');
+        })
+        //鼠标移出 背景
+        .on('mouseleave','li',function(){
+            $(this).removeClass('active');
+            $(this).find('input').removeClass('active').blur();
+        });
+
+    })
+    //删除快捷分组
+    function onDel(that){
+      console.log(that);
+    };
+    //置顶快捷分组
+    function onUp(that){
+      var oLi = $(that).parent('li');
+      var oUl = $(that).parent('li').parent('ul');
+      $(oUl).prepend(oLi);
+    };
+
+  </script>
+  </body>
+</html>
