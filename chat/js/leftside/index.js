@@ -12,9 +12,8 @@ function LeftSide(node,core,window) {
     };
 
     var newUserMessage = function(data) {
-        var _html = doT.template(template.listItem)(data);
-        var li = $(_html);
-        $(node).find(".js-users-list").append(li);
+        var item = new Item(data,core,node);
+        console.log(item);
     };
     var onReceive = function(value,data) {
         switch(data.type) {
@@ -49,15 +48,6 @@ function LeftSide(node,core,window) {
                         var item = ret.userList[i];
                         chatItemList[item.cid] = new Item(item,core,node);
                     }
-                    setTimeout(function() {
-                        var count = 0;
-                        for(var el in chatItemList) {
-                            if(count > 0)
-                                break;
-                            count++;
-                            chatItemList[el].onOffLine();
-                        }
-                    },1000);
                 });
             } else {
                 var height = $(node).outerHeight();
@@ -71,7 +61,7 @@ function LeftSide(node,core,window) {
         var cid = $(elm).attr("data-cid");
         var dialog = new Alert({
             'title' : '提示',
-            'text' : '是否确认删除这个用户？',
+            'text' : '请确认顾客的问题已经解答，是否结束对话？',
             'OK' : function() {
                 chatItemList[cid].onRemove();
             }

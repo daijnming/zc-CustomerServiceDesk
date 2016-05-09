@@ -7,7 +7,8 @@ function Item(data,core,outer) {
     var node,
         $node;
     var global = core.getGlobal();
-    var loadFile = require('../util/load.js');
+    var baseUrl = global.baseUrl;
+    var loadFile = require('../util/load.js')();
     this.token = +new Date();
 
     var shake = function($elm) {
@@ -27,6 +28,18 @@ function Item(data,core,outer) {
         shake($statusText);
     };
     var onRemove = function() {
+        $.ajax({
+            'url' : '/chat/admin/leave.action',
+            'data' : {
+                'cid' : data.cid,
+                'uid' : global.id,
+                'userid' : data .uid
+            },
+            'type' : 'post',
+            'dataType' : "json"
+        }).success(function(ret) {
+            console.log(ret);
+        });
         $node.animate({
             'height' : 0
         },300, function() {
