@@ -36,7 +36,9 @@
 	<link href="css/webchat4.0.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/rightside.css" charset="utf-8">
 	<link href="css/webchat4_1.css" rel="stylesheet">
-	<link href="css/qqFace.css" rel="stylesheet">
+
+
+	<!-- 初始化emoji -->
 	<script src="http://cdn.bootcss.com/twemoji/1.4.1/twemoji.min.js"></script>
 </head>
 <body style="min-width: 1155px">
@@ -144,7 +146,7 @@
 		<div id="main-content">
 			<div class="container-fluid" >
 				<div class="row chatCont" id="chatlist">
-					<div class="col-md-8 col-xs-8 chat TextArea" style="padding: 0px;display:none;min-width: 575px" id="chat">
+					<div class="col-md-8 col-xs-8 chat" style="padding: 0px;min-width: 575px" id="chat">
 						<header class='clearfix'>
 							<span style="margin-left: 15px;cursor: pointer;color: #555459;font-weight: 900;float:left" class="chat_user_title"></span>
 							<!--<div class="addButton">-->
@@ -162,9 +164,7 @@
 							</div>
 
 						</header>
-						<div class="scrollBoxParent">
-							<div class="panel-body scrollBox">
-							</div>
+						<div class="scrollBoxParent js-online-panel-body">
 						</div>
 						<div  style="position:absolute; bottom:0px;width:100%" class="botTextBox">
 							<div class="uesrDivNow">
@@ -173,7 +173,7 @@
 							<p class="userTextNow"></p>
 	                        		<span class="faceButton" >
 	                        				<!--<i class="fa fa-meh-o face"  style="font-size: 20px"></i>-->
-										<i class="fa face faceIcon js-emotion" style="font-size:20px"></i>
+										<i class="fa face faceIcon" style="font-size:20px"></i>
 										<i id="maskFace"></i>
 									</span>
 									<span class="picButton" >
@@ -183,18 +183,8 @@
 
 									</span>
 							<textarea class="animatedTextArea form-control msg-send-input sendMessage" maxlength="1024"  placeholder="请输入.." style="resize: none;max-height: 54px;"  robot="other" ></textarea>
-								<div id="faceGroupTarea" style="display:none;">
-							     	
-							     	<div id="faceGroup" class="groupChildren"></div>
-								 	<div id="emojiGroup" class="groupChildren" style="display:none"></div>
-								 	<ul class="GroupTab">
-							     		<li class="icoLi active" data-src="#faceGroup">qq表情</li>
-							     		<li class="icoLi" data-src="#emojiGroup">emoji</li>
-							     	</ul>
-							     </div>
 							<div><button   class="btnSend" id="btnSend" type="button">发送</button></div>
 						</div>
-						 
 					</div>
 					<div class="col-md-8 col-xs-8 chat" style="padding: 0px;display:none;min-width: 575px" id="hchat" >
 						<header class='clearfix'>
@@ -649,10 +639,12 @@
         </div>
     </div> -->
 </div>
+
+
 <script src="assets/jslib/jquery-1.8.3.min.js"></script>
-<script src="assets/jslib/mustache.min.js"></script>
 <script src="js/lib/doT.min.js"></script>
 <script src="dest/js/entrance.js"></script>
+
 <!-- <script src="js/quickReply.js?v=20150828"></script> -->
 </body>
 </html>
