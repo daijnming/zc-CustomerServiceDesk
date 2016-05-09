@@ -13,12 +13,22 @@ function LeftSide(node,core,window) {
 
     var newUserMessage = function(data) {
         var item = new Item(data,core,node);
-        console.log(item);
+        chatItemList[data.cid] = item;
+    };
+
+    var userOfflineMessage = function(data) {
+        var cid = data.cid;
+        if(chatItemList[cid]) {
+            chatItemList[cid].onOffLine();
+        }
     };
     var onReceive = function(value,data) {
         switch(data.type) {
             case 102:
                 newUserMessage(data);
+                break;
+            case 108:
+                userOfflineMessage(data);
                 break;
         }
     };

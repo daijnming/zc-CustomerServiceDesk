@@ -1,6 +1,6 @@
 {{ var item = it;}}
 <li titemle="{{=item.uname}}" class="user-list-item" data-cid="{{=item.cid}}">
-    <i class="icon {{=item.source_type || ''}} js-icon"> </i>
+    <i class="icon {{=item.source_type || ''}} js-icon"><span class="badge badge-red js-unread-count"></span></i>
     <div class="item-detail">
         <div class="uname" style="width: 230px;">
             {{=item.uname}}<span class="status js-status">[离线]</span></span>
