@@ -1,10 +1,11 @@
 {{ for(var i=0;i<it.list.length;i++) { }}
 {{ var item = it.list[i]; }}
-<li titemle="{{=item.uname}}" class="user-list-item">
-    <a href="javascript:;" class="user"  name="{{=item.uname}}" usource="0" data-uid="c8502966db3f40538794a4e9ab9a8c49">
-        <i class="icon {{=item.icon_type || ''}}">
-            <span class="newIcon"></span>
-        </i><span class="uname" style="width: 230px;">{{=item.uname}}</span><span class="lastMsg"><span style="color:#ffad01">sfsad</span></span><span class="badge badge-red msg-count"></span><i class="user-del"  style="display: none;"><span class="newIcon"></span></i><span class="ohide">{{=item.uname}}</span></a>
+<li titemle="{{=item.uname}}" class="user-list-item" data-cid="{{=item.cid}}">
+<i class="icon {{=item.source_type || ''}} js-icon">
+</i>
+<div class="item-detail">
+<div class="uname" style="width: 230px;">{{=item.uname}}<span class="status js-status">[离线]</span></span></div><span class="chat-detail orange">dsfasfasfasfsfd</span><i class="user-del js-remove"  data-cid="{{=item.cid}}"><span class="newIcon"></span></i>
+</div>
 </li>
 
 {{ } }}
