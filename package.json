@@ -13,7 +13,7 @@
   "author": "sobot_fe",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-notify": "^2.2.0",
     "gulp-watch": "^4.3.5",
