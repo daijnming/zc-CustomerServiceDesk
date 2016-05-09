@@ -8435,7 +8435,13 @@ hr.footer-border {
 
 
 .tab-content{
-    background: #f7fafa;
+   
+}
+#left-navigation .tab-content{
+    height:100%;    
+}
+#left-navigation .tab-content .noOnline{
+    height:100%;
 }
 .tab-border.tab-content{
     border-bottom: 1px solid #e3dfd8;

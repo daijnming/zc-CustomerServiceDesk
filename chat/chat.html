@@ -34,9 +34,8 @@
 	<link href="assets/css/responsive.css" rel="stylesheet">
 	<link href="css/webchat.css?v=151027" rel="stylesheet">
 	<link href="css/webchat4.0.css" rel="stylesheet">
-
-
-	<!-- 初始化emoji -->
+	<link href="css/webchat4_1.css" rel="stylesheet">
+	<link href="css/qqFace.css" rel="stylesheet">
 	<script src="http://cdn.bootcss.com/twemoji/1.4.1/twemoji.min.js"></script>
 </head>
 <body style="min-width: 1155px">
@@ -94,57 +93,57 @@
 					<li class="" style="float: right;"><a href="#0"  > 历史记录</a></li>
 					<li class="hide"><a href="#blacklist"  > 来访客户</a></li>
 				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active leftScroll"  id="chatonline">
-						<ul id="users" class="js-users-list"></ul>
-						<ul id="offlineUser"></ul>
-					</div>
-					<div class="tab-pane " id="history" style="overflow-y: hidden; outline: none;  padding: 0px; ">
-						<div class="radio-inline radio-box-yy">
-							<label class="radio-inline"  >
-								<div class="c-redio c-redio-noActive" id="optionsRadios3" value="1" ></div>
-								<!-- <input type="radio" name="utypeRadios" id="optionsRadios3" value="1"  > -->
-								<span>全部</span>
-							</label>
-							<label class="radio-inline"  >
-								<div class="c-redio c-redio-noActive" id="optionsRadios3" value="2" ></div>
-								<!-- <input type="radio" name="utypeRadios" id="optionsRadios4" value="2"  > -->
-								星标
-							</label>
-							<label class="radio-inline"  >
-								<div class="c-redio c-redio-noActive" id="optionsRadios3" value="3" ></div>
-								<!-- <input type="radio" name="utypeRadios" id="optionsRadios5" value="3"  > -->
-								黑名单
-							</label>
-						</div>
-						<div id="historylist" class="leftScroll" tabindex="1">
-							<ul id="historyusers" style="border-top: 0px solid #ddd;">
-								<li id="historyuser_267yhw37">
-									<a href="javascript:;" class="user" cid="267yhw37" name="yhw37" uid="267yhw37">
-										<i class="fa fa-laptop"></i>
-										<span class="uname">yhw37</span>
-										<span class="badge" style="right: 0px;background: transparent;">[10:42]</span>
-										<span class="ohide">yhw37</span>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="tab-pane leftScroll" id="blacklist" style="overflow-y: hidden; outline: none;  ">
-						<ul id="blackusers">
-						</ul>
-					</div>
-
-				</div>
 			</li>
 		</ul>
+		<div class="tab-content">
+                    <div class="tab-pane active leftScroll js-chatonline"  id="chatonline">
+                        <ul id="users" class="js-users-list"></ul>
+                        <ul id="offlineUser"></ul>
+                    </div>
+                    <div class="tab-pane " id="history" style="overflow-y: hidden; outline: none;  padding: 0px; ">
+                        <div class="radio-inline radio-box-yy">
+                            <label class="radio-inline"  >
+                                <div class="c-redio c-redio-noActive" id="optionsRadios3" value="1" ></div>
+                                <!-- <input type="radio" name="utypeRadios" id="optionsRadios3" value="1"  > -->
+                                <span>全部</span>
+                            </label>
+                            <label class="radio-inline"  >
+                                <div class="c-redio c-redio-noActive" id="optionsRadios3" value="2" ></div>
+                                <!-- <input type="radio" name="utypeRadios" id="optionsRadios4" value="2"  > -->
+                                星标
+                            </label>
+                            <label class="radio-inline"  >
+                                <div class="c-redio c-redio-noActive" id="optionsRadios3" value="3" ></div>
+                                <!-- <input type="radio" name="utypeRadios" id="optionsRadios5" value="3"  > -->
+                                黑名单
+                            </label>
+                        </div>
+                        <div id="historylist" class="leftScroll" tabindex="1">
+                            <ul id="historyusers" style="border-top: 0px solid #ddd;">
+                                <li id="historyuser_267yhw37">
+                                    <a href="javascript:;" class="user" cid="267yhw37" name="yhw37" uid="267yhw37">
+                                        <i class="fa fa-laptop"></i>
+                                        <span class="uname">yhw37</span>
+                                        <span class="badge" style="right: 0px;background: transparent;">[10:42]</span>
+                                        <span class="ohide">yhw37</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane leftScroll" id="blacklist" style="overflow-y: hidden; outline: none;  ">
+                        <ul id="blackusers">
+                        </ul>
+                    </div>
+
+                </div>
 	</section>
 
 	<section id="min-wrapper">
 		<div id="main-content">
 			<div class="container-fluid" >
 				<div class="row chatCont" id="chatlist">
-					<div class="col-md-8 col-xs-8 chat" style="padding: 0px;display:none;min-width: 575px" id="chat">
+					<div class="col-md-8 col-xs-8 chat TextArea" style="padding: 0px;display:none;min-width: 575px" id="chat">
 						<header class='clearfix'>
 							<span style="margin-left: 15px;cursor: pointer;color: #555459;font-weight: 900;float:left" class="chat_user_title"></span>
 							<!--<div class="addButton">-->
@@ -173,7 +172,7 @@
 							<p class="userTextNow"></p>
 	                        		<span class="faceButton" >
 	                        				<!--<i class="fa fa-meh-o face"  style="font-size: 20px"></i>-->
-										<i class="fa face faceIcon" style="font-size:20px"></i>
+										<i class="fa face faceIcon js-emotion" style="font-size:20px"></i>
 										<i id="maskFace"></i>
 									</span>
 									<span class="picButton" >
@@ -183,8 +182,18 @@
 
 									</span>
 							<textarea class="animatedTextArea form-control msg-send-input sendMessage" maxlength="1024"  placeholder="请输入.." style="resize: none;max-height: 54px;"  robot="other" ></textarea>
+								<div id="faceGroupTarea" style="display:none;">
+							     	
+							     	<div id="faceGroup" class="groupChildren"></div>
+								 	<div id="emojiGroup" class="groupChildren" style="display:none"></div>
+								 	<ul class="GroupTab">
+							     		<li class="icoLi active" data-src="#faceGroup">qq表情</li>
+							     		<li class="icoLi" data-src="#emojiGroup">emoji</li>
+							     	</ul>
+							     </div>
 							<div><button   class="btnSend" id="btnSend" type="button">发送</button></div>
 						</div>
+						 
 					</div>
 					<div class="col-md-8 col-xs-8 chat" style="padding: 0px;display:none;min-width: 575px" id="hchat" >
 						<header class='clearfix'>
@@ -632,15 +641,10 @@
         </div>
     </div> -->
 </div>
-
-
-
 <script src="assets/jslib/jquery-1.8.3.min.js"></script>
 <script src="assets/jslib/mustache.min.js"></script>
-
 <script src="js/lib/doT.min.js"></script>
 <script src="dest/js/entrance.js"></script>
-
 <!-- <script src="js/quickReply.js?v=20150828"></script> -->
 </body>
 </html>
