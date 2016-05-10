@@ -12,7 +12,6 @@ var FastMsgModal =function(node,core,window) {
 	var FastLayer = require('./fastLayer.js');
 
 	var config = {};//封装数据
-
   //TODO 预加载对象
 	var oShortcut;//快捷回复
 	var oRightQuickLeft;//快捷回复左侧列表

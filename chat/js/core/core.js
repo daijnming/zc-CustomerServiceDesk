@@ -6,7 +6,9 @@ function Core(window) {
     var Promise = require('../util/promise.js');
     var socket;
     var global = {};
-
+    var TYPE_EMOTION = 0,
+        TYPE_IMAGE = 1,
+        TYPE_TEXT = 2;
     var basicInfoHandler = function(value,promise) {
         token = value.token || window.sessionStorage.getItem('temp-id');
         promise.resolve({});
@@ -93,6 +95,35 @@ function Core(window) {
         });
     };
 
+    var normalMessageAdapter = function(value) {
+        var content = value.content;
+        var reg = /src=['"](.*?)['"]/;
+        if(content.indexOf("<img") >= 0) {
+            if(content.indexOf("webchat_img_face") >= 0) {
+                value.message_type = TYPE_EMOTION;
+                value.desc = '[表情]';
+            } else if(content.indexOf("webchat_img_upload") >= 0) {
+                value.message_type = TYPE_IMAGE;
+                value.desc = '[图片]';
+            }
+            if(reg.test(content)) {
+                value.url = RegExp.$1;
+            }
+        } else if(content.indexOf("<audio") >= 0) {
+        } else {
+            value.message_type = TYPE_TEXT;
+            value.desc = content;
+        }
+    };
+    var messageAdapter = function(list) {
+        for(var i = 0,
+            len = list.length;i < len;i++) {
+            var value = list[i];
+            if(value.type === 103) {
+                normalMessageAdapter(value);
+            }
+        }
+    };
     var getGlobal = function() {
         return global;
     };
@@ -110,8 +141,9 @@ function Core(window) {
             socket = new polling(global);
         }
 
-        socket.on("receive", function(value) {
-            $(document.body).trigger('core.receive',value);
+        socket.on("receive", function(list) {
+            messageAdapter(list);
+            $(document.body).trigger('core.receive',[list]);
         });
     };
 
