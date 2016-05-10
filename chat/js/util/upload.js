@@ -1,10 +1,4 @@
-/**
- * AJAX Upload ( http://valums.com/ajax-upload/ )
- * Copyright (c) Andrew Valums
- * Licensed under the MIT license
- */
-(function () {
-    /**
+    /**create by daijm
      * Attaches event to a dom element.
      * @param {Element} el
      * @param type event name
@@ -22,16 +16,16 @@
         }
     }
 
-    /**
-     * Attaches resize event to a window, limiting
-     * number of event fired. Fires only when encounteres
-     * delay of 100 after series of events.
-     *
-     * Some browsers fire event multiple times when resizing
-     * http://www.quirksmode.org/dom/events/resize.html
-     *
-     * @param fn callback This refers to the passed element
-     */
+    /* *
+        *将调整大小调整到窗口，限制
+        *事件数。只有当遇到火灾
+        * 100系列事件后的延迟。
+        *
+        *一些浏览器火灾事件多次调整
+        * http://www.quirksmode.org/dom/events/resize.html
+        *
+        * @param FN回调这是指通过元
+        */
     function addResizeEvent(fn){
         var timeout;
 
@@ -163,8 +157,8 @@
     })();
 
     /**
-     * Function generates unique id
-     * @return unique id
+*函数产生的唯一的ID
+* @return独特的ID
      */
     var getUID = (function(){
         var id = 0;
@@ -173,20 +167,20 @@
         };
     })();
 
-    /**
-     * Get file name from path
-     * @param {String} file path to file
-     * @return filename
-     */
+   /**
+    *从路径获取文件名
+    * @param { }文件路径字符串的文件
+    *返回文件名
+    */
     function fileFromPath(file){
         return file.replace(/.*(\/|\\)/, "");
     }
 
-    /**
-     * Get file extension lowercase
-     * @param {String} file name
-     * @return file extenstion
-     */
+    /* *
+    *获得文件扩展名
+    * @param { }文件名的字符串
+    * @返回文件扩展
+    */
     function getExt(file){
         return (-1 !== file.indexOf('.')) ? file.replace(/.*[.]/, '') : '';
     }
@@ -209,64 +203,65 @@
         el.parentNode.removeChild(el);
     }
 
-    /**
-     * Easy styling and uploading
-     * @constructor
-     * @param button An element you want convert to
-     * upload button. Tested dimentions up to 500x500px
-     * @param {Object} options See defaults below.
-     */
+   /**
+    *简单的造型和上传
+    * @构造函数
+    * @param按钮元素你想转换
+    *上传按钮。测试维度上500x500px
+    * @param {对象}选项默认下面看。
+    */
     var AjaxUpload = function(button, options){
         this._settings = {
-            // Location of the server-side upload script
+            // 服务器端上传脚本的位置
             action: 'upload.php',
-            // File upload name
+            // 上传文件的名称
             name: 'userfile',
-            // Select & upload multiple files at once FF3.6+, Chrome 4+
+            // 选择和上传多个文件一次ff3.6 +，Chrome 4 +
             multiple: false,
-            // Additional data to send
+            // 发送附加数据
             data: {},
-            // Submit file as soon as it's selected
+            //提交文件，只要它的选择
             autoSubmit: true,
-            // The type of data that you're expecting back from the server.
-            // html and xml are detected automatically.
-            // Only useful when you are using json data as a response.
-            // Set to "json" in that case.
+            // 你希望从服务器返回的数据类型。
+            //的HTML和XML的自动检测。
+            //唯一有用的当你使用JSON数据作为响应。
+            //设置为“json”那样的话。
             responseType: false,
-            // Class applied to button when mouse is hovered
+            // 类用于按钮时，鼠标悬停
             hoverClass: 'hover',
-            // Class applied to button when button is focused
+            // 类应用于按钮时，重点是
             focusClass: 'focus',
-            // Class applied to button when AU is disabled
+            // 当在类applied to按钮是残疾人
             disabledClass: 'disabled',
-            // When user selects a file, useful with autoSubmit disabled
-            // You can return false to cancel upload
+            //当用户选择一个文件，有用的autosubmit禁用
+            //你可以返回假以取消上传
             onChange: function(file, extension){
             },
-            // Callback to fire before file is uploaded
-            // You can return false to cancel upload
+            //在文件上传之前，回火
+            //你可以返回假以取消上传
             onSubmit: function(file, extension){
             },
-            // Fired when file upload is completed
-            // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
+            // 当文件上传完成时触发
+            //警告！不要使用“假”字符串作为响应！
             onComplete: function(file, response){
             }
         };
 
-        // Merge the users options with our defaults
-        for (var i in options) {
+        //用户的默认选项以及合并 
+
+        for (var i in options) { 
             if (options.hasOwnProperty(i)){
                 this._settings[i] = options[i];
             }
         }
 
-        // button isn't necessary a dom element
+        // 按钮不需要一个DOM元素
         if (button.jquery){
             // jQuery object was passed
             button = button[0];
         } else if (typeof button == "string") {
             if (/^#.*/.test(button)){
-                // If jQuery user passes #elementId don't break it
+                //如果jQuery用户通过# elementid不要打破它
                 button = button.slice(1);
             }
 
@@ -292,17 +287,17 @@
         this._button = button;
         // DOM element
         this._input = null;
-        // If disabled clicking on button won't do anything
+        //如果禁用按钮，就不会做任何事情
         this._disabled = false;
 
-        // if the button was disabled before refresh if will remain
-        // disabled in FireFox, let's fix it
+        // 如果按钮被禁用，刷新前，如果将继续
+        //在浏览器中禁用，让我们来解决它
         this.enable();
 
         this._rerouteClicks();
     };
 
-    // assigning methods to our class
+    // 分配方法 to our class
     AjaxUpload.prototype = {
         setData: function(data){
             this._settings.data = data;
@@ -388,10 +383,9 @@
                 if ( ! input || input.value === ''){
                     return;
                 }
-
-                // Get filename from input, required
-                // as some browsers have path instead of it
-                var file = fileFromPath(input.value);
+                //从输入获得文件名，要求
+                //一些浏览器有路径代替它
+                var file = fileFromPath(input.value);//获取文件名
 
                 if (false === self._settings.onChange.call(self, file, getExt(file))){
                     self._clearInput();
@@ -521,13 +515,12 @@
         _createForm: function(iframe){
             var settings = this._settings;
 
-            // We can't use the following code in IE6
-            // var form = document.createElement('form');
-            // form.setAttribute('method', 'post');
-            // form.setAttribute('enctype', 'multipart/form-data');
-            // Because in this case file won't be attached to request
+            //我们不能在IE6中使用以下代码
+            //无功表=文件。createElement（‘形’）；
+            //形式。setAttribute（表现'，'后'）；
+            //形式。setAttribute（'enctype”、“multipart/form-data”）；
+            //因为在这种情况下，文件不会被要求
             var form = toElement('<form method="post" enctype="multipart/form-data"></form>');
-
             form.setAttribute('action', settings.action);
             form.setAttribute('target', iframe.name);
             form.style.display = 'none';
@@ -545,11 +538,11 @@
             }
             return form;
         },
-        /**
-         * Gets response from iframe and fires onComplete event when ready
-         * @param iframe
-         * @param file Filename to use in onComplete callback
-         */
+       /* *
+        *和火灾时准备获取iframe oncomplete事件响应
+        * @param iframe
+        * @param文件的文件名中使用完全回调
+        */
         _getResponse : function(iframe, file){
             // getting response
             var toDeleteFlag = false, self = this, settings = this._settings;
@@ -636,7 +629,7 @@
             });
         },
         /**
-         * Upload file contained in this._input
+         * 在 this._input 上传文件
          */
         submit: function(){
             var self = this, settings = this._settings;
@@ -646,19 +639,19 @@
             }
 
             var file = fileFromPath(this._input.value);
-
-            // user returned false to cancel upload
+            console.log(file);
+            // 用户返回false 取消上传
             if (false === settings.onSubmit.call(this, file, getExt(file),this._input.files)){
                 this._clearInput();
                 return;
             }
 
-            // sending request
+            // 发送请求
             var iframe = this._createIframe();
             var form = this._createForm(iframe);
 
-            // assuming following structure
-            // div -> input type='file'
+           //assuming以下结构
+           //div > <input type=“file”
             removeNode(this._input.parentNode);
             removeClass(self._button, self._settings.hoverClass);
             removeClass(self._button, self._settings.focusClass);
@@ -671,17 +664,17 @@
             removeNode(form); form = null;
             removeNode(this._input); this._input = null;
 
-            // Get response from iframe and fire onComplete event when ready
+            //从iframe和fire oncomplete事件时准备响应
             this._getResponse(iframe, file);
 
-            // get ready for next request
+            //准备好下一个请求
             this._createInput();
         }
     };
 
 module.exports = AjaxUpload;
 
-})();
+
 
 
 

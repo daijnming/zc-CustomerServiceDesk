@@ -1,4 +1,7 @@
-//by daijm in 4/20/16
+/**
+ *
+ * @author daijm
+ */
 	var ZC_Face = {
 		initConfig:function(options,callback){//将表情集合预加载
 			var _this=this;
@@ -117,7 +120,7 @@
 		analysis:function(str){//将文本框内的表情字符转化为表情
 			var _this=this;
 			var icoAry=str.match(_this.reg);//将匹配到的结果放到icoAry这个数组里面，来获取长度
-
+			
 			if(icoAry){
 				for(var i=0;i<icoAry.length;i++){
 					var ico=_this.reg2.exec(str);//重新匹配到第一个符合条件的表情字符
@@ -129,7 +132,7 @@
 			return str
 		},
 		hasEmotion:function(str){//将文本框内的表情字符转化为表情
-			console.log(str);
+			//console.log(str);
 			return this.reg.test(str) || this.emojiReg.test(str);
 		}
 	};
