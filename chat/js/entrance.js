@@ -1,7 +1,6 @@
 (function(node) {
     var core = require('./Core/core.js')(window);
     var LeftSide = require('./leftside/index.js');
-    var RightSide = require('./rightside/index.js');
     var TextArea = require('./textarea/index.js');
     var ChatList = require('./chatlist/index.js');
     var Promise = require('./util/promise.js');

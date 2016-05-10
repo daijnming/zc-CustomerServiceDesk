@@ -56,7 +56,7 @@ function TextArea(node,core,window){
 
     var initPlugsin = function() {//插件
 				initFace();
-				uploadImg();
+				uploadFile();
     };
 
 	var initFace = function(){
@@ -107,11 +107,67 @@ function TextArea(node,core,window){
 		// $('#faceBox').perfectScrollbar();//加载滚动条
 		// $('#emojiBox').perfectScrollbar();//加载滚动条
 	};
-	var uploadImg=function(){
-		 
-	 	$('.upload').click(function(){
-	 		console.log(upload);
-	 		upload.addResizeEvent();
+	var uploadFile=function(){console.log(111);
+		var uploadBtn=$(".js-upload");//btn
+	 	$(uploadBtn).click(function(){
+			uploadImg(uploadBtn);
+	 		function uploadImg(uploadBtn){
+
+				var uploadOption = {
+			        action: apihost+"webchat/fileupload.action",
+			        name: "file",
+			        autoSubmit: true,
+			        data:{
+			          type: "msg",
+			          countTag: 0
+			        },
+			        responseType:"JSONP",
+			        contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			        onChange: function (file, extension){
+			        	if(source==0){
+				        	if (!(extension && /^(jpg|JPG|png|PNG|gif|GIF|txt|TXT|DOC|doc|docx|DOCX|pdf|PDF|ppt|PPT|pptx|PPTX|xls|XLS|xlsx|XLSX|RAR|rar|zip|ZIP)$/.test(extension))) {
+				        		 $.amaran({
+				        	            content:{
+				        	                message:'格式不支持!',
+				        	                size:'请上传正确的文件格式',
+				        	                file:'',
+				        	                icon:'fa fa-times'
+				        	            },
+				        	            theme:'default error',
+				        	            position:'bottom right',
+				        	            inEffect:'slideRight',
+				        	            outEffect:'slideBottom'
+				        	       });
+				                return false;
+				            }
+			        	}else{
+			        		if (!(extension && /^(jpg|JPG|png|PNG|gif|GIF)$/.test(extension))) {
+				        		 $.amaran({
+				        	            content:{
+				        	                message:'图片格式不支持!',
+				        	                size:'请上传jpg/png/gif格式图片',
+				        	                file:'',
+				        	                icon:'fa fa-times'
+				        	            },
+				        	            theme:'default error',
+				        	            position:'bottom right',
+				        	            inEffect:'slideRight',
+				        	            outEffect:'slideBottom'
+				        	       });
+				                return false;
+				            }
+			        	}
+			        },
+			        onSubmit: function (file, extension, base64file){
+
+			        },
+			        onComplete: function (file,response) {
+
+			          
+			        }
+			      }
+			     new AjaxUpload(uploadBtn, uploadOption);
+			}
 	 	})
 
 	}
