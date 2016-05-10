@@ -28,7 +28,21 @@ function Item(data,core,outer) {
         }
     };
 
-    var onReceive = function(value) {
+    var onReceive = function(evt,list) {
+        for(var i = 0,
+            len = list.length;i < len;i++) {
+            var msg = list[i];
+            console.log(msg);
+            if(msg.cid !== data.cid || msg.type != 103) {
+                continue;
+            }
+            unReadCount++;
+        }
+        var lastMessage = list.length > 0 ? list[list.length - 1] : null;
+        $unRead.html(unReadCount).css({
+            'visibility' : 'visible'
+        });
+        $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
     };
     var onOffLine = function() {
         $node.find(".js-icon").addClass("offline");
@@ -59,9 +73,18 @@ function Item(data,core,outer) {
         });
     };
 
+    var onOnline = function() {
+        status = 'online';
+        var $statusText = $node.find(".js-status");
+        $node.find(".js-icon").removeClass("offline");
+        $statusText.css({
+            'display' : 'none'
+        }).html('[离线]');
+    };
+
     var initNode = function() {
         var promise = new Promise();
-        var elm = $(outer).find('li[data-cid="' + data.cid + '"]');
+        var elm = $(outer).find('li[data-uid="' + data.uid + '"]');
         if(elm.length > 0) {
             node = elm[0];
             $node = $(node);
@@ -100,21 +123,7 @@ function Item(data,core,outer) {
         });
     };
     var bindListener = function() {
-        $body.on("core.receive", function(evt,list) {
-            for(var i = 0,
-                len = list.length;i < len;i++) {
-                var msg = list[i];
-                if(msg.cid !== data.cid) {
-                    return;
-                }
-                unReadCount++;
-            }
-            var lastMessage = list.length > 0 ? list[list.length - 1] : null;
-            $unRead.html(unReadCount).css({
-                'visibility' : 'visible'
-            });
-            $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
-        });
+        $body.on("core.receive",onReceive);
         $node.on("click", function() {
             clearUnread();
             $node.addClass("active").siblings().removeClass("active");
@@ -135,6 +144,8 @@ function Item(data,core,outer) {
     initNode().then(function() {
         init();
     });
+
+    this.onOnline = onOnline;
     this.getStatus = getStatus;
     this.onRemove = onRemove;
     this.onOffLine = onOffLine;

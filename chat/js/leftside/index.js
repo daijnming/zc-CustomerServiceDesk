@@ -24,8 +24,7 @@ function LeftSide(node,core,window) {
         var status = $(elm).attr("data-status");
         $statusMenu.removeClass("active");
         var url = URLLIST[status];
-        console.log(url,status);
-        if(status < 2) {
+        if(status <= 2 && status > 0) {
             $.ajax({
                 'url' : url,
                 'type' : 'POST',
@@ -34,14 +33,12 @@ function LeftSide(node,core,window) {
                     'uid' : global.id
                 }
             }).success(function(ret) {
-                console.log(STATUSIMAGELIST[status]);
                 $statusImage.attr("src",STATUSIMAGELIST[status]);
             });
         }
     };
 
     var onReceive = function(value,list) {
-
     };
 
     var onloadHandler = function(evt,data) {
