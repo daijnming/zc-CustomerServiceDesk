@@ -14,7 +14,7 @@
 		'title':'aaaa'
 	});
 	dialog.setInner();
-	dialog.show();
+	//dialog.show();
   //TODO 预加载对象
 	var oShortcut;//快捷回复
 	var oShadowRep;//快捷回复弹窗

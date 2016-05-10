@@ -7,7 +7,7 @@ function Alert(spec) {
     var _self = this;
     var conf = $.extend({
         'text' : 'TEXT',
-        'info' : 'info',
+        'info' : '',
         "OK" : function(dialog) {
         }
     },spec);
