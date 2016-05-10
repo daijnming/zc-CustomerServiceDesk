@@ -14,6 +14,7 @@ function Item(data,core,outer) {
     var $ulOuter;
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
+    var Promise = require('../util/promise.js');
     var USOURCE = ['laptop','','','','mobile'];
     this.token = +new Date();
 
@@ -58,15 +59,22 @@ function Item(data,core,outer) {
     };
 
     var initNode = function() {
+        var promise = new Promise();
         var elm = $(outer).find('li[data-cid="' + data.cid + '"]');
         if(elm.length > 0) {
             node = elm[0];
             $node = $(node);
+            setTimeout(function() {
+                promise.resolve();
+            },0);
         } else {
             loadFile.load(global.baseUrl + "views/leftside/chatitem.html").then(function(value) {
                 data['source_type'] = USOURCE[data.usource];
                 var _html = doT.template(value)(data);
                 $node = $(_html);
+                if(!$ulOuter) {
+                    $ulOuter = $(outer).find("ul.js-users-list");
+                }
                 var children = $ulOuter.children();
                 if(children.length == 0) {
                     $ulOuter.append($node);
@@ -74,10 +82,18 @@ function Item(data,core,outer) {
                     var elm = children[0];
                     $node.insertBefore(elm);
                 }
+                promise.resolve();
             });
         }
+        return promise;
     };
 
+    var clearUnread = function() {
+        unReadCount = 0;
+        $unRead.html('').css({
+            'visibility' : 'hidden'
+        });
+    };
     var bindListener = function() {
         $body.on("core.receive", function(evt,list) {
             for(var i = 0,
@@ -89,26 +105,31 @@ function Item(data,core,outer) {
                 unReadCount++;
             }
             var lastMessage = list.length > 0 ? list[list.length - 1] : null;
-            console.log($lastMessage)
             $unRead.html(unReadCount).css({
                 'visibility' : 'visible'
             });
             $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
         });
+        $node.on("click", function() {
+            clearUnread();
+            $node.addClass("active").siblings().removeClass("active");
+            $(document.body).trigger("leftside.onselected",[data]);
+        });
     };
     var parseDOM = function() {
-        initNode();
         $body = $(document.body);
         $unRead = $node.find(".js-unread-count");
         $ulOuter = $(outer).find("ul.js-users-list");
         $lastMessage = $node.find(".js-last-message");
+
     };
     var init = function() {
         parseDOM();
         bindListener();
     };
-
-    init();
+    initNode().then(function() {
+        init();
+    });
 
     this.onRemove = onRemove;
     this.onOffLine = onOffLine;

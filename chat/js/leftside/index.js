@@ -22,14 +22,18 @@ function LeftSide(node,core,window) {
             chatItemList[cid].onOffLine();
         }
     };
-    var onReceive = function(value,data) {
-        switch(data.type) {
-            case 102:
-                newUserMessage(data);
-                break;
-            case 108:
-                userOfflineMessage(data);
-                break;
+    var onReceive = function(value,list) {
+        for(var i = 0,
+            len = list.length;i < len;i++) {
+            var data = list[i];
+            switch(data.type) {
+                case 102:
+                    newUserMessage(data);
+                    break;
+                case 108:
+                    userOfflineMessage(data);
+                    break;
+            }
         }
     };
 
