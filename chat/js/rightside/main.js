@@ -18,8 +18,9 @@ function RightSide(node,core,window) {
 
   //TODO 模板/js/资源引用
 	// var template = require('./template.js');
-  require('./profileuser/index.js');
-  require('./messagesuser/index.js');
+  var profileuser =  require('./profileuser/index.js');
+  var messageUser =  require('./messagesuser/index.js');
+
 
 	var parseDOM = function() {
     tabSwitchBtn = $(node).find('.js-panel-body ul.js-nav-tabs');
@@ -67,12 +68,12 @@ function RightSide(node,core,window) {
 	var bindLitener = function() {
 		// $(document.body).on("RightSide.onload",onloadHandler);
 		// $(document.body).on("RightSide.receive",onReceive);
-    $(window).on('load',onloadHandler);
+    $(window).on('core.onload',onloadHandler);
     $(tabSwitchBtn).on('click','li',onTopWrapClick);
 	};
 
 	var initPlugsin = function() {
-
+        messageUser(node,core,window);
 	};
 
 	var init = function() {
@@ -81,7 +82,9 @@ function RightSide(node,core,window) {
 		initPlugsin();
 	};
 
-	init();
+	$(document.body).on("core.onload",function(evt){
+      init();
+  });
 }
 
 module.exports = RightSide;

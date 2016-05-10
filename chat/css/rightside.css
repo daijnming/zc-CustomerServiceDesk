@@ -6,74 +6,43 @@ ul{
 #btn{
   z-index: 100;
 }
-  .zc-short-shadow{
-    margin: 0;
-    padding: 0;
+.shadowLayer.content{
     width:100%;
     height: 100%;
-    position: fixed;;
-    background-color: #999;
-    opacity: 0;
-    z-index: 10000;
-    top:0;
-    left:0;
-    display: none;
-  }
-  .zc-short-shadow.active{
-    display: block;
-  }
-.zc-short-shadow  .content{
-    width:60%;
     margin: 0 auto;
-    margin-top: 100px;
+    background-color: #ddd;
+    text-align: left;
   }
-  .zc-short-shadow .title{
-    width:100%;
-    height: 50px;
-    border-bottom: 1px solid #38bfbe;
-    line-height: 50px;
-    background: #f4fdfb;
-
-  }
-  .zc-short-shadow .title span{
-    margin-left: 10px;
-  }
-  .zc-short-shadow .title i{
-    display: block;
-    float: right;
-    margin-right: 20px;
-  }
-  .zc-short-shadow .quickContent{
+  .shadowLayer.content .quickContent{
     width:100%;
     height: 400px;
     background-color: #fff;
     position: relative;
   }
-  .zc-short-shadow .quickContent .quickLeft{
+  .shadowLayer.content .quickContent .quickLeft{
     float: left;
     width: 35%;
     height: 100%;
     border-right: 1px solid #ccc;
   }
-  .zc-short-shadow .quickContent .quickRight{
+  .shadowLayer.content .quickContent .quickRight{
     float: left;
     width:64.8%;
     height: 100%;
   }
-  .zc-short-shadow .content .quickContent .leftContent{
+  .shadowLayer.content .quickContent .leftContent{
 
     width:100%;
     height: 370px;
     overflow: scroll;
   }
-  .zc-short-shadow .content .quickContent .rightContent{
+  .shadowLayer.content .quickContent .rightContent{
 
     width:100%;
     height: 370px;
     overflow: scroll;
   }
-  .zc-short-shadow .content .quickContent a{
-    position: absolute;;
+  .shadowLayer.content .quickContent a{
     bottom: 0;
     display: inline-block;
     height: 30px;
@@ -84,38 +53,36 @@ ul{
     line-height: 30px;
     border-top: 1px solid #ccc;
   }
-  .zc-short-shadow .content .quickContent .quickLeft a{
-      width:35%;
+  .shadowLayer.content .quickContent  a{
+      width:100%;
   }
-  .zc-short-shadow .content .quickContent .quickRight a{
-      width:65%;
-  }
-  .zc-short-shadow .content .quickContent  ul li.active{
+  .shadowLayer.content .quickContent  ul li.active{
       background-color: #ccc;
   }
-  .zc-short-shadow .content .quickContent  ul li.activeLine{
+  .shadowLayer.content .quickContent  ul li.activeLine{
       background-color: #ccc;
   }
-  .zc-short-shadow .content .quickContent  .detalBar input.active{
+  .shadowLayer.content .quickContent  .detalBar input.active{
     background-color: #ccc;
   }
-  .zc-short-shadow .content .quickContent  .detalBar input.activeLine{
+  .shadowLayer.content .quickContent  .detalBar input.activeLine{
     background-color: #ccc;
   }
-    .zc-short-shadow .content .quickContent  .leftContent .detalBar input{
+    .shadowLayer.content .quickContent  .leftContent .detalBar input{
       width: 65%;
     }
-    .zc-short-shadow .content .quickContent  .rightContent .detalBar input{
+    .shadowLayer.content .quickContent  .rightContent .detalBar input{
       width:80%;
     }
-    .zc-short-shadow .content .quickContent  .detalBar input{
+    .shadowLayer.content .quickContent  .detalBar input{
       display: inline-block;
       padding-left: 10px;
       height: 30px;
       font-size: 14px;
       border: 0;
+      outline: none;
     }
-    .zc-short-shadow .content .quickContent  .detalBar span{
+    .shadowLayer.content .quickContent  .detalBar span{
       display: none;
       float: right;
       margin-right: 10px;
@@ -124,9 +91,9 @@ ul{
       cursor: pointer;
       line-height: 30px;
     }
-    .zc-short-shadow .content .quickContent  .detalBar:hover span{
+    .shadowLayer.content .quickContent  .detalBar:hover span{
         display: block;
     }
-    .zc-short-shadow .content .quickContent  .rightContent li.detalBar.hide{
+    .shadowLayer.content .quickContent  .rightContent li.detalBar.hide{
       display: none;
     }
