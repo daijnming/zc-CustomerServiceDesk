@@ -1,6 +1,7 @@
 
-var Fastlayer = function(nodes,core,config){
+var Fastlayer = function(node,core,config){
 
+  // event();
   //TODO 规定
   /*
   * 没有特殊意义
@@ -8,8 +9,6 @@ var Fastlayer = function(nodes,core,config){
   * 所有 function onXX = function(){} 均是在方法内部引用执行
   */
     var global = core.getGlobal();
-    var loadFile = require('../../util/load.js')();
-    var Dialog = require('../../util/modal/dialog.js');
     //参数
     var fastData = config.fastData;
     var id = config.id;
@@ -32,14 +31,11 @@ var Fastlayer = function(nodes,core,config){
     var oDialogArea;//弹出层
 
     //TODO 模板/js/资源引用
-  	// var template = require('./template.js');
 
   	var parseDOM = function() {
-      if(nodes){
-        loadNode = nodes[0];
-        fastNode = nodes[1];
-      }
+      fastNode = node;
       oFastLeft = $(fastNode).find('.js-leftContent ul');
+
       oFastRight = $(fastNode).find('.js-rightContent ul');
       oAddNewGroup = $(fastNode).find('.js-addNewGroup');
       oAddNewRep = $(fastNode).find('.js-addNewRep');
@@ -215,45 +211,8 @@ var Fastlayer = function(nodes,core,config){
     //
     // };
     //初始化数据
-    var tempInit = function(){
-      loadFile.load(global.baseUrl+"views/rightside/fastreply.html").then(function(value){
-
-            var _html = doT.template(value)({
-              'list':fastData
-            });
-            var dialog = new Dialog({
-              'title':'快捷回复',
-              'footer':false
-            });
-            dialog.setInner(_html);
-            dialog.show();
-      });
-    };
   	var onloadHandler = function() {
       config.repBtnType = false;
-
-    //   for(var i=0;i<fastData.length;i++){
-    //     var oGLi =	'<li class="detalBar" gid="'
-    //     +fastData[i]["groupId"]+
-    //     '"><input utype="left" type="text"  value="'
-    //     +fastData[i]["groupName"]+
-    //     '" ><span class="delLeftGroup">删除</span><span class="upLeftGroup" >置顶</span></li>';
-    //
-    //     if(fastData[i]['quickreply'].length>0){
-    //       for(var j=0;j<fastData[i]['quickreply'].length;j++){
-    //           var oRLi =  '<li class="detalBar hide"  gid="'
-    //           +fastData[i]["quickreply"][j]["groupId"]+
-    //           '" qid="'
-    //           +fastData[i]["quickreply"][j]["id"]+
-    //           '"><input utype="right" type="text"  value="'
-    //           +fastData[i]["quickreply"][j]["value"]+
-    //           '" ><span class="delRightRep">删除</span><span class="upRightRep">置顶</span></li>';
-    //
-    //         $(oFastRight).append(oRLi);
-    //       }
-    //     }
-    //     $(oFastLeft).append(oGLi);
-  	// }
   };
 
   var onAddNewFast = function(evn){
@@ -271,30 +230,24 @@ var Fastlayer = function(nodes,core,config){
       clsUpName = 'upRightGroup';
       utype='right';
     }
-    var oListInput = $(obj).find('li')[$(obj).find('li').length-1];
+    var template = require('./template.js');
+    var conf = $.extend({
+        "utype" :utype,
+        "clsDelName" : clsDelName,
+        'clsUpName' : clsUpName
+    });
+      $layer = $(template.zcReplyOuter);
+      var _html = doT.template(template.zcReplyOuter)(conf);
+      var oListInput = $(obj).find('li')[$(obj).find('li').length-1];
     if($(obj).find('li').length > 0){
       if(!$(oListInput).find('input').val()){
         $(oListInput).remove();
       }else{
-        var oHtml = '<li class="detalBar"><input utype="'
-        +utype+
-        '" type="text" placeholder="请输入..." ><span class="'
-        +clsDelName+
-        '">删除</span><span class="'+
-        clsUpName+
-        '" >置顶</span></li>';
-        $(obj).append(oHtml);
+        $(obj).append(_html);
         // $(oFastLeft).find('input').focus();
       }
     }else{
-      var oHtml = '<li class="detalBar"><input utype="'
-      +utype+
-      '" type="text" placeholder="请输入..." ><span class="'
-      +clsDelName+
-      '" >删除</span><span class="'
-      +clsUpName+
-      '" >置顶</span></li>';
-      $(obj).append(oHtml);
+      $(obj).append(_html);
       // $(oFastLeft).find('input').focus();
     }
   };
@@ -443,17 +396,12 @@ var Fastlayer = function(nodes,core,config){
       $(oAddNewRep).on('click',onAddNewFast);
 
   	};
-
-  	var initPlugsin = function() {
-
-  	};
-
   	var init = function() {
   		parseDOM();
   		bindLitener();
-  		initPlugsin();
+
   	};
-    $(document.body).on('core.onload',init());
-  	// init();
+    // $(document.body).on('core.onload',init());
+  	init();
 };
 module.exports = Fastlayer;

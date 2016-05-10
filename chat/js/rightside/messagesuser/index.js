@@ -7,10 +7,12 @@ var FastMsgModal =function(node,core,window) {
 
 	var global = core.getGlobal();
 	//TODO 模板/js/资源引用
-	var Modal = require('../../util/modal/dialog.js');
 	var loadFile = require('../../util/load.js')();
 	var FastLayer = require('./fastLayer.js');
+	var Dialog = require('../../util/modal/dialog.js');
+	var Promise = require('../../util/promise.js');
 
+	var outer={};
 	var config = {};//封装数据
   //TODO 预加载对象
 	var oShortcut;//快捷回复
@@ -52,88 +54,75 @@ var FastMsgModal =function(node,core,window) {
 	};
 	//加载右侧快捷分组
 	var onRightGroup = function(data){
-		for(var i=0;i<data.length;i++){
-			var oGLi = '<li class="oTapGetRightRep" gid="'
-			+data[i]["groupId"]+
-			'">'
-			+data[i]["groupName"]+
-			'</li>';
-			if(data[i]['quickreply'].length>0){
-				for(var j=0;j<data[i]['quickreply'].length;j++){
-					var oRLi = '<li class="oRightRepToOut" style="word-wrap: break-word;" class="quickClick"  gid="'
-					+data[i]["quickreply"][j]["groupId"]+
-					'">'
-					+data[i]["quickreply"][j]["value"]+
-					'</li>';
-					$(oRightQuickRight).append(oRLi);
-				}
-			}
-			$(oRightQuickLeft).append(oGLi);
-		}
+		loadFile.load(global.baseUrl+'views/rightside/fastreplyleft.html').then(function(value){
+				var _html = doT.template(value)({
+					'list':data
+				});
+				$(oRightQuickLeft).append(_html);
+		});
+		loadFile.load(global.baseUrl+'views/rightside/fastreplyright.html').then(function(value){
+				var _html = doT.template(value)({
+					'list':data
+				});
+				$(oRightQuickRight).append(_html);
+		});
 	};
 	//初始化数据
-	var onloadHandler = function() {
-		var getQuickListUrl = "reply/replyGrouplist.action";
-		$.ajax({
-					type:"post",
-					cache:false,
-					// asynce:false,
-					data:{
-						'userId':config.id
-					},
-					url:getQuickListUrl,
-					dataType:"jsonp",
-					success:function(data){
-						config.fastData = data;
-						if(!data)
-						{
-								$(node).find('.js-rightQuickLeft ul').html('');
-								$(node).find('.js-rightQuickRight ul').html('');
-								return ;
-						}
-							onRightGroup(data);
-					}
-				}).then(function(){
-							FastLayer([node,oShadowLayer],core,config);
-				});
+	var initData = function(){
+		var promise =  new Promise();
+			var getQuickListUrl = "reply/replyGrouplist.action";
+			$.ajax({
+						type:"post",
+						cache:false,
+						data:{
+							'userId':config.id
+						},
+						url:getQuickListUrl,
+						dataType:"jsonp",
+						success:function(data){
+							config.fastData = data;
+							if(!data)
+							{
+									$(node).find('.js-rightQuickLeft ul').html('');
+									$(node).find('.js-rightQuickRight ul').html('');
+									return ;
+							}
+								loadFile.load(global.baseUrl+"views/rightside/fastreplylayer.html").then(function(value){
 
+											var _html = doT.template(value)({
+												'list':data
+											});
+											 outer.dialog = new Dialog({
+												'title':'快捷回复',
+												'footer':false
+											});
+											outer.dialog.setInner(_html);
+											outer.shadowNode = outer.dialog.getOuter();
+											promise.resolve();
+								});
+						}
+					});
+					return promise;
 	};
-	// var dialog = new Modal({
-	// 'title':'快捷回复',
-	// 'footer':false
-	// });
-	// loadFile.load(global.baseUrl+'views/rightside/fastreply.html').then(function(value){
-	// 	dialog.setInner(value);
-	// });
-	// dialog.show();
 	//弹出快捷回复
 	function onShortCutFun(){
-
-	// 	var dialog = new Modal({
-	// 	'title':'快捷回复',
-	// 	'footer':false
-	//  });
-	//  loadFile.load(global.baseUrl+'views/rightside/fastreply.html').then(function(value){
-	// 	dialog.setInner(value);
-	//  });
-	//  dialog.show();
-
+		FastLayer(outer.shadowNode,core,config);
+		outer.dialog.show();
 	}
+
 	var bindLitener = function() {
-		$(window).on('core.onload',onloadHandler);//加载load事件
 		$(oRightQuickLeft).on('click','li',onTapGetRightRep);
 		$(oRightQuickRight).on('click','li',onRightRepToOut);
 		$(oShortcut).on('click',onShortCutFun);//点击快捷回复
-	};
-	var initPlugsin = function() {
-		// FastLayer([node,oShadowLayer],core,config);
+		onRightGroup(config.fastData);
 	};
 	var init = function() {
 		parseDOM();
 		bindLitener();
-		initPlugsin();
 	};
-	$(document.body).on('core.onload',init());
+	initData().then(function(){
+			init();
+	});
 };
 
 module.exports = FastMsgModal;
