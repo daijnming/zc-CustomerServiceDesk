@@ -52,27 +52,27 @@
 	<section id="left-navigation">
 		<header class="dropdown header-box-yy">
 			<div id="user_menu">
-				<div data-toggle="dropdown" class="menuDropdown ">
+				<div data-toggle="dropdown" class="menuDropdown js-menuDropdown">
 					<div id="current_user_avatar">
 						<img class="member_image thumb_48 logo js-my-logo" src="" id="mylogo">
 					</div>
 					<span id="current_user_name" class="overflow_ellipsis js-customer-service"></span>
-					<img id="connection_icon" src="img/busy.png" class="">
+					<img id="connection_icon" src="img/busy.png" class="js-status-image">
 					<span id="connection_style">工单客服</span>
 					<span id="connection_status" style="display:none">离线</span>
 				</div>
-				<div class="dropdown-menu dropdown-menu-right menu status-user">
+				<div class="dropdown-menu dropdown-menu-right menu status-user js-status-menu">
 					<ul>
 						<!-- 							<li data-toggle="modal" data-target="#setting" id="gotoSetYourInfo"  >个人设置</li> -->
 
 
-						<li   >
+						<li class="js-status"  data-status="1">
 							<span class="user-icon-online">在线</span>
 						</li>
-						<li   >
+						<li class="js-status"  data-status="2">
 							<span class="user-icon-busy">忙碌</span>
 						</li>
-						<li   >
+						<li class="js-status"  data-status="0">
 							<span class="user-icon-offine">离线</span>
 						</li>
 						<!-- 							<li data-toggle="modal" data-target="#settingg" id="gotoSetYourInfoo"  >数据统计</li> -->

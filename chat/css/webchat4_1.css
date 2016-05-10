@@ -1,3 +1,21 @@
+#main-container #left-navigation .header-box-yy #user_menu .status-user.active {
+    height: 92px !important;
+    display: block;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-width: 1px;
+}
+#main-container #left-navigation .header-box-yy #user_menu .status-user {
+    height: 0px !important;
+    display: block;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-width: 0px;
+    transition: height 0.2s ease-in-out, border-width 0.2s ease-in-out;
+}
+#main-container #left-navigation .header-box-yy #user_menu .status-user {
+
+}
 #main-container #left-navigation .tab-content {
     margin-left: 4px;
 }

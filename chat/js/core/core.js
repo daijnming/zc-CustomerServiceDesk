@@ -77,14 +77,14 @@ function Core(window) {
                     'token' : token
                 }
             }).done(function(ret) {
-                if(ret.status == 1) {
+                if(ret.status == 1 || ret.status == 2) {
                     for(var el in ret) {
                         global[el] = ret[el];
                     }
                     global.baseUrl = location.protocol + "//" + location.host + "/chat/";
                     $(".js-loading-layer").hide();
                     promise.resolve(ret);
-                } else if(ret.status == -2) {
+                } else {
                     alert('登录失败');
                     window.close();
                 }
