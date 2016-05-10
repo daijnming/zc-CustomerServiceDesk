@@ -12,6 +12,7 @@ function Item(data,core,outer) {
     var $body;
     var baseUrl = global.baseUrl;
     var $ulOuter;
+    var status = 'online';
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
@@ -35,7 +36,7 @@ function Item(data,core,outer) {
         $statusText.css({
             'display' : 'inline-block'
         }).html('[离线]');
-        shake($statusText);
+        status = 'offline';
     };
     var onRemove = function() {
         $.ajax({
@@ -88,6 +89,10 @@ function Item(data,core,outer) {
         return promise;
     };
 
+    var getStatus = function() {
+        return status;
+    };
+
     var clearUnread = function() {
         unReadCount = 0;
         $unRead.html('').css({
@@ -130,7 +135,7 @@ function Item(data,core,outer) {
     initNode().then(function() {
         init();
     });
-
+    this.getStatus = getStatus;
     this.onRemove = onRemove;
     this.onOffLine = onOffLine;
 };

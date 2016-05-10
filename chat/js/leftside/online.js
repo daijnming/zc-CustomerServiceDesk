@@ -11,8 +11,10 @@ function Online(node,core,window) {
     var Alert = require('../util/modal/alert.js');
     var loadFile = require('../util/load.js')();
     var newUserMessage = function(data) {
+        var uid = data.uid;
+        console.log(chatItemList[uid]);
         var item = new Item(data,core,node);
-        chatItemList[data.cid] = item;
+        chatItemList[data.uid] = item;
     };
 
     var hide = function() {
@@ -41,7 +43,7 @@ function Online(node,core,window) {
                     for(var i = 0,
                         len = ret.userList.length;i < len;i++) {
                         var item = ret.userList[i];
-                        chatItemList[item.cid] = new Item(item,core,node);
+                        chatItemList[item.uid] = new Item(item,core,node);
                     }
                 });
             } else {
@@ -53,12 +55,12 @@ function Online(node,core,window) {
 
     var removeBtnClickHandler = function(e) {
         var elm = e.currentTarget;
-        var cid = $(elm).attr("data-cid");
+        var uid = $(elm).attr("data-uid");
         var dialog = new Alert({
             'title' : '提示',
             'text' : '请确认顾客的问题已经解答，是否结束对话？',
             'OK' : function() {
-                chatItemList[cid].onRemove();
+                chatItemList[uid].onRemove();
             }
         });
         dialog.show();
@@ -84,9 +86,9 @@ function Online(node,core,window) {
         getDefaultChatList();
     };
     var userOfflineMessage = function(data) {
-        var cid = data.cid;
-        if(chatItemList[cid]) {
-            chatItemList[cid].onOffLine();
+        var uid = data.uid;
+        if(chatItemList[uid]) {
+            chatItemList[uid].onOffLine();
         }
     };
     var bindListener = function() {
