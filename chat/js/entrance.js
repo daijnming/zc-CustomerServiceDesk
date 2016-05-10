@@ -16,7 +16,7 @@
         $("#chatlist").height(height);
         LeftSide($("section#left-navigation")[0],core,window);
        // RightSide($('.rightBox')[0],core,window);
-        TextArea($('.js-TextArea'),core,window);
+        // TextArea($('.js-TextArea'),core,window);
         ScrollContent($('#chatlist'), core, window);
     };
     var bindListener = function() {
