@@ -16,8 +16,9 @@ var zcModalOuter = ''+
                 '</button><h4 class="modal-title">{{=it.title || "提示"}}</h4>'+
             '</div>'+
             '<div class="modal-body">'+
-                
+
             '</div>'+
+            '{{ if(! (it.footer === false) ) { }}'+
             '<div class="modal-footer">'+
                 '<button class="btn btn-danger js-cancel-btn">'+
                     '{{=it.cancelText || "取消"}}'+
@@ -26,6 +27,7 @@ var zcModalOuter = ''+
                     '{{=it.okText || "确定"}}'+
                 '</button>'+
             '</div>'+
+            '{{ } }}'+
         '</div>'+
     '</div>'+
 '</div>'+

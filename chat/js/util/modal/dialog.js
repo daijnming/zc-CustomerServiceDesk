@@ -21,6 +21,7 @@ function Dialog(spec) {
     };
 
     var setInner = function(elm) {
+        console.log($(elm))
         $outer.find(".modal-body").append($(elm));
     };
     var hide = function() {
