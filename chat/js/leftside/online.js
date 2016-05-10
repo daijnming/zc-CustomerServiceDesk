@@ -12,9 +12,13 @@ function Online(node,core,window) {
     var loadFile = require('../util/load.js')();
     var newUserMessage = function(data) {
         var uid = data.uid;
-        console.log(chatItemList[uid]);
-        var item = new Item(data,core,node);
-        chatItemList[data.uid] = item;
+        if(chatItemList[uid] && chatItemList[uid].getStatus() == 'offline') {
+            chatItemList[uid].onOnline();
+        } else {
+            var item = new Item(data,core,node);
+            chatItemList[data.uid] = item;
+        }
+
     };
 
     var hide = function() {
@@ -48,7 +52,7 @@ function Online(node,core,window) {
                 });
             } else {
                 var height = $(node).outerHeight();
-                $(node).find(".js-chatonline").addClass("noOnline");
+                $node.addClass("noOnline");
             }
         });
     };
@@ -95,6 +99,7 @@ function Online(node,core,window) {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
         $node.delegate(".js-remove",'click',removeBtnClickHandler);
+
     };
     var parseDOM = function() {
         $node = $(node);
