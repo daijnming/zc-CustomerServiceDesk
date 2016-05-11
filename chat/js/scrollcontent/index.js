@@ -1,6 +1,6 @@
 function Content(node,core,window) {
     var loadFile = require('../util/load.js')();
-    var $rootNode = $(node);
+    var $rootNode;
     var global;
     // 保存用户对话消息缓存
     var chatCache = {};
@@ -53,12 +53,12 @@ function Content(node,core,window) {
     // --------------------------- http 请求 ---------------------------
 
     // 加载
-    var getChatListByOnline = function(type,callback) {
+    var getChatListByOnline = function(type,callback, pageNo, pageSize) {
 
         if( typeof arguments[0] === 'function') {
             callback = arguments[0];
             type = 'chat';
-        }18
+        }
 
         $.ajax({
             'url' : API.http.chatList[type],
@@ -68,18 +68,16 @@ function Content(node,core,window) {
                 t : '1462871390676',
                 uid : userInfo.uid,
                 pid : userInfo.pid,
-                pageNow : 1,
-                pageSize : 20
+                pageNow : pageNo || 1,
+                pageSize : pageSize || 20
             }
         }).success(function(ret) {
             callback && callback(type,ret);
         })
     };
 
+    // 改变用户状态
     var updateUserState = function(type,handleType,callback) {
-        console.log('init updateUserState');
-        console.log(arguments);
-        console.log(API.http.status[type][handleType])
         $.ajax({
             'url' : API.http.status[type][handleType],
             'dataType' : 'json',
@@ -93,6 +91,13 @@ function Content(node,core,window) {
             callback && callback(type,handleType);
         });
     }
+
+    // 转接
+    var onTransfer = function() {
+
+    }
+
+    // 智能搜索
     // --------------------------- dom操作 ---------------------------
 
     var parseTpl = function(type,ret) {
@@ -176,17 +181,10 @@ function Content(node,core,window) {
     // --------------------------- base ---------------------------
 
     var parseDOM = function() {
-        $rootNode.find('.js-addButton').on('click','.js-goOut', function(event) {
-            var $self = $(this);
-            var type = $self.attr('data-type');
-            var handleType = $self.attr('data-handle');
-            console.log(type,handleType);
-            updateUserState(type,handleType,updateHeaderTag);
-        })
+        $rootNode = $(node);
     };
 
     var onReceive = function(value,data) {
-        console.log(data[0]);
         userPushMessage(data[0]);
     };
 
@@ -194,19 +192,36 @@ function Content(node,core,window) {
         global = core.getGlobal();
 
         // 初始化历史记录
-        getChatListByOnline(parseTpl);
+        getChatListByOnline('chat', parseTpl);
 
         // 初始化用户状态
         initUserState({
             star : userInfo.isStar,
             black : userInfo.isBlack ,
         });
-        // updateUserState('star', 'add', updateHeaderTag);
     };
 
     var bindLitener = function() {
         $(document.body).on('core.onload',onloadHandler);
         $(document.body).on('core.receive',onReceive);
+
+        $(document.body).on('scrollcontent.updateUserState', updateUserState);
+        $(document.body).on('scrollcontent.transfer', onTransfer);
+        $(document.body).on('scrollcontent.searchUserChat', searchUserChat);
+
+        // 拉黑/星标
+        $rootNode.find('.js-addButton').on('click','.js-goOut', function(event) {
+            var $self = $(this) ,
+                type = $self.attr('data-type') ,
+                handleType = $self.attr('data-handle') ;
+            updateUserState(type,handleType,updateHeaderTag);
+        })
+
+        // 滚动加载分页
+        $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e){
+
+            if ($(this).scrollTop() === 0) getChatListByOnline('chat', parseTpl);
+        });
     };
 
     var initPlugsin = function() {
