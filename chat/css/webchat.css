@@ -542,19 +542,19 @@ ul.mainNav  .tab-content{
 .reqTableBox .reqTableTh .th5{width: 13%}
 .reqTableBox .reqTableTh .th6{width: 10%}
 
-.c-redio {
+ .c-redio {
 	float: left;
 	width: 16px;
 	height: 16px;
 	margin-right: 3px;
+	background-image: url(../img/icon-noActive.png);
 }
 
-.c-redio-active {
+label.active .c-redio {
 	background-image: url(../img/icon-active.png);
 }
 
 .c-redio-noActive {
-	background-image: url(../img/icon-noActive.png);
 }
 
 

@@ -85,6 +85,10 @@ function Online(node,core,window) {
         }
     };
 
+    var show = function() {
+        $node.show();
+    };
+
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
         getDefaultChatList();
@@ -115,6 +119,7 @@ function Online(node,core,window) {
 
     init();
     that.hide = hide;
+    that.show = show;
     return that;
 };
 

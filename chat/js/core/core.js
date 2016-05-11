@@ -3,6 +3,7 @@ function Core(window) {
     var token = '';
     var queryParam;
     var polling = require('./socket/json.js');
+    var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var socket;
     var global = {};
@@ -115,12 +116,18 @@ function Core(window) {
             value.desc = content;
         }
     };
+
+    var systemMessageAdpater = function(value) {
+        value.description = messageTypeConfig[value.type];
+    };
     var messageAdapter = function(list) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var value = list[i];
             if(value.type === 103) {
                 normalMessageAdapter(value);
+            } else {
+                systemMessageAdpater(value);
             }
         }
     };

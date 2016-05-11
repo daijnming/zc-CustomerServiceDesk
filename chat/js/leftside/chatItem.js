@@ -3,16 +3,18 @@
  * @author Treagzhao
  */
 
-function Item(data,core,outer) {
+function Item(data,core,outer,from) {
     var node,
         $node,
         $unRead,
         $lastMessage;
+    var from = from || 'online';
     var global = core.getGlobal();
     var $body;
+    var userDataCache = {};
     var baseUrl = global.baseUrl;
     var $ulOuter;
-    var status = 'online';
+    var status = (from == 'history') ? 'offline' : 'online';
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
@@ -32,16 +34,21 @@ function Item(data,core,outer) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var msg = list[i];
-            console.log(msg);
             if(msg.cid !== data.cid || msg.type != 103) {
                 continue;
             }
             unReadCount++;
         }
         var lastMessage = list.length > 0 ? list[list.length - 1] : null;
-        $unRead.html(unReadCount).css({
-            'visibility' : 'visible'
-        });
+        if(unReadCount > 0) {
+            $unRead.html(unReadCount).css({
+                'visibility' : 'visible'
+            });
+        } else {
+            $unRead.css({
+                'visibility' : 'hidden'
+            });
+        }
         $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
     };
     var onOffLine = function() {
@@ -73,6 +80,19 @@ function Item(data,core,outer) {
         });
     };
 
+    var insert = function(node) {
+        if(!$ulOuter) {
+            $ulOuter = $(outer).find("ul.js-users-list");
+        }
+        var children = $ulOuter.children();
+        if(children.length == 0) {
+            $ulOuter.append(node);
+        } else {
+            var elm = children[0];
+            node.insertBefore(elm);
+        }
+    };
+
     var onOnline = function() {
         status = 'online';
         var $statusText = $node.find(".js-status");
@@ -80,6 +100,7 @@ function Item(data,core,outer) {
         $statusText.css({
             'display' : 'none'
         }).html('[离线]');
+        insert($node);
     };
 
     var initNode = function() {
@@ -96,16 +117,7 @@ function Item(data,core,outer) {
                 data['source_type'] = USOURCE[data.usource];
                 var _html = doT.template(value)(data);
                 $node = $(_html);
-                if(!$ulOuter) {
-                    $ulOuter = $(outer).find("ul.js-users-list");
-                }
-                var children = $ulOuter.children();
-                if(children.length == 0) {
-                    $ulOuter.append($node);
-                } else {
-                    var elm = children[0];
-                    $node.insertBefore(elm);
-                }
+                insert($node);
                 promise.resolve();
             });
         }
@@ -122,13 +134,48 @@ function Item(data,core,outer) {
             'visibility' : 'hidden'
         });
     };
+
+    var onNodeClickHandler = function() {
+        clearUnread();
+        $node.addClass("active").siblings().removeClass("active");
+        data.from = from;
+        data.status = status;
+        Promise.when(function() {
+            var promise = new Promise();
+            var uid = data.uid;
+            if(userDataCache[uid]) {
+                setTimeout(function() {
+                    promise.resolve(userDataCache[uid]);
+                },0);
+            } else {
+                $.ajax({
+                    'url' : '/chat/admin/get_userinfo.action',
+                    'dataType' : "json",
+                    'data' : {
+                        'sender' : global.id,
+                        'uid' : data.uid
+                    }
+                }).success(function(ret) {
+                    if(ret.retcode == 0) {
+                        userDataCache[uid] = ret.data;
+                        promise.resolve(ret.data);
+                    }
+                });
+            }
+            return promise;
+        }).then(function(userData) {
+            $(document.body).trigger("leftside.onselected",[{
+                'data' : data,
+                'userData' : userData
+            }]);
+        });
+
+    };
+
     var bindListener = function() {
         $body.on("core.receive",onReceive);
-        $node.on("click", function() {
-            clearUnread();
-            $node.addClass("active").siblings().removeClass("active");
-            $(document.body).trigger("leftside.onselected",[data]);
-        });
+        $node.on("click",onNodeClickHandler);
+
     };
     var parseDOM = function() {
         $body = $(document.body);
