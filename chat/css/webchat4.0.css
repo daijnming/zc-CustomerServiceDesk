@@ -874,7 +874,8 @@ body,html{
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent {
   width: 100%;
   height: 380px;
-  overflow: hidden;
+  /*overflow: hidden;*/
+	overflow: auto;
   outline: none;
   background-color: #f7fafa;
 }
