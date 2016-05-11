@@ -21,7 +21,6 @@ function Dialog(spec) {
     };
 
     var setInner = function(elm) {
-        console.log($(elm))
         $outer.find(".modal-body").append($(elm));
     };
     var hide = function() {
@@ -50,8 +49,8 @@ function Dialog(spec) {
         });
     };
 
-    var getOuter = function(){
-    	return $outer[0];
+    var getOuter = function() {
+        return $outer[0];
     };
 
     var show = function() {
@@ -68,7 +67,7 @@ function Dialog(spec) {
     };
 
     init();
-	
+
     this.getOuter = getOuter;
     this.setInner = setInner;
     this.show = show;
