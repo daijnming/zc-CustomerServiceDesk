@@ -1,17 +1,25 @@
 /*
 * @author denzel
-* by 05.06.2016
 */
 
 function RightSide(node,core,window) {
 
-  //TODO 配置 api 说明
+  var LocString = String(window.document.location.href);
+  function getQueryStr(str) {
+		var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
+		if (tmp = rs) {
+			return tmp[2];
+		}
+		return "";
+	}
   var config ={
      version:'5.0' //chat项目重构 5.0版本
   };
+  config.id = getQueryStr('id');
+  //TODO 配置 api 说明
+
   var height = $(window).height();
   var newHeight = $(window).height() -50;
-
   //TODO 预加载对象
   var tabSwitchBtn,//右侧上方UL元素
       tabSwitchBody;//右侧对应内容展示区
@@ -20,6 +28,8 @@ function RightSide(node,core,window) {
 	// var template = require('./template.js');
   var profileuser =  require('./profileuser/index.js');
   var messageUser =  require('./messagesuser/index.js');
+  var homeuser = require('./homeuser/index.js');
+  // var leftSide = require('../leftSide/online.js');
 
 
 	var parseDOM = function() {
@@ -54,16 +64,20 @@ function RightSide(node,core,window) {
 	};
   //上方按钮点击事件
   var onTopWrapClick = function(evn){
-    var that = this;
-    var oId = $(that).find('a').attr('oData');
-    console.log(oId);
+    var $this =$(this);
+    var oId = $this.find('a').attr('oData');
+    // console.log(oId);
     $(tabSwitchBody).each(function(i,v){
       if($(v).attr('id') == oId.toString()){
         $(v).addClass('active in').siblings('div').removeClass('active in');
       }
     });
 
-    $(that).addClass('active').siblings('li').removeClass('active');
+    $this.addClass('active').siblings('li').removeClass('active');
+  };
+  //初始化右侧选项卡
+  var IChangeRightTabOuter = function(){
+
   };
 	var bindLitener = function() {
 		// $(document.body).on("RightSide.onload",onloadHandler);
@@ -73,15 +87,21 @@ function RightSide(node,core,window) {
 	};
 
 	var initPlugsin = function() {
-        messageUser(node,core,window);
+        messageUser(node,core,config);
+        homeuser(node,core,config);
+
+        initInterface();
 	};
+  //初始化接口
+  var initInterface = function(){
+      IChangeRightTabOuter();
+  };
 
 	var init = function() {
 		parseDOM();
 		bindLitener();
 		initPlugsin();
 	};
-
 	$(document.body).on("core.onload",function(evt){
       init();
   });

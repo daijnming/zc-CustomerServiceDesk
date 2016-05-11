@@ -3,7 +3,7 @@
 * @author denzel
 */
 
-var FastMsgModal =function(node,core,window) {
+var FastMsgModal =function(node,core,config) {
 
 	var global = core.getGlobal();
 	//TODO 模板/js/资源引用
@@ -13,22 +13,22 @@ var FastMsgModal =function(node,core,window) {
 	var Promise = require('../../util/promise.js');
 
 	var outer={};
-	var config = {};//封装数据
+	// var config = {};//封装数据
   //TODO 预加载对象
 	var oShortcut;//快捷回复
 	var oRightQuickLeft;//快捷回复左侧列表
 	var oRightQuickRight;//快捷回复右侧回复列表
 	var oShadowLayer;//快捷回复弹层
 
-	var LocString = String(window.document.location.href);
-	function getQueryStr(str) {
-		var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
-		if (tmp = rs) {
-			return tmp[2];
-		}
-		return "";
-	}
-	config.id = getQueryStr("id");
+	// var LocString = String(window.document.location.href);
+	// function getQueryStr(str) {
+	// 	var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
+	// 	if (tmp = rs) {
+	// 		return tmp[2];
+	// 	}
+	// 	return "";
+	// }
+	// config.id = getQueryStr("id");
 
 	var parseDOM = function() {
 		oShortcut = $(node).find('.js-panel-body .js-tab-pane#messagesuser .js-shortcut');

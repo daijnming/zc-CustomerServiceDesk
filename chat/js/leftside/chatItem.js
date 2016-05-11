@@ -149,6 +149,5 @@ function Item(data,core,outer) {
     this.getStatus = getStatus;
     this.onRemove = onRemove;
     this.onOffLine = onOffLine;
-};
-
+}
 module.exports = Item;
