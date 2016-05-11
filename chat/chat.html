@@ -144,7 +144,7 @@
 		<div id="main-content">
 			<div class="container-fluid" >
 				<div class="row chatCont" id="chatlist">
-					<div class="col-md-8 col-xs-8 chat js-TextArea" style="padding: 0px;display:none;min-width: 575px" id="chat">
+					<div class="col-md-8 col-xs-8 chat js-TextArea" style="padding: 0px;display:block;min-width: 575px" id="chat">
 						<header class='clearfix'>
 							<span style="margin-left: 15px;cursor: pointer;color: #555459;font-weight: 900;float:left" class="chat_user_title"></span>
 							<!--<div class="addButton">-->
@@ -173,14 +173,17 @@
 							<p class="userTextNow"></p>
 	                        		<span class="faceButton" >
 	                        				<!--<i class="fa fa-meh-o face"  style="font-size: 20px"></i>-->
-										<i class="fa face faceIcon js-emotion" style="font-size:20px"></i>
+										<i class="fa face faceIcon js-emotion" style="font-size:20px;cursor:pointer;"></i>
 										<i id="maskFace"></i>
 									</span>
 									<span class="picButton" >
 	                        				<!--<i class="fa fa-photo upload" style="font-size: 20px"></i>-->
 										<i id="maskPhoto"></i>
-										<i class="photoTag fa  upload jsUpload" style="font-size: 20px"></i>
-
+										
+										<form>
+											<input value="上传" type="button">
+											 <i class="photoTag fa  upload jsUpload" style="font-size: 20px"></i>
+										</form>
 									</span>
 							<textarea class="animatedTextArea form-control msg-send-input sendMessage js-sendMessage" maxlength="1024"  placeholder="请输入.." style="resize: none;max-height: 54px;"  robot="other" ></textarea>
 								<div id="faceGroupTarea" style="display:none;">
