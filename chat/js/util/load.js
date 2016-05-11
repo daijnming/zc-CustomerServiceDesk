@@ -4,10 +4,10 @@
 var Promise = require('./promise.js');
 var that = {};
 var cache = {};
-var load = function(url) {
+var load = function(url,promise) {
+    var promise = promise || new Promise();
     if(!cache[url]) {
         var promise = Promise.when(function() {
-            var promise = new Promise();
             $.ajax({
                 'url' : url,
                 'dataType' : 'text',

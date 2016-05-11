@@ -60,29 +60,25 @@ function TextArea(node,core,window){
     };
 
     var onSelected = function(evt,data){
-        console.log(data);
-    };
-    var sendMessageStatusHandler=function(data){//判断是否是离线用户
-        console.log(data)
-        var usertype=1;
-        if(usertype==1){
-            $node.find(".js-botTextBox").hide();
-        }else{
+        //console.log(data)
+        if(data.from=='online'){
             $node.find(".js-botTextBox").show();
+        }else{
+            $node.find(".js-botTextBox").hide();
         }
     };
+   
     var bindLitener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
-        $(document.body).on('leftside.onselected',onSelected);
+        $(document.body).on('leftside.onselected',onSelected);//监听历史用户、在线用户，控制输入框
         $node.find(".js-btnSend").on("click",onbtnSendHandler);//发送按钮
-        /**qq表情
+        /*
+        *
+        qq表情
         */
 	  	$node.find(".js-emotion").on("click",onEmotionClickHandler);
-		$node.find(".icoLi").on("click",onEmotionIcoClickHandler)
-        //$(document.body).on('***',sendMessageStatusHandler);//监听历史用户、在线用户，控制输入框
-
-
+		$node.find(".icoLi").on("click",onEmotionIcoClickHandler);
     };
 
     var initPlugsin = function() {//插件
@@ -108,9 +104,9 @@ function TextArea(node,core,window){
             Group : "#faceGroupTarea",
             faceGroup : "#faceGroup",
             emojiGroup : "#emojiGroup",
-            showId : ".panel-body",
+            //showId : ".panel-body",
             emotion : ".js-emotion",
-            sub_btn : ".btnSend",
+            //sub_btn : ".js-btnSend",
             path : "img/qqarclist/",
             emojiPath : "img/emoji/"
         }, function() {

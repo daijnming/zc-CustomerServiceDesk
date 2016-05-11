@@ -18,7 +18,7 @@ var zcModalOuter = ''+
             '<div class="modal-body">'+
 
             '</div>'+
-            '{{ if(! (it.footer === false) ) { }}'+
+            '{{ if((it.footer !== false) ) { }}'+
             '<div class="modal-footer">'+
                 '<button class="btn btn-danger js-cancel-btn">'+
                     '{{=it.cancelText || "取消"}}'+
