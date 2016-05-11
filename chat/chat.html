@@ -180,9 +180,10 @@
 	                        				<!--<i class="fa fa-photo upload" style="font-size: 20px"></i>-->
 										<i id="maskPhoto"></i>
 										
-										<form>
-											<input value="上传" type="button">
-											 <i class="photoTag fa  upload jsUpload" style="font-size: 20px"></i>
+										<form class="js-fileinfo" enctype="multipart/form-data" method="post" >
+											<input value="" type="file" class="js-upload" style="opacity:0;position:absolute;left:0;top:0;z-index:10;width:30px;cursor:pointer;">
+											<p style="opacity:0;position:absolute;left:30px;top:0;z-index:11;width:300px;height:30px;background:green;"></p>
+											<i class="photoTag fa upload" style="font-size: 20px"></i>
 										</form>
 									</span>
 							<textarea class="animatedTextArea form-control msg-send-input sendMessage js-sendMessage" maxlength="1024"  placeholder="请输入.." style="resize: none;max-height: 54px;"  robot="other" ></textarea>
@@ -195,7 +196,7 @@
 							     		<li class="icoLi" data-src="#emojiGroup">符号表情</li>
 							     	</ul>
 							     </div>
-							<div><button   class="btnSend" id="btnSend" type="button">发送</button></div>
+							<div><button   class="js-btnSend btnSend" id="btnSend" type="button">发送</button></div>
 						</div>
 						 
 					</div>
@@ -656,6 +657,7 @@
 <script src="assets/jslib/mustache.min.js"></script>
 <script src="js/lib/doT.min.js"></script>
 <script src="js/lib/jquery.amaran.js"></script>
+<script src="js/lib/divscroll.js"></script>
 <script src="dest/js/entrance.js"></script>
 <!-- <script src="js/quickReply.js?v=20150828"></script> -->
 </body>

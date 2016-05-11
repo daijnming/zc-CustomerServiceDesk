@@ -16,8 +16,8 @@ var Fastlayer = function(node,core,config){
     var That = this;
     //全局配置参数
     var alertList = {
-      L001:'确定删除该快捷分组？',
-      L002:'确定删除该快捷回复？'
+      l001:'确定删除该快捷分组？',
+      l002:'确定删除该快捷回复？'
     };
 
     //TODO 预加载对象
@@ -80,7 +80,7 @@ var Fastlayer = function(node,core,config){
           sendId,
           data;
       if($this.siblings('input').attr('utype')=='left'){
-          title = alertList.L001;
+          title = alertList.l001;
           cId = $this.parent('.detalBar').attr('gid');
           url = 'reply/delreplyGroup.action';
           sendId = 'groupId';
@@ -89,7 +89,7 @@ var Fastlayer = function(node,core,config){
             'userId':id
           };
       }else{
-          title = alertList.L002;
+          title = alertList.l002;
           cId = $this.parent('.detalBar').attr('qid');
           url = 'quick/delquickReply.action';
           sendId = 'id';
@@ -236,7 +236,7 @@ var Fastlayer = function(node,core,config){
         "clsDelName" : clsDelName,
         'clsUpName' : clsUpName
     });
-      $layer = $(template.zcReplyOuter);
+      // $layer = $(template.zcReplyOuter);
       var _html = doT.template(template.zcReplyOuter)(conf);
       var oListInput = $(obj).find('li')[$(obj).find('li').length-1];
     if($(obj).find('li').length > 0){
@@ -396,6 +396,7 @@ var Fastlayer = function(node,core,config){
       $(oAddNewRep).on('click',onAddNewFast);
 
   	};
+
   	var init = function() {
   		parseDOM();
   		bindLitener();

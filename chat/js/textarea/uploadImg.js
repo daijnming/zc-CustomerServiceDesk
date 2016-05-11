@@ -127,24 +127,24 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 	*uploadBtn 附件按钮
 	*uploadOption 上传参数
 	*/
-	if(FormData){//支持formData则使用formData上传
-		$(node).find('.jsUpload').on("click",function(){
-			var oData = new FormData(document.getElementById("fileinfo"));
+	if(!FormData){//支持formData则使用formData上传
+		$(node).find('.js-upload').on("click",function(){
+			var oData = new FormData($(node).find(".js-fileinfo"));
 			oData.append("type", "msg");
 			oData.append("countTag", "0");
-			$.ajax({
+			/*$.ajax({
 			  url: apihost+"webchat/fileupload.action",
 			  type: "POST",
 			  data: oData,
 			  processData: false,  // 告诉jQuery不要去处理发送的数据
 			  contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
 			  success: function(response) {
-					/*var url = response.url ,
-							con = '<img src="img/upImgLoad.png" class="webchat_img_upload upNowImg">';
-					showMsg(uid, myname, mylogo, con, null, null, response.url);
-					imgCallBack(uid,url,cid);*/
+					//var url = response.url ,
+					//		con = '<img src="img/upImgLoad.png" class="webchat_img_upload upNowImg">';
+					//showMsg(uid, myname, mylogo, con, null, null, response.url);
+					//imgCallBack(uid,url,cid);
 				}
-			});
+			});*/
 		})
 	}else{
 		new AjaxUpload(uploadBtn, uploadOption);

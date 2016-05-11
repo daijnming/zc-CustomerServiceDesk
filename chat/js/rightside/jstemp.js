@@ -1,7 +1,6 @@
 
 /*
 * @author denzel
-* by 05.06.2016
 */
 
 (function() {
