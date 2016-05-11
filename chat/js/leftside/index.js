@@ -2,10 +2,12 @@ function LeftSide(node,core,window) {
     var that = {};
     var template = require('./template.js');
     var loadFile = require('../util/load.js')();
-    var online;
+    var online,
+        offline;
     var URLLIST = ['','/chat/admin/online.action','/chat/admin/busy.action'];
     var STATUSIMAGELIST = ['','img/online.png','img/busy.png'];
     var Online = require('./online.js');
+    var Offline = require('./offline.js');
     var $node,
         $statusBtn,
         $statusMenu,
@@ -25,8 +27,10 @@ function LeftSide(node,core,window) {
         $elm.addClass("active").siblings().removeClass("active");
         if(index == 0) {
             online.show();
+            offline.hide();
         } else {
             online.hide();
+            offline.show();
         }
     };
 
@@ -92,6 +96,7 @@ function LeftSide(node,core,window) {
 
     var initPlugsin = function() {
         online = Online($node.find(".js-chatonline")[0],core,window);
+        offline = Offline($node.find(".js-history-outer")[0],core,window);
     };
 
     var init = function() {
