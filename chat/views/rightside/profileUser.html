@@ -1,0 +1,100 @@
+<h4>访问信息</h4>
+<ul>
+    <li>
+        <div class="userTypeName">
+            对话页：
+        </div>
+        <a style="color: #0d81c0; font-size:14px;text-decoration:none; " target="_blank" oType="visitUrl"  class="userInp">{{=it.item["visit"]}}</a>
+    </li>
+    <li>
+        <div class="userTypeName">
+            浏览器：
+        </div><p  oType="browser" class="userInp" style="display:inline-block;">{{=it.item["browser"]}}</p>
+    </li>
+    <li>
+        <div class="userTypeName">
+            系  统：
+        </div><p oType="os" class="userInp" style="display: inline-block;">{{=it.item["os"]}}</p>
+    </li>
+</ul>
+<h4 style="margin-top: 40px;">用户信息</h4>
+<ul>
+    <li class="clear">
+        <div class="userTypeName">
+            昵称：
+        </div>
+        <input type="text" class="userInp otherBorder" value="{{=it.item["nick"]}}" oType="nick" placeholder="_">
+        <span class="tip">不能超过28个字符</span>
+        <!-- <span class="tip">用户名不能为空</span> -->
+    </li>
+    <li class="clear">
+        <div class="userTypeName">
+            姓名：
+        </div>
+        <input type="text" class="userInp otherBorder userNameDyy" value="{{=it.item["uname"]}}" oType="uname" placeholder="_">
+        <span class="tip">不能超过28个字符</span>
+        <!-- <span class="tip">用户名不能为空</span> -->
+    </li>
+    <li class="clear">
+    <div class="userTypeName">生日：</div>
+    <input type="text" class="userInp otherBorder" oType="age" placeholder="_">
+    <span class="tip">输入格式有误</span>
+    <span class="tip">用户名不能为空</span>
+    </li>
+    <li class="clear">
+        <div class="userTypeName">
+            性别：
+        </div>
+        <select class="userInp otherBorder" oType="sex" id="sex" style="width:80px;">
+            <option value="">未知</option>
+            <option value="0">男</option>
+            <option value="1">女</option>
+        </select>
+    </li>
+    <li>
+        <div class="userTypeName">
+            电话：
+        </div>
+        <input type="text" class="userInp otherBorder" oType="tel" value="{{=it.item["tel"]}}" placeholder="_">
+        <span>请重新修改或置空</span>
+    </li>
+    <li>
+        <div class="userTypeName">
+            邮箱：
+        </div>
+        <input type="text" class="userInp otherBorder" oType="email" value="{{=it.item["email"]}}" placeholder="_">
+        <span class="tip">格式不正确</span>
+    </li>
+
+    <li>
+        <div class="userTypeName">
+            Q Q：
+        </div>
+        <input type="text" class="userInp otherBorder" oType="qq" value="{{=it.item["qq"]}}" placeholder="_">
+        <span>请重新修改或置空</span>
+    </li>
+
+    <li>
+        <div class="userTypeName">
+            微信：
+        </div>
+        <input type="text" class="userInp otherBorder" oType="weixin" value="{{=it.item["weixin"]}}" placeholder="_">
+        <span>请重新修改或置空</span>
+    </li>
+    <li>
+        <div class="userTypeName">
+            微博：
+        </div>
+        <input type="text" class="userInp otherBorder" oType="weibo" value="{{=it.item["weibo"]}}" placeholder="_">
+        <span>请重新修改或置空</span>
+    </li>
+    <li class="clearfix">
+        <div class="userTypeName remarkTip">
+            备注：
+        </div>
+        <div class="remarkTxt ">
+            <textarea   class="userInp othe remark form-control" maxlength="200" oType="remark" placeholder="上限200字">{{=it.item["remark"]}}</textarea>
+        </div>
+
+    </li>
+</ul>

@@ -179,7 +179,7 @@ var Fastlayer = function(node,core,config){
     var onFastBlur = function(evn){
       if($(oFastLeft).find('li').hasClass('activeLine'))$(oAddNewRep).show();else $(oAddNewRep).hide();
       var $this = $(this);
-      if($this.val().replace(/(^\s*)|(\s*$)/g,"")==""||$this.val()==null||$this.val()==undefined){
+      if($this.val().replace(/(^\s*)|(\s*$)/g,"")===""||$this.val()===null||$this.val()===undefined){
         var oGroupId =$this.parent('li.detalBar').attr('gid');
         //
 
@@ -216,7 +216,7 @@ var Fastlayer = function(node,core,config){
   };
 
   var onAddNewFast = function(evn){
-    var obj = evn.target.className=='js-addNewGroup'?oFastLeft:oFastRight;
+    var obj = evn.target.className==='js-addNewGroup'?oFastLeft:oFastRight;
     var clsDelName,
         clsUpName,
         utype;

@@ -5,6 +5,10 @@
 function RightSide(node,core,window) {
 
   var LocString = String(window.document.location.href);
+  //左侧用户点击保存右侧相应tab选项卡
+  //{uid:xx,tabId:xx,tabData:{}}
+  var saveSwitchTabBox=[];
+
   function getQueryStr(str) {
 		var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
 		if (tmp = rs) {
@@ -29,7 +33,6 @@ function RightSide(node,core,window) {
   var profileuser =  require('./profileuser/index.js');
   var messageUser =  require('./messagesuser/index.js');
   var homeuser = require('./homeuser/index.js');
-  // var leftSide = require('../leftSide/online.js');
 
 
 	var parseDOM = function() {
@@ -50,8 +53,6 @@ function RightSide(node,core,window) {
   };
 
 	var onloadHandler = function(evt,data) {
-		//$(node).find("img.js-my-logo").attr("src",data.face);
-		//$(node).find(".js-customer-service").html(data.name);
     //智能回复得高度
     $("#homeuser").css('height',newHeight-52 +'px');
     $("#homeuser .homeUserBox").css('height',newHeight-52-40-52 +'px');
@@ -75,32 +76,38 @@ function RightSide(node,core,window) {
 
     $this.addClass('active').siblings('li').removeClass('active');
   };
+
+  var initData = function(data,userData){
+      // console.log(userData);
+      //初始化用户数据 -- 客户资料
+      profileuser($('.js-tab-pane#profileuser'),core,userData);
+  };
   //初始化右侧选项卡
-  var IChangeRightTabOuter = function(){
+  var changeRightTabOuter = function(){
 
   };
-	var bindLitener = function() {
-		// $(document.body).on("RightSide.onload",onloadHandler);
-		// $(document.body).on("RightSide.receive",onReceive);
+
+	var bindListener = function() {
     $(window).on('core.onload',onloadHandler);
     $(tabSwitchBtn).on('click','li',onTopWrapClick);
+    $(document.body).on('leftside.onselected',initData);
 	};
 
 	var initPlugsin = function() {
         messageUser(node,core,config);
         homeuser(node,core,config);
-
-        initInterface();
+        // profileuser($('.js-tab-pane#profileuser'),core);
 	};
   //初始化接口
   var initInterface = function(){
-      IChangeRightTabOuter();
+
   };
 
 	var init = function() {
 		parseDOM();
-		bindLitener();
+		bindListener();
 		initPlugsin();
+    initData();
 	};
 	$(document.body).on("core.onload",function(evt){
       init();
