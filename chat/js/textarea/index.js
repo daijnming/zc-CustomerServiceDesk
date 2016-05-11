@@ -10,7 +10,6 @@ function TextArea(node,core,window) {
     var AjaxUpload = require('../util/upload.js');
     //上传附件
     var $node;
-    console.log(showMsg);
     //var apihost = "http://test.sobot.com/chat/";
     //var sendurl = apihost+"admin/send1.action"
     var parseDOM = function() {

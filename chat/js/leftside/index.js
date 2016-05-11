@@ -23,6 +23,20 @@ function LeftSide(node,core,window) {
         $waitOuter = $node.find(".js-wait-outer");
     };
 
+    var initQueueInfo = function() {
+        $.ajax({
+            'url' : '/chat/admin/getAdminChats.action',
+            'type' : 'get',
+            'dataType' : 'json',
+            'data' : {
+                'uid' : global.id
+            }
+        }).success(function(ret) {
+            onQueueLengthChanged({
+                'count' : ret.waitSize
+            });
+        });
+    };
     var tabItemClickHandler = function(e) {
         var $elm = $(e.currentTarget);
         var index = $elm.index();
@@ -79,7 +93,6 @@ function LeftSide(node,core,window) {
     var onQueueLengthChanged = function(data) {
         loadFile.load(global.baseUrl + "views/leftside/queuelength.html").then(function(value) {
             var _html = doT.template(value)(data);
-            console.log(_html);
             $waitOuter.html(_html);
         });
     };
@@ -97,6 +110,7 @@ function LeftSide(node,core,window) {
 
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
+        initQueueInfo();
         $statusImage.attr("src",STATUSIMAGELIST[global.status]);
         $(node).find("img.js-my-logo").attr("src",data.face);
         $(node).find(".js-customer-service").html(data.name);
