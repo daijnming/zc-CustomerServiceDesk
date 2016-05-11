@@ -19,6 +19,17 @@ function LeftSide(node,core,window) {
         $statusImage = $node.find(".js-status-image");
     };
 
+    var tabItemClickHandler = function(e) {
+        var $elm = $(e.currentTarget);
+        var index = $elm.index();
+        $elm.addClass("active").siblings().removeClass("active");
+        if(index == 0) {
+            online.show();
+        } else {
+            online.hide();
+        }
+    };
+
     var onStatusItemClickHandler = function(e) {
         var elm = e.currentTarget;
         var status = $(elm).attr("data-status");
@@ -35,6 +46,27 @@ function LeftSide(node,core,window) {
             }).success(function(ret) {
                 $statusImage.attr("src",STATUSIMAGELIST[status]);
             });
+        } else {
+            var dialog = new Alert({
+                'title' : '提示',
+                'text' : '请确定是否要下线？',
+                'OK' : function() {
+                    $.ajax({
+                        'url' : '/chat/admin/out.action',
+                        'type' : 'post',
+                        'dataType' : 'json',
+                        'data' : {
+                            'uid' : global.id
+                        }
+                    }).success(function(ret) {
+                        if(ret.status == 1) {
+                            $(window).unbind("onbeforeunload");
+                            window.location.href = "/console/login";
+                        }
+                    });
+                }
+            });
+            dialog.show();
         }
     };
 
@@ -51,6 +83,7 @@ function LeftSide(node,core,window) {
     var bindLitener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
+        $node.delegate(".js-tab-item",'click',tabItemClickHandler);
         $statusBtn.on("click", function() {
             $statusMenu.toggleClass("active");
         });
