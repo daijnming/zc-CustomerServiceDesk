@@ -19,6 +19,18 @@
 #main-container #left-navigation .tab-content {
     margin-left: 4px;
 }
+.tab-content  li.fullscreen.noBlack{
+    background-image:url("../assets/images/noBlockList.png");
+}
+.tab-content  li.fullscreen.noStar{
+    background-image:url("../assets/images/noStarList.png");
+}
+.tab-content  li.fullscreen{
+    height:3000px !important;
+    
+    background-repeat: no-repeat;
+    background-position:center 100px;
+}
 .tab-content  li.user-list-item {
     width: 100%;
     height: 80px;

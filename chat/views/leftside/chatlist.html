@@ -1,13 +1,18 @@
-{{ for(var i=0;i<it.list.length;i++) { }}
-{{ var item = it.list[i]; }}
-{{ var from = it.type === 'history'?'history':''; }}
-<li titemle="{{=item.uname}}" class="user-list-item {{=from}}" data-uid="{{=item.uid}}">
-    <i class="icon {{=item.source_type || ''}} js-icon"><span class="badge badge-red js-unread-count">1</span></i>
-    <div class="item-detail">
-        <div class="uname" style="width: 230px;">
-            {{=item.uname}}<span class="status js-status">[离线]</span></span>
-        </div><span class="chat-detail js-last-message"></span><i class="user-del js-remove"  data-uid="{{=item.uid}}"><span class="newIcon"></span></i>
-    </div>
-</li>
-
-{{ } }}
+{{ if(it.list.length > 0) { }}
+        
+        {{ for(var i=0;i<it.list.length;i++) { }}
+        {{ var item = it.list[i]; }}
+        {{ var from = it.type === 'history'?'history':''; }}
+        <li titemle="{{=item.uname}}" class="user-list-item {{=from}}" data-uid="{{=item.uid}}">
+            <i class="icon {{=item.source_type || ''}} js-icon"><span class="badge badge-red js-unread-count">1</span></i>
+            <div class="item-detail">
+                <div class="uname" style="width: 230px;">
+                    {{=item.uname}}<span class="status js-status">[离线]</span></span>
+                </div><span class="chat-detail js-last-message"></span><i class="user-del js-remove"  data-uid="{{=item.uid}}"><span class="newIcon"></span></i>
+            </div>
+        </li>
+        
+        {{ } }}
+{{ }else{ }}
+    <li class="fullscreen {{=it.className}}"></li>
+{{  } }}
