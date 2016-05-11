@@ -6,11 +6,13 @@ function Offline(node,core,window) {
     var $ulOuter;
     var that = {};
     var USOURCE = require('./source.json');
+    var Item = require('./chatItem.js');
     var CLASSNAME = ['','noStar','noBlack'];
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
     var prevCursor = 0;
-    var dataCache = {};
+    var dataCache = {},
+        chatItemList = {};
     var global = core.getGlobal();
     var urlList = ['/chat/admin/get_histroryUser.action','/chat/admin/query_marklist.action','/chat/admin/query_blacklist.action'];
     var parseDOM = function() {
@@ -50,13 +52,16 @@ function Offline(node,core,window) {
         }).then(function(list,promise) {
             loadFile.load(global.baseUrl + "views/leftside/chatlist.html").then(function(value) {
                 var className = CLASSNAME[index];
-                console.log(className);
                 var _html = doT.template(value)({
                     'list' : list,
                     'type' : 'history',
                     'className' : className
                 });
                 $ulOuter.html(_html);
+                for(var i = 0,
+                    len = list.length;i < len;i++) {
+                    var item = new Item(list[i],core,node,'history');
+                }
             });
         });
     };

@@ -19,17 +19,16 @@
 #main-container #left-navigation .tab-content {
     margin-left: 4px;
 }
-.tab-content  li.fullscreen.noBlack{
-    background-image:url("../assets/images/noBlockList.png");
+.tab-content  li.fullscreen.noBlack {
+    background-image: url("../assets/images/noBlockList.png");
 }
-.tab-content  li.fullscreen.noStar{
-    background-image:url("../assets/images/noStarList.png");
+.tab-content  li.fullscreen.noStar {
+    background-image: url("../assets/images/noStarList.png");
 }
-.tab-content  li.fullscreen{
-    height:3000px !important;
-    
+.tab-content  li.fullscreen {
+    height: 3000px !important;
     background-repeat: no-repeat;
-    background-position:center 100px;
+    background-position: center 100px;
 }
 .tab-content  li.user-list-item {
     width: 100%;
@@ -41,7 +40,7 @@
     overflow: hidden;
     transition: background 0.3s linear, border-width 0.1s linear;
 }
-.tab-content  li.user-list-item.active,.tab-content  li.user-list-item.active:hover {
+.tab-content  li.user-list-item.active, .tab-content  li.user-list-item.active:hover {
     background-color: #d8ebea;
     border-left: 5px solid #09aeb0;
 }
@@ -67,8 +66,8 @@
     visibility: hidden;
     right: -5px;
 }
-.tab-content  li.user-list-item.history .icon{
-    background-color:#ccc !important;
+.tab-content  li.user-list-item.history .icon {
+    background-color: #ccc !important;
 }
 .tab-content  li.user-list-item .icon.offline, .tab-content  li.user-list-item .icon.laptop.offline, .tab-content  li.user-list-item .icon.mobile.offline {
     background-color: #ccc;
@@ -82,11 +81,11 @@
     background-position: -38px -234px;
     background-color: #f1c644;
 }
-.tab-content  li.user-list-item.history .user-del{
-    display:none !important;
+.tab-content  li.user-list-item.history .user-del {
+    display: none !important;
 }
-.tab-content  li.user-list-item:hover{
-    background:#EEF6F4;
+.tab-content  li.user-list-item:hover {
+    background: #EEF6F4;
 }
 .tab-content  li.user-list-item:hover .user-del {
     display: block;
@@ -122,4 +121,14 @@
 }
 .tab-content  li.user-list-item .item-detail .chat-detail.orange {
     color: #ffad01;
+}
+
+.joinBox-yy #waitNum span {
+    color: #09aeb0;
+}
+
+.joinBox-yy #waitNum span.special {
+    color: #ea8f57;
+    display: inline-block;
+    margin-left: 5px;
 }

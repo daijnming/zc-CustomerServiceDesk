@@ -11,7 +11,8 @@ function LeftSide(node,core,window) {
     var $node,
         $statusBtn,
         $statusMenu,
-        $statusImage;
+        $statusImage,
+        $waitOuter;
     var Alert = require('../util/modal/alert.js');
     var global;
     var parseDOM = function() {
@@ -19,6 +20,7 @@ function LeftSide(node,core,window) {
         $statusBtn = $node.find(".js-menuDropdown");
         $statusMenu = $node.find(".js-status-menu");
         $statusImage = $node.find(".js-status-image");
+        $waitOuter = $node.find(".js-wait-outer");
     };
 
     var tabItemClickHandler = function(e) {
@@ -74,7 +76,23 @@ function LeftSide(node,core,window) {
         }
     };
 
+    var onQueueLengthChanged = function(data) {
+        loadFile.load(global.baseUrl + "views/leftside/queuelength.html").then(function(value) {
+            var _html = doT.template(value)(data);
+            console.log(_html);
+            $waitOuter.html(_html);
+        });
+    };
     var onReceive = function(value,list) {
+        for(var i = 0,
+            len = list.length;i < len;i++) {
+            var msg = list[i];
+            switch(msg.type) {
+                case 110:
+                    onQueueLengthChanged(msg);
+                    break;
+            }
+        }
     };
 
     var onloadHandler = function(evt,data) {
@@ -97,7 +115,6 @@ function LeftSide(node,core,window) {
     var initPlugsin = function() {
         online = Online($node.find(".js-chatonline")[0],core,window);
         offline = Offline($node.find(".js-history-outer")[0],core,window);
-
     };
 
     var init = function() {

@@ -3,17 +3,18 @@
  * @author Treagzhao
  */
 
-function Item(data,core,outer) {
+function Item(data,core,outer,from) {
     var node,
         $node,
         $unRead,
         $lastMessage;
+    var from = from || 'online';
     var global = core.getGlobal();
     var $body;
     var userDataCache = {};
     var baseUrl = global.baseUrl;
     var $ulOuter;
-    var status = 'online';
+    var status = (from == 'history') ? 'offline' : 'online';
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
@@ -133,44 +134,47 @@ function Item(data,core,outer) {
             'visibility' : 'hidden'
         });
     };
+
+    var onNodeClickHandler = function() {
+        clearUnread();
+        $node.addClass("active").siblings().removeClass("active");
+        data.from = from;
+        data.status = status;
+        Promise.when(function() {
+            var promise = new Promise();
+            var uid = data.uid;
+            if(userDataCache[uid]) {
+                setTimeout(function() {
+                    promise.resolve(userDataCache[uid]);
+                },0);
+            } else {
+                $.ajax({
+                    'url' : '/chat/admin/get_userinfo.action',
+                    'dataType' : "json",
+                    'data' : {
+                        'sender' : global.id,
+                        'uid' : data.uid
+                    }
+                }).success(function(ret) {
+                    if(ret.retcode == 0) {
+                        userDataCache[uid] = ret.data;
+                        promise.resolve(ret.data);
+                    }
+                });
+            }
+            return promise;
+        }).then(function(userData) {
+            $(document.body).trigger("leftside.onselected",[{
+                'data' : data,
+                'userData' : userData
+            }]);
+        });
+
+    };
+
     var bindListener = function() {
         $body.on("core.receive",onReceive);
-        $node.on("click", function() {
-            clearUnread();
-            $node.addClass("active").siblings().removeClass("active");
-            data.from = 'onlineList';
-            data.status = status;
-            Promise.when(function() {
-                var promise = new Promise();
-                var uid = data.uid;
-                if(userDataCache[uid]) {
-                    setTimeout(function() {
-                        promise.resolve(userDataCache[uid]);
-                    },0);
-                } else {
-                    $.ajax({
-                        'url' : '/chat/admin/get_userinfo.action',
-                        'dataType' : "json",
-                        'data' : {
-                            'sender' : global.id,
-                            'uid' : data.uid
-                        }
-                    }).success(function(ret) {
-                        if(ret.retcode == 0) {
-                            userDataCache[uid] = ret.data;
-                            promise.resolve(ret.data);
-                        }
-                    });
-                }
-                return promise;
-            }).then(function(userData) {
-                $(document.body).trigger("leftside.onselected",[{
-                    'data' : data,
-                    'userData' : userData
-                }]);
-            });
-
-        });
+        $node.on("click",onNodeClickHandler);
 
     };
     var parseDOM = function() {
