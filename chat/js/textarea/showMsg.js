@@ -13,14 +13,14 @@
 		///TODO 发送和接收都会调用
 		var form = ' ';
 		var workOrderCus = 'workOrderCus';
-		var float = 'fr';
+		var fr = 'fr';
 		var angle = 'angleRight';
 		var margin = 'mr';
 		if(formUser)
 		{
 			form = "formUser";
 			workOrderCus = 'userCus';
-			float = "fl";
+			fl = "fl";
 			margin = 'ml';
 			angle ="angleLeft";
 		}
@@ -59,25 +59,25 @@
 
 
 		var msg = '<div class="msg '+workOrderCus+'">'
-				+ '<div class="msg_user '+float+'"><img src="'+logoUrl+'" class="msg_user_img"></div>'
-				+ '<div class="msgContBox '+float+'"><span class="msg_name">'+name+'</span>'
+				+ '<div class="msg_user '+fr+'"><img src="'+logoUrl+'" class="msg_user_img"></div>'
+				+ '<div class="msgContBox '+fr+'"><span class="msg_name">'+name+'</span>'
 					//[~]需求修改
 //				+ '<span class="msg_time ' + margin + '">' + name.substring(0, 8) + '</span>'
 				+ '<span class="msg_time ' + margin + '">' + name + '</span>'
 				+ '<span class="msg_time" style="margin-left: 0px;">'+dt+'</span>'
 				+ '<div style="clear:both;"></div>'
-				+ '<div class="msgBg ' + float + '" style="display: inline-flex;margin: 0px;">'+'<i class="'+angle+'"></i>'+'<div class="msg_content '+ form +'" >'+content+'</div></div></div>'
+				+ '<div class="msgBg ' + fr + '" style="display: inline-flex;margin: 0px;">'+'<i class="'+angle+'"></i>'+'<div class="msg_content '+ form +'" >'+content+'</div></div></div>'
 				+ '</div>';
 		if(source!=null){//如果附件不为空则重新拼接msg
 			var msg = '<div class="msg '+workOrderCus+'">'
-				+ '<div class="msg_user '+float+'"><img src="'+logoUrl+'" class="msg_user_img"></div>'
-				+ '<div class="msgContBox '+float+'"><span class="msg_name">'+name+'</span>'
+				+ '<div class="msg_user '+fr+'"><img src="'+logoUrl+'" class="msg_user_img"></div>'
+				+ '<div class="msgContBox '+fr+'"><span class="msg_name">'+name+'</span>'
 					//[~]需求修改
 //				+ '<span class="msg_time ' + margin + '">' + name.substring(0, 8) + '</span>'
 				+ '<span class="msg_time ' + margin + '">' + name + '</span>'
 				+ '<span class="msg_time" style="margin-left: 0px;">'+dt+'</span>'
 				+ '<div style="clear:both;"></div>'
-				+ '<div class="msgBg ' + float + '" style="display: inline-flex;margin: 0px;">'+'<i class="'+angle+'"></i>'+'<div class="msg_content '+ form +'" >'+source+'</div></div></div>'
+				+ '<div class="msgBg ' + fr + '" style="display: inline-flex;margin: 0px;">'+'<i class="'+angle+'"></i>'+'<div class="msg_content '+ form +'" >'+source+'</div></div></div>'
 				+ '</div>';
 		}
 
@@ -119,6 +119,29 @@
 
 		    reader.readAsDataURL(file);
 		}
+		/*Date.prototype.format = function(format) {
+			var o = {
+				"M+" : this.getMonth() + 1, // month
+				"d+" : this.getDate(), // day
+				"h+" : this.getHours(), // hour
+				"m+" : this.getMinutes(), // minute
+				"s+" : this.getSeconds(), // second
+				"q+" : Math.floor((this.getMonth() + 3) / 3), // quarter
+				"S" : this.getMilliseconds()
+				// millisecond
+			}
+			if (/(y+)/.test(format)) {
+				format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4
+						- RegExp.$1.length));
+			}
+			for (var k in o) {
+				if (new RegExp("(" + k + ")").test(format)) {
+					format = format.replace(RegExp.$1, RegExp.$1.length == 1  ? o[k]  : ("00" + o[k]).substr(("" + o[k]).length));
+				}
+			}
+			return format;
+		}*/
+
 		////滚动条
 		/*function setScroll(obj){
 			$(obj).find('.scrollBoxParent').niceScroll({cursorwidth:"10px",mousescrollstep:"100",scrollspeed:"200"});

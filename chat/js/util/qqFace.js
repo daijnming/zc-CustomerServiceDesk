@@ -10,10 +10,10 @@
 			_this.Group=o.Group||"";
 			_this.faceGroup=o.faceGroup||"";
 			_this.emojiGroup=o.emojiGroup||"";
-			_this.showId=o.showId||"";
+			//_this.showId=o.showId||"";
 			_this.emotion=o.emotion||"";
 			_this.saytext=o.saytext||"";
-			_this.sub_btn=o.sub_btn||"";
+			//_this.sub_btn=o.sub_btn||"";
 			_this.path=o.path||"";
 			_this.emojiPath=o.emojiPath||"";
 			_this.tip={"/::)":"weixiao","/::~":"shangxin","/::B":"meinv","/::|":"fadai","/:8-)":"mojing","/::<":"daku","/::$":"xiu","/::X":"ya","/::Z":"shui","/::'(":"ku","/::-|":"jiong","/::@":"nu","/::P":"tiaopi","/::D":"xiao","/::O":"jingya","/::(":"nanguo","/::+":"xuanku","/:–b":"lenghan","/::Q":"zhuakuang","/::T":"tu","/:,@P":"xiao","/:,@-D":"kuaile","/::d":"qi","/:,@o":"ao","/::g":"e","/:|-)":"lei","/::!":"jingkong","/::L":"han","/::>":"gaoxing","/::,@":"xian","/:,@f":"nuli","/::-S":"ma","/:?":"yiwen","/:,@x":"mimi","/:,@@":"luan","/::8":"feng","/:,@!":"ai","/:!!!":"gui","/:xx":"daji","/:bye":"bye","/:wipe":"wuyu","/:dig":"kou","/:handclap":"guzhang","/:&-(":"zaogao","/:B-)":"egao","/:<@":"zuohengheng","/:@>":"youhengheng","/::-O":"lei","/:>-|":"kan","/:P-(":"weiqu","/::'|":"nanguo","/:X-)":"huai","/::*":"qin","/:@x":"xia","/:8*":"kelian","/:pd":"dao","/:<W>":"shuiguo","/:beer":"jiu","/:basketb":"lanqiu","/:oo":"pingpang","/:coffee":"kafei","/:eat":"meishi","/:pig":"dongwu","/:rose":"xianhua","/:fade":"ku","/:showlove":"chun","/:heart":"ai","/:break":"fenshou","/:cake":"shengri","/:li":"dian","/:bome":"zhadan","/:kn":"bishou","/:footb":"zuqiu","/:ladybug":"chong","/:shit":"chou","/:moon":"yueliang","/:sun":"taiyang","/:gift":"liwu","/:hug":"huoban","/:strong":"zan","/:weak":"cha","/:share":"woshou","/:v":"you","/:@)":"gong","/:jj":"gou","/:@@":"ding","/:bad":"chajin","/:lvu":"aiqing","/:no":"bu","/:ok":"haode","/:love":"aiqing","/:<L>":"wen","/:jump":"tiao","/:shake":"pa","/:<O>":"jianjiao","/:circle":"quan","/:kotow":"bai","/:turn":"huitou","/:skip":"shangxiatiao","/:oY":"tianshi","/:#-0":"jidong","/:hiphot":"wu","/:kiss":"wen","/:<&":"yujia","/:&>":"taiji"};//show
@@ -29,7 +29,7 @@
 				img.src=_this.path+_this.tip[a]+'.gif';
 				//console.log(img.src)
 			}
-			 callback&&callback();
+			 //callback&&callback();
 		},
 		show:function(){
 			var _this=this;
