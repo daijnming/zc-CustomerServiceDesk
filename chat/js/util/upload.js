@@ -639,7 +639,7 @@
             }
 
             var file = fileFromPath(this._input.value);
-            console.log(file);
+           // console.log(file);
             // 用户返回false 取消上传
             if (false === settings.onSubmit.call(this, file, getExt(file),this._input.files)){
                 this._clearInput();

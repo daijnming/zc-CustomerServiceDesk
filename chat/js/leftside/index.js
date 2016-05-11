@@ -2,6 +2,7 @@ function LeftSide(node,core,window) {
     var that = {};
     var template = require('./template.js');
     var loadFile = require('../util/load.js')();
+    var Queue = require('./queue.js');
     var online,
         offline;
     var URLLIST = ['','/chat/admin/online.action','/chat/admin/busy.action'];
@@ -12,6 +13,7 @@ function LeftSide(node,core,window) {
         $statusBtn,
         $statusMenu,
         $statusImage,
+        $inviteBtn,
         $waitOuter;
     var Alert = require('../util/modal/alert.js');
     var global;
@@ -21,6 +23,11 @@ function LeftSide(node,core,window) {
         $statusMenu = $node.find(".js-status-menu");
         $statusImage = $node.find(".js-status-image");
         $waitOuter = $node.find(".js-wait-outer");
+        $inviteBtn = $node.find(".js-invite-btn");
+    };
+
+    var inviteBtnClickHandler = function() {
+        new Queue(core,window);
     };
 
     var initQueueInfo = function() {
@@ -124,6 +131,7 @@ function LeftSide(node,core,window) {
             $statusMenu.toggleClass("active");
         });
         $node.delegate(".js-status",'click',onStatusItemClickHandler);
+        $inviteBtn.on("click",inviteBtnClickHandler);
     };
 
     var initPlugsin = function() {
