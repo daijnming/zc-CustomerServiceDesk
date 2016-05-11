@@ -54,12 +54,16 @@ function Offline(node,core,window) {
                 var _html = doT.template(value)({
                     'list' : list,
                     'type' : 'history',
-                    'className':className
+                    'className' : className
                 });
                 $ulOuter.html(_html);
             });
         });
     };
+
+    var onloadHandler = function() {
+    };
+
     var labelItemClickHandler = function(e) {
         var $elm = $(e.currentTarget);
         $elm.addClass("active").siblings().removeClass("active");
@@ -69,6 +73,7 @@ function Offline(node,core,window) {
 
     var show = function() {
         $node.show();
+        fetchData(prevCursor);
     };
 
     var hide = function() {
@@ -76,11 +81,11 @@ function Offline(node,core,window) {
     };
 
     var bindListener = function() {
+        $(document.body).on("core.onload",onloadHandler);
         $node.delegate(".js-switch-label",'click',labelItemClickHandler);
     };
 
     var initPlugins = function() {
-        fetchData(prevCursor);
     };
 
     var init = function() {

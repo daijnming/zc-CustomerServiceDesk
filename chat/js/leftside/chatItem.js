@@ -10,6 +10,7 @@ function Item(data,core,outer) {
         $lastMessage;
     var global = core.getGlobal();
     var $body;
+    var userDataCache = {};
     var baseUrl = global.baseUrl;
     var $ulOuter;
     var status = 'online';
@@ -139,7 +140,36 @@ function Item(data,core,outer) {
             $node.addClass("active").siblings().removeClass("active");
             data.from = 'onlineList';
             data.status = status;
-            $(document.body).trigger("leftside.onselected",[data]);
+            Promise.when(function() {
+                var promise = new Promise();
+                var uid = data.uid;
+                if(userDataCache[uid]) {
+                    setTimeout(function() {
+                        promise.resolve(userDataCache[uid]);
+                    },0);
+                } else {
+                    $.ajax({
+                        'url' : '/chat/admin/get_userinfo.action',
+                        'dataType' : "json",
+                        'data' : {
+                            'sender' : global.id,
+                            'uid' : data.uid
+                        }
+                    }).success(function(ret) {
+                        if(ret.retcode == 0) {
+                            userDataCache[uid] = ret.data;
+                            promise.resolve(ret.data);
+                        }
+                    });
+                }
+                return promise;
+            }).then(function(userData) {
+                $(document.body).trigger("leftside.onselected",[{
+                    'data' : data,
+                    'userData' : userData
+                }]);
+            });
+
         });
 
     };
