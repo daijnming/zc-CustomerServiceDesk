@@ -103,3 +103,6 @@ ul{
 .js-tab-pane#profileuser.showBg{
   background:url(../assets/images/noOnlinePerson.png) center  no-repeat
 }
+.rightBox .js-panel-body .js-tab-pane#homeuser p.searchBot{
+  margin: 0 0 10px;
+}

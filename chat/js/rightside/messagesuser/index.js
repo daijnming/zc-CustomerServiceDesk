@@ -114,7 +114,7 @@ var FastMsgModal =function(node,core,config) {
 		outer.dialog.show();
 	}
 
-	var bindLitener = function() {
+	var bindLsitener = function() {
 		$(oRightQuickLeft).on('click','li',onTapGetRightRep);
 		$(oRightQuickRight).on('click','li',onRightRepToOut);
 		$(oShortcut).on('click',onShortCutFun);//点击快捷回复
@@ -122,7 +122,7 @@ var FastMsgModal =function(node,core,config) {
 	};
 	var init = function() {
 		parseDOM();
-		bindLitener();
+		bindLsitener();
 	};
 	initData().then(function(){
 			init();

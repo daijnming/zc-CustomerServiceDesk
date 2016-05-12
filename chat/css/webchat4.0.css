@@ -1382,7 +1382,7 @@ body,html{
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li span {
   color: #f90;
-  margin-left: 10px;
+  /*margin-left: 10px;*/
   display: none;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy {
