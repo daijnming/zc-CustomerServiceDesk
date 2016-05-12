@@ -60,18 +60,23 @@ function TextArea(node,core,window){
     };
 
     var onSelected = function(evt,data){
-        //console.log(data)
+        
+    
         if(data.from=='online'){
             $node.find(".js-botTextBox").show();
-        }else{
+        }else if(data.from=='history'){
             $node.find(".js-botTextBox").hide();
         }
+    };
+    var onQuickreplyHandler=function(data){
+        //$node.find(".js-sendMessage").html(data.answer)
     };
    
     var bindLitener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
         $(document.body).on('leftside.onselected',onSelected);//监听历史用户、在线用户，控制输入框
+        //$(document.body).on('rightside.lalalala',onQuickreplyHandler);//监听快捷回复
         $node.find(".js-btnSend").on("click",onbtnSendHandler);//发送按钮
         /*
         *
@@ -113,7 +118,7 @@ function TextArea(node,core,window){
             //cbk
         });
 
-        $node.find('.face').perfectScrollbar();//加载滚动条
+        //$node.find('.face').perfectScrollbar();//加载滚动条
     };
 
 
