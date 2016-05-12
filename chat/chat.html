@@ -36,6 +36,7 @@
         <link href="css/webchat4.0.css" rel="stylesheet">
         <link href="css/qqFace.css" rel="stylesheet">
         <link rel="stylesheet" href="css/rightside.css" charset="utf-8">
+        <link href="css/scrollcontent.css" rel="stylesheet"  charset="utf-8">
         <link href="css/webchat4_1.css" rel="stylesheet">
 
         <!-- 初始化emoji -->
@@ -128,7 +129,7 @@
                 <div id="main-content">
                     <div class="container-fluid" >
                         <div class="row chatCont" id="chatlist">
-                            <div class="col-md-8 col-xs-8 chat js-TextArea" style="padding: 0px;display:block;min-width: 575px" id="chat">
+                            <div class="col-md-8 col-xs-8 chat js-TextArea" style="padding: 0px;display:block;min-width: 575px;" id="chat">
                                 <header class='clearfix'>
                                     <span style="margin-left: 15px;cursor: pointer;color: #555459;font-weight: 900;float:left" class="chat_user_title"></span>
                                     <!--<div class="addButton">-->
@@ -146,9 +147,11 @@
                                     </div>
 
                                 </header>
-                                <div class="scrollBoxParent" id="chat_daijm">
+                                <div class="scrollBoxParent" id="chat_daijm" style="overflow: auto;outline: none;">
                                     <div class="js-panel-body panel-body scrollBox">
                                     </div>
+                                </div>
+                                <div class="js-user-ready-input" style="position:absolute;bottom: 230px;width:100%;" >
                                 </div>
                                 <div  style="position:absolute; bottom:0px;width:100%" class="botTextBox js-botTextBox">
                                     <div class="uesrDivNow">
@@ -173,10 +176,10 @@
                                     <textarea class="animatedTextArea form-control msg-send-input sendMessage js-sendMessage" maxlength="1024"  placeholder="请输入.." style="resize: none;max-height: 54px;"  robot="other" ></textarea>
                                         <div id="faceGroupTarea" style="display:none;">
 
-                                            <div id="faceGroup" class="groupChildren"></div>
-                                            <div id="emojiGroup" class="groupChildren" style="display:none"></div>
+                                            <div id="faceGroup" class="groupChildren item"></div>
+                                            <div id="emojiGroup" class="groupChildren item" style="display:none"></div>
                                             <ul class="GroupTab">
-                                                <li class="icoLi active" data-src="#faceGroup">默认表情</li>
+                                                <li class="firsticoLi icoLi active" data-src="#faceGroup">默认表情</li>
                                                 <li class="icoLi" data-src="#emojiGroup">符号表情</li>
                                             </ul>
                                          </div>
@@ -594,6 +597,7 @@
 
         <script src="assets/jslib/jquery-1.8.3.min.js"></script>
         <script src="js/lib/doT.min.js"></script>
+        <script src="js/lib/divscroll.js"></script>
         <script src="dest/js/entrance.js"></script>
 
         <!-- <script src="js/quickReply.js?v=20150828"></script> -->

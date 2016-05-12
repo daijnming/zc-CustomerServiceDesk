@@ -1,0 +1,15 @@
+.zc-c-chat-user-ready-chat {
+  margin: 0;
+  position: absolute;
+  top: -30px;
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+  opacity: 0.7;
+  padding-left: 12px;
+  color: #fff;
+  background: rgba(123, 100, 100, 0.5);
+  z-index: 999;
+  overflow: hidden;
+  white-space: nowrap
+}
