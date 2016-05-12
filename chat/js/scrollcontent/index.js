@@ -25,7 +25,7 @@ function Content(node,core,window) {
             },
 
             getOtherAdmin: 'admin/getOhterAdminList.action' ,
-            userTransfer : '' ,
+            userTransfer : 'admin/transfer.action' ,
             searchChat: 'admin/internalChat1.action'
         },
 
@@ -50,10 +50,36 @@ function Content(node,core,window) {
         uid : '088ad376b6514ed0a191067308c284fe000025',
         pid : '088ad376b6514ed0a191067308c284fe',
         sender : 'mTLX96VS13KSmF6VqxK9KBtavHt7fYVcV6Ekx3YuXvcoNskGFZk2xQ==',
+        userId: 'fdf2f6e709f7457aae9b9bd5afcb1f57' ,
+        cid: '2c24f755180b48408f658520c116d101',
         isStar : true,
         isBlack : true,
         isTransfer: true
     }
+
+    // --------------------------- 推送函数 ---------------------------
+
+    // 智能搜索事件
+    var onSearchUserChat = function(data) {
+      $(document.body).trigger('scrollcontent.onSearchUserChat', [data]);
+    }
+
+    // 暴露修改状态事件
+    var onUpdateUserState = function(type, handleType) {
+      $(document.body).trigger('scrollcontent.onUpdateUserState', [{
+        type: type ,
+        handleType: handleType
+      }]);
+    }
+
+    // 推送转接事件
+    var onTransfer = function(uid, uname) {
+      $(document.body).trigger('scrollcontent.onTransfer', [{
+        uid: uid ,
+        userName: uname
+      }]);
+    }
+
 
     // --------------------------- http 请求 ---------------------------
 
@@ -107,7 +133,6 @@ function Content(node,core,window) {
             }
         })
         .success(function(ret) {
-            console.log(ret);
             var dialog = new Dialog({
                 'title' : '转接给新的客服',
                 'footer' : false
@@ -126,15 +151,50 @@ function Content(node,core,window) {
                 });
 
                 dialog.setInner(_html);
+                callback && callback(dialog);
             });
-
-            callback && callback(ret);
         });
     }
 
     // 转接
-    var onTransfer = function() {
+    var transfer = function(dialog) {
 
+      $(dialog.getOuter()).find('.js-transfer-href').on('click', function(){
+        var uid = $(this).attr('uid') ,
+            uname = $(this).attr('uname');
+
+        console.log({
+            uid: userInfo.sender ,
+            cid: userInfo.cid,
+            joinUid: uid ,
+            userId: userInfo.userId ,
+            userName: uname
+        });
+
+        $.ajax({
+            'url' : API.http.userTransfer,
+            'dataType' : 'json',
+            'type' : 'get',
+            'data' : {
+                uid: userInfo.sender ,
+                cid: userInfo.cid,
+                joinUid: uid ,
+                userId: userInfo.userId ,
+                userName: uname
+            }
+        }).success(function(ret) {
+            console.log(ret);
+
+            if (ret.status === 1) onTransfer(uid, uname);
+        });
+      });
+    }
+
+    var sendSearchUserChat = function() {
+      $rootNode.find('.formUser').on('click', function(){
+        var chatText = $(this).val();
+        searchUserChat(userInfo.sender, chatText, onSearchUserChat);
+      });
     }
 
     // 智能搜索
@@ -183,11 +243,7 @@ function Content(node,core,window) {
         $rootNode.find('.js-addButton').children('[data-type="' + type + '"]').removeClass('hide');
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
 
-        // 暴露事件
-        $(document.body).trigger('scrollcontent.updateUserState', [{
-          type: type ,
-          handleType: handleType
-        }]);
+        onUpdateUserState(type, handleType);
     }
 
     var initUserState = function(data) {
@@ -293,7 +349,7 @@ function Content(node,core,window) {
                 handleType = $self.attr('data-handle') ;
 
             if (!!!type && !!!handleType) {
-              getAdminList(userInfo.sender, onTransfer);
+              getAdminList(userInfo.sender, transfer);
             } else {
               updateUserState(type,handleType,updateHeaderTag);
             }
