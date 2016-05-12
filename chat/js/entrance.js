@@ -16,10 +16,10 @@
         $("#main-container").height($(window).outerHeight());
         $("#chatlist").height(height);
         LeftSide($("section#left-navigation")[0],core,window);
-       RightSide($('.rightBox')[0],core,window);
-         TextArea($('.js-TextArea'),core,window);
-        ChatList($('#chatlist'), core, window);
-        ScrollContent($('#chatlist'), core, window);
+        RightSide($('.rightBox')[0],core,window);
+        TextArea($('.js-TextArea'),core,window);
+        ChatList($('#chatlist'),core,window);
+        ScrollContent($('#chatlist'),core,window);
     };
     var bindListener = function() {
         $(window).on("resize", function(e) {
