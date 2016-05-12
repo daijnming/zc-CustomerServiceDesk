@@ -98,6 +98,30 @@ function Queue(core,window) {
         $refreshTime = $node.find(".js-refresh-time");
     };
 
+    var onInviteBtnClickHandler = function(e) {
+        var elm = e.currentTarget;
+        if($(elm).hasClass("disabled")) {
+            return;
+        }
+        var uid = $(elm).attr("data-uid");
+        $.ajax({
+            'url' : '/chat/admin/invite.action',
+            'dataType' : 'json',
+            'type' : "post",
+            'data' : {
+                'uid' : global.id,
+                'userid' : uid
+            }
+        }).done(function(ret) {
+            if(ret.status == 1) {
+                $(elm).html('已邀请').addClass('disabled').css({
+                    'color' : '#808080'
+                });
+            }
+        });
+
+    };
+
     var onPageBtnClickHandler = function(e) {
         var elm = e.currentTarget;
         var type = $(elm).attr("data-type");
@@ -111,6 +135,7 @@ function Queue(core,window) {
     var bindListener = function() {
         $node.delegate(".js-page-btn",'click',onPageBtnClickHandler);
         $pageJump.on("click",pageJumpBtnClickHandler);
+        $node.delegate(".js-invite-btn","click",onInviteBtnClickHandler);
         $refreshBtn.on("click", function() {
             fetchData();
         });
