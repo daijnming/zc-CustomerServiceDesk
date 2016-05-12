@@ -58,6 +58,14 @@ function Content(node,core,window) {
         isTransfer: true
     }
 
+    // --------------------------- 接收推送函数 ---------------------------
+
+    $(document.body).on('textarea.send', function() {
+      console.log(arguments);
+      // 插入客服输入内容
+      // adminPushMessage(arguments[1]);
+    });
+
     // --------------------------- 推送函数 ---------------------------
 
     // 智能搜索事件
@@ -284,7 +292,7 @@ function Content(node,core,window) {
     // 显示其他在线客服列表
     var showAdminList = function(data) {
 
-    }  
+    }
 
     // --------------------------- socket ---------------------------
 
