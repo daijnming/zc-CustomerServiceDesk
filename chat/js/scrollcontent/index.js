@@ -32,7 +32,8 @@ function Content(node,core,window) {
         tpl : {
             chatList : 'views/scrollcontent/list.html',
             chatItem : 'views/scrollcontent/item.html',
-            chatItemByAdmin : 'views/scrollcontent/itemByAdmin.html'
+            chatItemByAdmin : 'views/scrollcontent/itemByAdmin.html',
+            adminTable: 'views/scrollcontent/adminTable.html'
         }
     };
 
@@ -50,7 +51,8 @@ function Content(node,core,window) {
         pid : '088ad376b6514ed0a191067308c284fe',
         sender : 'mTLX96VS13KSmF6VqxK9KBtavHt7fYVcV6Ekx3YuXvcoNskGFZk2xQ==',
         isStar : true,
-        isBlack : true
+        isBlack : true,
+        isTransfer: true
     }
 
     // --------------------------- http 请求 ---------------------------
@@ -111,8 +113,21 @@ function Content(node,core,window) {
                 'footer' : false
             });
 
-            dialog.setInner();
+            // ret = [{"maxcount":2,"id":"d2d94e70e0884a47a734f6860b541e79","face":"http://img.sobot.com/console/common/face/admin.png","groupId":["61da00ab8aae43b6932ef83635b0912f"],"groupName":["100"],"count":0,"status":1,"uname":"10041n"}];
+
             dialog.show();
+
+            loadFile.load(global.baseUrl + API.tpl.adminTable).then(function(tpl) {
+
+                var _html;
+
+                _html = doT.template(tpl)({
+                    list : ret
+                });
+
+                dialog.setInner(_html);
+            });
+
             callback && callback(ret);
         });
     }
@@ -178,7 +193,15 @@ function Content(node,core,window) {
     var initUserState = function(data) {
         $rootNode.find('.js-addButton').children('a').addClass('hide');
 
-        for (var k in data) $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
+        for (var k in data) {
+
+          if (k === 'transfer') {
+
+            if (data[k]) $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
+          } else {
+            $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
+          }
+        }
     }
 
     var parseChat = {
@@ -199,9 +222,7 @@ function Content(node,core,window) {
 
     // 显示其他在线客服列表
     var showAdminList = function(data) {
-      new Alert({
 
-      })
     }
 
     // --------------------------- socket ---------------------------
@@ -259,8 +280,11 @@ function Content(node,core,window) {
         $(document.body).on('core.onload',onloadHandler);
         $(document.body).on('core.receive',onReceive);
 
-        $(document.body).on('scrollcontent.updateUserState', updateUserState);
-        $(document.body).on('scrollcontent.transfer', onTransfer);
+        // $(document.body).on('scrollcontent.updateUserState', updateUserState);
+        // $(document.body).on('scrollcontent.transfer', onTransfer);
+        // $(document.body).on('scrollcontent.searchUserChat', searchUserChat);
+
+        // $(document.body).tr
 
         // 拉黑/星标
         $rootNode.find('.js-addButton').on('click','.js-goOut', function(event) {
