@@ -4,6 +4,7 @@
  */
 
 function Item(data,core,outer,from) {
+    console.log(data);
     var node,
         $node,
         $unRead,
@@ -65,7 +66,7 @@ function Item(data,core,outer,from) {
             'data' : {
                 'cid' : data.cid,
                 'uid' : global.id,
-                'userid' : data.uid
+                'userId' : data.uid
             },
             'type' : 'post',
             'dataType' : "json"
@@ -197,4 +198,5 @@ function Item(data,core,outer,from) {
     this.onRemove = onRemove;
     this.onOffLine = onOffLine;
 }
+
 module.exports = Item;

@@ -124,6 +124,10 @@ function Core(window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var value = list[i];
+            if(value.type == 102) {
+                console.log(value);
+                alert();
+            }
             if(value.type === 103) {
                 normalMessageAdapter(value);
             } else {
@@ -138,7 +142,11 @@ function Core(window) {
     var parseDOM = function() {
     };
 
+    var onsend = function(evt,data) {
+        console.log(evt);
+    };
     var bindListener = function() {
+        $(document.body).on("textarea.send",onsend);
     };
 
     var socketFactory = function() {

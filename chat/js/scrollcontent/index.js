@@ -25,14 +25,15 @@ function Content(node,core,window) {
             },
 
             getOtherAdmin: 'admin/getOhterAdminList.action' ,
-            userTransfer : '' ,
+            userTransfer : 'admin/transfer.action' ,
             searchChat: 'admin/internalChat1.action'
         },
 
         tpl : {
             chatList : 'views/scrollcontent/list.html',
             chatItem : 'views/scrollcontent/item.html',
-            chatItemByAdmin : 'views/scrollcontent/itemByAdmin.html'
+            chatItemByAdmin : 'views/scrollcontent/itemByAdmin.html',
+            adminTable: 'views/scrollcontent/adminTable.html'
         }
     };
 
@@ -49,9 +50,36 @@ function Content(node,core,window) {
         uid : '088ad376b6514ed0a191067308c284fe000025',
         pid : '088ad376b6514ed0a191067308c284fe',
         sender : 'mTLX96VS13KSmF6VqxK9KBtavHt7fYVcV6Ekx3YuXvcoNskGFZk2xQ==',
+        userId: 'fdf2f6e709f7457aae9b9bd5afcb1f57' ,
+        cid: '2c24f755180b48408f658520c116d101',
         isStar : true,
-        isBlack : true
+        isBlack : true,
+        isTransfer: true
     }
+
+    // --------------------------- 推送函数 ---------------------------
+
+    // 智能搜索事件
+    var onSearchUserChat = function(data) {
+      $(document.body).trigger('scrollcontent.onSearchUserChat', [data]);
+    }
+
+    // 暴露修改状态事件
+    var onUpdateUserState = function(type, handleType) {
+      $(document.body).trigger('scrollcontent.onUpdateUserState', [{
+        type: type ,
+        handleType: handleType
+      }]);
+    }
+
+    // 推送转接事件
+    var onTransfer = function(uid, uname) {
+      $(document.body).trigger('scrollcontent.onTransfer', [{
+        uid: uid ,
+        userName: uname
+      }]);
+    }
+
 
     // --------------------------- http 请求 ---------------------------
 
@@ -105,21 +133,68 @@ function Content(node,core,window) {
             }
         })
         .success(function(ret) {
-            console.log(ret);
             var dialog = new Dialog({
                 'title' : '转接给新的客服',
                 'footer' : false
             });
 
-            dialog.setInner();
+            // ret = [{"maxcount":2,"id":"d2d94e70e0884a47a734f6860b541e79","face":"http://img.sobot.com/console/common/face/admin.png","groupId":["61da00ab8aae43b6932ef83635b0912f"],"groupName":["100"],"count":0,"status":1,"uname":"10041n"}];
+
             dialog.show();
-            callback && callback(ret);
+
+            loadFile.load(global.baseUrl + API.tpl.adminTable).then(function(tpl) {
+
+                var _html;
+
+                _html = doT.template(tpl)({
+                    list : ret
+                });
+
+                dialog.setInner(_html);
+                callback && callback(dialog);
+            });
         });
     }
 
     // 转接
-    var onTransfer = function() {
+    var transfer = function(dialog) {
 
+      $(dialog.getOuter()).find('.js-transfer-href').on('click', function(){
+        var uid = $(this).attr('uid') ,
+            uname = $(this).attr('uname');
+
+        console.log({
+            uid: userInfo.sender ,
+            cid: userInfo.cid,
+            joinUid: uid ,
+            userId: userInfo.userId ,
+            userName: uname
+        });
+
+        $.ajax({
+            'url' : API.http.userTransfer,
+            'dataType' : 'json',
+            'type' : 'get',
+            'data' : {
+                uid: userInfo.sender ,
+                cid: userInfo.cid,
+                joinUid: uid ,
+                userId: userInfo.userId ,
+                userName: uname
+            }
+        }).success(function(ret) {
+            console.log(ret);
+
+            if (ret.status === 1) onTransfer(uid, uname);
+        });
+      });
+    }
+
+    var sendSearchUserChat = function() {
+      $rootNode.find('.formUser').on('click', function(){
+        var chatText = $(this).val();
+        searchUserChat(userInfo.sender, chatText, onSearchUserChat);
+      });
     }
 
     // 智能搜索
@@ -168,17 +243,21 @@ function Content(node,core,window) {
         $rootNode.find('.js-addButton').children('[data-type="' + type + '"]').removeClass('hide');
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
 
-        // 暴露事件
-        $(document.body).trigger('scrollcontent.updateUserState', [{
-          type: type ,
-          handleType: handleType
-        }]);
+        onUpdateUserState(type, handleType);
     }
 
     var initUserState = function(data) {
         $rootNode.find('.js-addButton').children('a').addClass('hide');
 
-        for (var k in data) $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
+        for (var k in data) {
+
+          if (k === 'transfer') {
+
+            if (data[k]) $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
+          } else {
+            $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
+          }
+        }
     }
 
     var parseChat = {
@@ -199,9 +278,7 @@ function Content(node,core,window) {
 
     // 显示其他在线客服列表
     var showAdminList = function(data) {
-      new Alert({
 
-      })
     }
 
     // --------------------------- socket ---------------------------
@@ -272,7 +349,7 @@ function Content(node,core,window) {
                 handleType = $self.attr('data-handle') ;
 
             if (!!!type && !!!handleType) {
-              getAdminList(userInfo.sender, onTransfer);
+              getAdminList(userInfo.sender, transfer);
             } else {
               updateUserState(type,handleType,updateHeaderTag);
             }
