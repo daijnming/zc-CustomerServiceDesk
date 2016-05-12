@@ -3,7 +3,7 @@
         <div class="reqMenuBox clear">
             <div class="fl">
                 <button class="btn ls-red-btn">
-                    排队中 <span class="waitSize">1</span>
+                    排队中 <span class="waitSize">{{=it.waitSize}}</span>
                 </button>
                 <button class="btn ls-light-green-btn hide">
                     与机器人对话 <span class="robotSize"></span>
@@ -13,32 +13,37 @@
                 </button>
             </div>
             <div class="fr">
-                <span class="reqRefNow">刷新于15:51:21</span><a class="reaRefBtn" href="javascript:;"></a>
+                <span class="reqRefNow">刷新于<span class="js-refresh-time">{{=it.currentTime}}</span></span><a class="reaRefBtn js-refresh-btn" href="javascript:;"></a>
             </div>
         </div>
-        <table class="table table-bottomless ls-animated-table">
-            <thead class="reqTableTh waitClass">
-                <tr>
-                    <th class="th2">客户名称</th><th class="thGroup th21">技能组</th><th class="reqTdTitle th3" style="display: none;">最后访问页面</th><th class="otherTime th4">转人工时间</th><th class="th5">等待时长</th><th class="hide th51" style="display: none;">最后接待客服</th><th class="th6">操作</th>
-                </tr>
-            </thead>
-            <tbody class="reqDomBox">
-                <tr>
-                    <td class="reqTd2 td2"><span class="reqTdSpan">北京市海淀区联通</span><span class="reqTitleSpan">北京市海淀区联通</span></td><td class="reqTdGroup td3">无技能组</td><td class="reqTd3 td4">15:43:43</td><td class="td5">0小时7分40秒</td><td><a reqlistid="c23dea0d25c143bc829f264ea100d28c" class="reqBtns" href="javascript:;">邀请</a></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="js-table-outer">
+            <table class="table table-bottomless ls-animated-table">
+                <thead class="reqTableTh waitClass">
+                    <tr>
+                        <th class="th2">客户名称</th><th class="thGroup th21">技能组</th><th class="reqTdTitle th3" style="display: none;">最后访问页面</th><th class="otherTime th4">转人工时间</th><th class="th5">等待时长</th><th class="hide th51" style="display: none;">最后接待客服</th><th class="th6">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="reqDomBox">
+                    {{for(var i=0;i<it.list.length;i++) { }}
+                    {{var item = it.list[i];}}
+                    <tr>
+                    <td class="reqTd2 td2"><span class="reqTdSpan">{{=item.name}}</span><span class="reqTitleSpan">{{=it.name}}</span></td><td class="reqTdGroup td3">{{=item.groupName || '无技能组'}}</td><td class="reqTd3 td4">{{=item.lastTime}}</td><td class="td5">{{=item.remainTime}}</td><td><a data-uid="{{=item.id}}" class="reqBtns js-invite-btn" href="javascript:;">邀请</a></td>
+                    </tr>
+                    {{ } }}
+                </tbody>
+            </table>
+        </div>
         <div class="reqBottom clear">
             <div class="fl">
                 <p>
-                    显示 <span class="countPage js-current-page">1</span>/<span class="allCountPage js-all-count-page">1</span> 页 总共 <span class="countSize">1</span> 条
+                    显示 <span class="countPage js-current-page">{{=it.currentPage}}</span>/<span class="allCountPage js-all-count-page">{{=it.countPage}}</span> 页 总共 <span class="countSize">{{=it.waitSize}}</span> 条
                 </p>
             </div>
             <div class="fr">
                 <p>
-                    <a class="reqFirstBtn" href="javascript:;">首页 </a><span class="allCountPageBox hide"> <a class="goCountPage" href="javascript:;">0</a> </span><a class="reaPrevBtn" href="javascript:;">上一页 </a><a class="reaNextBtn" href="javascript:;">下一页 </a><a class="reqLastBtn" href="javascript:;">末页 </a>
-                    <input type="text" class="reqGoText">
-                    <a class="reqGoNumber" href="javascript:;">跳转</a>
+                    <a class="reqFirstBtn" href="javascript:;">首页 </a><span class="allCountPageBox hide"> <a class="goCountPage" href="javascript:;">0</a> </span><a class="reaPrevBtn js-page-btn" data-type="prev" href="#0">上一页 </a><a class="reaNextBtn js-page-btn" data-type="next" href="javascript:;">下一页 </a><a class="reqLastBtn" href="javascript:;">末页 </a>
+                    <input type="text" class="reqGoText js-input">
+                    <a class="reqGoNumber js-page-jump-btn" href="javascript:;">跳转</a>
                 </p>
             </div>
         </div>

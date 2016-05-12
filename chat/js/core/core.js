@@ -124,6 +124,9 @@ function Core(window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var value = list[i];
+            if(value.type == 102) {
+                alert();
+            }
             if(value.type === 103) {
                 normalMessageAdapter(value);
             } else {
