@@ -6,6 +6,15 @@ function Core(window) {
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var socket;
+    var defaultParams = {
+        answer : "",
+        answerType : "",
+        cid : "",
+        docId : "",
+        pid : "",
+        questionId : "",
+        uid : ""
+    };
     var global = {};
     var TYPE_EMOTION = 0,
         TYPE_IMAGE = 1,
@@ -143,7 +152,17 @@ function Core(window) {
     };
 
     var onsend = function(evt,data) {
-        console.log(evt);
+        console.log(data);
+        $.ajax({
+            'url' : '/chat/admin/send1.action',
+            'dataType' : 'json',
+            'type' : "post",
+            'data' : $.extend(defaultParams, {
+                'answer' : data.answer,
+                'cid' : data.cid,
+                'uid' : global.id
+            })
+        });
     };
     var bindListener = function() {
         $(document.body).on("textarea.send",onsend);
