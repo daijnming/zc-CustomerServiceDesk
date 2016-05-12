@@ -137,17 +137,17 @@
                                         <!--<a href="javascript:;" class="goOut addstar hide"  ></i>加星标</a>-->
                                         <!--<a href="javascript:;" class="goOut deldestar hide"  ></i></a>-->
                                     <!--</div>-->
-                                    <div class="addButton" >
-                                        <a href="javascript:;" class="goOut addstar hide"  ></i>星标</a>
-                                        <a href="javascript:;" class="goOut deldestar hide"  ></i>已标记</a>
-                                        <a href="javascript:;" class="goOut addblack hide"  ></i>拉黑</a>
-                                        <a href="javascript:;" class="goOut delblack hide"  ></i>解除拉黑</a>
-                                        <a href="javascript:;" class="goOut transfer"  ></i>转接</a>
+                                    <div class="addButton js-addButton" >
+                                      <a href="javascript:;" class="js-goOut goOut addstar hide js-star-add" data-type="star" data-handle="add"></i>星标</a>
+                                      <a href="javascript:;" class="js-goOut goOut deldestar hide js-star-del" data-type="star" data-handle="del" ></i>已标记</a>
+                                      <a href="javascript:;" class="js-goOut goOut addblack hide js-black-add" data-type="black" data-handle="add"></i>拉黑</a>
+                                      <a href="javascript:;" class="js-goOut goOut delblack hide js-black-del" data-type="black" data-handle="del"></i>解除拉黑</a>
+                                      <a href="javascript:;" class="js-goOut goOut transfer js-transfer"  ></i>转接</a>
                                     </div>
 
                                 </header>
                                 <div class="scrollBoxParent" id="chat_daijm">
-                                    <div class="panel-body scrollBox">
+                                    <div class="js-panel-body panel-body scrollBox">
                                     </div>
                                 </div>
                                 <div  style="position:absolute; bottom:0px;width:100%" class="botTextBox js-botTextBox">
@@ -163,7 +163,7 @@
                                             <span class="picButton" >
                                                     <!--<i class="fa fa-photo upload" style="font-size: 20px"></i>-->
                                                 <i id="maskPhoto"></i>
-                                                
+
                                                 <form class="js-fileinfo" enctype="multipart/form-data" method="post" >
                                                     <input value="" type="file" class="js-upload" style="opacity:0;position:absolute;left:0;top:0;z-index:10;width:30px;cursor:pointer;">
                                                     <p style="opacity:0;position:absolute;left:30px;top:0;z-index:11;width:300px;height:30px;background:green;"></p>
@@ -172,7 +172,7 @@
                                             </span>
                                     <textarea class="animatedTextArea form-control msg-send-input sendMessage js-sendMessage" maxlength="1024"  placeholder="请输入.." style="resize: none;max-height: 54px;"  robot="other" ></textarea>
                                         <div id="faceGroupTarea" style="display:none;">
-                                            
+
                                             <div id="faceGroup" class="groupChildren"></div>
                                             <div id="emojiGroup" class="groupChildren" style="display:none"></div>
                                             <ul class="GroupTab">
@@ -182,9 +182,9 @@
                                          </div>
                                     <div><button   class="js-btnSend btnSend" id="btnSend" type="button">发送</button></div>
                                 </div>
-                                 
+
                             </div>
-                                           
+
                             <div class="col-md-8 col-xs-8 chat" style="padding: 0px;display:none;min-width: 575px" id="hchat" >
                                 <header class='clearfix'>
                                     <!--原型目前没有-yyy-->
@@ -243,7 +243,7 @@
                                             <div class="js-tab-pane tab-pane fade active in" id="profileuser">
 
                                               <!--改版：  客户资料 通过模板加载-->
-                                              
+
                                             </div>
                                             <!--快捷回复-->
                                             <div class="js-tab-pane tab-pane fade tab-home-yy" id="messagesuser">

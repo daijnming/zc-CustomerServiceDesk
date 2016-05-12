@@ -38,8 +38,12 @@ var FastMsgModal =function(node,core,config) {
 	};
 	//点击快捷回复进行回复
 	var onRightRepToOut = function(){
-		var $this = $(this);
-		console.log($this);
+		var val = $(this).html();
+		// console.log(val);
+		//暴露接口给文本框输入
+		$(document.body).trigger("rightside.onSelectedByFastRelpy",[{
+				'data':val
+		}]);
 	};
 	//点击获取快捷回复
 	var onTapGetRightRep = function(){

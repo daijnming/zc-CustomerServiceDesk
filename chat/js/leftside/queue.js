@@ -14,9 +14,12 @@ function Queue(core,window) {
         $totalpage,
         $currentPage,
         $pageJump,
+        $refreshTime,
+        $refreshBtn,
+        $tableOuter,
         $input;
     var urlList = ['/chat/admin/queryUser.action',''];
-    var TEMPLATELIST = ['views/leftside/queuelist.html'];
+    var TEMPLATELIST = ['views/leftside/queueitem.html'];
     var totalPage,
         currentPage = 1;
     this.token = +new Date();
@@ -35,7 +38,16 @@ function Queue(core,window) {
     };
 
     var fetchData = function() {
-        loadFile.load(global.baseUrl + TEMPLATELIST[currentTab]).then(getQueryUsers);
+        loadFile.load(global.baseUrl + TEMPLATELIST[currentTab]).then(getQueryUsers).then(function(ret,promise) {
+            totalPage = ret.data.countPage;
+            $totalpage.html(totalPage);
+            $currentPage.html(currentPage);
+            $refreshTime.html(dateTimeUtil.getTime(new Date()));
+            var _html = doT.template(ret.html)({
+                'list' : ret.data.list
+            });
+            $tableOuter.html(_html);
+        });
     };
     var pageJumpBtnClickHandler = function() {
         var value = $input.val();
@@ -50,6 +62,7 @@ function Queue(core,window) {
         }
         $input.val(num);
         currentPage = num;
+        fetchData();
     };
 
     var getQueryUsers = function(value,promise) {
@@ -80,21 +93,27 @@ function Queue(core,window) {
         $totalpage = $node.find(".js-all-count-page");
         $pageJump = $node.find(".js-page-jump-btn");
         $input = $node.find(".js-input");
-
+        $refreshBtn = $node.find(".js-refresh-btn");
+        $tableOuter = $node.find(".js-table-outer");
+        $refreshTime = $node.find(".js-refresh-time");
     };
 
     var onPageBtnClickHandler = function(e) {
         var elm = e.currentTarget;
         var type = $(elm).attr("data-type");
         if(type == 'prev') {
-            currentPage = currentPage <= 1 ? 0 : currentPage - 1;
+            currentPage = currentPage <= 1 ? 1 : currentPage - 1;
         } else if(type == 'next') {
             currentPage = currentPage >= totalPage - 1 ? totalPage : currentPage + 1;
         }
+        fetchData();
     };
     var bindListener = function() {
         $node.delegate(".js-page-btn",'click',onPageBtnClickHandler);
         $pageJump.on("click",pageJumpBtnClickHandler);
+        $refreshBtn.on("click", function() {
+            fetchData();
+        });
     };
 
     var initPlugins = function() {
