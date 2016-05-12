@@ -284,7 +284,7 @@ function Content(node,core,window) {
     // 显示其他在线客服列表
     var showAdminList = function(data) {
 
-    }
+    }  
 
     // --------------------------- socket ---------------------------
 
