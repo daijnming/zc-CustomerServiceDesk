@@ -152,4 +152,4 @@
 		}*/
 			 
 	}
-	module.exports = showMsg;
+	//module.exports = showMsg;

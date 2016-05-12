@@ -110,7 +110,7 @@ function Queue(core,window) {
             'type' : "post",
             'data' : {
                 'uid' : global.id,
-                'userid' : uid
+                'userId' : uid
             }
         }).done(function(ret) {
             if(ret.status == 1) {
