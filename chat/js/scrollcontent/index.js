@@ -1,5 +1,6 @@
 function Content(node,core,window) {
     var loadFile = require('../util/load.js')();
+    var Dialog = require('../util/modal/dialog.js');
     var $rootNode;
     var global;
     // 保存用户对话消息缓存
@@ -23,7 +24,9 @@ function Content(node,core,window) {
                 }
             },
 
-            addTransfer : ''
+            getOtherAdmin: 'admin/getOhterAdminList.action' ,
+            userTransfer : '' ,
+            searchChat: 'admin/internalChat1.action'
         },
 
         tpl : {
@@ -92,12 +95,48 @@ function Content(node,core,window) {
         });
     }
 
+    var getAdminList = function(sender, callback) {
+        $.ajax({
+            'url' : API.http.getOtherAdmin,
+            'dataType' : 'json',
+            'type' : 'get',
+            'data' : {
+                uid: sender
+            }
+        })
+        .success(function(ret) {
+            console.log(ret);
+            var dialog = new Dialog({
+                'title' : '转接给新的客服',
+                'footer' : false
+            });
+
+            dialog.setInner();
+            dialog.show();
+            callback && callback(ret);
+        });
+    }
+
     // 转接
     var onTransfer = function() {
 
     }
 
     // 智能搜索
+    var searchUserChat = function(sender, requestText, callback) {
+        $.ajax({
+            'url' : API.http.searchChat,
+            'dataType' : 'json',
+            'type' : 'get',
+            'data' : {
+                uid: sender ,
+                requestText: requestText
+            }
+        }).success(function(ret) {
+            console.log(ret);
+            callback && callback(ret);
+        });
+    }
     // --------------------------- dom操作 ---------------------------
 
     var parseTpl = function(type,ret) {
@@ -128,13 +167,20 @@ function Content(node,core,window) {
     var updateHeaderTag = function(type,handleType) {
         $rootNode.find('.js-addButton').children('[data-type="' + type + '"]').removeClass('hide');
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
+
+        // 暴露事件
+        $(document.body).trigger('scrollcontent.updateUserState', [{
+          type: type ,
+          handleType: handleType
+        }]);
     }
+
     var initUserState = function(data) {
         $rootNode.find('.js-addButton').children('a').addClass('hide');
 
-        for(var k in data)
-        $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
+        for (var k in data) $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
     }
+
     var parseChat = {
         102 : function(data) {
             data.userHeadImage = userSourceMap[data.source];
@@ -149,6 +195,13 @@ function Content(node,core,window) {
         108 : function(data) {
             data.t = new Date(data.t).toLocaleString().split(' ')[1];
         }
+    }
+
+    // 显示其他在线客服列表
+    var showAdminList = function(data) {
+      new Alert({
+
+      })
     }
 
     // --------------------------- socket ---------------------------
@@ -196,8 +249,9 @@ function Content(node,core,window) {
 
         // 初始化用户状态
         initUserState({
-            star : userInfo.isStar,
+            star : userInfo.isStar ,
             black : userInfo.isBlack ,
+            transfer: userInfo.isTransfer
         });
     };
 
@@ -205,16 +259,23 @@ function Content(node,core,window) {
         $(document.body).on('core.onload',onloadHandler);
         $(document.body).on('core.receive',onReceive);
 
-        $(document.body).on('scrollcontent.updateUserState', updateUserState);
-        $(document.body).on('scrollcontent.transfer', onTransfer);
-        $(document.body).on('scrollcontent.searchUserChat', searchUserChat);
+        // $(document.body).on('scrollcontent.updateUserState', updateUserState);
+        // $(document.body).on('scrollcontent.transfer', onTransfer);
+        // $(document.body).on('scrollcontent.searchUserChat', searchUserChat);
+
+        // $(document.body).tr
 
         // 拉黑/星标
         $rootNode.find('.js-addButton').on('click','.js-goOut', function(event) {
             var $self = $(this) ,
                 type = $self.attr('data-type') ,
                 handleType = $self.attr('data-handle') ;
-            updateUserState(type,handleType,updateHeaderTag);
+
+            if (!!!type && !!!handleType) {
+              getAdminList(userInfo.sender, onTransfer);
+            } else {
+              updateUserState(type,handleType,updateHeaderTag);
+            }
         })
 
         // 滚动加载分页
@@ -222,6 +283,11 @@ function Content(node,core,window) {
 
             if ($(this).scrollTop() === 0) getChatListByOnline('chat', parseTpl);
         });
+
+        // // 请求其他在线客服列表
+        // $rootNode.find('.js-transfer').on('click', function() {
+        //     getAdminList(userInfo.sender, onTransfer);
+        // });
     };
 
     var initPlugsin = function() {
@@ -235,7 +301,6 @@ function Content(node,core,window) {
     };
 
     init();
-
 };
 
 module.exports = Content;

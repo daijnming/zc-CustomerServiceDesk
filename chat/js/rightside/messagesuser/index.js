@@ -40,6 +40,7 @@ var FastMsgModal =function(node,core,config) {
 	var onRightRepToOut = function(){
 		var val = $(this).html();
 		// console.log(val);
+		//暴露接口给文本框输入
 		$(document.body).trigger("rightside.onSelectedByFastRelpy",[{
 				'data':val
 		}]);

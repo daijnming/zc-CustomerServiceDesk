@@ -41,13 +41,13 @@ var ProfileUser = function(node,core,userData) {
 			//有数据再添加dom
 			if(data){
 				//客户资料背景清除
-				$(node).removeClass('showBg');
+				$(node).html('').removeClass('showBg');
 				loadFile.load(global.baseUrl+'views/rightside/profileUser.html').then(function(value){
 					//对话页进行调整
 					// data.userData['visitUrl']='baidu.com';
 					// data.userData['visitTitle']='百度百度明天星百度百度明天星期三还是要上班期三还是要上班';
-
 					//组装对话页
+					console.log(data);
 					data.userData["visit"] = onVisitHandle(data.userData['visitUrl'],data.userData['visitTitle']);
 					var _html = doT.template(value)({
 							'item':data.userData
@@ -71,6 +71,9 @@ var ProfileUser = function(node,core,userData) {
 	};
 	var bindLitener = function() {
 		// $(document.body).on("RightSide.onload",onloadHandler);
+		$(node).delegate('click','.js-userTnp',function(){
+			// console.log('dd');
+		});
 
 	};
 	var initConfig = function(){
