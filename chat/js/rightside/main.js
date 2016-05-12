@@ -62,6 +62,8 @@ function RightSide(node,core,window) {
     $("#clientSystem").css('height',newHeight-52 +'px');
     $("#clientSysIframe").css('height',newHeight-52 +'px');
 
+    $('.js-tab-pane#profileuser').css('height',newHeight-100+'px');
+
 	};
   //上方按钮点击事件
   var onTopWrapClick = function(evn){
@@ -86,7 +88,6 @@ function RightSide(node,core,window) {
   var changeRightTabOuter = function(){
 
   };
-
 	var bindListener = function() {
     $(window).on('core.onload',onloadHandler);
     $(tabSwitchBtn).on('click','li',onTopWrapClick);
@@ -96,7 +97,6 @@ function RightSide(node,core,window) {
 	var initPlugsin = function() {
         messageUser(node,core,config);
         homeuser(node,core,config);
-        // profileuser($('.js-tab-pane#profileuser'),core);
 	};
   //初始化接口
   var initInterface = function(){
@@ -104,6 +104,9 @@ function RightSide(node,core,window) {
   };
 
 	var init = function() {
+
+    $('.js-tab-pane#profileuser').addClass('showBg');
+
 		parseDOM();
 		bindListener();
 		initPlugsin();

@@ -58,10 +58,8 @@ function TextArea(node,core,window){
         $node.find("img.js-my-logo").attr("src",data.face);
         $node.find(".js-customer-service").html(data.name);
     };
-
+ 
     var onSelected = function(evt,data){
-        
-    
         if(data.from=='online'){console.log(data.from);
             $node.find(".js-botTextBox").show();
         }else if(data.from=='history'){console.log(data.from);

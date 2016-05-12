@@ -13,101 +13,9 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
     Global.map = Global.map || {};
     Global.map[uid] = Global.map[uid] || {};*/
     var apihost = "http://test.sobot.com/chat/";
-	var uploadOption = {//上传附件
-        action: apihost+"webchat/fileupload.action",
-        name: "file",
-        autoSubmit: true, 
-        data:{
-          type: "msg",
-          countTag: 0
-        },
-        responseType:"JSONP",
-        contentType:"application/x-www-form-urlencoded; charset=utf-8",
-        onChange: function (file, extension){//file文件名称，extension扩展名
-        	//if(source==0){
-	        	if (!(extension && /^(jpg|JPG|png|PNG|gif|GIF|txt|TXT|DOC|doc|docx|DOCX|pdf|PDF|ppt|PPT|pptx|PPTX|xls|XLS|xlsx|XLSX|RAR|rar|zip|ZIP|mp3|MP3|mp4|MP4|wma|WMA|wmv|WMV|rmvb|RMVB)$/.test(extension))) {
-	        		 $.amaran({
-	        	            content:{
-	        	                message:'格式不支持!',
-	        	                size:'请上传正确的文件格式',
-	        	                file:'',
-	        	                icon:'fa fa-times'
-	        	            },
-	        	            theme:'default error',
-	        	            position:'bottom right',
-	        	            inEffect:'slideRight',
-	        	            outEffect:'slideBottom'
-	        	       });
-	                return false;
-	            }
-        	
-	    
-    
-	    },
-	    onSubmit: function (file, extension, base64file){
-	    	var fileTypeReg = /\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/;
-		 
-	          //uid = $("[class='user active']").attr('uid')
-	         // cid = $("[class='user active']").attr('cid');
-	         // usource = $("[class='user active']").attr('usource');
-
-	         // Global.map[$("[class='user active']").attr('uid')].count = Global.map[$("[class='user active']").attr('uid')].count || 0;
-
-	        //  if (fileTypeReg.test(file)) Global.map[$("[class='user active']").attr('uid')].count++;
-	        //  uploadOption.data.source = Global.usource;
-	        //  uploadOption.data.countTag = Global.map[uid].count;
-
-	        	if(extension && /^(jpg|JPG|png|PNG|gif|GIF)$/.test(extension))
-	        	{
-					//去除admin/
-	        		//var con = '<img src="img/upImgLoad.png" class="webchat_img_upload upNowImg">';
-	        		 
-	        	showMsg(uid,"daijm","img/qqarclist/jianjiao.gif","",null,"<img src='img/appType.png'>",base64file);//显示气泡
-	        	}
-	        	//else
-	        	//{console.log(2);
-	        	//	var oMsgDom = '<div class="systeamTextBox systeamNowText"><p class="systeamText">正在上传 '+ file +'</p></div>';
-	        	//	$node.find(".panel-body").append(oMsgDom);
-	        		//$node.find('.scrollBoxParent').scrollTop(999999);
-	        	//}
-	    },
-	    onComplete: function (file,response) {
-			 var countTag = 0,
-	              res,
-	              url, 
-	              size;
-
-	    		if (typeof response == 'string') {
-	                res = JSON.parse(response);
-	                url = res.url;
-	    		    countTag = parseInt(res.countTag) - 1;
-	    		}else{
-	    			url = response.url;
-	    		}
-
-
-	        	size = response.filesize;
-	        	if (size==false) {
-	        		 $.amaran({ 
-	     	            content:{
-	     	                message:'所传文件过大!',
-	     	                size:'',
-	     	                file:'',
-	     	                icon:'fa fa-times'
-	     	            },
-	     	            theme:'default error',
-	     	            position:'bottom right',
-	     	            inEffect:'slideRight',
-	     	            outEffect:'slideBottom'
-	     	       });
-	        		 return;
-	        	 }
-
-	        	 imgCallBack(uid, url, cid, countTag);
-	      
-	    } 
-    
-	}
+	 var parseDOM = function() {
+        $node = $(node);
+    };
 
 	/*
 	*uploadBtn 附件按钮
@@ -136,7 +44,104 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 		}
 	};
 	var onAjaxUploadUpHandler=function(){
+		var uploadBtn=$node.find(".js-upload");
+		var uploadOption = {//上传附件
+	        action: apihost+"webchat/fileupload.action",
+	        name: "file",
+	        autoSubmit: true, 
+	        data:{
+	          type: "msg",
+	          countTag: 0
+	        },
+	        responseType:"JSONP",
+	        contentType:"application/x-www-form-urlencoded; charset=utf-8",
+	        onChange: function (file, extension){//file文件名称，extension扩展名
+	        	//if(source==0){
+		        	if (!(extension && /^(jpg|JPG|png|PNG|gif|GIF|txt|TXT|DOC|doc|docx|DOCX|pdf|PDF|ppt|PPT|pptx|PPTX|xls|XLS|xlsx|XLSX|RAR|rar|zip|ZIP|mp3|MP3|mp4|MP4|wma|WMA|wmv|WMV|rmvb|RMVB)$/.test(extension))) {
+		        		 $.amaran({
+		        	            content:{
+		        	                message:'格式不支持!',
+		        	                size:'请上传正确的文件格式',
+		        	                file:'',
+		        	                icon:'fa fa-times'
+		        	            },
+		        	            theme:'default error',
+		        	            position:'bottom right',
+		        	            inEffect:'slideRight',
+		        	            outEffect:'slideBottom'
+		        	       });
+		                return false;
+		            }
+	        	
+		    
+	    
+		    },
+		    onSubmit: function (file, extension, base64file){
+		    	var fileTypeReg = /\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/;
+			 
+		          //uid = $("[class='user active']").attr('uid')
+		         // cid = $("[class='user active']").attr('cid');
+		         // usource = $("[class='user active']").attr('usource');
+
+		         // Global.map[$("[class='user active']").attr('uid')].count = Global.map[$("[class='user active']").attr('uid')].count || 0;
+
+		        //  if (fileTypeReg.test(file)) Global.map[$("[class='user active']").attr('uid')].count++;
+		        //  uploadOption.data.source = Global.usource;
+		        //  uploadOption.data.countTag = Global.map[uid].count;
+
+		        	if(extension && /^(jpg|JPG|png|PNG|gif|GIF)$/.test(extension))
+		        	{
+						//去除admin/
+		        		//var con = '<img src="img/upImgLoad.png" class="webchat_img_upload upNowImg">';
+		        		 
+		        	showMsg(uid,"daijm","img/qqarclist/jianjiao.gif","",null,"<img src='img/appType.png'>",base64file);//显示气泡
+		        	}
+		        	//else
+		        	//{console.log(2);
+		        	//	var oMsgDom = '<div class="systeamTextBox systeamNowText"><p class="systeamText">正在上传 '+ file +'</p></div>';
+		        	//	$node.find(".panel-body").append(oMsgDom);
+		        		//$node.find('.scrollBoxParent').scrollTop(999999);
+		        	//}
+		    },
+		    onComplete: function (file,response) {
+				 var countTag = 0,
+		              res,
+		              url, 
+		              size;
+
+		    		if (typeof response == 'string') {
+		                res = JSON.parse(response);
+		                url = res.url;
+		    		    countTag = parseInt(res.countTag) - 1;
+		    		}else{
+		    			url = response.url;
+		    		}
+
+
+		        	size = response.filesize;
+		        	if (size==false) {
+		        		 $.amaran({ 
+		     	            content:{
+		     	                message:'所传文件过大!',
+		     	                size:'',
+		     	                file:'',
+		     	                icon:'fa fa-times'
+		     	            },
+		     	            theme:'default error',
+		     	            position:'bottom right',
+		     	            inEffect:'slideRight',
+		     	            outEffect:'slideBottom'
+		     	       });
+		        		 return;
+		        	 }
+
+		        	 imgCallBack(uid, url, cid, countTag);
+		      
+		    } 
+	    
+		}
 		new AjaxUpload(uploadBtn, uploadOption);
+
 	};
 	var bindLitener = function() {
         $(node).find('.js-upload').on("click",onFormDataUpHandler);//使用formData上传附件
@@ -149,7 +154,7 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 		var obj = $('.mainNav #users .active')
 		// ,
 		// 		uid = Global.uid || uid,
-		// 		cid = Global.cid || cid;
+		// 		cid = Global.cid || cid; 
 
 		var resulturl = url.substr(url.lastIndexOf('\.')+1,url.length);
 		var resultName = url.substr(url.lastIndexOf('\/')+1,url.length);
