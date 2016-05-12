@@ -91,7 +91,7 @@ function TextArea(node,core,window){
         $(document.body).on('leftside.onselected',onSelected);//监听历史用户、在线用户，控制输入框
         $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);//监听快捷回复
         $(document.body).on('rightside.onselectedmsg',onIntelligencereplyHandler);//监听智能回复
-        $(document.body).on("resize",botTextBoxPosition);//控制输入框的位置
+        $(window||document.body).on("resize",botTextBoxPosition);//控制输入框的位置
         $node.find(".js-btnSend").on("click",onbtnSendHandler);//发送按钮
         $sendMessage.on("keydown",onEnterSendHandler);
         /*
@@ -107,6 +107,9 @@ function TextArea(node,core,window){
         global = core.getGlobal();
         initFace();
         uploadFile();
+        //console.log(perfectScrollbar);
+        //$node.find(".item").perfectScrollbar();
+       
     };
 
     var initFace = function() {
@@ -147,6 +150,7 @@ function TextArea(node,core,window){
 		
 	};
     var botTextBoxPosition=function(){
+        console.log(1)
             $('.scrollBoxParent').height(($(window).height() - (50 + 52 + 230))+'px');
             $(".js-botTextBox").css("bottom","-230px")
     };
