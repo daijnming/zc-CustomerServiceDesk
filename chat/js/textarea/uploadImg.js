@@ -1,6 +1,6 @@
 function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片按钮，oChat获取用户信息
 	var AjaxUpload=require('../util/upload.js');//上传附件 插件
-	var showMsg=require('./showMsg.js');//会话气泡
+	//var showMsg=require('./showMsg.js');//会话气泡
 	var uid="daijm";
 	//var uid = oChat.attr("uid");
 	//var cid = oChat.attr("cid");
@@ -23,7 +23,7 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
         },
         responseType:"JSONP",
         contentType:"application/x-www-form-urlencoded; charset=utf-8",
-        onChange: function (file, extension){//file文件名称，
+        onChange: function (file, extension){//file文件名称，extension扩展名
         	//if(source==0){
 	        	if (!(extension && /^(jpg|JPG|png|PNG|gif|GIF|txt|TXT|DOC|doc|docx|DOCX|pdf|PDF|ppt|PPT|pptx|PPTX|xls|XLS|xlsx|XLSX|RAR|rar|zip|ZIP|mp3|MP3|mp4|MP4|wma|WMA|wmv|WMV|rmvb|RMVB)$/.test(extension))) {
 	        		 $.amaran({
@@ -40,22 +40,7 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 	        	       });
 	                return false;
 	            }
-        	/*}else{
-        		if (!(extension && /^(jpg|JPG|png|PNG|gif|GIF)$/.test(extension))) {
-	        		 $.amaran({
-	        	            content:{
-	        	                message:'图片格式不支持!',
-	        	                size:'请上传jpg/png/gif格式图片',
-	        	                file:'',
-	        	                icon:'fa fa-times'
-	        	            },
-	        	            theme:'default error',
-	        	            position:'bottom right',
-	        	            inEffect:'slideRight',
-	        	            outEffect:'slideBottom'
-	        	       });
-	                return false;
-	            }*/
+        	
 	    
     
 	    },
@@ -92,13 +77,13 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 	              url, 
 	              size;
 
-	    			if (typeof response == 'string') {
-	              res = JSON.parse(response);
-	              url = res.url;
-	    			    countTag = parseInt(res.countTag) - 1;
-	    			}else{
-	    				  url = response.url;
-	    			}
+	    		if (typeof response == 'string') {
+	                res = JSON.parse(response);
+	                url = res.url;
+	    		    countTag = parseInt(res.countTag) - 1;
+	    		}else{
+	    			url = response.url;
+	    		}
 
 
 	        	size = response.filesize;
@@ -123,36 +108,42 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 	    } 
     
 	}
+
 	/*
 	*uploadBtn 附件按钮
 	*uploadOption 上传参数
 	*/
-	if(!FormData){//支持formData则使用formData上传
-		$(node).find('.js-upload').on("click",function(){
+	var onFormDataUpHandler=function(){
+		if(FormData){//支持formData则使用formData上传
 			var oData = new FormData($(node).find(".js-fileinfo"));
-			oData.append("type", "msg");
-			oData.append("countTag", "0");
-			/*$.ajax({
-			  url: apihost+"webchat/fileupload.action",
-			  type: "POST",
-			  data: oData,
-			  processData: false,  // 告诉jQuery不要去处理发送的数据
-			  contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
-			  success: function(response) {
-					//var url = response.url ,
-					//		con = '<img src="img/upImgLoad.png" class="webchat_img_upload upNowImg">';
-					//showMsg(uid, myname, mylogo, con, null, null, response.url);
-					//imgCallBack(uid,url,cid);
-				}
-			});*/
-		})
-	}else{
+				oData.append("type", "msg");
+				oData.append("countTag", "0");
+				/*$.ajax({
+				  url: apihost+"webchat/fileupload.action",
+				  type: "POST",
+				  data: oData,
+				  processData: false,  // 告诉jQuery不要去处理发送的数据
+				  contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+				  success: function(response) {
+						//var url = response.url ,
+						//		con = '<img src="img/upImgLoad.png" class="webchat_img_upload upNowImg">';
+						//showMsg(uid, myname, mylogo, con, null, null, response.url);
+						//imgCallBack(uid,url,cid);
+					}
+				});*/
+		}else{
+			onAjaxUploadUpHandler();
+		}
+	};
+	var onAjaxUploadUpHandler=function(){
 		new AjaxUpload(uploadBtn, uploadOption);
 	};
+	var bindLitener = function() {
+        $(node).find('.js-upload').on("click",onFormDataUpHandler);//使用formData上传附件
+      	
+    };
 
-
-
-	function imgCallBack(uid,url,cid){
+	var imgCallBack=function(uid,url,cid){
 
 		// 当前对话用户的标签
 		var obj = $('.mainNav #users .active')

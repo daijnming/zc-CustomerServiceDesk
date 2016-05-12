@@ -62,21 +62,23 @@ function TextArea(node,core,window){
     var onSelected = function(evt,data){
         
     
-        if(data.from=='online'){
+        if(data.from=='online'){console.log(data.from);
             $node.find(".js-botTextBox").show();
-        }else if(data.from=='history'){
+        }else if(data.from=='history'){console.log(data.from);
             $node.find(".js-botTextBox").hide();
         }
     };
-    var onQuickreplyHandler=function(data){
-        //$node.find(".js-sendMessage").html(data.answer)
+    var onQuickreplyHandler=function(evn,data){
+        alert()
+        console.log(data.data);
+        $node.find(".js-sendMessage").html(data.data)
     };
    
     var bindLitener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
         $(document.body).on('leftside.onselected',onSelected);//监听历史用户、在线用户，控制输入框
-        //$(document.body).on('rightside.lalalala',onQuickreplyHandler);//监听快捷回复
+        $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);//监听快捷回复
         $node.find(".js-btnSend").on("click",onbtnSendHandler);//发送按钮
         /*
         *
