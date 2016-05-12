@@ -7,7 +7,6 @@ function TextArea(node,core,window){
 	var apihost = "http://test.sobot.com/chat/";
     var global;
     var $node;
-    var uid="daijm";
 
     var parseDOM = function() {
         $node = $(node);
@@ -23,6 +22,15 @@ function TextArea(node,core,window){
             case 102:
                 newUserMessage(data);
                 break;
+        }
+    };
+    var onSelected = function(evt,data){
+        global.uid=data.data.uid;
+        global.cid=data.data.cid; 
+        if(data.data.from=='online'){
+            $node.find(".js-botTextBox").show();
+        }else if(data.data.from=='history'){
+            $node.find(".js-botTextBox").hide();
         }
     };
     var onEmotionClickHandler = function(){
@@ -42,16 +50,21 @@ function TextArea(node,core,window){
         $(dataId).show();
     };
     var onbtnSendHandler=function(){
-         
+       
         var str = $sendMessage.val();
         str=ZC_Face.analysis(str);//str已做表情处理
-        $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到后台
+        $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
             'answer':str,
-            'uid':uid
+            'uid':global.uid,
+            'cid':global.cid
         }]);
+        
         $sendMessage.val("");//清空待发送框
         //showMsg(uid,"daijm","img/qqarclist/jianjiao.gif",str,null,null,null);//显示气泡
     };
+    var onIntelligencereplyHandler=function(evt,data){//智能回复
+        $sendMessage.val(data.data)
+    }
     var onEnterSendHandler=function(evt){
             //监听文本框回车
             if(evt.keyCode == 13){
@@ -63,18 +76,12 @@ function TextArea(node,core,window){
             }
          
     };
-    var onloadHandler = function(evt,data) {
+    var onloadHandler = function(evt,data) { 
         $node.find("img.js-my-logo").attr("src",data.face);
         $node.find(".js-customer-service").html(data.name);
     };
  
-    var onSelected = function(evt,data){
-        if(data.data.from=='online'){
-            $node.find(".js-botTextBox").show();
-        }else if(data.data.from=='history'){
-            $node.find(".js-botTextBox").hide();
-        }
-    };
+
     var onQuickreplyHandler=function(evn,data){
         $sendMessage.val(data.data)
     };
@@ -83,6 +90,7 @@ function TextArea(node,core,window){
         $(document.body).on("core.receive",onReceive);
         $(document.body).on('leftside.onselected',onSelected);//监听历史用户、在线用户，控制输入框
         $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);//监听快捷回复
+        $(document.body).on('rightside.onselectedmsg',onIntelligencereplyHandler);//监听智能回复
         $(document.body).on("resize",botTextBoxPosition);//控制输入框的位置
         $node.find(".js-btnSend").on("click",onbtnSendHandler);//发送按钮
         $sendMessage.on("keydown",onEnterSendHandler);
