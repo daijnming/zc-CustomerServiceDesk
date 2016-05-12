@@ -100,3 +100,6 @@ ul{
 
 
 /****homeuser css***/
+.js-tab-pane#profileuser.showBg{
+  background:url(../assets/images/noOnlinePerson.png) center  no-repeat
+}
