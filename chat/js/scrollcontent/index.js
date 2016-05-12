@@ -207,7 +207,7 @@ function Content(node,core,window) {
 
         $(document.body).on('scrollcontent.updateUserState', updateUserState);
         $(document.body).on('scrollcontent.transfer', onTransfer);
-        $(document.body).on('scrollcontent.searchUserChat', searchUserChat);
+        //$(document.body).on('scrollcontent.searchUserChat', searchUserChat);
 
         // 拉黑/星标
         $rootNode.find('.js-addButton').on('click','.js-goOut', function(event) {

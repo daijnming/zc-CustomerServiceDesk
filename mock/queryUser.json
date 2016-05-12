@@ -1,0 +1,88 @@
+{
+    "robotSize": 0,
+    "waitSize": 35,
+    "list": [
+        {
+            "id": "22e4b47f4ac3403d87f0c200a137725b",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分33秒",
+            "name": "北京市联通",
+            "lastTime": "2016-05-12 17:10:20",
+            "visitTitle": ""
+        }, {
+            "id": "d91f6d72bfb146e3bd22ea0262d52203123",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分31秒",
+            "name": "北京市联通",
+            "lastTime": "2016-05-12 17:10:22",
+            "visitTitle": ""
+        }, {
+            "id": "d91f6d72bfb146e3bd22ea0262d52203125",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分24秒",
+            "name": "北京市海淀区联通",
+            "lastTime": "2016-05-12 17:10:29",
+            "visitTitle": ""
+        }, {
+            "id": "d91f6d72bfb146e3bd22ea0262d52203126",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分14秒",
+            "name": "北京市海淀区联通",
+            "lastTime": "2016-05-12 17:10:39",
+            "visitTitle": ""
+        }, {
+            "id": "d91f6d72bfb146e3bd22ea0262d52203128",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分6秒",
+            "name": "北京市海淀区联通",
+            "lastTime": "2016-05-12 17:10:47",
+            "visitTitle": ""
+        }, {
+            "id": "d91f6d72bfb146e3bd22ea0262d52203128",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分6秒",
+            "name": "北京市海淀区联通",
+            "lastTime": "2016-05-12 17:10:47",
+            "visitTitle": ""
+        }, {
+            "id": "d91f6d72bfb146e3bd22ea0262d52203128",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分6秒",
+            "name": "北京市海淀区联通",
+            "lastTime": "2016-05-12 17:10:47",
+            "visitTitle": ""
+        }, {
+            "id": "d91f6d72bfb146e3bd22ea0262d52203128",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分6秒",
+            "name": "北京市海淀区联通",
+            "lastTime": "2016-05-12 17:10:47",
+            "visitTitle": ""
+        }, {
+            "id": "d91f6d72bfb146e3bd22ea0262d52203128",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分6秒",
+            "name": "北京市海淀区联通",
+            "lastTime": "2016-05-12 17:10:47",
+            "visitTitle": ""
+        }, {
+            "id": "d91f6d72bfb146e3bd22ea0262d52203128",
+            "groupId": "",
+            "groupName": null,
+            "remainTime": "0小时1分6秒",
+            "name": "北京市海淀区联通",
+            "lastTime": "2016-05-12 17:10:47",
+            "visitTitle": ""
+        }
+    ],
+    "countPage": 10
+}
