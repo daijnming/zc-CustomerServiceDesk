@@ -173,10 +173,10 @@
                                     <textarea class="animatedTextArea form-control msg-send-input sendMessage js-sendMessage" maxlength="1024"  placeholder="请输入.." style="resize: none;max-height: 54px;"  robot="other" ></textarea>
                                         <div id="faceGroupTarea" style="display:none;">
 
-                                            <div id="faceGroup" class="groupChildren"></div>
+                                            <div id="faceGroup" class="groupChildren" tabindex="5000"></div>
                                             <div id="emojiGroup" class="groupChildren" style="display:none"></div>
                                             <ul class="GroupTab">
-                                                <li class="icoLi active" data-src="#faceGroup">默认表情</li>
+                                                <li class="firsticoLi icoLi active" data-src="#faceGroup">默认表情</li>
                                                 <li class="icoLi" data-src="#emojiGroup">符号表情</li>
                                             </ul>
                                          </div>
@@ -594,6 +594,7 @@
 
         <script src="assets/jslib/jquery-1.8.3.min.js"></script>
         <script src="js/lib/doT.min.js"></script>
+        <script src="js/lib/divscroll.js"></script>
         <script src="dest/js/entrance.js"></script>
 
         <!-- <script src="js/quickReply.js?v=20150828"></script> -->

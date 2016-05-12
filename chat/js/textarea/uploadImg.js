@@ -23,7 +23,7 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 	*/
 	var onFormDataUpHandler=function(){
 		if(FormData){//支持formData则使用formData上传
-			var oData = new FormData($(node).find(".js-fileinfo"));
+			var oData = new FormData($node.find(".js-fileinfo"));
 				oData.append("type", "msg");
 				oData.append("countTag", "0");
 				/*$.ajax({
@@ -72,7 +72,7 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 		        	       });
 		                return false;
 		            }
-	        	
+	        	//}
 		    
 	    
 		    },
@@ -135,7 +135,7 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 		        		 return;
 		        	 }
 
-		        	 imgCallBack(uid, url, cid, countTag);
+		        	 //imgCallBack(uid, url, cid, countTag);
 		      
 		    } 
 	    
@@ -144,7 +144,7 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 
 	};
 	var bindLitener = function() {
-        $(node).find('.js-upload').on("click",onFormDataUpHandler);//使用formData上传附件
+        $node.find('.js-upload').on("click",onFormDataUpHandler);//使用formData上传附件
       	
     };
 
@@ -197,12 +197,17 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 			msg = "<img style='vertical-align: middle; margin-right: 2px;' src='http://img.sobot.com/yun/attachment/fileTypeImages/"+icon+"'><a  style='font-size:10px;' target='_black' href= '"+url+"'>"+resultName+"</a>";
 
 			$("#chat_"+uid+" .systeamNowText").remove();
-			showMsg(uid,myname,mylogo,content);
+			//showMsg(uid,myname,mylogo,content);
 		}
 
-		send(cid,msg);
-		$unread = $("#chat_"+uid+" .unread_divider");
-		$unread.remove();
+		//send(cid,msg);
+		//$unread = $("#chat_"+uid+" .unread_divider");
+		//$unread.remove();
 	}
+	var init = function() {
+        parseDOM();
+        bindLitener();
+       
+    };
 }
 module.exports = uploadImg;
