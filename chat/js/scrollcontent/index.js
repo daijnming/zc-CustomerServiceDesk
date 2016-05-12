@@ -33,7 +33,8 @@ function Content(node,core,window) {
             chatList : 'views/scrollcontent/list.html',
             chatItem : 'views/scrollcontent/item.html',
             chatItemByAdmin : 'views/scrollcontent/itemByAdmin.html',
-            adminTable: 'views/scrollcontent/adminTable.html'
+            adminTable: 'views/scrollcontent/adminTable.html' ,
+            userReadySend: 'views/scrollcontent/userReadySend.html'
         }
     };
 
@@ -273,6 +274,10 @@ function Content(node,core,window) {
 
         108 : function(data) {
             data.t = new Date(data.t).toLocaleString().split(' ')[1];
+        },
+
+        111: function(data) {
+
         }
     }
 
@@ -285,15 +290,30 @@ function Content(node,core,window) {
 
     var userPushMessage = function(data) {
         parseChat[data.type] && parseChat[data.type](data);
-        // 用户发送消息
-        loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
-            var _html;
-            _html = doT.template(tpl)({
-                data : data
-            });
 
-            $rootNode.find('#chat').find('.js-panel-body').append(_html);
-        });
+        if (data.type === 111) {
+          console.log(data);
+          console.log(' 用户' + data.uname +'正在:' + data.description + ' :' + data.content);
+
+          loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
+              var _html;
+              _html = doT.template(tpl)({
+                  data : data
+              });
+
+              $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
+          });
+        } else {
+          // 用户发送消息
+          loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
+              var _html;
+              _html = doT.template(tpl)({
+                  data : data
+              });
+
+              $rootNode.find('#chat').find('.js-panel-body').append(_html);
+          });
+        }
     };
 
     var adminPushMessage = function(data) {
