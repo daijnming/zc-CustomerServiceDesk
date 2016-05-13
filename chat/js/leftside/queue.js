@@ -18,16 +18,18 @@ function Queue(core,window) {
         $refreshBtn,
         $tableOuter,
         $input;
-    var urlList = ['/chat/admin/queryUser.action',''];
-    var TEMPLATELIST = ['views/leftside/queueitem.html'];
+    var urlList = ['/chat/admin/queryUser.action','/chat/admin/queryVisitUser.action'];
+    var TEMPLATELIST = ['views/leftside/queueitem.html',''];
     var totalPage,
         currentPage = 1;
     this.token = +new Date();
 
     var onTabClickHandler = function(e) {
         var elm = e.currentTarget;
-        currentPage = 1;
         var index = $(elm).attr("data-index");
+        currentPage = 1;
+        currentTab = index;
+        fetchData();
     };
 
     var initContent = function(data,promise) {
@@ -45,6 +47,7 @@ function Queue(core,window) {
     };
 
     var fetchData = function() {
+        console.log('currentTab' + currentTab);
         loadFile.load(global.baseUrl + TEMPLATELIST[currentTab]).then(getQueryUsers).then(function(ret,promise) {
             totalPage = ret.data.countPage;
             $totalpage.html(totalPage);
