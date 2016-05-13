@@ -33,127 +33,6 @@ var FastMsgModal = function(node,core,config) {
     // }
     // config.id = getQueryStr("id");
 
-<<<<<<< HEAD
-	var parseDOM = function() {
-		oShortcut = $(node).find('.js-panel-body .js-tab-pane#messagesuser .js-shortcut');
-		oRightQuickLeft = $(node).find('.js-rightQuickLeft ul');
-		oRightQuickRight = $(node).find('.js-rightQuickLRight ul');
-		oShadowLayer = $('.zc-shadow-layer .modal-dialog');
-	};
-	//点击快捷回复进行回复
-	var onRightRepToOut = function(){
-		var val = $(this).html();
-		// console.log(val);
-		//暴露接口给文本框输入
-		$(document.body).trigger("rightside.onSelectedByFastRelpy",[{
-				'data':val
-		}]);
-	};
-	//点击获取快捷回复
-	var onTapGetRightRep = function(){
-		var $this = $(this);
-		var oLi =$(oRightQuickRight).find('li');
-		$(oLi).removeClass('active');
-		for(var i=0;i<oLi.length;i++){
-			if($(oLi[i]).attr('gid')==$this.attr('gid')){
-				$(oLi[i]).addClass('active');
-			}
-		}
-	};
-	//重新加载快捷回复分组
-	var onReLoadRightGroup = function(){
-		$.ajax({
-			type:"post",
-			cache:false,
-			data:{
-				'userId':config.id
-			},
-			url:"reply/replyGrouplist.action",
-			dataType:"json",
-			success:function(data){
-				onRightGroup(data);
-			}
-		});
-	};
-	//加载右侧快捷分组
-	var onRightGroup = function(data){
-		//置空
-		$(oRightQuickLeft).html('');
-		$(oRightQuickRight).html('');
-		loadFile.load(global.baseUrl+'views/rightside/fastreplyleft.html').then(function(value){
-				var _html = doT.template(value)({
-					'list':data
-				});
-				$(oRightQuickLeft).append(_html);
-		});
-		loadFile.load(global.baseUrl+'views/rightside/fastreplyright.html').then(function(value){
-				var _html = doT.template(value)({
-					'list':data
-				});
-				$(oRightQuickRight).append(_html);
-		});
-	};
-	//初始化数据
-	var initData = function(){
-		var promise =  new Promise();
-		$.ajax({
-						type:"post",
-						cache:false,
-						data:{
-							'userId':config.id
-						},
-						url:"reply/replyGrouplist.action",
-						dataType:"json",
-						success:function(data){
-							config.fastData = data;
-							//
-							if(!data)
-							{
-									$(node).find('.js-rightQuickLeft ul').html('');
-									$(node).find('.js-rightQuickRight ul').html('');
-									return ;
-							}
-							loadFile.load(global.baseUrl+"views/rightside/fastreplylayer.html").then(function(value){
-
-									var _html = doT.template(value)({
-										'list':data
-									});
-									 outer.dialog = new Dialog({
-										'title':'快捷回复',
-										'footer':false
-									});
-									outer.dialog.setInner(_html);
-									outer.shadowNode = outer.dialog.getOuter();
-									promise.resolve();
-							});
-						}
-					});
-					return promise;
-	};
-	//弹出快捷回复
-	var onShortCutFun = function(){
-		FastLayer(outer.shadowNode,core,config);
-		outer.dialog.show();
-	};
-	var initPlugsin = function(){
-		onRightGroup(config.fastData);
-	};
-	var bindLsitener = function() {
-		$(oRightQuickLeft).on('click','li',onTapGetRightRep);
-		$(oRightQuickRight).on('click','li',onRightRepToOut);
-		$(oShortcut).on('click',onShortCutFun);//点击快捷回复
-		$(document.body).on('rightside.oReLoadRightGroup',onReLoadRightGroup);
-
-	};
-	var init = function() {
-		parseDOM();
-		bindLsitener();
-		initPlugsin();
-	};
-	initData().then(function(){
-			init();
-	});
-=======
     var parseDOM = function() {
         oShortcut = $(node).find('.js-panel-body .js-tab-pane#messagesuser .js-shortcut');
         oRightQuickLeft = $(node).find('.js-rightQuickLeft ul');
@@ -251,7 +130,7 @@ var FastMsgModal = function(node,core,config) {
     initData().then(function() {
         init();
     });
->>>>>>> 72e7e76f3ff131b40bbf1af8188af2a8cfc8574c
+
 };
 
 module.exports = FastMsgModal;
