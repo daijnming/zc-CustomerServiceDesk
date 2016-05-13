@@ -11,18 +11,19 @@ function HeartBeat() {
             'data' : {},
             'dataType' : 'json'
         }).success(function() {
-            setTimeout(send,1000,TEN_SECOND);
+            setTimeout(send,TEN_SECOND);
         }).fail(function(ret) {
             count++;
             if(count >= 6) {
                 $(document.body).trigger("emergency.netclose");
             } else {
-                setTimeout(send,1000,TEN_SECOND);
+                setTimeout(send,TEN_SECOND);
             }
         });
     };
 
     this.start = function() {
+        send();
     };
 };
 
