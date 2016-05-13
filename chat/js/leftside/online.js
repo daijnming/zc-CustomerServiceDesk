@@ -12,7 +12,6 @@ function Online(node,core,window) {
     var loadFile = require('../util/load.js')();
     var newUserMessage = function(data) {
         var uid = data.uid;
-        console.log('data',data)
         if(data.isTransfer === undefined) {
             data.isTransfer = data.chatType;
         }

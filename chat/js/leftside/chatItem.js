@@ -34,22 +34,23 @@ function Item(data,core,outer,from) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var msg = list[i];
-            if(msg.cid !== data.cid || msg.type != 103) {
+            console.log('msg',msg.cid,data.cid);
+            if((msg.cid !== data.cid ) || msg.type != 103) {
                 continue;
             }
             unReadCount++;
+            var lastMessage = list.length > 0 ? list[list.length - 1] : null;
+            if(unReadCount > 0) {
+                $unRead.html(unReadCount).css({
+                    'visibility' : 'visible'
+                });
+            } else {
+                $unRead.css({
+                    'visibility' : 'hidden'
+                });
+            }
+            $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
         }
-        var lastMessage = list.length > 0 ? list[list.length - 1] : null;
-        if(unReadCount > 0) {
-            $unRead.html(unReadCount).css({
-                'visibility' : 'visible'
-            });
-        } else {
-            $unRead.css({
-                'visibility' : 'hidden'
-            });
-        }
-        $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
     };
     var onOffLine = function() {
         $node.find(".js-icon").addClass("offline");
