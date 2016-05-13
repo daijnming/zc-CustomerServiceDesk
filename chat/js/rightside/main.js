@@ -7,7 +7,7 @@ function RightSide(node,core,window) {
   var LocString = String(window.document.location.href);
   //左侧用户点击保存右侧相应tab选项卡
   //{uid:xx,tabId:xx,tabData:{}}
-  var saveSwitchTabBox=[];
+  var switchTabBox=[];
 
   function getQueryStr(str) {
 		var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
@@ -79,11 +79,22 @@ function RightSide(node,core,window) {
     $this.addClass('active').siblings('li').removeClass('active');
   };
 
+  //绑定右侧tab标签页
+  var onSwitchTabBox = function(data){
+
+  };
+
   var initData = function(data,userData){
       // console.log(userData);
       //初始化用户数据 -- 客户资料
       profileuser($('.js-tab-pane#profileuser'),core,userData);
+
+
+      onSwitchTabBox(userData);
+
+      console.log(userData);
   };
+
   //初始化右侧选项卡
   var changeRightTabOuter = function(){
 
@@ -98,6 +109,7 @@ function RightSide(node,core,window) {
         messageUser(node,core,config);
         homeuser(node,core,config);
 	};
+
   //初始化接口
   var initInterface = function(){
 

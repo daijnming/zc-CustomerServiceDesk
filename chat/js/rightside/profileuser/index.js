@@ -71,7 +71,7 @@ var ProfileUser = function(node,core,userData) {
 				type:'post',
 				url:oUrl,
 				data:sendData,
-				dataType:'JSONP',
+				dataType:'json',
 				success:function(data){
 					//如果编辑的是姓名字段 则要传值给左侧栏显示
 					if($(obj).hasClass('userNameDyy'))

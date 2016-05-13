@@ -41,7 +41,10 @@ var Fastlayer = function(node,core,config){
       oAddNewRep = $(fastNode).find('.js-addNewRep');
       oDialogArea = $(fastNode).find('.js-content');
   	};
-
+    //触发快捷回复更新
+    var onReLoadHandler = function(boo){
+      if(boo)$(document.body).trigger('rightside.oReLoadRightGroup');
+    };
     var onFastMouseOver = function(){
       var $this = $(this);
       $this.addClass('active').siblings('li').removeClass('active');
@@ -105,12 +108,12 @@ var Fastlayer = function(node,core,config){
 								type:"post",
 								url:url,
 								data:data,
-								dataType:"jsonp",
+								dataType:"json",
 								success:function(data){
 									if(data.status)
 									{
 										$this.parent('.detalBar').remove();
-										// This.load(true);
+										onReLoadHandler(true);
 									}
 								}
 							});
@@ -119,7 +122,6 @@ var Fastlayer = function(node,core,config){
 						{
 							$this.parent('.detalBar').remove();
 						}
-						// $('.quickLeft .addGroupBtn').show();
     }
   };
 
@@ -153,14 +155,15 @@ var Fastlayer = function(node,core,config){
           type:"post",
           url:url,
           data:data,
-          dataType:"jsonp",
+          dataType:"json",
           success:function(data){
             if(data.status)
             {
               var oLi = $this.parent('li');
               var oUl = $this.parents('ul');
               $(oUl).prepend(oLi);
-              // This.load(true);
+              onReLoadHandler(true);
+
             }
           }
         });
@@ -277,11 +280,11 @@ var Fastlayer = function(node,core,config){
                   'groupName':groupName,
                   'userId':id
                 },
-                dataType:"jsonp",
+                dataType:"json",
                 success:function(data){
                   if(data.status)
                   {
-                    alert('更新成功');
+                    onReLoadHandler(true);
                      $(obj).val(groupName);
                   }
                 }
@@ -297,11 +300,11 @@ var Fastlayer = function(node,core,config){
                   'groupName':groupName,
                   'userId':id
                 },
-                dataType:"jsonp",
+                dataType:"json",
                 success:function(data){
                   if(data.status)
                   {
-                    alert('新增成功');
+                    onReLoadHandler(true);
                   }
                 }
               });
@@ -327,16 +330,11 @@ var Fastlayer = function(node,core,config){
       								'value':oText,
       								'userId':id
       							},
-      							dataType:"jsonp",
+      							dataType:"json",
       							success:function(data){
       								if(data.status)
       								{
-                        alert('回复保存成功');
-      									// $this.html("保存");
-      									// $this.hide();
-      									// $this.nextAll().hide();
-      									// This.load(true);
-      									// $this.parents('.reply').find('.quickBtn').show();
+                        onReLoadHandler(true);
       								}
       							}
       						});
@@ -359,11 +357,11 @@ var Fastlayer = function(node,core,config){
       								'value':oText,
       								'userId':id
       							},
-      							dataType:"jsonp",
+      							dataType:"json",
       							success:function(data){
       								if(data.status)
       								{
-      									alert('回复添加成功');
+      									onReLoadHandler(true);
       								}
       							}
       						});
