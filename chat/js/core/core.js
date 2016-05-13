@@ -7,6 +7,8 @@ function Core(window) {
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var socket;
+    var audioNewMessage,
+        audioOnline;
     var defaultParams = {
         answer : "",
         answerType : "",
@@ -130,6 +132,9 @@ function Core(window) {
     };
 
     var systemMessageAdpater = function(value) {
+        if(value.type === 102) {
+            audioOnline.play();
+        }
         value.description = messageTypeConfig[value.type];
     };
     var messageAdapter = function(list) {
@@ -137,6 +142,7 @@ function Core(window) {
             len = list.length;i < len;i++) {
             var value = list[i];
             if(value.type === 103) {
+                audioNewMessage.play();
                 normalMessageAdapter(value);
             } else {
                 systemMessageAdpater(value);
@@ -192,6 +198,8 @@ function Core(window) {
         }
         initBasicInfo();
         socketFactory();
+        audioNewMessage = $("#audio1")[0];
+        audioOnline = $("#audio2")[0];
     };
 
     var init = function() {

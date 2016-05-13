@@ -27,7 +27,7 @@ function polling(global) {
             eventCache['receive'] && eventCache['receive'](arr);
         }).fail(function(ret,err) {
         });
-        setTimeout(start,2000);
+        setTimeout(start,1500);
     };
 
     this.on = on;
