@@ -4,7 +4,6 @@
  */
 
 function Item(data,core,outer,from) {
-    console.log(data);
     var node,
         $node,
         $unRead,
@@ -173,7 +172,22 @@ function Item(data,core,outer,from) {
 
     };
 
+    var onBlackListChange = function(evt,data) {
+        if($node.index() == 0) {
+            onRemove();
+        }
+    };
+
+    var onTransfer = function(evt,data) {
+        var uid = data.uid;
+        if(true) {
+            alert();
+            onRemove();
+        }
+    };
     var bindListener = function() {
+        $body.on("scrollcontent.onUpdateUserState",onBlackListChange);
+        $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);
         $node.on("click",onNodeClickHandler);
 

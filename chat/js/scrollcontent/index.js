@@ -24,17 +24,17 @@ function Content(node,core,window) {
                 }
             },
 
-            getOtherAdmin: 'admin/getOhterAdminList.action' ,
-            userTransfer : 'admin/transfer.action' ,
-            searchChat: 'admin/internalChat1.action'
+            getOtherAdmin : 'admin/getOhterAdminList.action',
+            userTransfer : 'admin/transfer.action',
+            searchChat : 'admin/internalChat1.action'
         },
 
         tpl : {
             chatList : 'views/scrollcontent/list.html',
             chatItem : 'views/scrollcontent/item.html',
             chatItemByAdmin : 'views/scrollcontent/itemByAdmin.html',
-            adminTable: 'views/scrollcontent/adminTable.html' ,
-            userReadySend: 'views/scrollcontent/userReadySend.html'
+            adminTable : 'views/scrollcontent/adminTable.html',
+            userReadySend : 'views/scrollcontent/userReadySend.html'
         }
     };
 
@@ -51,41 +51,45 @@ function Content(node,core,window) {
         uid : '088ad376b6514ed0a191067308c284fe000025',
         pid : '088ad376b6514ed0a191067308c284fe',
         sender : 'mTLX96VS13KSmF6VqxK9KBtavHt7fYVcV6Ekx3YuXvcoNskGFZk2xQ==',
-        userId: 'fdf2f6e709f7457aae9b9bd5afcb1f57' ,
-        cid: '2c24f755180b48408f658520c116d101',
+        userId : 'fdf2f6e709f7457aae9b9bd5afcb1f57',
+        cid : '2c24f755180b48408f658520c116d101',
         isStar : true,
         isBlack : true,
-        isTransfer: true
+        isTransfer : true
     }
+
+    // --------------------------- 接收推送函数 ---------------------------
+
+    $(document.body).on('textarea.send', function() {
+        console.log(arguments);
+        // 插入客服输入内容
+        // adminPushMessage(arguments[1]);
+    });
 
     // --------------------------- 推送函数 ---------------------------
 
     // 智能搜索事件
     var onSearchUserChat = function(data) {
-      $(document.body).trigger('scrollcontent.onSearchUserChat', [data]);
+        $(document.body).trigger('scrollcontent.onSearchUserChat',[data]);
     }
-
     // 暴露修改状态事件
-    var onUpdateUserState = function(type, handleType) {
-      $(document.body).trigger('scrollcontent.onUpdateUserState', [{
-        type: type ,
-        handleType: handleType
-      }]);
+    var onUpdateUserState = function(type,handleType) {
+        $(document.body).trigger('scrollcontent.onUpdateUserState',[{
+            type : type,
+            handleType : handleType
+        }]);
     }
-
     // 推送转接事件
-    var onTransfer = function(uid, uname) {
-      $(document.body).trigger('scrollcontent.onTransfer', [{
-        uid: uid ,
-        userName: uname
-      }]);
+    var onTransfer = function(uid,uname) {
+        $(document.body).trigger('scrollcontent.onTransfer',[{
+            uid : uid,
+            userName : uname
+        }]);
     }
-
-
     // --------------------------- http 请求 ---------------------------
 
     // 加载
-    var getChatListByOnline = function(type,callback, pageNo, pageSize) {
+    var getChatListByOnline = function(type,callback,pageNo,pageSize) {
 
         if( typeof arguments[0] === 'function') {
             callback = arguments[0];
@@ -123,17 +127,15 @@ function Content(node,core,window) {
             callback && callback(type,handleType);
         });
     }
-
-    var getAdminList = function(sender, callback) {
+    var getAdminList = function(sender,callback) {
         $.ajax({
             'url' : API.http.getOtherAdmin,
             'dataType' : 'json',
             'type' : 'get',
             'data' : {
-                uid: sender
+                uid : sender
             }
-        })
-        .success(function(ret) {
+        }).success(function(ret) {
             var dialog = new Dialog({
                 'title' : '转接给新的客服',
                 'footer' : false
@@ -156,57 +158,55 @@ function Content(node,core,window) {
             });
         });
     }
-
     // 转接
     var transfer = function(dialog) {
 
-      $(dialog.getOuter()).find('.js-transfer-href').on('click', function(){
-        var uid = $(this).attr('uid') ,
-            uname = $(this).attr('uname');
+        $(dialog.getOuter()).find('.js-transfer-href').on('click', function() {
+            var uid = $(this).attr('uid'),
+                uname = $(this).attr('uname');
 
-        console.log({
-            uid: userInfo.sender ,
-            cid: userInfo.cid,
-            joinUid: uid ,
-            userId: userInfo.userId ,
-            userName: uname
+            console.log({
+                uid : userInfo.sender,
+                cid : userInfo.cid,
+                joinUid : uid,
+                userId : userInfo.userId,
+                userName : uname
+            });
+
+            $.ajax({
+                'url' : API.http.userTransfer,
+                'dataType' : 'json',
+                'type' : 'get',
+                'data' : {
+                    uid : userInfo.sender,
+                    cid : userInfo.cid,
+                    joinUid : uid,
+                    userId : userInfo.userId,
+                    userName : uname
+                }
+            }).success(function(ret) {
+                console.log(ret);
+
+                if(ret.status === 1)
+                    onTransfer(uid,uname);
+            });
         });
-
-        $.ajax({
-            'url' : API.http.userTransfer,
-            'dataType' : 'json',
-            'type' : 'get',
-            'data' : {
-                uid: userInfo.sender ,
-                cid: userInfo.cid,
-                joinUid: uid ,
-                userId: userInfo.userId ,
-                userName: uname
-            }
-        }).success(function(ret) {
-            console.log(ret);
-
-            if (ret.status === 1) onTransfer(uid, uname);
-        });
-      });
     }
-
     var sendSearchUserChat = function() {
-      $rootNode.find('.formUser').on('click', function(){
-        var chatText = $(this).val();
-        searchUserChat(userInfo.sender, chatText, onSearchUserChat);
-      });
+        $rootNode.find('.formUser').on('click', function() {
+            var chatText = $(this).val();
+            searchUserChat(userInfo.sender,chatText,onSearchUserChat);
+        });
     }
-
     // 智能搜索
-    var searchUserChat = function(sender, requestText, callback) {
+    var searchUserChat = function(sender,requestText,callback) {
         $.ajax({
             'url' : API.http.searchChat,
             'dataType' : 'json',
             'type' : 'get',
             'data' : {
-                uid: sender ,
-                requestText: requestText
+                uid : sender,
+                requestText : requestText
             }
         }).success(function(ret) {
             console.log(ret);
@@ -243,24 +243,22 @@ function Content(node,core,window) {
     var updateHeaderTag = function(type,handleType) {
         $rootNode.find('.js-addButton').children('[data-type="' + type + '"]').removeClass('hide');
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
-
-        onUpdateUserState(type, handleType);
+        onUpdateUserState(type,handleType);
     }
-
     var initUserState = function(data) {
         $rootNode.find('.js-addButton').children('a').addClass('hide');
 
-        for (var k in data) {
+        for(var k in data) {
 
-          if (k === 'transfer') {
+            if(k === 'transfer') {
 
-            if (data[k]) $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
-          } else {
-            $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
-          }
+                if(data[k])
+                    $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
+            } else {
+                $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
+            }
         }
     }
-
     var parseChat = {
         102 : function(data) {
             data.userHeadImage = userSourceMap[data.source];
@@ -276,7 +274,7 @@ function Content(node,core,window) {
             data.t = new Date(data.t).toLocaleString().split(' ')[1];
         },
 
-        111: function(data) {
+        111 : function(data) {
 
         }
     }
@@ -284,35 +282,34 @@ function Content(node,core,window) {
     // 显示其他在线客服列表
     var showAdminList = function(data) {
 
-    }  
-
+    }
     // --------------------------- socket ---------------------------
 
     var userPushMessage = function(data) {
         parseChat[data.type] && parseChat[data.type](data);
 
-        if (data.type === 111) {
-          console.log(data);
-          console.log(' 用户' + data.uname +'正在:' + data.description + ' :' + data.content);
+        if(data.type === 111) {
+            console.log(data);
+            console.log(' 用户' + data.uname + '正在:' + data.description + ' :' + data.content);
 
-          loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
-              var _html;
-              _html = doT.template(tpl)({
-                  data : data
-              });
+            loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
+                var _html;
+                _html = doT.template(tpl)({
+                    data : data
+                });
 
-              $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
-          });
+                $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
+            });
         } else {
-          // 用户发送消息
-          loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
-              var _html;
-              _html = doT.template(tpl)({
-                  data : data
-              });
+            // 用户发送消息
+            loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
+                var _html;
+                _html = doT.template(tpl)({
+                    data : data
+                });
 
-              $rootNode.find('#chat').find('.js-panel-body').append(_html);
-          });
+                $rootNode.find('#chat').find('.js-panel-body').append(_html);
+            });
         }
     };
 
@@ -342,13 +339,13 @@ function Content(node,core,window) {
         global = core.getGlobal();
 
         // 初始化历史记录
-        getChatListByOnline('chat', parseTpl);
+        getChatListByOnline('chat',parseTpl);
 
         // 初始化用户状态
         initUserState({
-            star : userInfo.isStar ,
-            black : userInfo.isBlack ,
-            transfer: userInfo.isTransfer
+            star : userInfo.isStar,
+            black : userInfo.isBlack,
+            transfer : userInfo.isTransfer
         });
     };
 
@@ -364,21 +361,21 @@ function Content(node,core,window) {
 
         // 拉黑/星标
         $rootNode.find('.js-addButton').on('click','.js-goOut', function(event) {
-            var $self = $(this) ,
-                type = $self.attr('data-type') ,
-                handleType = $self.attr('data-handle') ;
+            var $self = $(this),
+                type = $self.attr('data-type'),
+                handleType = $self.attr('data-handle');
 
-            if (!!!type && !!!handleType) {
-              getAdminList(userInfo.sender, transfer);
+            if(!!!type && !!!handleType) {
+                getAdminList(userInfo.sender,transfer);
             } else {
-              updateUserState(type,handleType,updateHeaderTag);
+                updateUserState(type,handleType,updateHeaderTag);
             }
         })
-
         // 滚动加载分页
-        $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e){
+        $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e) {
 
-            if ($(this).scrollTop() === 0) getChatListByOnline('chat', parseTpl);
+            if($(this).scrollTop() === 0)
+                getChatListByOnline('chat',parseTpl);
         });
 
         // // 请求其他在线客服列表

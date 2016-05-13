@@ -3,6 +3,7 @@ function Core(window) {
     var token = '';
     var queryParam;
     var polling = require('./socket/json.js');
+    var HearBeat = require("./socket/heartbeat.js");
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var socket;
@@ -100,6 +101,7 @@ function Core(window) {
                 }
             });
         }).then(function(value,promise) {
+            new HearBeat().start();
             $(document.body).trigger("core.onload",[global]);
             getMessage();
         });
@@ -166,6 +168,11 @@ function Core(window) {
     };
     var bindListener = function() {
         $(document.body).on("textarea.send",onsend);
+        $(document.body).on("emergency.netclose", function() {
+            alert('与服务器连接中断！');
+            window.close();
+            window.location.reload();
+        });
     };
 
     var socketFactory = function() {
