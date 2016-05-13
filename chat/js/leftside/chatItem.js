@@ -34,7 +34,6 @@ function Item(data,core,outer,from) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var msg = list[i];
-            console.log('msg',msg.cid,data.cid);
             if((msg.cid !== data.cid ) || msg.type != 103) {
                 continue;
             }
