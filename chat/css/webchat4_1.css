@@ -17,7 +17,6 @@
 
 }
 #main-container #left-navigation .tab-content {
-    margin-left: 4px;
 }
 .tab-content  li.fullscreen.noBlack {
     background-image: url("../assets/images/noBlockList.png");

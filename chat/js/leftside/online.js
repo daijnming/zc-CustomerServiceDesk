@@ -12,6 +12,10 @@ function Online(node,core,window) {
     var loadFile = require('../util/load.js')();
     var newUserMessage = function(data) {
         var uid = data.uid;
+        console.log('data',data)
+        if(data.isTransfer === undefined) {
+            data.isTransfer = data.chatType;
+        }
         if(chatItemList[uid] && chatItemList[uid].getStatus() == 'offline') {
             chatItemList[uid].onOnline();
         } else {
@@ -38,7 +42,7 @@ function Online(node,core,window) {
                     for(var i = 0,
                         len = ret.userList.length;i < len;i++) {
                         var item = ret.userList[i];
-                        if(item.isTransfer === undefined){
+                        if(item.isTransfer === undefined) {
                             item.isTransfer = item.chatType;
                         }
                         item.source_type = USOURCE[item.usource];
