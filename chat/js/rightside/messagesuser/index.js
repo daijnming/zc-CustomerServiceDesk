@@ -74,6 +74,27 @@ var FastMsgModal = function(node,core,config) {
             $(oRightQuickRight).append(_html);
         });
     };
+
+    var onContentLoaded = function(ret) {
+        var data = ret || [];
+        if(!ret) {
+            $(node).find('.js-rightQuickLeft ul').html('');
+            $(node).find('.js-rightQuickRight ul').html('');
+        }
+
+        loadFile.load(global.baseUrl + "views/rightside/fastreplylayer.html").then(function(value) {
+            var _html = doT.template(value)({
+                'list' : data
+            });
+            outer.dialog = new Dialog({
+                'title' : '快捷回复',
+                'footer' : false
+            });
+            outer.dialog.setInner(_html);
+            outer.shadowNode = outer.dialog.getOuter();
+        });
+    };
+
     //初始化数据
     var initData = function() {
         var promise = new Promise();
@@ -88,24 +109,14 @@ var FastMsgModal = function(node,core,config) {
             dataType : "jsonp",
             success : function(data) {
                 config.fastData = data;
-                if(!data) {
-                    $(node).find('.js-rightQuickLeft ul').html('');
-                    $(node).find('.js-rightQuickRight ul').html('');
-                    return;
-                }
-                loadFile.load(global.baseUrl + "views/rightside/fastreplylayer.html").then(function(value) {
-
-                    var _html = doT.template(value)({
-                        'list' : data
-                    });
-                    outer.dialog = new Dialog({
-                        'title' : '快捷回复',
-                        'footer' : false
-                    });
-                    outer.dialog.setInner(_html);
-                    outer.shadowNode = outer.dialog.getOuter();
-                    promise.resolve();
-                });
+                promise.resolve();
+                onContentLoaded(data);
+            }
+        }).fail(function(ret,err) {
+            if(err === 'parsererror') {
+                config.fastData = [];
+                onContentLoaded();
+                promise.resolve();
             }
         });
         return promise;
