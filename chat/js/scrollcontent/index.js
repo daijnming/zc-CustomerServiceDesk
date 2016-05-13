@@ -85,7 +85,7 @@ function Content(node,core,window) {
       getChatListByOnline('chat', parseTpl, null, null, {
         uid: params.data.uid ,
         pid: params.data.pid
-      }, true);
+      }, true, true);
 
       // parseList('chat', userChatCache[params.data.uid]);
 
@@ -123,7 +123,7 @@ function Content(node,core,window) {
     // --------------------------- http 请求 ---------------------------
 
     // 加载
-    var getChatListByOnline = function(type,callback, pageNo, pageSize, userData, isRender) {
+    var getChatListByOnline = function(type,callback, pageNo, pageSize, userData, isRender, isScrollBottom) {
         var userId;
         if( typeof arguments[0] === 'function') {
             callback = arguments[0];
@@ -142,7 +142,7 @@ function Content(node,core,window) {
           console.log('加入用户缓存后');
           console.log(userChatCache);
 
-          if (isRender) parseList(type , userChatCache[userId]);
+          if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
         } else {
           $.ajax({
               'url' : API.http.chatList[type],
@@ -156,7 +156,7 @@ function Content(node,core,window) {
                   pageSize : pageSize || 20
               }
           }).success(function(ret) {
-              callback && callback(type,ret, userId);
+              callback && callback(type,ret, userId, isScrollBottom);
           })
         }
     };
@@ -264,7 +264,7 @@ function Content(node,core,window) {
     }
     // --------------------------- dom操作 ---------------------------
 
-    var parseTpl = function(type,ret, uid) {
+    var parseTpl = function(type,ret, uid, isScrollBottom) {
 
         console.log(uid);
         // console.log(type, ret);
@@ -285,27 +285,28 @@ function Content(node,core,window) {
                 });
             });
 
-            console.log(list);
+            // console.log(list);
 
-            console.log('首次加载历史记录到缓存');
+            // console.log('首次加载历史记录到缓存');
             // userChatCache[uid].list = list;
-            console.log('缓存添加新用户')
+            // console.log('缓存添加新用户')
             userChatCache[uid] = {
               list: list ,
               scrollTop: 0
             }
-            console.log('缓存');
-            console.log(userChatCache)
+            // console.log('缓存');
+            // console.log(userChatCache)
 
             _html = doT.template(tpl)({
                 list : list
             });
 
             $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
+            if (isScrollBottom) $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
         });
     }
 
-    var parseList = function(type, data) {
+    var parseList = function(type, data, isScrollBottom) {
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
             var _html;
@@ -315,6 +316,7 @@ function Content(node,core,window) {
             });
 
             $rootNode.find('#' + type).find('.js-panel-body').html(_html);
+            if (isScrollBottom) $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
         });
     }
 
