@@ -51,10 +51,19 @@ function Content(node,core,window) {
 
     // --------------------------- 接收推送函数 ---------------------------
 
-    $(document.body).on('textarea.send', function() {
+    $(document.body).on('textarea.send', function(ev) {
+        var data = arguments[1];
+        // userChatCache[data.uid].list.push({
+        //
+        // })
         console.log(arguments);
         // 插入客服输入内容
-        // adminPushMessage(arguments[1]);
+        adminPushMessage(arguments[1]);
+        // $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
+        //     'answer':str,
+        //     'uid':global.uid,
+        //     'cid':global.cid
+        // }]);
     });
 
     $(document.body).on("leftside.onselected", function() {
@@ -415,15 +424,36 @@ function Content(node,core,window) {
 
     var adminPushMessage = function(data) {
 
-        // 客服发送消息
-        loadFile.load(global.baseUrl + API.tpl.chatItemByAdmin).then(function(tpl) {
-            var _html;
-            _html = doT.template(tpl)({
-                data : data
-            });
-
-            $rootNode.find('#chat').find('.js-panel-body').append(_html);
+      if (userChatCache[data.uid]) {
+        userChatCache[data.uid].list.push({
+          action: 5 ,
+          senderType: 2 ,
+          senderName: global.name ,
+          msg: data.answer ,
+          ts: 'date ' + new Date().toTimeString().split(' ')[0]
         });
+        // for (var i = 0;i < data.length;i++) {
+        //   // userChatCache[data[0].uid].list.push(data[i]);
+        //
+        //   console.log(data[i].type);
+        //   // 聊天
+        //   if (data[i].type === 103) {
+        //     userChatCache[data[0].uid].list.push({
+        //       action: 5 ,
+        //       senderType: 0 ,
+        //       senderName: data[i].uname ,
+        //       msg: data[i].content ,
+        //       ts: data[i].ts
+        //     })
+        //   }
+        //
+        //
+        // }
+        console.log('userInfo.userId => ' + userInfo.userId);
+        console.log('data.uid => ' + data.uid);
+        var isRender = userInfo.userId === data.uid;
+        getChatListByOnline('chat', parseList , null, null, data, isRender);
+      }
     }
     // --------------------------- base ---------------------------
 
