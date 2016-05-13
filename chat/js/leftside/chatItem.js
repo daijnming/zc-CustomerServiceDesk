@@ -71,6 +71,10 @@ function Item(data,core,outer,from) {
             'dataType' : "json"
         }).success(function(ret) {
             if(ret.status === 1) {
+                $body.trigger("leftside.onremove",[{
+                    'cid' : data.cid,
+                    'uid' : data.uid
+                }]);
                 $node.animate({
                     'height' : 0
                 },300, function() {
