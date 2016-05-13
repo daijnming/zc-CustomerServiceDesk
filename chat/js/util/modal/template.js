@@ -7,7 +7,7 @@ var zcShadowLayer = '<div class="zc-shadow-layer">'+
 '</div>';
 
 var zcModalOuter = ''+
-'<div class="bootbox modal fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">'+
+'<div class="bootbox  fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;">'+
     '<div class="modal-dialog">'+
         '<div class="modal-content">'+
             '<div class="modal-header">'+

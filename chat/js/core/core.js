@@ -98,6 +98,7 @@ function Core(window) {
                 } else {
                     alert('登录失败');
                     window.close();
+                    window.location.href = "/console/login";
                 }
             });
         }).then(function(value,promise) {
@@ -135,10 +136,6 @@ function Core(window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var value = list[i];
-            if(value.type == 102) {
-                console.log(value);
-                alert();
-            }
             if(value.type === 103) {
                 normalMessageAdapter(value);
             } else {
@@ -171,7 +168,7 @@ function Core(window) {
         $(document.body).on("emergency.netclose", function() {
             alert('与服务器连接中断！');
             window.close();
-            window.location.reload();
+            window.location.href = "/console/login";
         });
     };
 

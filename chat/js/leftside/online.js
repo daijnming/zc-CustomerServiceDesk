@@ -38,6 +38,9 @@ function Online(node,core,window) {
                     for(var i = 0,
                         len = ret.userList.length;i < len;i++) {
                         var item = ret.userList[i];
+                        if(item.isTransfer === undefined){
+                            item.isTransfer = item.chatType;
+                        }
                         item.source_type = USOURCE[item.usource];
                     }
                     var _html = doT.template(value)({

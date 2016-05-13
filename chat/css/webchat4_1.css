@@ -49,6 +49,9 @@
     display: none;
     position: relative;
 }
+.tab-content  li.user-list-item .status.show {
+    display: inline !important;
+}
 .tab-content  li.user-list-item .icon {
     float: left;
     height: 40px;
