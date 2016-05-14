@@ -177,9 +177,10 @@ function Item(data,core,outer,from) {
     };
 
     var onBlackListChange = function(evt,data) {
-        if($node.index() == 0) {
-            onRemove();
-        }
+	console.log(data);
+    	if(data.type == "black" && data.handleType == 'add'){
+		onRemove();
+	}
     };
 
     var onTransfer = function(evt,data) {
