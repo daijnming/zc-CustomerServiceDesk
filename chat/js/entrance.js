@@ -1,5 +1,5 @@
 (function(node) {
-    var core = require('./Core/core.js')(window);
+    var core = require('./core/core.js')(window);
     var LeftSide = require('./leftside/index.js');
     var RightSide = require('./rightside/main.js');
     var TextArea = require('./textarea/index.js');
