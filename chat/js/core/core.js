@@ -6,7 +6,8 @@ function Core(window) {
     var HearBeat = require("./socket/heartbeat.js");
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
-    var socket;
+    var socket,Notification = window.Notification || window.webkitNotifications;
+    console.log(Notification);
     var audioNewMessage,
         audioOnline;
     var defaultParams = {
@@ -144,6 +145,10 @@ function Core(window) {
             if(value.type === 103) {
                 audioNewMessage.play();
                 normalMessageAdapter(value);
+            }else if(value.type == 109){
+		alert('另外一个窗口已经登录，您被强迫下线！');
+                window.close();
+                window.location.href = "/console/login/";
             } else {
                 systemMessageAdpater(value);
             }
@@ -156,21 +161,7 @@ function Core(window) {
     var parseDOM = function() {
     };
 
-    var onsend = function(evt,data) {
-        console.log(data);
-        $.ajax({
-            'url' : '/chat/admin/send1.action',
-            'dataType' : 'json',
-            'type' : "post",
-            'data' : $.extend(defaultParams, {
-                'answer' : data.answer,
-                'cid' : data.cid,
-                'uid' : global.id
-            })
-        });
-    };
     var bindListener = function() {
-        $(document.body).on("textarea.send",onsend);
         $(document.body).on("emergency.netclose", function() {
             alert('与服务器连接中断！');
             window.close();
@@ -191,6 +182,24 @@ function Core(window) {
         });
     };
 
+    var initNotification = function(){
+        if(Notification.permission !== 'granted'){
+            Notification.requestPermission();
+        }
+        var notification = new Notification('title',{
+            'body':'aaaa',
+            'timeout':300,
+            'icon':'assets/images/logo.png'
+        });
+        notification.onclick = (function(id){
+            console.log(id);
+            return function(){ alert(id);};
+        })(+new Date());
+        setTimeout(function(){
+            notification.close();
+        },2000);
+    };
+
     var initPlugins = function() {
         queryParam = getQueryParam();
         for(var el in queryParam) {
@@ -200,6 +209,7 @@ function Core(window) {
         socketFactory();
         audioNewMessage = $("#audio1")[0];
         audioOnline = $("#audio2")[0];
+        initNotification();
     };
 
     var init = function() {
