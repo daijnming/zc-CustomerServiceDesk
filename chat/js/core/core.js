@@ -6,8 +6,9 @@ function Core(window) {
     var HearBeat = require("./socket/heartbeat.js");
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
-    var socket,Notification = window.Notification || window.webkitNotifications;
-    console.log(Notification);
+    var notificationPermission;
+    var socket,
+        Notification = window.Notification || window.webkitNotifications;
     var audioNewMessage,
         audioOnline;
     var defaultParams = {
@@ -100,6 +101,7 @@ function Core(window) {
                     promise.resolve(ret);
                 } else {
                     alert('登录失败');
+                    $(window).unbind("beforeunload");
                     window.close();
                     window.location.href = "/console/login";
                 }
@@ -137,7 +139,19 @@ function Core(window) {
             audioOnline.play();
         }
         value.description = messageTypeConfig[value.type];
+
     };
+
+    var createNotification = function(data,type) {
+        var title = type == 103 ? '用户' + data.uname + '发送了一条消息' : '新用户上线了！';
+        var desc = type == 103 ? data.desc : data.uname;
+        var noti = new Notification(title, {
+            'body' : desc,
+            'tag' : type + desc.uid
+        });
+        setTimeout(noti.close,5000);
+    };
+
     var messageAdapter = function(list) {
         for(var i = 0,
             len = list.length;i < len;i++) {
@@ -145,12 +159,14 @@ function Core(window) {
             if(value.type === 103) {
                 audioNewMessage.play();
                 normalMessageAdapter(value);
-            }else if(value.type == 109){
-		alert('另外一个窗口已经登录，您被强迫下线！');
+                createNotification(value,103);
+            } else if(value.type == 109) {
+                alert('另外一个窗口已经登录，您被强迫下线！');
                 window.close();
                 window.location.href = "/console/login/";
             } else {
                 systemMessageAdpater(value);
+                createNotification(value,102);
             }
         }
     };
@@ -167,6 +183,9 @@ function Core(window) {
             window.close();
             window.location.href = "/console/login";
         });
+        $(window).on("beforeunload", function() {
+            return '';
+        });
     };
 
     var socketFactory = function() {
@@ -182,22 +201,14 @@ function Core(window) {
         });
     };
 
-    var initNotification = function(){
-        if(Notification.permission !== 'granted'){
-            Notification.requestPermission();
+    var initNotification = function() {
+        if(Notification && Notification.permission !== 'granted') {
+            Notification.requestPermission().then(function() {
+                notificationPermission = Notification.requestPermission();
+            });
+        } else {
+            notificationPermission = 'granted';
         }
-        var notification = new Notification('title',{
-            'body':'aaaa',
-            'timeout':300,
-            'icon':'assets/images/logo.png'
-        });
-        notification.onclick = (function(id){
-            console.log(id);
-            return function(){ alert(id);};
-        })(+new Date());
-        setTimeout(function(){
-            notification.close();
-        },2000);
     };
 
     var initPlugins = function() {
