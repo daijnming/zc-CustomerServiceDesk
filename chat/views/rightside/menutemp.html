@@ -1,0 +1,12 @@
+ <ul class="dropdown-menu dropdown-menu-right ifList" aria-labelledby="dropdownMenu2">
+   {{for(var i=0;i<it.list.length;i++){ }}
+    {{var tmp = it.list[i]; }}
+      {{for(var key in tmp){ }}
+        {{if(key.indexOf('blank')>0){ }}
+          <li class="menuListLi"><a href="{{=tmp[key]}}" target="_blank">{{=key}}</a></li>
+        {{ }else{ }}
+          <li class="menuListLi"><a href=#clientSystem  data-toggle="tab" addrurl="{{=tmp[key]}}" onclick="showClientSys(this)">{{=key}}</a></li>
+        {{ } }}
+      {{ } }}
+   {{ } }}
+ </ul>

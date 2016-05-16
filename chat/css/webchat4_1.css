@@ -17,7 +17,6 @@
 
 }
 #main-container #left-navigation .tab-content {
-    margin-left: 4px;
 }
 .tab-content  li.fullscreen.noBlack {
     background-image: url("../assets/images/noBlockList.png");
@@ -48,6 +47,9 @@
 .tab-content  li.user-list-item .status {
     display: none;
     position: relative;
+}
+.tab-content  li.user-list-item .status.show {
+    display: inline !important;
 }
 .tab-content  li.user-list-item .icon {
     float: left;

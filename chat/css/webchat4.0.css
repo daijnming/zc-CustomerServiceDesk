@@ -1382,7 +1382,7 @@ body,html{
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li span {
   color: #f90;
-  margin-left: 10px;
+  /*margin-left: 10px;*/
   display: none;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy {
@@ -1436,7 +1436,7 @@ body,html{
   bottom: 0;
   background-color: #fff;
   border-left: 1px solid #e5eeec;
-  z-index: 2;
+  z-index: 0;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content #messagesuser .quickBtnP #shortcut:hover {
   color: #09aeb0;

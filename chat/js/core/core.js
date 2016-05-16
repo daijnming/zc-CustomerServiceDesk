@@ -3,9 +3,14 @@ function Core(window) {
     var token = '';
     var queryParam;
     var polling = require('./socket/json.js');
+    var HearBeat = require("./socket/heartbeat.js");
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
-    var socket;
+    var notificationPermission;
+    var socket,
+        Notification = window.Notification || window.webkitNotifications;
+    var audioNewMessage,
+        audioOnline;
     var defaultParams = {
         answer : "",
         answerType : "",
@@ -96,10 +101,13 @@ function Core(window) {
                     promise.resolve(ret);
                 } else {
                     alert('登录失败');
+                    $(window).unbind("beforeunload");
                     window.close();
+                    window.location.href = "/console/login";
                 }
             });
         }).then(function(value,promise) {
+            new HearBeat().start();
             $(document.body).trigger("core.onload",[global]);
             getMessage();
         });
@@ -127,20 +135,38 @@ function Core(window) {
     };
 
     var systemMessageAdpater = function(value) {
+        if(value.type === 102) {
+            audioOnline.play();
+        }
         value.description = messageTypeConfig[value.type];
+
     };
+
+    var createNotification = function(data,type) {
+        var title = type == 103 ? '用户' + data.uname + '发送了一条消息' : '新用户上线了！';
+        var desc = type == 103 ? data.desc : data.uname;
+        var noti = new Notification(title, {
+            'body' : desc,
+            'tag' : type + desc.uid
+        });
+        setTimeout(noti.close,5000);
+    };
+
     var messageAdapter = function(list) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var value = list[i];
-            if(value.type == 102) {
-                console.log(value);
-                alert();
-            }
             if(value.type === 103) {
+                audioNewMessage.play();
                 normalMessageAdapter(value);
+                createNotification(value,103);
+            } else if(value.type == 109) {
+                alert('另外一个窗口已经登录，您被强迫下线！');
+                window.close();
+                window.location.href = "/console/login/";
             } else {
                 systemMessageAdpater(value);
+                createNotification(value,102);
             }
         }
     };
@@ -151,21 +177,15 @@ function Core(window) {
     var parseDOM = function() {
     };
 
-    var onsend = function(evt,data) {
-        console.log(data);
-        $.ajax({
-            'url' : '/chat/admin/send1.action',
-            'dataType' : 'json',
-            'type' : "post",
-            'data' : $.extend(defaultParams, {
-                'answer' : data.answer,
-                'cid' : data.cid,
-                'uid' : global.id
-            })
-        });
-    };
     var bindListener = function() {
-        $(document.body).on("textarea.send",onsend);
+        $(document.body).on("emergency.netclose", function() {
+            alert('与服务器连接中断！');
+            window.close();
+            window.location.href = "/console/login";
+        });
+        $(window).on("beforeunload", function() {
+            return '';
+        });
     };
 
     var socketFactory = function() {
@@ -181,6 +201,16 @@ function Core(window) {
         });
     };
 
+    var initNotification = function() {
+        if(Notification && Notification.permission !== 'granted') {
+            Notification.requestPermission().then(function() {
+                notificationPermission = Notification.requestPermission();
+            });
+        } else {
+            notificationPermission = 'granted';
+        }
+    };
+
     var initPlugins = function() {
         queryParam = getQueryParam();
         for(var el in queryParam) {
@@ -188,6 +218,9 @@ function Core(window) {
         }
         initBasicInfo();
         socketFactory();
+        audioNewMessage = $("#audio1")[0];
+        audioOnline = $("#audio2")[0];
+        initNotification();
     };
 
     var init = function() {

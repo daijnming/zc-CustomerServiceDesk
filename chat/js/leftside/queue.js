@@ -18,15 +18,24 @@ function Queue(core,window) {
         $refreshBtn,
         $tableOuter,
         $input;
-    var urlList = ['/chat/admin/queryUser.action',''];
-    var TEMPLATELIST = ['views/leftside/queueitem.html'];
+    var urlList = ['/chat/admin/queryUser.action','/chat/admin/queryVisitUser.action'];
+    var TEMPLATELIST = ['views/leftside/queueitem.html',''];
     var totalPage,
         currentPage = 1;
     this.token = +new Date();
 
+    var onTabClickHandler = function(e) {
+        var elm = e.currentTarget;
+        var index = $(elm).attr("data-index");
+        currentPage = 1;
+        currentTab = index;
+        fetchData();
+    };
+
     var initContent = function(data,promise) {
         var html = data.html;
         var ret = data.data;
+        ret.isInvite = global.isInvite;
         totalPage = ret.countPage;
         ret.currentTime = dateTimeUtil.getTime(new Date());
         var _html = doT.template(html)(ret);
@@ -136,6 +145,7 @@ function Queue(core,window) {
         $node.delegate(".js-page-btn",'click',onPageBtnClickHandler);
         $pageJump.on("click",pageJumpBtnClickHandler);
         $node.delegate(".js-invite-btn","click",onInviteBtnClickHandler);
+        $node.delegate(".js-queue-tab","click",onTabClickHandler);
         $refreshBtn.on("click", function() {
             fetchData();
         });

@@ -56,13 +56,13 @@ ul{
   .shadowLayer.content .quickContent  a{
       width:100%;
   }
-  .shadowLayer.content .quickContent  ul li.active{
+  .shadowLayer.content .quickContent  ul li:hover{
       background-color: #ccc;
   }
   .shadowLayer.content .quickContent  ul li.activeLine{
       background-color: #ccc;
   }
-  .shadowLayer.content .quickContent  .detalBar input.active{
+  .shadowLayer.content .quickContent  .detalBar input:hover{
     background-color: #ccc;
   }
   .shadowLayer.content .quickContent  .detalBar input.activeLine{
@@ -70,9 +70,11 @@ ul{
   }
     .shadowLayer.content .quickContent  .leftContent .detalBar input{
       width: 65%;
+      background-color: transparent;
     }
     .shadowLayer.content .quickContent  .rightContent .detalBar input{
       width:80%;
+      background-color: transparent;
     }
     .shadowLayer.content .quickContent  .detalBar input{
       display: inline-block;
@@ -98,8 +100,15 @@ ul{
       display: none;
     }
 
+    .shadowLayer.content .quickContent  .detalBar span.hide{
+      display: none;
+    }
+
 
 /****homeuser css***/
 .js-tab-pane#profileuser.showBg{
   background:url(../assets/images/noOnlinePerson.png) center  no-repeat
+}
+.rightBox .js-panel-body .js-tab-pane#homeuser p.searchBot{
+  margin: 0 0 10px;
 }

@@ -4,7 +4,6 @@
  */
 
 function Item(data,core,outer,from) {
-    console.log(data);
     var node,
         $node,
         $unRead,
@@ -35,22 +34,22 @@ function Item(data,core,outer,from) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var msg = list[i];
-            if(msg.cid !== data.cid || msg.type != 103) {
+            if((msg.cid !== data.cid ) || msg.type != 103) {
                 continue;
             }
             unReadCount++;
+            var lastMessage = list.length > 0 ? list[list.length - 1] : null;
+            if(unReadCount > 0) {
+                $unRead.html(unReadCount).css({
+                    'visibility' : 'visible'
+                });
+            } else {
+                $unRead.css({
+                    'visibility' : 'hidden'
+                });
+            }
+            $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
         }
-        var lastMessage = list.length > 0 ? list[list.length - 1] : null;
-        if(unReadCount > 0) {
-            $unRead.html(unReadCount).css({
-                'visibility' : 'visible'
-            });
-        } else {
-            $unRead.css({
-                'visibility' : 'hidden'
-            });
-        }
-        $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
     };
     var onOffLine = function() {
         $node.find(".js-icon").addClass("offline");
@@ -72,6 +71,10 @@ function Item(data,core,outer,from) {
             'dataType' : "json"
         }).success(function(ret) {
             if(ret.status === 1) {
+                $body.trigger("leftside.onremove",[{
+                    'cid' : data.cid,
+                    'uid' : data.uid
+                }]);
                 $node.animate({
                     'height' : 0
                 },300, function() {
@@ -96,12 +99,15 @@ function Item(data,core,outer,from) {
 
     var onOnline = function() {
         status = 'online';
+
         var $statusText = $node.find(".js-status");
         $node.find(".js-icon").removeClass("offline");
         $statusText.css({
             'display' : 'none'
         }).html('[离线]');
-        insert($node);
+        if($node.index() !== 0) {
+            insert($node);
+        }
     };
 
     var initNode = function() {
@@ -173,7 +179,21 @@ function Item(data,core,outer,from) {
 
     };
 
+    var onBlackListChange = function(evt,data) {
+        if(data.type == "black" && data.handleType == 'add') {
+            onRemove();
+        }
+    };
+
+    var onTransfer = function(evt,data) {
+        var uid = data.uid;
+        if(true) {
+            onRemove();
+        }
+    };
     var bindListener = function() {
+        $body.on("scrollcontent.onUpdateUserState",onBlackListChange);
+        $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);
         $node.on("click",onNodeClickHandler);
 

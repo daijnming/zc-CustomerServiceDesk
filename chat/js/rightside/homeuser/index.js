@@ -25,7 +25,7 @@ var HomeUser = function(node,core,config) {
 	$.ajax({
 		type:"post",
 		url:searchUrl,
-		dataType:"JSONP",
+		dataType:"json",
 		data:{
 			uid:config.id,
 			requestText:val
@@ -67,19 +67,13 @@ var HomeUser = function(node,core,config) {
 			}
 		}
 	};
-$(robotAnswer).on('click','a',function(ev){
-	// var ocid = $('#left-navigation .mainNav .leftScroll li .active').attr('cid');
-	// if(ocid)
-	// {
-	// 	var oHtml = $(this).html();
-	// 		oHtml = oHtml.replace(/<[^<>]+>/g,'');
-	// 	var oSobj = $('#chatlist .chat[cid="'+ ocid+'"] .botTextBox textarea');
-	// 		oSobj.attr("robot","robot");
-	// 	var oSatr = oSobj.val();
-	// 	oSobj.val(oSatr + ' ' + oHtml);
-	// 	oSobj.val(oSobj.val().replace("请输入..",""));
-	// }
-});
+	//点击智能回复答案 进行回复
+	var onSendAnswer = function(){
+		var $this = $(this);
+		$(document.body).trigger('rightside.onselectedmsg',[{
+			'data':$($this[0]).text()
+		}]);
+	};
 
 //文本点击禁止
 $(homeuser).on('click','.js-robotBackHideBtn',function(){
@@ -112,7 +106,10 @@ $(sugguestions).on('click','li',function(ev) {
 		//type=3 未搜索到智能回复答案 不进行发送
 		if(_answer.html()===''||_answer.attr('answerType')==='3')return;
 		//TODO 调取外部接口 直接给用户发送智能回复答案
-			console.log($(robotAnswer).find('a').html());
+			// console.log($(robotAnswer).find('a').html());
+			$(document.body).trigger('rightside.directsendreply',[{
+					'data':$(robotAnswer).find('a').html()
+			}]);
 	};
 
 	var parseDOM = function() {
@@ -129,9 +126,9 @@ $(sugguestions).on('click','li',function(ev) {
 
 	};
 	var bindLitener = function() {
-		// $(document.body).on("RightSide.onload",onloadHandler);
-			$(oHomeuser).on('keyup','#quickSerch',onSerchContent);
-			$(robotDirectHideBtn).on('click','a.quickSendBtn',onDirectSendBtn);
+			$(oHomeuser).delegate('#quickSerch','keyup',onSerchContent);
+			$(robotDirectHideBtn).delegate('a.quickSendBtn','click',onDirectSendBtn);
+			$(robotAnswer).delegate('a','click',onSendAnswer);
 
 	};
 

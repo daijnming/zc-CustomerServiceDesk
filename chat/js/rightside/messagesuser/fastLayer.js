@@ -41,17 +41,12 @@ var Fastlayer = function(node,core,config){
       oAddNewRep = $(fastNode).find('.js-addNewRep');
       oDialogArea = $(fastNode).find('.js-content');
   	};
-
-    var onFastMouseOver = function(){
-      var $this = $(this);
-      $this.addClass('active').siblings('li').removeClass('active');
-      $this.find('input').addClass('active').parent('li').siblings('li').find('input').removeClass('active');
-    };
-    var onFastMouseLeave = function(){
-      var $this = $(this);
-      $this.removeClass('active');
-      $this.find('input').removeClass('active');//.blur();
-      //if($(this).find('input').hasClass('activeLine'))$(this).find('input').blur();
+    //触发快捷回复更新
+    var onReLoadHandler = function(boo){
+      $(node).find('.js-quickContent ul li.detalBar span').removeClass('hide');
+      $($(node).find('.js-quickLeft ul li')[0]).find('span.upLeftGroup').addClass('hide');
+      $($(node).find('.js-quickRight ul li')[0]).find('span.upRightRep').addClass('hide');
+      if(boo)$(document.body).trigger('rightside.oReLoadRightGroup');
     };
     var onFastTap = function(){
       var $this = $(this);
@@ -105,12 +100,12 @@ var Fastlayer = function(node,core,config){
 								type:"post",
 								url:url,
 								data:data,
-								dataType:"jsonp",
+								dataType:"json",
 								success:function(data){
 									if(data.status)
 									{
 										$this.parent('.detalBar').remove();
-										// This.load(true);
+										onReLoadHandler(true);
 									}
 								}
 							});
@@ -119,7 +114,6 @@ var Fastlayer = function(node,core,config){
 						{
 							$this.parent('.detalBar').remove();
 						}
-						// $('.quickLeft .addGroupBtn').show();
     }
   };
 
@@ -153,14 +147,15 @@ var Fastlayer = function(node,core,config){
           type:"post",
           url:url,
           data:data,
-          dataType:"jsonp",
+          dataType:"json",
           success:function(data){
             if(data.status)
             {
               var oLi = $this.parent('li');
               var oUl = $this.parents('ul');
               $(oUl).prepend(oLi);
-              // This.load(true);
+              onReLoadHandler(true);
+
             }
           }
         });
@@ -277,11 +272,11 @@ var Fastlayer = function(node,core,config){
                   'groupName':groupName,
                   'userId':id
                 },
-                dataType:"jsonp",
+                dataType:"json",
                 success:function(data){
                   if(data.status)
                   {
-                    alert('更新成功');
+                    onReLoadHandler(true);
                      $(obj).val(groupName);
                   }
                 }
@@ -297,11 +292,11 @@ var Fastlayer = function(node,core,config){
                   'groupName':groupName,
                   'userId':id
                 },
-                dataType:"jsonp",
+                dataType:"json",
                 success:function(data){
                   if(data.status)
                   {
-                    alert('新增成功');
+                    onReLoadHandler(true);
                   }
                 }
               });
@@ -327,16 +322,11 @@ var Fastlayer = function(node,core,config){
       								'value':oText,
       								'userId':id
       							},
-      							dataType:"jsonp",
+      							dataType:"json",
       							success:function(data){
       								if(data.status)
       								{
-                        alert('回复保存成功');
-      									// $this.html("保存");
-      									// $this.hide();
-      									// $this.nextAll().hide();
-      									// This.load(true);
-      									// $this.parents('.reply').find('.quickBtn').show();
+                        onReLoadHandler(true);
       								}
       							}
       						});
@@ -359,11 +349,11 @@ var Fastlayer = function(node,core,config){
       								'value':oText,
       								'userId':id
       							},
-      							dataType:"jsonp",
+      							dataType:"json",
       							success:function(data){
       								if(data.status)
       								{
-      									alert('回复添加成功');
+      									onReLoadHandler(true);
       								}
       							}
       						});
@@ -373,10 +363,6 @@ var Fastlayer = function(node,core,config){
 
   	var bindLitener = function() {
       onloadHandler();
-      // initConfig();
-      // $(window).on('core.onload',onloadHandler);
-      $(oFastLeft).on('mouseover','li',onFastMouseOver);
-      $(oFastLeft).on('mouseleave','li',onFastMouseLeave);
       $(oFastLeft).on('click','li',onFastTap);
       $(oFastLeft).on('click','span.delLeftGroup',onDelFast);
       $(oFastLeft).on('click','span.upLeftGroup',onUpFast);
@@ -384,8 +370,6 @@ var Fastlayer = function(node,core,config){
       $(oFastLeft).on('blur','input',onFastBlur);
       $(oFastLeft).on('focus','input',onFastFocus);
       ///
-      $(oFastRight).on('mouseover','li',onFastMouseOver);
-      $(oFastRight).on('mouseleave','li',onFastMouseLeave);
       $(oFastRight).on('click','span.delRightRep',onDelFast);
       $(oFastRight).on('click','span.upRightRep',onUpFast);
       $(oFastRight).on('keypress','input',onFastkeyParess);
@@ -400,9 +384,8 @@ var Fastlayer = function(node,core,config){
   	var init = function() {
   		parseDOM();
   		bindLitener();
-
+      onReLoadHandler();
   	};
-    // $(document.body).on('core.onload',init());
   	init();
 };
 module.exports = Fastlayer;

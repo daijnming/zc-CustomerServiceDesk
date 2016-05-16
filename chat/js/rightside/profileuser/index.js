@@ -1,12 +1,10 @@
-
 /*
-* @author denzel.gou
-*/
+ * @author denzel.gou
+ */
 
 var ProfileUser = function(node,core,userData) {
 	//TODO
 	var global=core.getGlobal();//全局对象
-
 	var data = userData,
 			config ={};
 	var regExUserInfo=[];//保存用户验证信息
@@ -24,7 +22,7 @@ var ProfileUser = function(node,core,userData) {
 		//暂定成35个字符
 		if(!url&&!title) return '未获取到';
 		if(url&&!title) {
-				var urlTitle = url.length>35?url.substr(0,35)+'..':url;
+				var urlTitle = url.length>25?url.substr(0,25)+'..':url;
 				return	'<a target="_black" style="font-size:14px;" href="'+url+'" title="'+url+'">'+urlTitle+'</a>';
 		}
 		if(!url&&title) {
@@ -50,6 +48,8 @@ var ProfileUser = function(node,core,userData) {
 							'item':data.userData
 					});
 					$(node).append(_html);
+					//显示性别
+					$(node).find('#sex').val(data.userData['sex']);
 					promise.resolve();
 				});
 				// console.log(data.userData);
@@ -70,7 +70,7 @@ var ProfileUser = function(node,core,userData) {
 				type:'post',
 				url:oUrl,
 				data:sendData,
-				dataType:'JSONP',
+				dataType:'json',
 				success:function(data){
 					//如果编辑的是姓名字段 则要传值给左侧栏显示
 					if($(obj).hasClass('userNameDyy'))
@@ -83,29 +83,56 @@ var ProfileUser = function(node,core,userData) {
 			});
 
 	};
-	//编辑客户资料字段值
-	var onTextRegexData = function(){
+
+	var oFieldRegex={
+	 	This:this,
+		onTextBlurRegex:function(){
 			var $this =$($(this)[0]);
 			var isSubmit = false;//是否通过验证提交用户资料字段
 			if($this){
 				var val = $this.val().trim().replace(/[ ]/g,'');
-				// console.log(regExUserInfo[$this.attr('otype')].regex);
-				var regex = regExUserInfo[$this.attr('otype')].regex;
-				(function(regex,val,$this){
-						console.log('dd');
-						if(!val&&!regex.test(val)){
-							$this.siblings('span.tip').show();
-							isSubmit = false;
-						}else {
-							$this.siblings('span.tip').hide();
-							isSubmit = true;
+				var _cur = regExUserInfo[$this.attr('otype')];
+				(function(_cur,val,$this){
+					var _boo=true;
+					//正则匹配
+					for(var i=0;i<_cur.length;i++){
+						var item = _cur[i];
+						if(!item.regex.test(val)){
+							_boo=false;
+							//重新赋值
+							$this.val(oFieldRegex.This.inputText);
+							var $span = $this.siblings('span.tip');
+							var top = $this.offset().top-70;
+							var left= 58;
+							$span.css({
+						    position: "absolute",
+						    zIndex: 99, margin: 0,
+						    left: left+'px', top: top+'px',
+								width:'150px',background:'#ddd'
+							}).text(item.alert).show().on('click',function(){
+								$(this).hide();
+							});
+							break;
 						}
-
+					}
+					if(_boo){
+						$this.siblings('span.tip').text('').hide();
+						isSubmit = true;
+					}
 						//保存
 						if(isSubmit)
 							onTextSaveData(val,$this);
-				})(regex,val,$this);
+				})(_cur,val,$this);
 			}
+		},
+		onTextFocusRegex:function(){
+			oFieldRegex.This.inputText = $(this).val();
+			$(this).select();
+		}
+	};
+	var onSelected = function(){
+			var val = $(this).find('option:selected').val();
+			onTextSaveData(val,$(this)[0]);
 	};
 	var parseDOM = function() {
     // someOne = $(node).find('.js-xx');
@@ -117,9 +144,10 @@ var ProfileUser = function(node,core,userData) {
 	var onloadHandler = function(evt,data) {
 
 	};
-
 	var bindLitener = function() {
-		$(node).delegate('.js-userTnp','blur',onTextRegexData);
+		$(node).delegate('.js-userTnp','blur',oFieldRegex.onTextBlurRegex);
+		$(node).delegate('.js-userTnp','focus',oFieldRegex.onTextFocusRegex);
+		$(node).delegate('#sex','change',onSelected);
 	};
 
 	var initConfig = function(){
@@ -128,19 +156,20 @@ var ProfileUser = function(node,core,userData) {
 		config.url_id = global.id;//url地址栏id
 
 		regExUserInfo = {
-			nick:{'regex':/(\w{0,28})/},
-			uname:{'regex':/(\w{0,28})/},
-			tel:{'regex':'/^\d{8,13}$/'},
-			email:{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-z0-9-]*)(?:[a-z0-9](?!-))(?:\.(?!-)))+[a-z]{2,}$/},
-			qq:{'regex':/[1-9][0-9]{4,15}/},
-			weixin:{'regex':/\w{5,28}/},
-			weibo:{'regex':/\w{5,28}/},
-			remark:{'regex':/\w{5,28}/}
+			nick:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'长度错误'}],
+			uname:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			tel:[{'regex':/^[0-9]{8,13}$/,'alert':'格式错误'}],
+			birthday:[{'regex':/^[0-9]{2}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
+			email:[{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'格式错误'}],
+			qq:[{'regex':/[1-9][0-9]{4,13}/,'alert':'格式错误'}],
+			weixin:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			weibo:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			remark:[{'regex':/\w{0,200}/,'alert':'格式错误'}]
 		};
 	};
-
 	initUserInfo().then(function(){
 		init();
+		//console.log(data);
 	});
 	var init = function() {
 		initConfig();
