@@ -99,12 +99,15 @@ function Item(data,core,outer,from) {
 
     var onOnline = function() {
         status = 'online';
+
         var $statusText = $node.find(".js-status");
         $node.find(".js-icon").removeClass("offline");
         $statusText.css({
             'display' : 'none'
         }).html('[离线]');
-        insert($node);
+        if($node.index() !== 0) {
+            insert($node);
+        }
     };
 
     var initNode = function() {
@@ -177,16 +180,14 @@ function Item(data,core,outer,from) {
     };
 
     var onBlackListChange = function(evt,data) {
-	console.log(data);
-    	if(data.type == "black" && data.handleType == 'add'){
-		onRemove();
-	}
+        if(data.type == "black" && data.handleType == 'add') {
+            onRemove();
+        }
     };
 
     var onTransfer = function(evt,data) {
         var uid = data.uid;
         if(true) {
-            alert();
             onRemove();
         }
     };

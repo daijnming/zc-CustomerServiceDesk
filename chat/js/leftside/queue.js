@@ -47,7 +47,6 @@ function Queue(core,window) {
     };
 
     var fetchData = function() {
-        console.log('currentTab' + currentTab);
         loadFile.load(global.baseUrl + TEMPLATELIST[currentTab]).then(getQueryUsers).then(function(ret,promise) {
             totalPage = ret.data.countPage;
             $totalpage.html(totalPage);
