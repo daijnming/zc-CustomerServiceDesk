@@ -57,6 +57,9 @@ function Content(node,core,window) {
         //
         // })
         console.log(arguments);
+        console.log(arguments[1]);
+
+        // if (arguments[1].uid ? )
         // 插入客服输入内容
         adminPushMessage(arguments[1]);
         // $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
@@ -104,6 +107,12 @@ function Content(node,core,window) {
     $(document.body).on("rightside.directsendreply", function() {
       console.log('智能回复');
       console.log(arguments);
+      var data = {
+        answer: arguments[1].data ,
+        uid: userInfo.userId ,
+        pid: userInfo.pid
+      }
+      adminPushMessage(data);
     });
 
     // --------------------------- 推送函数 ---------------------------
@@ -476,8 +485,12 @@ function Content(node,core,window) {
     };
 
     var adminPushMessage = function(data) {
-
-      if (userChatCache[data.uid]) {
+      userChatCache[data.uid] = userChatCache[data.uid] || {
+        list: [],
+        scrollTop: 0,
+        pageNo: 1
+      }
+      // if () {
         userChatCache[data.uid].list.push({
           action: 5 ,
           senderType: 2 ,
@@ -506,7 +519,7 @@ function Content(node,core,window) {
         console.log('data.uid => ' + data.uid);
         var isRender = userInfo.userId === data.uid;
         getChatListByOnline('chat', parseList , null, null, data, isRender, true);
-      }
+      // }
     }
     // --------------------------- base ---------------------------
 
