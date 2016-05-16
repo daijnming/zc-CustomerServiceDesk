@@ -10,6 +10,24 @@ function Online(node,core,window) {
     var Item = require('./chatItem.js');
     var Alert = require('../util/modal/alert.js');
     var loadFile = require('../util/load.js')();
+
+    var checkOnlineListLength = function() {
+        var count = 0;
+        for(var el in chatItemList) {
+            count++;
+        }
+        if(count == 0) {
+            $node.addClass("noOnline");
+        } else {
+            $node.removeClass("noOnline");
+        }
+    };
+
+    var onChatItemListLengthChange = function(evt,data) {
+        delete chatItemList[data.uid];
+        checkOnlineListLength();
+    };
+
     var newUserMessage = function(data) {
         var uid = data.uid;
         if(data.isTransfer === undefined) {
@@ -21,7 +39,7 @@ function Online(node,core,window) {
             var item = new Item(data,core,node);
             chatItemList[data.uid] = item;
         }
-
+        checkOnlineListLength();
     };
 
     var hide = function() {
@@ -108,6 +126,7 @@ function Online(node,core,window) {
     var bindListener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
+        $(document.body).on("leftside.onremove",onChatItemListLengthChange);
         $node.delegate(".js-remove",'click',removeBtnClickHandler);
 
     };
