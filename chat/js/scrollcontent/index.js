@@ -4,7 +4,7 @@ function Content(node,core,window) {
     var $rootNode;
     var global;
     // 保存用户对话消息缓存
-    var chatCache = {};
+    var userChatCache = {};
     var API = {
         http : {
             chatList : {
@@ -47,23 +47,57 @@ function Content(node,core,window) {
         5 : 'http://img.sobot.com/chatres/common/face/moType.png'
     }
 
-    var userInfo = {
-        uid : '088ad376b6514ed0a191067308c284fe000025',
-        pid : '088ad376b6514ed0a191067308c284fe',
-        sender : 'mTLX96VS13KSmF6VqxK9KBtavHt7fYVcV6Ekx3YuXvcoNskGFZk2xQ==',
-        userId : 'fdf2f6e709f7457aae9b9bd5afcb1f57',
-        cid : '2c24f755180b48408f658520c116d101',
-        isStar : true,
-        isBlack : true,
-        isTransfer : true
-    }
+    var userInfo = {};
 
     // --------------------------- 接收推送函数 ---------------------------
 
-    $(document.body).on('textarea.send', function() {
+    $(document.body).on('textarea.send', function(ev) {
+        var data = arguments[1];
+        // userChatCache[data.uid].list.push({
+        //
+        // })
         console.log(arguments);
         // 插入客服输入内容
-        // adminPushMessage(arguments[1]);
+        adminPushMessage(arguments[1]);
+        // $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
+        //     'answer':str,
+        //     'uid':global.uid,
+        //     'cid':global.cid
+        // }]);
+    });
+
+    $(document.body).on("leftside.onselected", function() {
+      console.log(arguments);
+
+      var params = arguments[1];
+
+      userInfo = {
+        isStar: !!params.userData.ismark ,
+        isBlack: !!params.userData.isblack ,
+        isTransfer: !!params.userData.chatType ,
+        cid: params.data.cid ,
+        uid: global.id,
+        sender : global.id,
+        userId: params.data.uid
+      }
+
+      // 初始化历史记录
+      getChatListByOnline('chat', parseTpl, null, null, {
+        uid: params.data.uid ,
+        pid: params.data.pid
+      }, true, true);
+
+      // parseList('chat', userChatCache[params.data.uid]);
+
+      // 初始化用户状态
+      initUserState({
+          // star : userInfo.isStar ,
+          // black : userInfo.isBlack ,
+          // transfer: userInfo.isTransfer
+          star: !!params.userData.ismark ,
+          black: !!params.userData.isblack ,
+          transfer: !!params.userData.chatType ,
+      });
     });
 
     // --------------------------- 推送函数 ---------------------------
@@ -89,27 +123,42 @@ function Content(node,core,window) {
     // --------------------------- http 请求 ---------------------------
 
     // 加载
-    var getChatListByOnline = function(type,callback,pageNo,pageSize) {
-
+    var getChatListByOnline = function(type,callback, pageNo, pageSize, userData, isRender, isScrollBottom) {
+        var userId;
         if( typeof arguments[0] === 'function') {
             callback = arguments[0];
             type = 'chat';
         }
 
-        $.ajax({
-            'url' : API.http.chatList[type],
-            'dataType' : 'json',
-            'type' : 'get',
-            'data' : {
-                t : '1462871390676',
-                uid : userInfo.uid,
-                pid : userInfo.pid,
-                pageNow : pageNo || 1,
-                pageSize : pageSize || 20
-            }
-        }).success(function(ret) {
-            callback && callback(type,ret);
-        })
+
+        if ($.isArray(userData)) {
+          userId = userData[0].uid;
+        } else {
+          userId = userData.uid;
+        }
+        console.log(userId);
+        // 假如用户在缓存里
+        if (userChatCache[userId]) {
+          console.log('加入用户缓存后');
+          console.log(userChatCache);
+
+          if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
+        } else {
+          $.ajax({
+              'url' : API.http.chatList[type],
+              'dataType' : 'json',
+              'type' : 'get',
+              'data' : {
+                  t : '1462871390676',
+                  uid : userId,
+                  pid : userData.pid,
+                  pageNow : pageNo || 1,
+                  pageSize : pageSize || 20
+              }
+          }).success(function(ret) {
+              callback && callback(type,ret, userId, isScrollBottom);
+          })
+        }
     };
 
     // 改变用户状态
@@ -215,7 +264,10 @@ function Content(node,core,window) {
     }
     // --------------------------- dom操作 ---------------------------
 
-    var parseTpl = function(type,ret) {
+    var parseTpl = function(type,ret, uid, isScrollBottom) {
+
+        console.log(uid);
+        // console.log(type, ret);
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
             var list = [],
@@ -233,13 +285,41 @@ function Content(node,core,window) {
                 });
             });
 
+            // console.log(list);
+
+            // console.log('首次加载历史记录到缓存');
+            // userChatCache[uid].list = list;
+            // console.log('缓存添加新用户')
+            userChatCache[uid] = {
+              list: list ,
+              scrollTop: 0
+            }
+            // console.log('缓存');
+            // console.log(userChatCache)
+
             _html = doT.template(tpl)({
                 list : list
             });
 
-            $rootNode.find('#' + type).find('.js-panel-body').html(_html);
+            $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
+            if (isScrollBottom) $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
         });
     }
+
+    var parseList = function(type, data, isScrollBottom) {
+        loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
+
+            var _html;
+
+            _html = doT.template(tpl)({
+                list : data.list
+            });
+
+            $rootNode.find('#' + type).find('.js-panel-body').html(_html);
+            if (isScrollBottom) $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+        });
+    }
+
     var updateHeaderTag = function(type,handleType) {
         $rootNode.find('.js-addButton').children('[data-type="' + type + '"]').removeClass('hide');
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
@@ -285,45 +365,97 @@ function Content(node,core,window) {
     }
     // --------------------------- socket ---------------------------
 
+    // 加入到某一个user的chche内
     var userPushMessage = function(data) {
         parseChat[data.type] && parseChat[data.type](data);
 
-        if(data.type === 111) {
-            console.log(data);
-            console.log(' 用户' + data.uname + '正在:' + data.description + ' :' + data.content);
+        if (data[0].type === 111) {
+          console.log(data);
+          console.log(' 用户' + data.uname +'正在:' + data.description + ' :' + data.content);
 
-            loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
-                var _html;
-                _html = doT.template(tpl)({
-                    data : data
-                });
-
-                $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
-            });
+          loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
+              var _html;
+              _html = doT.template(tpl)({
+                  data : data[0]
+              });
+              $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
+          });
         } else {
-            // 用户发送消息
-            loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
-                var _html;
-                _html = doT.template(tpl)({
-                    data : data
-                });
 
-                $rootNode.find('#chat').find('.js-panel-body').append(_html);
-            });
+
+          if (userChatCache[data[0].uid]) {
+            // console.log('用户发送消息 ');
+            // console.log(data)
+            // console.log('准备加入用户缓存');
+            for (var i = 0;i < data.length;i++) {
+              // userChatCache[data[0].uid].list.push(data[i]);
+
+              console.log(data[i].type);
+              // 聊天
+              if (data[i].type === 103) {
+                userChatCache[data[0].uid].list.push({
+                  action: 5 ,
+                  senderType: 0 ,
+                  senderName: data[i].uname ,
+                  msg: data[i].content ,
+                  ts: data[i].ts
+                })
+              }
+
+
+            }
+
+            console.log('userInfo.userId => ' + userInfo.userId);
+            console.log('data[0].uid => ' + data[0].uid);
+            var isRender = userInfo.userId === data[0].uid;
+            // 是否渲染 isRender
+            getChatListByOnline('chat', parseList , null, null, data, isRender);
+          }
+
+          // 用户发送消息
+          // loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
+          //     var _html;
+          //     _html = doT.template(tpl)({
+          //         list : data
+          //     });
+          //     // userChatCache.push
+          //     $rootNode.find('#chat').find('.js-panel-body').append(_html);
+          // });
         }
     };
 
     var adminPushMessage = function(data) {
 
-        // 客服发送消息
-        loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
-            var _html;
-            _html = doT.template(tpl)({
-                data : data
-            });
-
-            $rootNode.find('#chat').find('.js-panel-body').append(_html);
+      if (userChatCache[data.uid]) {
+        userChatCache[data.uid].list.push({
+          action: 5 ,
+          senderType: 2 ,
+          senderName: global.name ,
+          msg: data.answer ,
+          ts: 'date ' + new Date().toTimeString().split(' ')[0]
         });
+        // for (var i = 0;i < data.length;i++) {
+        //   // userChatCache[data[0].uid].list.push(data[i]);
+        //
+        //   console.log(data[i].type);
+        //   // 聊天
+        //   if (data[i].type === 103) {
+        //     userChatCache[data[0].uid].list.push({
+        //       action: 5 ,
+        //       senderType: 0 ,
+        //       senderName: data[i].uname ,
+        //       msg: data[i].content ,
+        //       ts: data[i].ts
+        //     })
+        //   }
+        //
+        //
+        // }
+        console.log('userInfo.userId => ' + userInfo.userId);
+        console.log('data.uid => ' + data.uid);
+        var isRender = userInfo.userId === data.uid;
+        getChatListByOnline('chat', parseList , null, null, data, isRender);
+      }
     }
     // --------------------------- base ---------------------------
 
@@ -332,21 +464,17 @@ function Content(node,core,window) {
     };
 
     var onReceive = function(value,data) {
-        userPushMessage(data[0]);
+        console.log(data);
+
+        // if (data[0].type === 102) {
+        //
+        // }
+
+        userPushMessage(data);
     };
 
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
-
-        // 初始化历史记录
-        getChatListByOnline('chat',parseTpl);
-
-        // 初始化用户状态
-        initUserState({
-            star : userInfo.isStar,
-            black : userInfo.isBlack,
-            transfer : userInfo.isTransfer
-        });
     };
 
     var bindLitener = function() {

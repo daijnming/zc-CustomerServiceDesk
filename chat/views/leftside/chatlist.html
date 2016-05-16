@@ -7,7 +7,12 @@
             <i class="icon {{=item.source_type || ''}} js-icon"><span class="badge badge-red js-unread-count">1</span></i>
             <div class="item-detail">
                 <div class="uname" style="width: 230px;">
-                    {{=item.uname}}<span class="status js-status">[离线]</span></span>
+                    {{=item.uname}}
+                    {{ if(item.isTransfer == 0) { }}
+                        <span class="status js-status">[离线]</span></span>
+                    {{  }else{ }}
+                        <span class="status js-status show">[转接]</span></span>
+                    {{  } }}
                 </div><span class="chat-detail js-last-message"></span><i class="user-del js-remove"  data-uid="{{=item.uid}}"><span class="newIcon"></span></i>
             </div>
         </li>

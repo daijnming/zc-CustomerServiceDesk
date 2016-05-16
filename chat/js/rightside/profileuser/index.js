@@ -1,7 +1,6 @@
-
 /*
-* @author denzel.gou
-*/
+ * @author denzel.gou
+ */
 
 var ProfileUser = function(node,core,userData) {
 	//TODO

@@ -2,12 +2,18 @@
     <div class="table-responsive ls-table reqTableBox">
         <div class="reqMenuBox clear">
             <div class="fl">
-                <button class="btn ls-red-btn">
+                <button class="btn ls-red-btn js-queue-tab" data-index="0">
                     排队中 <span class="waitSize">{{=it.waitSize}}</span>
                 </button>
-                <button class="btn ls-light-green-btn hide">
-                    与机器人对话 <span class="robotSize"></span>
+                {{if(it.isInvite == 1) { }}
+                <button class="btn ls-light-green-btn hide js-queue-tab" data-index="1">
+                    浏览网站中 <span class="visitSize">0</span>
                 </button>
+                {{  }else{ }}
+                     <button class="btn ls-light-green-btn js-queue-tab" data-index="1">
+                    浏览网站中 <span class="visitSize">0</span>
+                </button>
+                {{ }  }}
                 <button class="btn ls-light-green-btn hide" id="adminisinvite">
                     浏览网站中 <span class="visitSize">0</span>
                 </button>

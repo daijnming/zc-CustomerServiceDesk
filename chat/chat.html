@@ -133,57 +133,57 @@
                                 <header class='clearfix'>
                                     <span style="margin-left: 15px;cursor: pointer;color: #555459;font-weight: 900;float:left" class="chat_user_title"></span>
                                     <!--<div class="addButton">-->
-                                        <!--<a href="javascript:;" class="goOut"  ></i>转接</a>-->
-                                        <!--<a href="javascript:;" class="goOut"  ></i>拉黑</a>-->
-                                        <!--<a href="javascript:;" class="goOut addstar hide"  ></i>加星标</a>-->
-                                        <!--<a href="javascript:;" class="goOut deldestar hide"  ></i></a>-->
+                                    <!--<a href="javascript:;" class="goOut"  ></i>转接</a>-->
+                                    <!--<a href="javascript:;" class="goOut"  ></i>拉黑</a>-->
+                                    <!--<a href="javascript:;" class="goOut addstar hide"  ></i>加星标</a>-->
+                                    <!--<a href="javascript:;" class="goOut deldestar hide"  ></i></a>-->
                                     <!--</div>-->
                                     <div class="addButton js-addButton" >
-                                      <a href="javascript:;" class="js-goOut goOut addstar hide js-star-add" data-type="star" data-handle="add"></i>星标</a>
-                                      <a href="javascript:;" class="js-goOut goOut deldestar hide js-star-del" data-type="star" data-handle="del" ></i>已标记</a>
-                                      <a href="javascript:;" class="js-goOut goOut addblack hide js-black-add" data-type="black" data-handle="add"></i>拉黑</a>
-                                      <a href="javascript:;" class="js-goOut goOut delblack hide js-black-del" data-type="black" data-handle="del"></i>解除拉黑</a>
-                                      <a href="javascript:;" class="js-goOut goOut transfer js-transfer"  ></i>转接</a>
+                                        <a href="javascript:;" class="js-goOut goOut addstar hide js-star-add" data-type="star" data-handle="add"></i>星标</a>
+                                        <a href="javascript:;" class="js-goOut goOut deldestar hide js-star-del" data-type="star" data-handle="del" ></i>已标记</a>
+                                        <a href="javascript:;" class="js-goOut goOut addblack hide js-black-add" data-type="black" data-handle="add"></i>拉黑</a>
+                                        <a href="javascript:;" class="js-goOut goOut delblack hide js-black-del" data-type="black" data-handle="del"></i>解除拉黑</a>
+                                        <a href="javascript:;" class="js-goOut goOut transfer js-transfer"  ></i>转接</a>
                                     </div>
 
                                 </header>
                                 <div class="scrollBoxParent" id="chat_daijm" style="overflow: auto;outline: none;">
-                                    <div class="js-panel-body panel-body scrollBox">
-                                    </div>
+                                    <div class="js-panel-body panel-body scrollBox"></div>
                                 </div>
-                                <div class="js-user-ready-input" style="position:absolute;bottom: 230px;width:100%;" >
-                                </div>
+                                <div class="js-user-ready-input" style="position:absolute;width:100%;background-color: red;" ></div>
                                 <div  style="position:absolute; bottom:0px;width:100%" class="botTextBox js-botTextBox">
                                     <div class="uesrDivNow">
-                                        <p><span class="callText"></span><a href="javascript:;" class="callBtn">电话回拨</a></p>
+                                        <p>
+                                            <span class="callText"></span><a href="javascript:;" class="callBtn">电话回拨</a>
+                                        </p>
                                     </div>
                                     <p class="userTextNow"></p>
-                                            <span class="faceButton" >
-                                                    <!--<i class="fa fa-meh-o face"  style="font-size: 20px"></i>-->
-                                                <i class="fa face faceIcon js-emotion" style="font-size:20px;cursor:pointer;"></i>
-                                                <i id="maskFace"></i>
-                                            </span>
-                                            <span class="picButton" >
-                                                    <!--<i class="fa fa-photo upload" style="font-size: 20px"></i>-->
-                                                <i id="maskPhoto"></i>
-
-                                                <form class="js-fileinfo" enctype="multipart/form-data" method="post" >
-                                                    <input value="" type="file" class="js-upload" style="opacity:0;position:absolute;left:0;top:0;z-index:10;width:30px;cursor:pointer;">
-                                                    <p style="opacity:0;position:absolute;left:30px;top:0;z-index:11;width:300px;height:30px;background:green;"></p>
-                                                    <i class="photoTag fa upload" style="font-size: 20px"></i>
-                                                </form>
-                                            </span>
+                                    <span class="faceButton" > <!--<i class="fa fa-meh-o face"  style="font-size: 20px"></i>--> <i class="fa face faceIcon js-emotion" style="font-size:20px;cursor:pointer;"></i> <i id="maskFace"></i> </span>
+                                    <span class="picButton" > <!--<i class="fa fa-photo upload" style="font-size: 20px"></i>--> <i id="maskPhoto"></i>
+                                        <form class="js-fileinfo" enctype="multipart/form-data" method="post" >
+                                            <input value="" type="file" class="js-upload" style="opacity:0;position:absolute;left:0;top:0;z-index:10;width:30px;cursor:pointer;">
+                                            <p style="opacity:0;position:absolute;left:30px;top:0;z-index:11;width:300px;height:30px;background:green;"></p>
+                                            <i class="photoTag fa upload" style="font-size: 20px"></i>
+                                        </form> </span>
                                     <textarea class="animatedTextArea form-control msg-send-input sendMessage js-sendMessage" maxlength="1024"  placeholder="请输入.." style="resize: none;max-height: 54px;"  robot="other" ></textarea>
-                                        <div id="faceGroupTarea" style="display:none;">
+                                    <div id="faceGroupTarea" style="display:none;">
 
-                                            <div id="faceGroup" class="groupChildren item"></div>
-                                            <div id="emojiGroup" class="groupChildren item" style="display:none"></div>
-                                            <ul class="GroupTab">
-                                                <li class="firsticoLi icoLi active" data-src="#faceGroup">默认表情</li>
-                                                <li class="icoLi" data-src="#emojiGroup">符号表情</li>
-                                            </ul>
-                                         </div>
-                                    <div><button   class="js-btnSend btnSend" id="btnSend" type="button">发送</button></div>
+                                        <div id="faceGroup" class="groupChildren item"></div>
+                                        <div id="emojiGroup" class="groupChildren item" style="display:none"></div>
+                                        <ul class="GroupTab">
+                                            <li class="firsticoLi icoLi active" data-src="#faceGroup">
+                                                默认表情
+                                            </li>
+                                            <li class="icoLi" data-src="#emojiGroup">
+                                                符号表情
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <button   class="js-btnSend btnSend" id="btnSend" type="button">
+                                            发送
+                                        </button>
+                                    </div>
                                 </div>
 
                             </div>
@@ -245,7 +245,7 @@
                                             <!--客户资料-->
                                             <div class="js-tab-pane tab-pane fade active in" id="profileuser">
 
-                                              <!--改版：  客户资料 通过模板加载-->
+                                                <!--改版：  客户资料 通过模板加载-->
 
                                             </div>
                                             <!--快捷回复-->
