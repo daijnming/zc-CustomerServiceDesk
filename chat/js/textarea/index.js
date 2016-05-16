@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 function TextArea(node,core,window){
     //var that = {};
@@ -29,29 +28,14 @@ function TextArea(node,core,window){
         var _html = doT.template(template.listItem)(data);
         var li = $(_html);
         $node.find(".js-users-list").append(li);
-=======
-function TextArea(node,core,window) {
-    var loadFile = require('../util/load.js')();
-    var showMsg = require('./showMsg.js');
-    //会话气泡
-    var ZC_Face = require('../util/qqFace.js');
-    //表情
-    var uploadImg = require('./uploadImg.js');
-    //上传附件
-    var apihost = "http://test.sobot.com/chat/";
-    var global;
-    var $node;
-
-    var parseDOM = function() {
-        $node = $(node);
-        $sendMessage = $node.find(".js-sendMessage");
->>>>>>> e519f61ab278445a9e3745298573c854677b5847
     };
-
     var onReceive = function(value,data) {
-
+        switch(data.type) {
+            case 102:
+                newUserMessage(data);
+                break;
+        }
     };
-<<<<<<< HEAD
     var onSelected = function(evt,data){
          currentUid=data.data.uid;
          currentCid=data.data.cid; 
@@ -67,58 +51,20 @@ function TextArea(node,core,window) {
 
     var onbtnSendHandler=function(){
        
-=======
-    var onSelected = function(evt,data) {
-        global.uid = data.data.uid;
-        global.cid = data.data.cid;
-        if(data.data.from == 'online') {
-            $node.find(".js-botTextBox").show();
-        } else if(data.data.from == 'history') {
-            $node.find(".js-botTextBox").hide();
-        }
-    };
-    var onEmotionClickHandler = function() {
-        //打开集合,默认qq表情为显示状态
-        $node.find("#faceGroup").show();
-        $node.find("#emojiGroup").hide();
-        $node.find(".icoLi").removeClass("active");
-        $node.find(".firsticoLi").addClass("active");
-        ZC_Face.show();
-        ZC_Face.emojiShow();
-    };
-    var onEmotionIcoClickHandler = function() {
-        //qq表情tab
-        $(this).addClass("active").siblings().removeClass("active");
-        $node.find('.groupChildren').hide();
-        var dataId = $(this).attr("data-src");
-        $(dataId).show();
-    };
-    var onbtnSendHandler = function() {
-
->>>>>>> e519f61ab278445a9e3745298573c854677b5847
         var str = $sendMessage.val();
-        str = ZC_Face.analysis(str);
-        //str已做表情处理
+        str=ZC_Face.analysis(str);//str已做表情处理
         $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
-<<<<<<< HEAD
             'answer':str,
             'uid':currentUid,
             'cid':currentCid
-=======
-            'answer' : str,
-            'uid' : global.uid,
-            'cid' : global.cid
->>>>>>> e519f61ab278445a9e3745298573c854677b5847
         }]);
-
-        $sendMessage.val("");
-        //清空待发送框
+        
+        $sendMessage.val("");//清空待发送框
         //showMsg(uid,"daijm","img/qqarclist/jianjiao.gif",str,null,null,null);//显示气泡
     };
-    var onIntelligencereplyHandler = function(evt,data) {//智能回复
+    var onIntelligencereplyHandler=function(evt,data){//智能回复
         $sendMessage.val(data.data)
     }
-<<<<<<< HEAD
     var onQuickreplyHandler=function(evn,data){//快捷回复
         $sendMessage.val(data.data)
     };
@@ -130,24 +76,13 @@ function TextArea(node,core,window) {
                 }else{
                     onbtnSendHandler()
                 }
-=======
-    var onEnterSendHandler = function(evt) {
-        //监听文本框回车
-        if(evt.keyCode == 13) {
-            if($sendMessage.val() == "") {
-                return false;
-            } else {
-                onbtnSendHandler()
->>>>>>> e519f61ab278445a9e3745298573c854677b5847
             }
-        }
-
+         
     };
-    var onloadHandler = function(evt,data) {
+    var onloadHandler = function(evt,data) { 
         $node.find("img.js-my-logo").attr("src",data.face);
         $node.find(".js-customer-service").html(data.name);
     };
-<<<<<<< HEAD
     var uploadFile=function(){
        uploadFun.onChangeHandler(currentUid,currentCid);
         
@@ -173,51 +108,23 @@ function TextArea(node,core,window) {
     };
     var isHiddenBotTextBox=function(){
          $botTextBox.hide();
-=======
-
-    var onQuickreplyHandler = function(evn,data) {
-        $sendMessage.val(data.data)
->>>>>>> e519f61ab278445a9e3745298573c854677b5847
     };
     var bindLitener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
-        $(document.body).on('leftside.onselected',onSelected);
-        //监听历史用户、在线用户，控制输入框
-        $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);
-        //监听快捷回复
-        $(document.body).on('rightside.onselectedmsg',onIntelligencereplyHandler);
-        //监听智能回复
-        $(window || document.body).on("resize",botTextBoxPosition);
-        //控制输入框的位置
-        $node.find(".js-btnSend").on("click",onbtnSendHandler);
-        //发送按钮
+        $(document.body).on('leftside.onselected',onSelected);//监听历史用户、在线用户，控制输入框
+        $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);//监听快捷回复
+        $(document.body).on('rightside.onselectedmsg',onIntelligencereplyHandler);//监听智能回复
+        $(window||document.body).on("resize",botTextBoxPosition);//控制输入框的位置
+        $node.find(".js-btnSend").on("click",onbtnSendHandler);//发送按钮
         $sendMessage.on("keydown",onEnterSendHandler);
         /*
-<<<<<<< HEAD
         *
         qq表情
         */
         $node.find(".js-emotion").on("click",onEmotionClickHandler);
         $node.find(".icoLi").on("click",onEmotionIcoClickHandler);
         $node.find('.js-upload').on("change",uploadFile);//使用formData上传附件
-=======
-         *
-         qq表情
-         */
-        $node.find(".js-emotion").on("click",onEmotionClickHandler);
-        $node.find(".icoLi").on("click",onEmotionIcoClickHandler);
-
-    };
-
-    var initPlugsin = function() {//插件
-        global = core.getGlobal();
-        initFace();
-        uploadFile();
-        //console.log(perfectScrollbar);
-        //$node.find(".item").perfectScrollbar();
-
->>>>>>> e519f61ab278445a9e3745298573c854677b5847
     };
     var initFace = function() {
         /*
@@ -245,10 +152,8 @@ function TextArea(node,core,window) {
             //cbk
         });
 
-        $node.find('#faceGroup').perfectScrollbar();
-        //加载滚动条
+        $node.find('#faceGroup').perfectScrollbar();//加载滚动条
     };
-<<<<<<< HEAD
     var onEmotionClickHandler = function(){
         //打开集合,默认qq表情为显示状态
         $node.find("#faceGroup").show();
@@ -272,22 +177,6 @@ function TextArea(node,core,window) {
         //console.log(perfectScrollbar);
         //$node.find(".item").perfectScrollbar();
        
-=======
-
-    var uploadFile = function() {
-        var uploadBtn = $node.find(".js-upload");
-        //btn
-        //聊天窗口
-        //$chat_new = $("#chat").clone();
-        uploadImg(uploadBtn/*,$chat_new*/,node,core,window);
-        //uploadBtn对准btn
-
-    };
-    var botTextBoxPosition = function() {
-        console.log(1)
-        $('.scrollBoxParent').height(($(window).height() - (50 + 52 + 230)) + 'px');
-        $(".js-botTextBox").css("bottom","-230px")
->>>>>>> e519f61ab278445a9e3745298573c854677b5847
     };
     var init = function() {
         parseDOM();
