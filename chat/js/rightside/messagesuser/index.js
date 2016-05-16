@@ -23,15 +23,6 @@ var FastMsgModal = function(node,core,config) {
     var oShadowLayer;
     //快捷回复弹层
 
-    // var LocString = String(window.document.location.href);
-    // function getQueryStr(str) {
-    // 	var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
-    // 	if (tmp = rs) {
-    // 		return tmp[2];
-    // 	}
-    // 	return "";
-    // }
-    // config.id = getQueryStr("id");
 
     var parseDOM = function() {
         oShortcut = $(node).find('.js-panel-body .js-tab-pane#messagesuser .js-shortcut');
@@ -61,6 +52,9 @@ var FastMsgModal = function(node,core,config) {
     };
     //加载右侧快捷分组
     var onRightGroup = function(data) {
+      // console.log(data);
+      $(oRightQuickLeft).html('');
+      $(oRightQuickRight).html('');
         loadFile.load(global.baseUrl + 'views/rightside/fastreplyleft.html').then(function(value) {
             var _html = doT.template(value)({
                 'list' : data
@@ -74,6 +68,21 @@ var FastMsgModal = function(node,core,config) {
             $(oRightQuickRight).append(_html);
         });
     };
+    //编辑重新加载
+    var onReloadFastReply = function(){
+      $.ajax({
+        type:'post',
+        cache:false,
+        data:{
+          'userId':config.id
+        },
+        url:'reply/replyGrouplist.action',
+        dataType:'json',
+        success:function(data){
+          onRightGroup(data);
+        }
+      });
+    };
     //初始化数据
     var initData = function() {
         var promise = new Promise();
@@ -85,7 +94,7 @@ var FastMsgModal = function(node,core,config) {
                 'userId' : config.id
             },
             url : getQuickListUrl,
-            dataType : "jsonp",
+            dataType : "json",
             success : function(data) {
                 config.fastData = data;
                 if(!data) {
@@ -115,17 +124,21 @@ var FastMsgModal = function(node,core,config) {
         FastLayer(outer.shadowNode,core,config);
         outer.dialog.show();
     }
-
+    var initPlugsin = function(){
+      //点击快捷回复
+      onRightGroup(config.fastData);
+    };
     var bindLsitener = function() {
         $(oRightQuickLeft).on('click','li',onTapGetRightRep);
         $(oRightQuickRight).on('click','li',onRightRepToOut);
         $(oShortcut).on('click',onShortCutFun);
-        //点击快捷回复
-        onRightGroup(config.fastData);
+        $(document.body).on('rightside.oReLoadRightGroup',onReloadFastReply);
+
     };
     var init = function() {
         parseDOM();
         bindLsitener();
+        initPlugsin();
     };
     initData().then(function() {
         init();

@@ -1436,7 +1436,7 @@ body,html{
   bottom: 0;
   background-color: #fff;
   border-left: 1px solid #e5eeec;
-  z-index: 2;
+  z-index: 0;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content #messagesuser .quickBtnP #shortcut:hover {
   color: #09aeb0;

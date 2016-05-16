@@ -43,18 +43,10 @@ var Fastlayer = function(node,core,config){
   	};
     //触发快捷回复更新
     var onReLoadHandler = function(boo){
+      $(node).find('.js-quickContent ul li.detalBar span').removeClass('hide');
+      $($(node).find('.js-quickLeft ul li')[0]).find('span.upLeftGroup').addClass('hide');
+      $($(node).find('.js-quickRight ul li')[0]).find('span.upRightRep').addClass('hide');
       if(boo)$(document.body).trigger('rightside.oReLoadRightGroup');
-    };
-    var onFastMouseOver = function(){
-      var $this = $(this);
-      $this.addClass('active').siblings('li').removeClass('active');
-      $this.find('input').addClass('active').parent('li').siblings('li').find('input').removeClass('active');
-    };
-    var onFastMouseLeave = function(){
-      var $this = $(this);
-      $this.removeClass('active');
-      $this.find('input').removeClass('active');//.blur();
-      //if($(this).find('input').hasClass('activeLine'))$(this).find('input').blur();
     };
     var onFastTap = function(){
       var $this = $(this);
@@ -371,10 +363,6 @@ var Fastlayer = function(node,core,config){
 
   	var bindLitener = function() {
       onloadHandler();
-      // initConfig();
-      // $(window).on('core.onload',onloadHandler);
-      $(oFastLeft).on('mouseover','li',onFastMouseOver);
-      $(oFastLeft).on('mouseleave','li',onFastMouseLeave);
       $(oFastLeft).on('click','li',onFastTap);
       $(oFastLeft).on('click','span.delLeftGroup',onDelFast);
       $(oFastLeft).on('click','span.upLeftGroup',onUpFast);
@@ -382,8 +370,6 @@ var Fastlayer = function(node,core,config){
       $(oFastLeft).on('blur','input',onFastBlur);
       $(oFastLeft).on('focus','input',onFastFocus);
       ///
-      $(oFastRight).on('mouseover','li',onFastMouseOver);
-      $(oFastRight).on('mouseleave','li',onFastMouseLeave);
       $(oFastRight).on('click','span.delRightRep',onDelFast);
       $(oFastRight).on('click','span.upRightRep',onUpFast);
       $(oFastRight).on('keypress','input',onFastkeyParess);
@@ -398,9 +384,8 @@ var Fastlayer = function(node,core,config){
   	var init = function() {
   		parseDOM();
   		bindLitener();
-
+      onReLoadHandler();
   	};
-    // $(document.body).on('core.onload',init());
   	init();
 };
 module.exports = Fastlayer;

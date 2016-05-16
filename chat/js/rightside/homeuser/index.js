@@ -25,7 +25,7 @@ var HomeUser = function(node,core,config) {
 	$.ajax({
 		type:"post",
 		url:searchUrl,
-		dataType:"JSONP",
+		dataType:"json",
 		data:{
 			uid:config.id,
 			requestText:val

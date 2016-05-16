@@ -84,31 +84,55 @@ var ProfileUser = function(node,core,userData) {
 			});
 
 	};
-	//编辑客户资料字段值
-	var onTextRegexData = function(){
+
+	var oFieldRegex={
+	 	This:this,
+		onTextBlurRegex:function(){
 			var $this =$($(this)[0]);
 			var isSubmit = false;//是否通过验证提交用户资料字段
 			if($this){
 				var val = $this.val().trim().replace(/[ ]/g,'');
-				// console.log(regExUserInfo[$this.attr('otype')].regex);
 				var _cur = regExUserInfo[$this.attr('otype')];
 				(function(_cur,val,$this){
-						if(val==='' || !_cur.regex.test(val)){
-							$this.siblings('span.tip').text(_cur.alert).show();
-							isSubmit = false;
-						}else {
-							$this.siblings('span.tip').text('').hide();
-							isSubmit = true;
+					var _boo=true;
+					//正则匹配
+					for(var i=0;i<_cur.length;i++){
+						var item = _cur[i];
+						if(!item.regex.test(val)){
+							_boo=false;
+							//重新赋值
+							$this.val(oFieldRegex.This.inputText);
+							var $span = $this.siblings('span.tip');
+							var top = $this.offset().top-70;
+							var left= 58;
+							$span.css({
+						    position: "absolute",
+						    zIndex: 99, margin: 0,
+						    left: left+'px', top: top+'px',
+								width:'150px',background:'#ddd'
+							}).text(item.alert).show().on('click',function(){
+								$(this).hide();
+							});
+							break;
 						}
+					}
+					if(_boo){
+						$this.siblings('span.tip').text('').hide();
+						isSubmit = true;
+					}
 						//保存
 						if(isSubmit)
 							onTextSaveData(val,$this);
 				})(_cur,val,$this);
 			}
+		},
+		onTextFocusRegex:function(){
+			oFieldRegex.This.inputText = $(this).val();
+			$(this).select();
+		}
 	};
-
 	var onSelected = function(){
-			var val = $(this).find('option:selected').val()
+			var val = $(this).find('option:selected').val();
 			onTextSaveData(val,$(this)[0]);
 	};
 	var parseDOM = function() {
@@ -122,7 +146,8 @@ var ProfileUser = function(node,core,userData) {
 
 	};
 	var bindLitener = function() {
-		$(node).delegate('.js-userTnp','blur',onTextRegexData);
+		$(node).delegate('.js-userTnp','blur',oFieldRegex.onTextBlurRegex);
+		$(node).delegate('.js-userTnp','focus',oFieldRegex.onTextFocusRegex);
 		$(node).delegate('#sex','change',onSelected);
 	};
 
@@ -132,18 +157,17 @@ var ProfileUser = function(node,core,userData) {
 		config.url_id = global.id;//url地址栏id
 
 		regExUserInfo = {
-			nick:{'regex':/\w{5,28}/,'alert':'格式错误'},
-			uname:{'regex':/\w{5,28}/,'alert':'格式错误'},
-			tel:{'regex':/^[0-9]{8,13}$/,'alert':'格式错误'},
-			birthday:{'regex':/^[0-9]{2}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'},
-			email:{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'格式错误'},
-			qq:{'regex':/[1-9][0-9]{4,13}/,'alert':'格式错误'},
-			weixin:{'regex':/\w{5,28}/,'alert':'格式错误'},
-			weibo:{'regex':/\w{5,28}/,'alert':'格式错误'},
-			remark:{'regex':/\w{0,200}/,'alert':'格式错误'}
+			nick:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'长度错误'}],
+			uname:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			tel:[{'regex':/^[0-9]{8,13}$/,'alert':'格式错误'}],
+			birthday:[{'regex':/^[0-9]{2}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
+			email:[{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'格式错误'}],
+			qq:[{'regex':/[1-9][0-9]{4,13}/,'alert':'格式错误'}],
+			weixin:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			weibo:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			remark:[{'regex':/\w{0,200}/,'alert':'格式错误'}]
 		};
 	};
-
 	initUserInfo().then(function(){
 		init();
 		//console.log(data);
