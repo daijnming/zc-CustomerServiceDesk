@@ -405,10 +405,10 @@
 
             var _html;
 
-            data.list.map(function(item) {
-              // item.
-              item.msg = item.msg ? Face.analysis(item.msg) : null;
-            })
+            // data.list.map(function(item) {
+            //   // item.
+            //   item.msg = item.msg ? Face.analysis(item.msg) : null;
+            // })
 
             _html = doT.template(tpl)({
                 list : data.list
