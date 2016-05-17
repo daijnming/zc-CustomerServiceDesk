@@ -2,7 +2,8 @@
  * @author Treagzhao
  */
 function Online(node,core,window) {
-    var $node;
+    var $node,
+        $body;
     var that = {};
     var chatItemList = {};
     var global;
@@ -99,6 +100,8 @@ function Online(node,core,window) {
     var removeBtnClickHandler = function(e) {
         var elm = e.currentTarget;
         var uid = $(elm).attr("data-uid");
+        if(!chatItemList[uid])
+            return;
         var dialog = new Alert({
             'title' : '提示',
             'text' : '请确认顾客的问题已经解答，是否结束对话？',
@@ -128,6 +131,11 @@ function Online(node,core,window) {
         $node.show();
     };
 
+    var onNotificationClickHandler = function(evt,id) {
+        if(id !== currentUid) {
+            $node.find('li[data-uid="' + id + '"]').trigger("click");
+        }
+    };
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
         getDefaultChatList();
@@ -139,15 +147,17 @@ function Online(node,core,window) {
         }
     };
     var bindListener = function() {
-        $(document.body).on("core.onload",onloadHandler);
-        $(document.body).on("core.receive",onReceive);
-        $(document.body).on("leftside.onselected",onLeftSideSelected);
-        $(document.body).on("leftside.onremove",onChatItemListLengthChange);
+        $body.on("core.onload",onloadHandler);
+        $body.on("core.receive",onReceive);
+        $body.on("notification.click",onNotificationClickHandler);
+        $body.on("leftside.onselected",onLeftSideSelected);
+        $body.on("leftside.onremove",onChatItemListLengthChange);
         $node.delegate(".js-remove",'click',removeBtnClickHandler);
 
     };
     var parseDOM = function() {
         $node = $(node);
+        $body = $(document.body);
     };
 
     var initPlugins = function() {
