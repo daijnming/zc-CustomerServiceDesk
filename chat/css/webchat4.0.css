@@ -1170,7 +1170,7 @@ body,html{
   background-color: #f7fafa;
   border-bottom: 0;
 }
-#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li {
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li.js-menu {
   height: 52px;
   width: 25%;
   cursor: pointer;
@@ -1187,7 +1187,7 @@ body,html{
   padding: 0;
   line-height: 25px;
 }
-#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li a {
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li a.js-menua {
   width: 100%;
   height: 100%;
   display: block;
@@ -1207,7 +1207,7 @@ body,html{
   font-weight: normal;
   font-size: 13px;
 }
-#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li.active a {
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li.js-menu.active a.js-menua {
   border-bottom: solid 3px #09aeb0;
   /*background-color: #fff;*/
 }

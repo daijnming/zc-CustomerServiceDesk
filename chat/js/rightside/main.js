@@ -100,7 +100,7 @@ function RightSide(node,core,window) {
       var item = switchPreferenceLibrary[i];
       if(item['uid']==uid){
         _val = item['item']['homeuser'];
-        $(tabSwitchNav).find('li').each(function(i,o){
+        $(tabSwitchNav).find('li.js-menu').each(function(i,o){
           if($(o).attr('id')==item['item']['zIndex']){
             onSetSwitchTab($(o),_val);
           }
@@ -175,7 +175,7 @@ function RightSide(node,core,window) {
 
 	var bindListener = function() {
     $(window).on('core.onload',onloadHandler);
-    $(tabSwitchNav).on('click','li',setPreferenceInfo);
+    $(tabSwitchNav).on('click','li.js-menu',setPreferenceInfo);
     $(document.body).on('leftside.onselected',initData);
     $(tabInput).delegate('input','keyup',onGetSearch);
     $(tabInput).delegate('input','blur',onGetSearch1);

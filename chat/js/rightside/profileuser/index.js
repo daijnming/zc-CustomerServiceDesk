@@ -26,7 +26,6 @@ var ProfileUser = function(node,core,userData) {
 				return	'<a target="_black" style="font-size:14px;" href="'+url+'" title="'+url+'">'+urlTitle+'</a>';
 		}
 		if(!url&&title) {
-
 				return  subTitle;
 		}
 		return '<a target="_black" style="font-size:14px;" href="'+url+'" title="'+title+'">'+subTitle+'</a>';

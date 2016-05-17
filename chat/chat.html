@@ -221,23 +221,28 @@
                                         <!-- Nav tabs -->
                                         <ul class="js-nav-tabs nav nav-tabs icon-tab">
                                             <!--客户资料-->
-                                            <li class="active" id="profileuser">
-                                                <a href="#0" id="goProfileuser"  data-toggle="tab"><i class="js-fa-user fa fa-user1"></i> <span>客户资料</span></a>
+                                            <li class="active js-menu" id="profileuser">
+                                                <a href="#0" id="goProfileuser" class="js-menua"  data-toggle="tab"><i class="js-fa-user fa fa-user1"></i> <span>客户资料</span></a>
                                             </li>
                                             <!--快捷回复-->
-                                            <li class="" id="messagesuser">
-                                                <a href="#0" id="goMessage"  data-toggle="tab"><i class="js-glyphicon-comment glyphicon glyphicon-comment1"></i> <span>快捷回复</span></a>
+                                            <li class="js-menu" id="messagesuser">
+                                                <a href="#0" id="goMessage" class="js-menua"  data-toggle="tab"><i class="js-glyphicon-comment glyphicon glyphicon-comment1"></i> <span>快捷回复</span></a>
                                             </li>
                                             <!--智能回复-->
-                                            <li class="" id="homeuser">
-                                                <a href="#0" id="gotoQuick"  data-toggle="tab"><i class="js-fa-comments-o fa fa-comments-o1"></i> <span>智能回复</span></a>
+                                            <li class="js-menu" id="homeuser">
+                                                <a href="#0" id="gotoQuick" class="js-menua"  data-toggle="tab"><i class="js-fa-comments-o fa fa-comments-o1"></i> <span>智能回复</span></a>
                                             </li>
-                                            <!--自定义菜单-->
-                                            <li class="dropdown clearfix hide" id="clientSystem">
-                                                <a href="#0" class="js-dropdown-toggle dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="fa fa-navicon1"></i> <span>客户系统</span> <span style="display: none" class="caret"></span> </a>
+                                            <!--自定义菜单 dropdown clearfix hide -->
+                                            <li class="dropdown clearfix hide js-menu" id="clientSystem" >
+                                                <a href="#0" class="js-dropdown-toggle js-menua dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="fa fa-navicon1"></i> <span>客户系统</span> <span style="display: none" class="caret"></span> </a>
                                                 <!--把此ul写到js中去了-->
-                                                <!--<ul class="dropdown-menu dropdown-menu-right ifList" aria-labelledby="dropdownMenu2">-->
-                                                <!--</ul>-->
+                                                <!-- <ul class="dropdown-menu dropdown-menu-right ifList" aria-labelledby="dropdownMenu2"> -->
+                                                <!-- </ul> -->
+                                                <!-- <ul class="js-dropdown-menu">
+                                                  <li><a>11111</a></li>
+                                                  <li><a href="#0">22222</a></li>
+                                                  <li><a href="#0">3333</a></li>
+                                                </ul> -->
                                             </li>
                                         </ul>
                                         <!-- Tab panes -->
@@ -291,7 +296,7 @@
                                                 </div>
                                             </div>
                                             <!--自定义菜单-->
-                                            <div class="js-tab-pane tab-pane fade" id="clientSystem" style="padding: 0px">
+                                            <div class="js-tab-pane tab-pane fade js-clientSystem " id="clientSystem"  style="padding: 0px">
                                                 <iframe id="clientSysIframe" style="border:0;height:100%;width:100%" scrolling="show"></iframe>
                                             </div>
                                         </div>
