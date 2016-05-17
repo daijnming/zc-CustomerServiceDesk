@@ -20,6 +20,11 @@ function Offline(node,core,window) {
         $ulOuter = $node.find(".js-history-list");
     };
 
+    var currentUid;
+
+    var getCurrentUid = function() {
+        return currentUid;
+    };
     var dataAdapter = function(list) {
         for(var i = 0,
             len = list.length;i < len;i++) {
@@ -82,7 +87,8 @@ function Offline(node,core,window) {
 
     var show = function() {
         $node.show();
-        fetchData(prevCursor);
+        $node.find(".js-switch-label").eq(prevCursor).trigger("click");
+        //fetchData(prevCursor);
     };
 
     var hide = function() {
@@ -106,6 +112,7 @@ function Offline(node,core,window) {
     init();
     that.show = show;
     that.hide = hide;
+    that.getCurrentUid = getCurrentUid;
     return that;
 };
 

@@ -1,6 +1,8 @@
  function Content(node,core,window) {
     var loadFile = require('../util/load.js')();
     var Dialog = require('../util/modal/dialog.js');
+    var Alert = require('../util/modal/alert.js');
+    var Face = require('../util/qqFace.js');
     var $rootNode;
     var global;
     // 保存用户对话消息缓存
@@ -51,23 +53,22 @@
     // --------------------------- 接收推送函数 ---------------------------
 
     $(document.body).on('textarea.send', function(ev) {
-        var data = arguments[1];
-        // userChatCache[data.uid].list.push({
-        //
-        // })
 
-        // if (arguments[1].uid ? )
         // 插入客服输入内容
         adminPushMessage(arguments[1]);
-        // $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
-        //     'answer':str,
-        //     'uid':global.uid,
-        //     'cid':global.cid
-        // }]);
+    });
+
+    $(document.body).on('textarea.uploadImgUrl', function(ev) {
+        console.log('上传图片');
+        console.log(arguments);
+        // 插入客服输入内容
+        // adminPushMessage(arguments[1]);
     });
 
     $(document.body).on("leftside.onselected", function() {
       var params = arguments[1];
+
+      console.log(params);
 
       userInfo = {
         isStar: !!params.userData.ismark ,
@@ -100,11 +101,14 @@
     });
 
     $(document.body).on("rightside.directsendreply", function() {
+      console.log('rightside.directsendreply');
+      console.log(arguments);
       var data = {
         answer: arguments[1].data ,
         uid: userInfo.userId ,
         pid: userInfo.pid
       }
+      console.log(data);
       adminPushMessage(data);
     });
 
@@ -118,7 +122,9 @@
     var onUpdateUserState = function(type,handleType) {
         $(document.body).trigger('scrollcontent.onUpdateUserState',[{
             type : type,
-            handleType : handleType
+            handleType : handleType,
+            userId: userInfo.userId,
+            test: 11111
         }]);
     }
     // 推送转接事件
@@ -210,18 +216,54 @@
 
     // 改变用户状态
     var updateUserState = function(type,handleType,callback) {
+      console.log(type);
+      console.log(handleType);
+      var func = function(){
         $.ajax({
             'url' : API.http.status[type][handleType],
             'dataType' : 'json',
             'type' : 'get',
             'data' : {
                 sender : userInfo.sender,
-                receiver : userInfo.uid
+                receiver : userInfo.userId
             }
         }).success(function(ret) {
             callback && callback(type,handleType);
         });
+      }
+
+      // 只有添加标记没有弹框 直接添加
+      if (type === 'star' && handleType === 'add') {
+        func();
+      } else {
+        var dialog = new Alert({
+            'title' : '提示',
+            'text' : '请确定是否要改变状态？',
+            'OK' : function() {
+              func();
+              dialog.hide();
+                // $.ajax({
+                //     'url' : '/chat/admin/out.action',
+                //     'type' : 'post',
+                //     'dataType' : 'json',
+                //     'data' : {
+                //         'uid' : global.id
+                //     }
+                // }).success(function(ret) {
+                //     if(ret.status == 1) {
+                //         $(window).unbind("onbeforeunload");
+                //         window.location.href = "/console/login";
+                //     }
+                // });
+            }
+        });
+        dialog.show();
+      }
+
+      // userStateMap[type][handleType](func);
     }
+
+
     var getAdminList = function(sender,callback) {
         $.ajax({
             'url' : API.http.getOtherAdmin,
@@ -298,6 +340,12 @@
     }
     // --------------------------- dom操作 ---------------------------
 
+    // 清理聊天主体页面
+    var clearScrollContent = function() {
+      $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
+      $rootNode.find('#chat').find('.js-panel-body').parent().empty();
+    }
+
     var parseTpl = function(type,ret, uid, isScrollBottom) {
 
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
@@ -351,12 +399,27 @@
             else if (isToTop) {
               $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
             }
+            else {
+              var height = $rootNode.find('#' + type).find('.js-panel-body').parent()[0].scrollHeight;
+              var scrollTop = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+              console.log('height => ' + height);
+              console.log('scrollTop => ' + scrollTop);
+
+              if ((height - scrollTop) > 700) {
+                $rootNode.find('#' + type).find('.zc-newchat-tag').show();
+              } else {
+                $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+              }
+            }
         });
     }
 
     var updateHeaderTag = function(type,handleType) {
         $rootNode.find('.js-addButton').children('[data-type="' + type + '"]').removeClass('hide');
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
+
+        // 如果是添加拉黑
+        if (type === 'black' && handleType === 'add') clearScrollContent();
         onUpdateUserState(type,handleType);
     }
     var initUserState = function(data) {
@@ -369,6 +432,8 @@
                 if(data[k])
                     $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
             } else {
+                console.log(k);
+                console.log(data[k]);
                 $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
             }
         }
@@ -533,6 +598,10 @@
                 pid: userInfo.pid
               }, true, false);
             }
+        });
+
+        $rootNode.find('#chat').on('click', '.zc-newchat-tag', function() {
+          $rootNode.find('#chat').find('.js-panel-body')[0].scrollIntoView(false);
         });
 
         sendSearchUserChat();
