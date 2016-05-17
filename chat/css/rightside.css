@@ -143,3 +143,40 @@ ul{
 .js-panel-body .dropdown ul.js-dropdown-menu li a,.js-panel-body .dropdown ul.js-dropdown-menu li a:link,.js-panel-body .dropdown ul.js-dropdown-menu li a:visited,.js-panel-body .dropdown ul.js-dropdown-menu li a:active{
   text-decoration: none;
 }
+
+.chatWarp{
+  display:block;
+  float:left;
+  /*background-color:red;*/
+  color: #0d81c0;
+  text-decoration:none;
+  width:73%;
+  overflow: hidden;
+}
+.aChat{
+  font-size:14px;
+  /*visibility: hidden;*/
+  white-space: nowrap;
+  text-decoration: none;
+  color:#333;
+}
+.aChat:hover,.aChat:visited,.aChat:link,.aChat:active{
+  text-decoration: none;
+  color:#333;
+}
+.aSession{
+  float: left;
+}
+.chatWarp i.hide{
+  display: none;
+}
+.chatWarpi {
+  float: left;
+  display: none;
+}
+.chatWarpi.show{
+  display: block;
+}
+.sessionWarp{
+  padding-bottom: 20px;
+}
