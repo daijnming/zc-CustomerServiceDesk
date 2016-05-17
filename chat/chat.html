@@ -38,6 +38,7 @@
         <link rel="stylesheet" href="css/rightside.css" charset="utf-8">
         <link href="css/scrollcontent.css" rel="stylesheet"  charset="utf-8">
         <link href="css/webchat4_1.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/datepicker.css" charset="utf-8">
 
         <!-- 初始化emoji -->
         <script src="http://cdn.bootcss.com/twemoji/1.4.1/twemoji.min.js"></script>
@@ -143,7 +144,7 @@
                                         <a href="javascript:;" class="js-goOut goOut deldestar hide js-star-del" data-type="star" data-handle="del" ></i>已标记</a>
                                         <a href="javascript:;" class="js-goOut goOut addblack hide js-black-add" data-type="black" data-handle="add"></i>拉黑</a>
                                         <a href="javascript:;" class="js-goOut goOut delblack hide js-black-del" data-type="black" data-handle="del"></i>解除拉黑</a>
-                                        <a href="javascript:;" class="js-goOut goOut transfer js-transfer"  ></i>转接</a>
+                                        <a href="javascript:;" class="js-goOut goOut transfer hide js-transfer"  ></i>转接</a>
                                     </div>
 
                                 </header>
@@ -151,6 +152,7 @@
                                     <div class="js-panel-body panel-body scrollBox"></div>
                                 </div>
                                 <div class="js-user-ready-input" style="position:absolute;width:100%;background-color: red;" ></div>
+                                <div class="zc-newchat-tag"></div>
                                 <div  style="position:absolute; bottom:0px;width:100%" class="botTextBox js-botTextBox">
                                     <div class="uesrDivNow">
                                         <p>
@@ -221,23 +223,28 @@
                                         <!-- Nav tabs -->
                                         <ul class="js-nav-tabs nav nav-tabs icon-tab">
                                             <!--客户资料-->
-                                            <li class="active" id="profileuser">
-                                                <a href="#0" id="goProfileuser"  data-toggle="tab"><i class="js-fa-user fa fa-user1"></i> <span>客户资料</span></a>
+                                            <li class="active js-menu" id="profileuser">
+                                                <a href="#0" id="goProfileuser" class="js-menua"  data-toggle="tab"><i class="js-fa-user fa fa-user1"></i> <span>客户资料</span></a>
                                             </li>
                                             <!--快捷回复-->
-                                            <li class="" id="messagesuser">
-                                                <a href="#0" id="goMessage"  data-toggle="tab"><i class="js-glyphicon-comment glyphicon glyphicon-comment1"></i> <span>快捷回复</span></a>
+                                            <li class="js-menu" id="messagesuser">
+                                                <a href="#0" id="goMessage" class="js-menua"  data-toggle="tab"><i class="js-glyphicon-comment glyphicon glyphicon-comment1"></i> <span>快捷回复</span></a>
                                             </li>
                                             <!--智能回复-->
-                                            <li class="" id="homeuser">
-                                                <a href="#0" id="gotoQuick"  data-toggle="tab"><i class="js-fa-comments-o fa fa-comments-o1"></i> <span>智能回复</span></a>
+                                            <li class="js-menu" id="homeuser">
+                                                <a href="#0" id="gotoQuick" class="js-menua"  data-toggle="tab"><i class="js-fa-comments-o fa fa-comments-o1"></i> <span>智能回复</span></a>
                                             </li>
-                                            <!--自定义菜单-->
-                                            <li class="dropdown clearfix hide" id="clientSystem">
-                                                <a href="#0" class="js-dropdown-toggle dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="fa fa-navicon1"></i> <span>客户系统</span> <span style="display: none" class="caret"></span> </a>
+                                            <!--自定义菜单 dropdown clearfix hide -->
+                                            <li class="dropdown clearfix hide js-menu" id="clientSystem" >
+                                                <a href="#0" class="js-dropdown-toggle js-menua dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="fa fa-navicon1"></i> <span>客户系统</span> <span style="display: none" class="caret"></span> </a>
                                                 <!--把此ul写到js中去了-->
-                                                <!--<ul class="dropdown-menu dropdown-menu-right ifList" aria-labelledby="dropdownMenu2">-->
-                                                <!--</ul>-->
+                                                <!-- <ul class="dropdown-menu dropdown-menu-right ifList" aria-labelledby="dropdownMenu2"> -->
+                                                <!-- </ul> -->
+                                                <!-- <ul class="js-dropdown-menu">
+                                                  <li><a>11111</a></li>
+                                                  <li><a href="#0">22222</a></li>
+                                                  <li><a href="#0">3333</a></li>
+                                                </ul> -->
                                             </li>
                                         </ul>
                                         <!-- Tab panes -->
@@ -291,7 +298,7 @@
                                                 </div>
                                             </div>
                                             <!--自定义菜单-->
-                                            <div class="js-tab-pane tab-pane fade" id="clientSystem" style="padding: 0px">
+                                            <div class="js-tab-pane tab-pane fade js-clientSystem " id="clientSystem"  style="padding: 0px">
                                                 <iframe id="clientSysIframe" style="border:0;height:100%;width:100%" scrolling="show"></iframe>
                                             </div>
                                         </div>
@@ -605,6 +612,7 @@
         <script src="js/lib/doT.min.js"></script>
         <script src="js/lib/divscroll.js"></script>
         <script src="dest/js/entrance.js"></script>
+        <script src="assets/jslib/bootstrap-datepicker.js" charset="utf-8"></script>
         <!-- <script src="js/quickReply.js?v=20150828"></script> -->
     </body>
 </html>
