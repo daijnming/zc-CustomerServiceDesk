@@ -12,6 +12,7 @@ function Item(data,core,outer,from,manager) {
     var from = from || 'online';
     var global = core.getGlobal();
     var $body;
+    var messageAdapter = require('../util/normatMessageAdapter.js');
     var userDataCache = {};
     var baseUrl = global.baseUrl;
     var $ulOuter;
@@ -32,17 +33,16 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onReceive = function(evt,list) {
-        if(data.uid === manager.getCurrentUid()) {
-            return;
-        }
-        for(var i = 0,
-            len = list.length;i < len;i++) {
-            var msg = list[i];
-            if((msg.cid !== data.cid ) || msg.type != 103) {
-                continue;
+        var lastMessage = list.length > 0 ? list[list.length - 1] : null;
+        if(data.uid !== manager.getCurrentUid()) {
+            for(var i = 0,
+                len = list.length;i < len;i++) {
+                var msg = list[i];
+                if((msg.cid !== data.cid ) || msg.type != 103) {
+                    continue;
+                }
+                unReadCount++;
             }
-            unReadCount++;
-            var lastMessage = list.length > 0 ? list[list.length - 1] : null;
             if(unReadCount > 0) {
                 $unRead.html(unReadCount).css({
                     'visibility' : 'visible'
@@ -52,8 +52,8 @@ function Item(data,core,outer,from,manager) {
                     'visibility' : 'hidden'
                 });
             }
-            $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
         }
+        $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
     };
     var onOffLine = function() {
         $node.find(".js-icon").addClass("offline");
@@ -207,6 +207,11 @@ function Item(data,core,outer,from,manager) {
         }
     };
 
+    var onServerSend = function(evt,ret) {
+        messageAdapter(ret);
+        $lastMessage.html(ret.desc).removeClass("orange");
+    };
+
     var onTransfer = function(evt,data) {
         var uid = data.uid;
         manager.setCurrentUid(undefined);
@@ -218,6 +223,7 @@ function Item(data,core,outer,from,manager) {
         $body.on("scrollcontent.onUpdateUserState",onUserStatusChange);
         $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);
+        $body.on("textarea.send",onServerSend);
         $node.on("click",onNodeClickHandler);
         $body.on("rightside.onProfileUserInfo",onProfileUserInfo);
 

@@ -4,6 +4,7 @@ function Core(window) {
     var queryParam;
     var polling = require('./socket/json.js');
     var HearBeat = require("./socket/heartbeat.js");
+    var normalMessageAdapter = require('../util/normatMessageAdapter.js');
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var notificationPermission;
@@ -22,9 +23,6 @@ function Core(window) {
         uid : ""
     };
     var global = {};
-    var TYPE_EMOTION = 0,
-        TYPE_IMAGE = 1,
-        TYPE_TEXT = 2;
     var basicInfoHandler = function(value,promise) {
         token = value.token || window.sessionStorage.getItem('temp-id');
         promise.resolve({});
@@ -112,27 +110,6 @@ function Core(window) {
             $body.trigger("core.onload",[global]);
             getMessage();
         });
-    };
-
-    var normalMessageAdapter = function(value) {
-        var content = value.content;
-        var reg = /src=['"](.*?)['"]/;
-        if(content.indexOf("<img") >= 0) {
-            if(content.indexOf("webchat_img_face") >= 0) {
-                value.message_type = TYPE_EMOTION;
-                value.desc = '[表情]';
-            } else if(content.indexOf("webchat_img_upload") >= 0) {
-                value.message_type = TYPE_IMAGE;
-                value.desc = '[图片]';
-            }
-            if(reg.test(content)) {
-                value.url = RegExp.$1;
-            }
-        } else if(content.indexOf("<audio") >= 0) {
-        } else {
-            value.message_type = TYPE_TEXT;
-            value.desc = content;
-        }
     };
 
     var systemMessageAdpater = function(value) {
