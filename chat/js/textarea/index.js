@@ -57,7 +57,7 @@ function TextArea(node,core,window) {
 
     var onImageUpload = function(evt,data) {
         $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
-            'answer' : '<img src="' + data.url + '" />"',
+            'answer' : '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />"',
             'uid' : currentUid,
             'cid' : currentCid
         }]);
@@ -78,7 +78,8 @@ function TextArea(node,core,window) {
         //showMsg(uid,"daijm","img/qqarclist/jianjiao.gif",str,null,null,null);//显示气泡
     };
     var onIntelligencereplyHandler = function(evt,data) {//智能回复
-        $sendMessage.val(data.data)
+        console.log(data);
+        $sendMessage.val(data.data.msg)
     }
     var onQuickreplyHandler = function(evn,data) {//快捷回复
         $sendMessage.val(data.data)
@@ -132,7 +133,7 @@ function TextArea(node,core,window) {
         //监听历史用户、在线用户，控制输入框
         $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);
         //监听快捷回复
-        $(document.body).on('rightside.onselectedmsg',onIntelligencereplyHandler);
+        $(document.body).on('rightside.onChatSmartReply',onIntelligencereplyHandler);
         //监听智能回复
         $(window || document.body).on("resize",botTextBoxPosition);
         //控制输入框的位置
@@ -193,6 +194,7 @@ function TextArea(node,core,window) {
         $(dataId).show();
     };
     var initPlugsin = function() {//插件
+
         uploadFun = uploadImg($uploadBtn,node,core,window);
         //上传图片
         initFace();

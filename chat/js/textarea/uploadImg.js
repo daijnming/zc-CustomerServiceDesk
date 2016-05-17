@@ -34,6 +34,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
     };
 
     var onFormDataUpHandler = function(uid,cid) {
+
         if(FormData) {//支持formData则使用formData上传
             var oData = new FormData();
             var input = $node.find(".js-upload")[0];
@@ -54,6 +55,9 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     'cid' : cid,
                     'url' : url
                 }]);
+               /* var file = $node.find(".js-upload"); 
+                file.after(file.clone().val("")); 
+                file.remove(); */
             }).fail(function(ret) {
                 console.log("fail")
             });

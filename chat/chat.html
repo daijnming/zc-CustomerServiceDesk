@@ -22,7 +22,8 @@
 
         <!--<link rel="shortcut icon" href="assets/images/ico/fab.ico">-->
         <title>人工客服工作台</title>
-
+        <link href="assets/css/style.css" rel="stylesheet">
+        <!--build:css css/lib.css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/bootstrap-switch.css" rel="stylesheet">
         <link href="assets/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -30,16 +31,18 @@
         <link href="assets/css/plugins/amaranjs/theme/all-themes.css" rel="stylesheet">
         <link href="assets/css/plugins/jquery.remodal.css" rel="stylesheet">
         <link href="assets/css/jquery.Jcrop.css" rel="stylesheet">
-        <link href="assets/css/style.css" rel="stylesheet">
         <link href="assets/css/responsive.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/datepicker.css" charset="utf-8">
+        <!-- endbuild -->
+        <!-- build:css css/main.css -->
         <link href="css/webchat.css?v=151027" rel="stylesheet">
         <link href="css/webchat4.0.css" rel="stylesheet">
         <link href="css/qqFace.css" rel="stylesheet">
         <link rel="stylesheet" href="css/rightside.css" charset="utf-8">
         <link href="css/scrollcontent.css" rel="stylesheet"  charset="utf-8">
-        <link href="css/webchat4_1.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/datepicker.css" charset="utf-8">
 
+        <link href="css/webchat4_1.css" rel="stylesheet">
+        <!-- endbuild -->
         <!-- 初始化emoji -->
         <script src="http://cdn.bootcss.com/twemoji/1.4.1/twemoji.min.js"></script>
     </head>
@@ -140,11 +143,21 @@
                                     <!--<a href="javascript:;" class="goOut deldestar hide"  ></i></a>-->
                                     <!--</div>-->
                                     <div class="addButton js-addButton" >
-                                        <a href="javascript:;" class="js-goOut goOut addstar hide js-star-add" data-type="star" data-handle="add"></i>星标</a>
-                                        <a href="javascript:;" class="js-goOut goOut deldestar hide js-star-del" data-type="star" data-handle="del" ></i>已标记</a>
-                                        <a href="javascript:;" class="js-goOut goOut addblack hide js-black-add" data-type="black" data-handle="add"></i>拉黑</a>
-                                        <a href="javascript:;" class="js-goOut goOut delblack hide js-black-del" data-type="black" data-handle="del"></i>解除拉黑</a>
-                                        <a href="javascript:;" class="js-goOut goOut transfer hide js-transfer"  ></i>转接</a>
+                                        <a href="javascript:;" class="js-goOut goOut addstar hide js-star-add" data-type="star" data-handle="add">
+                                          <i class="fa fa-star-o"></i>星标
+                                        </a>
+                                        <a href="javascript:;" class="js-goOut goOut deldestar hide js-star-del" data-type="star" data-handle="del" >
+                                          <i class="fa fa-star"></i>已标记
+                                        </a>
+                                        <a href="javascript:;" class="js-goOut goOut addblack hide js-black-add" data-type="black" data-handle="add">
+                                          <i class="fa fa-minus-circle"></i>拉黑
+                                        </a>
+                                        <a href="javascript:;" class="js-goOut goOut delblack hide js-black-del" data-type="black" data-handle="del">
+                                          <i class="fa fa-minus-circle"></i>解除拉黑
+                                        </a>
+                                        <a href="javascript:;" class="js-goOut goOut transfer hide js-transfer"  >
+                                          <i class="fa fa-share"></i>转接
+                                        </a>
                                     </div>
 
                                 </header>
@@ -195,11 +208,21 @@
                                     <!--原型目前没有-yyy-->
                                     <!--<span style="margin-left: 15px;cursor: pointer;color: #555459;font-weight: 900;float:left" class="chat_user_title"></span>-->
                                     <div class="addButton js-addButton" >
-                                        <a href="javascript:;" class="js-goOut goOut addstar hide js-star-del"  ></i>星标</a>
-                                        <a href="javascript:;" class="js-goOut goOut deldestar hide js-star-add"  ></i>已标记</a>
-                                        <a href="javascript:;" class="js-goOut goOut addblack hide js-black-del"  ></i>拉黑</a>
-                                        <a href="javascript:;" class="js-goOut goOut delblack hide js-black-add"  ></i>解除拉黑</a>
-                                        <a href="javascript:;" class="js-goOut goOut transfer"  ></i>转接</a>
+                                        <a href="javascript:;" class="js-goOut goOut addstar hide js-star-add" data-type="star" data-handle="add">
+                                          <i class="fa fa-star-o"></i>星标
+                                        </a>
+                                        <a href="javascript:;" class="js-goOut goOut deldestar hide js-star-del" data-type="star" data-handle="del" >
+                                          <i class="fa fa-star"></i>已标记
+                                        </a>
+                                        <a href="javascript:;" class="js-goOut goOut addblack hide js-black-add" data-type="black" data-handle="add">
+                                          <i class="fa fa-minus-circle"></i>拉黑
+                                        </a>
+                                        <a href="javascript:;" class="js-goOut goOut delblack hide js-black-del" data-type="black" data-handle="del">
+                                          <i class="fa fa-minus-circle"></i>解除拉黑
+                                        </a>
+                                        <a href="javascript:;" class="js-goOut goOut transfer hide js-transfer"  >
+                                          <i class="fa fa-share"></i>转接
+                                        </a>
                                     </div>
                                 </header>
                                 <div class="scrollBoxParent">
@@ -241,9 +264,9 @@
                                                 <!-- <ul class="dropdown-menu dropdown-menu-right ifList" aria-labelledby="dropdownMenu2"> -->
                                                 <!-- </ul> -->
                                                 <!-- <ul class="js-dropdown-menu">
-                                                  <li><a>11111</a></li>
-                                                  <li><a href="#0">22222</a></li>
-                                                  <li><a href="#0">3333</a></li>
+                                                <li><a>11111</a></li>
+                                                <li><a href="#0">22222</a></li>
+                                                <li><a href="#0">3333</a></li>
                                                 </ul> -->
                                             </li>
                                         </ul>
@@ -602,17 +625,21 @@
             </div> -->
         </div>
         <style>
- 
- 
-.item{ height: 140px; line-height:20px;}
- 
-</style>
+            .item {
+                height: 140px;
+                line-height: 20px;
+            }
 
+        </style>
+        <!-- build:js js/lib.js -->
         <script src="assets/jslib/jquery-1.8.3.min.js"></script>
         <script src="js/lib/doT.min.js"></script>
         <script src="js/lib/divscroll.js"></script>
-        <script src="dest/js/entrance.js"></script>
         <script src="assets/jslib/bootstrap-datepicker.js" charset="utf-8"></script>
+        <!-- endbuild -->
+        <!-- build:js js/main.js -->
+        <script src="dest/js/entrance.js"></script>
+        <!-- endbuild -->
         <!-- <script src="js/quickReply.js?v=20150828"></script> -->
     </body>
 </html>
