@@ -167,7 +167,7 @@ var Fastlayer = function(node,core,config){
       var key = e.which;
         if (key == 13&&!e.shiftKey) {
           $that.blur();
-          console.log('e');
+          // console.log('e');
           return false;
         }
     };
