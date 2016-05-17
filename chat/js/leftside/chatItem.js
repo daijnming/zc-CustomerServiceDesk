@@ -190,12 +190,20 @@ function Item(data,core,outer,from,manager) {
 
     };
 
+    var onProfileUserInfo = function(evt,ret) {
+        if(ret.data.uid == data.uid && ret.data.name) {
+            var name = ret.data.name;
+            $userName.html(name);
+        }
+    };
+
     var onUserStatusChange = function(evt,data) {
         if(data.type == "black" && data.handleType == 'add' && data.uid === data.id) {
             onRemove();
         }
         if(data.type == 'star') {
             delete userDataCache[data.uid];
+            getUserData();
         }
     };
 
@@ -210,6 +218,7 @@ function Item(data,core,outer,from,manager) {
         $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);
         $node.on("click",onNodeClickHandler);
+        $body.on("rightside.onProfileUserInfo",onProfileUserInfo);
 
     };
     var parseDOM = function() {
