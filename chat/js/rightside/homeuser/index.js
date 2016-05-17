@@ -13,6 +13,9 @@ var HomeUser = function(node,core,config) {
 			robotAnswer,
 			sugguestions;
 
+	var user={
+		uid:''
+	};//用户信息
   //TODO 模板/js/资源引用
 	// var template = require('./template.js');
 
@@ -67,10 +70,37 @@ var HomeUser = function(node,core,config) {
 			}
 		}
 	};
+	var onLoadUserInfo = function(evn,data){
+		user.uid = data?data.userData.uid:'';
+		console.log(user.uid);
+	};
+	//智能回复
+	var onChatSmartReply = function(){
+		var $this = $(this);
+		var obj={},
+			_answer = $(robotAnswer).find('a');
+		//type=3 未搜索到智能回复答案 不进行发送
+		if(_answer.html()===''||_answer.attr('answerType')==='3'||user.uid=='')return;
+
+		if($this.hasClass('quickSendBtn')){
+			//直接发送
+			obj.msg = $(robotAnswer).find('a').html();
+		}else{
+			//存到发送框
+			obj.msg = $($this[0]).html();
+		}
+		obj.uid = user.uid;
+		//TODO 调取外部接口 直接给用户发送智能回复答案
+		$(document.body).trigger('rightside.onChatSmartReply',[{
+				'data':obj
+		}]);
+		// console.log(obj);
+	};
+
 	//点击智能回复答案 进行回复
 	var onSendAnswer = function(){
 		var $this = $(this);
-		// console.log($($this[0]).html());
+		console.log($this);
 		$(document.body).trigger('rightside.onselectedmsg',[{
 			'data':$($this[0]).html()
 		}]);
@@ -113,7 +143,9 @@ $(sugguestions).on('click','li',function(ev) {
 			$(homeuser).find('.js-robotBackHideBtn').hide();
 		}
 	};
-
+	var onGetReplyByChat = function(evn,data){
+		console.log(data);
+	};
 	var parseDOM = function() {
     oHomeuser = $(node).find('.js-tab-pane#homeuser');
 		robotDirectHideBtn = $(node).find('.js-homeUserBox .js-robotDirectHideBtn');
@@ -129,9 +161,12 @@ $(sugguestions).on('click','li',function(ev) {
 	};
 	var bindLitener = function() {
 			$(oHomeuser).delegate('#quickSerch','keyup',onSerchContent);
-			$(robotDirectHideBtn).delegate('a.quickSendBtn','click',onDirectSendBtn);
-			$(robotAnswer).delegate('a','click',onSendAnswer);
-
+			// $(robotDirectHideBtn).delegate('a.quickSendBtn','click',onDirectSendBtn);
+			// $(robotAnswer).delegate('a','click',onSendAnswer);
+			$(robotDirectHideBtn).delegate('a.quickSendBtn','click',onChatSmartReply);
+			$(robotAnswer).delegate('a','click',onChatSmartReply);
+			$(document.body).on('scrollcontent.onSearchUserChat',onGetReplyByChat);//点击聊天内容获取智能回复
+			$(document.body).on('leftside.onselected',onLoadUserInfo);//加载用户信息 点击左侧用户列表才会触发
 	};
 
 	//点击聊天内容进行智能回复搜索
