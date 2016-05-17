@@ -61,7 +61,8 @@ var ProfileUser = function(node,core,userData) {
 
 		var oUrl = 'admin/modify_userinfo.action',
 				sendData = {},
-				type = $(obj).attr('otype');
+				type = $(obj).attr('otype'),
+				reviceData={};//通知有左侧用户列表
 				sendData.uid=config.uid;
 				sendData.sender = config.url_id;
 				if(type)sendData[type] = val;
@@ -71,13 +72,18 @@ var ProfileUser = function(node,core,userData) {
 				data:sendData,
 				dataType:'json',
 				success:function(data){
+					reviceData.status=true;
+					reviceData.uid = config.uid;
 					//如果编辑的是姓名字段 则要传值给左侧栏显示
 					if($(obj).hasClass('userNameDyy'))
 					{
-						$(document.body).trigger('rightside.onGetName',[{
-								'name':val
-						}]);
+						reviceData.name=val;
+					}else{
+						reviceData.name='';
 					}
+					$(document.body).trigger('rightside.onProfileUserInfo',[{
+							'data':reviceData
+					}]);
 				}
 			});
 
