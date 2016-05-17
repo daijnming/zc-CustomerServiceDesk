@@ -1371,6 +1371,26 @@ body,html{
   font-family: 'microsoft yahei';
   font-weight: bold;
 }
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .tip{
+  display: none;
+}
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .tip.show{
+  position: absolute;
+  z-index: 99;
+  margin: 0;
+  width:150px;
+  height:20px;
+  background:#fff;
+  border:1px solid #f90;
+  color:red;
+  font-size:11px;
+  line-height:20px;
+  padding-left: 5px;
+  display: block;
+}
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .userInp.warm{
+	border:1px solid red;
+}
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .remark {
   background-color: #f7fafa;
   height: 106px;
