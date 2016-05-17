@@ -4,8 +4,8 @@
 	.GroupTab li{float:left;padding:4px 15px;background:#fff;color:#929292;text-align: center;cursor: pointer;border:1px solid #e7e7e7;border-right:none;border-top:1px solid #fff;font-size:12px;}
 	.GroupTab li.active{background:#fff;color:#383a3b;border-top:#fff 2px solid;margin-top:-1px;}
 	.GroupTab li:first-child{border-left:none;}
-	#faceGroupTarea .groupChildren{padding:6px;background:#fff;}
-	#faceGroupTarea .groupChildren .face{height:178px;overflow-y: hidden; outline: none;}
+	#faceGroupTarea .groupChildren{padding:6px;background:#fff;height:190px;}
+	#faceGroupTarea .groupChildren .face{/* height:178px;overflow-y: hidden; outline: none; */}
 	#faceGroupTarea .groupChildren li{float:left;width:30px;height:30px;text-align:center;line-height:30px;cursor: pointer;}
 	#faceGroupTarea .groupChildren li .faceIco{width:24px;height:24px;}
 	#faceGroupTarea .groupChildren li:hover{background:#edeff0;}

@@ -52,14 +52,15 @@ function TextArea(node,core,window){
     var onbtnSendHandler=function(){
        
         var str = $sendMessage.val();
-        str=ZC_Face.analysis(str);//str已做表情处理
+       
         $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
             'answer':str,
             'uid':currentUid,
             'cid':currentCid
         }]);
-        
+        str=ZC_Face.analysis(str);//str已做表情处理
         $sendMessage.val("");//清空待发送框
+
         //showMsg(uid,"daijm","img/qqarclist/jianjiao.gif",str,null,null,null);//显示气泡
     };
     var onIntelligencereplyHandler=function(evt,data){//智能回复
@@ -72,11 +73,14 @@ function TextArea(node,core,window){
             //监听文本框回车
             if(evt.keyCode == 13){
                 if($sendMessage.val()==""){
+
                     return false;
                 }else{
                     onbtnSendHandler()
                 }
+                $sendMessage.val("");//清空待发送框
             }
+           // $sendMessage.val("");//清空待发送框
          
     };
     var onloadHandler = function(evt,data) { 
@@ -146,13 +150,12 @@ function TextArea(node,core,window){
             //showId : ".panel-body",
             emotion : ".js-emotion",
             //sub_btn : ".js-btnSend",
-            path : apihost+"chatres/common/emotes/qqarclist/",
-            emojiPath : apihost+"chatres/common/emotes/emoji/"
+            path : "chatres/common/emotes/qqarclist/",
+            emojiPath :"chatres/common/emotes/emoji/"
         }, function() {
             //cbk
         });
-
-        $node.find('#faceGroup').perfectScrollbar();//加载滚动条
+        //$node.find('#faceGroup').perfectScrollbar();//加载滚动条
     };
     var onEmotionClickHandler = function(){
         //打开集合,默认qq表情为显示状态
@@ -162,20 +165,21 @@ function TextArea(node,core,window){
         $node.find(".firsticoLi").addClass("active");
         ZC_Face.show();
         ZC_Face.emojiShow();
+       
     };
     var onEmotionIcoClickHandler = function(){
         //qq表情tab
         $(this).addClass("active").siblings().removeClass("active");
         $node.find('.groupChildren').hide();
         var dataId=$(this).attr("data-src");
-        $(dataId).show();
+        $(dataId).show();$('.item').perfectScrollbar();
     };
     var initPlugsin = function() {//插件
         uploadFun = uploadImg($uploadBtn,node,core,window); //上传图片
         // that.getCurrentUserInfo = getCurrentUserInfo;
         initFace();
         //console.log(perfectScrollbar);
-        //$node.find(".item").perfectScrollbar();
+        $node.find('.item').perfectScrollbar();//表情滚动插件
        
     };
     var init = function() {

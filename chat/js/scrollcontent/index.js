@@ -45,7 +45,7 @@ function Content(node,core,window) {
         3 : 'http://img.sobot.com/chatres/common/face/weiboType.png',
         4 : 'http://img.sobot.com/chatres/common/face/moType.png',
         5 : 'http://img.sobot.com/chatres/common/face/moType.png'
-    }
+    };
 
     var userInfo = {};
 
@@ -57,6 +57,9 @@ function Content(node,core,window) {
         //
         // })
         console.log(arguments);
+        console.log(arguments[1]);
+
+        // if (arguments[1].uid ? )
         // 插入客服输入内容
         adminPushMessage(arguments[1]);
         // $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
@@ -77,6 +80,7 @@ function Content(node,core,window) {
         isTransfer: !!params.userData.chatType ,
         cid: params.data.cid ,
         uid: global.id,
+        pid: params.data.pid,
         sender : global.id,
         userId: params.data.uid
       }
@@ -96,8 +100,19 @@ function Content(node,core,window) {
           // transfer: userInfo.isTransfer
           star: !!params.userData.ismark ,
           black: !!params.userData.isblack ,
-          transfer: !!params.userData.chatType ,
+          transfer: !!params.userData.chatType
       });
+    });
+
+    $(document.body).on("rightside.directsendreply", function() {
+      console.log('智能回复');
+      console.log(arguments);
+      var data = {
+        answer: arguments[1].data ,
+        uid: userInfo.userId ,
+        pid: userInfo.pid
+      }
+      adminPushMessage(data);
     });
 
     // --------------------------- 推送函数 ---------------------------
@@ -142,21 +157,63 @@ function Content(node,core,window) {
           console.log('加入用户缓存后');
           console.log(userChatCache);
 
-          if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
+
+          if (pageNo) {
+            $.ajax({
+                'url' : API.http.chatList[type],
+                'dataType' : 'json',
+                'type' : 'get',
+                'data' : {
+                    t : userChatCache[userId].date || Date.parse(new Date()),
+                    uid : userId,
+                    pid : userData.pid,
+                    pageNow : pageNo || 1,
+                    pageSize : pageSize || 20
+                }
+            }).success(function(ret) {
+              var list = [];
+              ret.data.map(function(item) {
+                  list.push({
+                      action : 'dateline',
+                      date : item.date
+                  });
+
+                  item.content.map(function(obj) {
+                      list.push(obj);
+                  });
+              });
+
+              list = list.concat(userChatCache[userId].list);
+              userChatCache[userId].list = list;
+              console.log(userChatCache[userId].list.length);
+
+              if (ret.data[0] && ret.data[0].content[0]) {
+                userChatCache[userId].date = ret.data[0].content[0].t;
+              }
+              if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
+            });
+          } else {
+            if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
+          }
         } else {
+          userChatCache[userId] = {};
           $.ajax({
               'url' : API.http.chatList[type],
               'dataType' : 'json',
               'type' : 'get',
               'data' : {
-                  t : '1462871390676',
+                  t : userChatCache[userId].date || Date.parse(new Date()),
                   uid : userId,
                   pid : userData.pid,
                   pageNow : pageNo || 1,
                   pageSize : pageSize || 20
               }
           }).success(function(ret) {
-              callback && callback(type,ret, userId, isScrollBottom);
+
+            if (ret.data[0] && ret.data[0].content[0]) {
+              userChatCache[userId].date = ret.data[0].content[0].t;
+            }
+            callback && callback(type,ret, userId, isScrollBottom);
           })
         }
     };
@@ -242,10 +299,10 @@ function Content(node,core,window) {
         });
     }
     var sendSearchUserChat = function() {
-        $rootNode.find('.formUser').on('click', function() {
-            var chatText = $(this).val();
+        $rootNode.on('click', '.formUser', function() {
+            var chatText = $(this).html();
             searchUserChat(userInfo.sender,chatText,onSearchUserChat);
-        });
+        })
     }
     // 智能搜索
     var searchUserChat = function(sender,requestText,callback) {
@@ -292,7 +349,8 @@ function Content(node,core,window) {
             // console.log('缓存添加新用户')
             userChatCache[uid] = {
               list: list ,
-              scrollTop: 0
+              scrollTop: 0,
+              pageNo: 1
             }
             // console.log('缓存');
             // console.log(userChatCache)
@@ -338,6 +396,8 @@ function Content(node,core,window) {
                 $rootNode.find('.js-addButton').children('.js-' + k + '-' + (data[k] ? 'del' : 'add')).removeClass('hide');
             }
         }
+
+        $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
     }
     var parseChat = {
         102 : function(data) {
@@ -425,8 +485,12 @@ function Content(node,core,window) {
     };
 
     var adminPushMessage = function(data) {
-
-      if (userChatCache[data.uid]) {
+      userChatCache[data.uid] = userChatCache[data.uid] || {
+        list: [],
+        scrollTop: 0,
+        pageNo: 1
+      }
+      // if () {
         userChatCache[data.uid].list.push({
           action: 5 ,
           senderType: 2 ,
@@ -454,8 +518,8 @@ function Content(node,core,window) {
         console.log('userInfo.userId => ' + userInfo.userId);
         console.log('data.uid => ' + data.uid);
         var isRender = userInfo.userId === data.uid;
-        getChatListByOnline('chat', parseList , null, null, data, isRender);
-      }
+        getChatListByOnline('chat', parseList , null, null, data, isRender, true);
+      // }
     }
     // --------------------------- base ---------------------------
 
@@ -501,10 +565,20 @@ function Content(node,core,window) {
         })
         // 滚动加载分页
         $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e) {
+            // console.log($(this).scrollTop());
 
-            if($(this).scrollTop() === 0)
-                getChatListByOnline('chat',parseTpl);
+            if ($(this).scrollTop() === 0) {
+              // console.log('滚动')
+              // alert($(this).scrollTop());
+              userChatCache[userInfo.userId].pageNo++;
+              getChatListByOnline('chat', parseTpl, userChatCache[userInfo.userId].pageNo, null, {
+                uid: userInfo.userId ,
+                pid: userInfo.pid
+              }, true, false);
+            }
         });
+
+        sendSearchUserChat();
 
         // // 请求其他在线客服列表
         // $rootNode.find('.js-transfer').on('click', function() {
