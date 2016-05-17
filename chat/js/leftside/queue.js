@@ -19,7 +19,7 @@ function Queue(core,window) {
         $tableOuter,
         $input;
     var urlList = ['/chat/admin/queryUser.action','/chat/admin/queryVisitUser.action'];
-    var TEMPLATELIST = ['views/leftside/queueitem.html',''];
+    var TEMPLATELIST = ['views/leftside/queueitem.html','views/leftside/visitqueue.html'];
     var totalPage,
         currentPage = 1;
     this.token = +new Date();
@@ -44,6 +44,8 @@ function Queue(core,window) {
         $node = $(dialog.getOuter());
         parseDOM();
         bindListener();
+        setTimeout(promise.resolve,0);
+        return promise;
     };
 
     var fetchData = function() {
@@ -158,7 +160,7 @@ function Queue(core,window) {
         });
         loadFile.load(global.baseUrl + "views/leftside/queuelist.html").then(function(value,promise) {
             return getQueryUsers(value,promise);
-        }).then(initContent);
+        }).then(initContent).then();
     };
 
     var init = function() {

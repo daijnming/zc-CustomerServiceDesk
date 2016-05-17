@@ -26,7 +26,6 @@ var ProfileUser = function(node,core,userData) {
 				return	'<a target="_black" style="font-size:14px;" href="'+url+'" title="'+url+'">'+urlTitle+'</a>';
 		}
 		if(!url&&title) {
-
 				return  subTitle;
 		}
 		return '<a target="_black" style="font-size:14px;" href="'+url+'" title="'+title+'">'+subTitle+'</a>';
@@ -62,7 +61,8 @@ var ProfileUser = function(node,core,userData) {
 
 		var oUrl = 'admin/modify_userinfo.action',
 				sendData = {},
-				type = $(obj).attr('otype');
+				type = $(obj).attr('otype'),
+				reviceData={};//通知有左侧用户列表
 				sendData.uid=config.uid;
 				sendData.sender = config.url_id;
 				if(type)sendData[type] = val;
@@ -72,13 +72,18 @@ var ProfileUser = function(node,core,userData) {
 				data:sendData,
 				dataType:'json',
 				success:function(data){
+					reviceData.status=true;
+					reviceData.uid = config.uid;
 					//如果编辑的是姓名字段 则要传值给左侧栏显示
 					if($(obj).hasClass('userNameDyy'))
 					{
-						$(document.body).trigger('rightside.onGetName',[{
-								'name':val
-						}]);
+						reviceData.name=val;
+					}else{
+						reviceData.name='';
 					}
+					$(document.body).trigger('rightside.onProfileUserInfo',[{
+							'data':reviceData
+					}]);
 				}
 			});
 
@@ -99,24 +104,27 @@ var ProfileUser = function(node,core,userData) {
 						var item = _cur[i];
 						if(!item.regex.test(val)){
 							_boo=false;
+							//加警告框
+							$this.addClass('warm');
 							//重新赋值
 							$this.val(oFieldRegex.This.inputText);
 							var $span = $this.siblings('span.tip');
-							var top = $this.offset().top-70;
-							var left= 58;
+							$span.find('.alerticon').text(item.alert);
+							var top = $this.offset().top-68;
+							var left= 63;
 							$span.css({
-						    position: "absolute",
-						    zIndex: 99, margin: 0,
-						    left: left+'px', top: top+'px',
-								width:'150px',background:'#ddd'
-							}).text(item.alert).show().on('click',function(){
-								$(this).hide();
+								left:left+'px',
+								top:top+'px'
+							}).addClass('show').on('click',function(){
+								$(this).removeClass('show');
+								$this.removeClass('warm');
 							});
 							break;
 						}
 					}
 					if(_boo){
-						$this.siblings('span.tip').text('').hide();
+						$this.siblings('span.tip').removeClass('show').find('.alerticon').text('');
+						$this.removeClass('warm');
 						isSubmit = true;
 					}
 						//保存
@@ -148,6 +156,7 @@ var ProfileUser = function(node,core,userData) {
 		$(node).delegate('.js-userTnp','blur',oFieldRegex.onTextBlurRegex);
 		$(node).delegate('.js-userTnp','focus',oFieldRegex.onTextFocusRegex);
 		$(node).delegate('#sex','change',onSelected);
+		$(node).find('#dp').datepicker();
 	};
 
 	var initConfig = function(){
@@ -159,7 +168,7 @@ var ProfileUser = function(node,core,userData) {
 			nick:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'长度错误'}],
 			uname:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
 			tel:[{'regex':/^[0-9]{8,13}$/,'alert':'格式错误'}],
-			birthday:[{'regex':/^[0-9]{2}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
+			birthday:[{'regex':/^[1-2][0-9]{3}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
 			email:[{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'格式错误'}],
 			qq:[{'regex':/[1-9][0-9]{4,13}/,'alert':'格式错误'}],
 			weixin:[{'regex':/\w{5,28}/,'alert':'格式错误'}],

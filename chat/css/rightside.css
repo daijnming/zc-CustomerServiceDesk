@@ -104,11 +104,42 @@ ul{
       display: none;
     }
 
-
 /****homeuser css***/
 .js-tab-pane#profileuser.showBg{
   background:url(../assets/images/noOnlinePerson.png) center  no-repeat
 }
 .rightBox .js-panel-body .js-tab-pane#homeuser p.searchBot{
   margin: 0 0 10px;
+}
+
+
+/****clientSystem*****/
+.js-panel-body  .dropdown  ul.js-dropdown-menu{
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width:90%;
+  margin: 0 auto;
+  /*display: none;*/
+}
+.js-panel-body .dropdown ul.js-dropdown-menu li{
+  border-bottom: 1px dashed #ddd;
+}
+.js-panel-body .dropdown ul.js-dropdown-menu li a{
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  color:#999;
+  cursor: pointer;
+}
+.js-panel-body .dropdown ul.js-dropdown-menu li:hover,.js-panel-body .dropdown ul.js-dropdown-menu li:hover a{
+  background-color: #09aeb0;
+  color:#fff;
+}
+.js-panel-body .dropdown ul.js-dropdown-menu li:last-child{
+  border-bottom: 0;
+}
+.js-panel-body .dropdown ul.js-dropdown-menu li a,.js-panel-body .dropdown ul.js-dropdown-menu li a:link,.js-panel-body .dropdown ul.js-dropdown-menu li a:visited,.js-panel-body .dropdown ul.js-dropdown-menu li a:active{
+  text-decoration: none;
 }

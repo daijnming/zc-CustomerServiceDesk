@@ -70,12 +70,26 @@ var HomeUser = function(node,core,config) {
 	//点击智能回复答案 进行回复
 	var onSendAnswer = function(){
 		var $this = $(this);
+		// console.log($($this[0]).html());
 		$(document.body).trigger('rightside.onselectedmsg',[{
-			'data':$($this[0]).text()
+			'data':$($this[0]).html()
 		}]);
 	};
+	//直接发送按钮
+	var onDirectSendBtn = function(){
+		var $this = $(this);
+		var _answer = $(robotAnswer).find('a');
+		//type=3 未搜索到智能回复答案 不进行发送
+		if(_answer.html()===''||_answer.attr('answerType')==='3')return;
+		//TODO 调取外部接口 直接给用户发送智能回复答案
+			// console.log($(robotAnswer).find('a').html());
+			$(document.body).trigger('rightside.directsendreply',[{
+					'data':$(robotAnswer).find('a').html()
+			}]);
+			// console.log($(robotAnswer).find('a').html());
+	};
 
-//文本点击禁止
+//文本点击
 $(homeuser).on('click','.js-robotBackHideBtn',function(){
 	quickSearch($(homeuser).find('input#quickSerch')[0].value);
 	$(this).hide();
@@ -98,18 +112,6 @@ $(sugguestions).on('click','li',function(ev) {
 			quickSearch($this.val());
 			$(homeuser).find('.js-robotBackHideBtn').hide();
 		}
-	};
-	//直接发送按钮
-	var onDirectSendBtn = function(){
-		var $this = $(this);
-		var _answer = $(robotAnswer).find('a');
-		//type=3 未搜索到智能回复答案 不进行发送
-		if(_answer.html()===''||_answer.attr('answerType')==='3')return;
-		//TODO 调取外部接口 直接给用户发送智能回复答案
-			// console.log($(robotAnswer).find('a').html());
-			$(document.body).trigger('rightside.directsendreply',[{
-					'data':$(robotAnswer).find('a').html()
-			}]);
 	};
 
 	var parseDOM = function() {

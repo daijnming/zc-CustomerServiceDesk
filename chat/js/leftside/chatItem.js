@@ -3,11 +3,12 @@
  * @author Treagzhao
  */
 
-function Item(data,core,outer,from) {
+function Item(data,core,outer,from,manager) {
     var node,
         $node,
         $unRead,
-        $lastMessage;
+        $lastMessage,
+        $userName;
     var from = from || 'online';
     var global = core.getGlobal();
     var $body;
@@ -18,7 +19,7 @@ function Item(data,core,outer,from) {
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
-    var USOURCE = ['laptop','','','','mobile'];
+    var USOURCE = require('./source.json');
     this.token = +new Date();
 
     var shake = function($elm) {
@@ -31,6 +32,9 @@ function Item(data,core,outer,from) {
     };
 
     var onReceive = function(evt,list) {
+        if(data.uid === manager.getCurrentUid()) {
+            return;
+        }
         for(var i = 0,
             len = list.length;i < len;i++) {
             var msg = list[i];
@@ -122,6 +126,9 @@ function Item(data,core,outer,from) {
         } else {
             loadFile.load(global.baseUrl + "views/leftside/chatitem.html").then(function(value) {
                 data['source_type'] = USOURCE[data.usource];
+                if(data.usource == 1) {
+                    data.imgUrl = "img/weixinType.png";
+                }
                 var _html = doT.template(value)(data);
                 $node = $(_html);
                 insert($node);
@@ -142,35 +149,39 @@ function Item(data,core,outer,from) {
         });
     };
 
+    var getUserData = function() {
+        var promise = new Promise();
+        var uid = data.uid;
+        if(userDataCache[uid]) {
+            setTimeout(function() {
+                promise.resolve(userDataCache[uid]);
+            },0);
+        } else {
+            $.ajax({
+                'url' : '/chat/admin/get_userinfo.action',
+                'dataType' : "json",
+                'data' : {
+                    'sender' : global.id,
+                    'uid' : data.uid
+                }
+            }).success(function(ret) {
+                if(ret.retcode == 0) {
+                    userDataCache[uid] = ret.data;
+                    promise.resolve(ret.data);
+                }
+            });
+        }
+        return promise;
+    };
+
     var onNodeClickHandler = function() {
         clearUnread();
         $node.addClass("active").siblings().removeClass("active");
         data.from = from;
         data.status = status;
-        Promise.when(function() {
-            var promise = new Promise();
-            var uid = data.uid;
-            if(userDataCache[uid]) {
-                setTimeout(function() {
-                    promise.resolve(userDataCache[uid]);
-                },0);
-            } else {
-                $.ajax({
-                    'url' : '/chat/admin/get_userinfo.action',
-                    'dataType' : "json",
-                    'data' : {
-                        'sender' : global.id,
-                        'uid' : data.uid
-                    }
-                }).success(function(ret) {
-                    if(ret.retcode == 0) {
-                        userDataCache[uid] = ret.data;
-                        promise.resolve(ret.data);
-                    }
-                });
-            }
-            return promise;
-        }).then(function(userData) {
+        Promise.when(getUserData).then(function(userData) {
+            if(data.uid == manager.getCurrentUid())
+                return;
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,
                 'userData' : userData
@@ -179,9 +190,20 @@ function Item(data,core,outer,from) {
 
     };
 
-    var onBlackListChange = function(evt,data) {
-        if(data.type == "black" && data.handleType == 'add') {
+    var onProfileUserInfo = function(evt,ret) {
+        if(ret.data.uid == data.uid && ret.data.name) {
+            var name = ret.data.name;
+            $userName.html(name);
+        }
+    };
+
+    var onUserStatusChange = function(evt,ret) {
+        if(ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             onRemove();
+        }
+        if(ret.type == 'star') {
+            delete userDataCache[data.uid];
+            getUserData();
         }
     };
 
@@ -192,10 +214,11 @@ function Item(data,core,outer,from) {
         }
     };
     var bindListener = function() {
-        $body.on("scrollcontent.onUpdateUserState",onBlackListChange);
+        $body.on("scrollcontent.onUpdateUserState",onUserStatusChange);
         $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);
         $node.on("click",onNodeClickHandler);
+        $body.on("rightside.onProfileUserInfo",onProfileUserInfo);
 
     };
     var parseDOM = function() {
@@ -203,11 +226,17 @@ function Item(data,core,outer,from) {
         $unRead = $node.find(".js-unread-count");
         $ulOuter = $(outer).find("ul.js-users-list");
         $lastMessage = $node.find(".js-last-message");
+        $userName = $node.find(".js-user-name");
+    };
+
+    var initPlugins = function() {
 
     };
+
     var init = function() {
         parseDOM();
         bindListener();
+        initPlugins();
     };
     initNode().then(function() {
         init();

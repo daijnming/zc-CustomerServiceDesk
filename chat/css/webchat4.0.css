@@ -1170,7 +1170,7 @@ body,html{
   background-color: #f7fafa;
   border-bottom: 0;
 }
-#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li {
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li.js-menu {
   height: 52px;
   width: 25%;
   cursor: pointer;
@@ -1187,7 +1187,7 @@ body,html{
   padding: 0;
   line-height: 25px;
 }
-#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li a {
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li a.js-menua {
   width: 100%;
   height: 100%;
   display: block;
@@ -1207,7 +1207,7 @@ body,html{
   font-weight: normal;
   font-size: 13px;
 }
-#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li.active a {
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li.js-menu.active a.js-menua {
   border-bottom: solid 3px #09aeb0;
   /*background-color: #fff;*/
 }
@@ -1371,6 +1371,27 @@ body,html{
   font-family: 'microsoft yahei';
   font-weight: bold;
 }
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .tip{
+  display: none;
+}
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .tip.show{
+  position: absolute;
+  z-index: 99;
+  margin: 0;
+  width:150px;
+  height:20px;
+  background:#fff;
+  border:1px solid #f90;
+  color:red;
+  font-size:11px;
+  line-height:20px;
+  padding-left: 5px;
+  display: block;
+  cursor:pointer;
+}
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .userInp.warm{
+	border:1px solid red;
+}
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .remark {
   background-color: #f7fafa;
   height: 106px;
@@ -1381,9 +1402,9 @@ body,html{
   width:90%;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li span {
-  color: #f90;
+  /*color: #f90;*/
   /*margin-left: 10px;*/
-  display: none;
+  /*display: none;*/
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy {
   height: 100%;
@@ -1765,7 +1786,7 @@ body,html{
 #clientSystems a:hover {color: #a4b2b3} /* 鼠标移动到链接上 */
 #clientSystems a:active {color: #a4b2b3} /* 选定的链接 */
 
-#profileuser:first-child ul i{
+#profileuser:i.systemicon.pc{
   width:14px;
   height: 14px;
   background: url("../assets/images/comptuer.png") no-repeat;
@@ -1773,9 +1794,28 @@ body,html{
   display: inline-block;
   margin-bottom: 3px;
 }
-#profileuser:first-child ul i:mobile{
+#profileuser i.systemicon.mobile{
   background: url("../assets/images/mobile.png") no-repeat;
   background-position: center center;
+}
+#profileuser i.closeicon::before{
+  -webkit-transform:rotate(45deg);
+  -moz-transform:rotate(45deg);
+  transform: rotate(45deg);
+}
+#profileuser i.closeicon::after{
+  -webkit-transform:rotate(-45deg);
+  -moz-transform:rotate(-45deg);
+  transform: rotate(-45deg);
+}
+#profileuser i.closeicon::before,#profileuser i.closeicon::after{
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: 10px;
+  top:50%;
+  left:130px;
+  background-color: red;
 }
 #profileuser select {
   /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
