@@ -127,7 +127,7 @@ var Client = function(node,core,data){
   // init();
   initData().then(function(){
     init();
-    console.log($(dropdownListMenu));
+    // console.log($(dropdownListMenu));
   });
 
 };

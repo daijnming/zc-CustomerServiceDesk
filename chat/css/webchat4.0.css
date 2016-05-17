@@ -1387,6 +1387,7 @@ body,html{
   line-height:20px;
   padding-left: 5px;
   display: block;
+  cursor:pointer;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .userInp.warm{
 	border:1px solid red;
@@ -1401,9 +1402,9 @@ body,html{
   width:90%;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li span {
-  color: #f90;
+  /*color: #f90;*/
   /*margin-left: 10px;*/
-  display: none;
+  /*display: none;*/
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy {
   height: 100%;
@@ -1785,7 +1786,7 @@ body,html{
 #clientSystems a:hover {color: #a4b2b3} /* 鼠标移动到链接上 */
 #clientSystems a:active {color: #a4b2b3} /* 选定的链接 */
 
-#profileuser:first-child ul i{
+#profileuser:i.systemicon.pc{
   width:14px;
   height: 14px;
   background: url("../assets/images/comptuer.png") no-repeat;
@@ -1793,9 +1794,28 @@ body,html{
   display: inline-block;
   margin-bottom: 3px;
 }
-#profileuser:first-child ul i:mobile{
+#profileuser i.systemicon.mobile{
   background: url("../assets/images/mobile.png") no-repeat;
   background-position: center center;
+}
+#profileuser i.closeicon::before{
+  -webkit-transform:rotate(45deg);
+  -moz-transform:rotate(45deg);
+  transform: rotate(45deg);
+}
+#profileuser i.closeicon::after{
+  -webkit-transform:rotate(-45deg);
+  -moz-transform:rotate(-45deg);
+  transform: rotate(-45deg);
+}
+#profileuser i.closeicon::before,#profileuser i.closeicon::after{
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: 10px;
+  top:50%;
+  left:130px;
+  background-color: red;
 }
 #profileuser select {
   /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
