@@ -1,20 +1,34 @@
+
+{{if(it.item.data['usource']=='0'){}}
+  {{ var clsName='pcicon';}}
+{{}else{}}
+{{ var clsName='mobileicon';}}
+{{}}}
 <h4>访问信息</h4>
 <ul>
     <li>
-        <div class="userTypeName">
+      <div class="sessionWarp">
+        <div class="userTypeName aSession" >
             对话页：
         </div>
-        <a style="color: #0d81c0; font-size:14px;text-decoration:none; " target="_blank" oType="visitUrl"  class="userInp">{{=it.item["visit"]}}</a>
+        <!-- <a class="chata" style="background-color:red;" target="_blank" oType="visitUrl"  class="userInp"></a> -->
+        <div class="chatWarp">
+          {{=it.item.userData["visit"]}}
+        </div>
+        <div class="chatWarpi">
+          ...
+        </div>
+        </div>
     </li>
     <li>
         <div class="userTypeName">
             浏览器：
-        </div><p  oType="browser" class="userInp" style="display:inline-block;">{{=it.item["browser"]}}</p>
+        </div><p  oType="browser" class="userInp" style="display:inline-block;">{{=it.item.userData["browser"]}}</p>
     </li>
     <li>
         <div class="userTypeName">
             系  统：
-        </div><i class="systemicon"></i><p oType="os" class="userInp" style="display: inline-block;">{{=it.item["os"]}}</p>
+        </div><i class="{{=clsName}}"></i><p oType="os" class="userInp" style="display: inline-block;">{{=it.item.userData["os"]}}</p>
     </li>
 </ul>
 <h4 style="margin-top: 40px;">用户信息</h4>
@@ -23,21 +37,21 @@
         <div class="userTypeName">
             昵称：
         </div>
-        <input type="text" class="js-userTnp userInp otherBorder" value="{{=it.item["nick"]}}" oType="nick" placeholder="-">
+        <input type="text" class="js-userTnp userInp otherBorder" value="{{=it.item.userData["nick"]}}" oType="nick" placeholder="-">
         <span class="tip"><span class="alerticon"></span><!--不能超过28个字符--><i class="closeicon"></i></span>
     </li>
     <li class="clear">
         <div class="userTypeName">
             姓名：
         </div>
-        <input type="text" class="js-userTnp userInp otherBorder userNameDyy" value="{{=it.item["uname"]}}" oType="uname" placeholder="-">
+        <input type="text" class="js-userTnp userInp otherBorder userNameDyy" value="{{=it.item.userData["uname"]}}" oType="uname" placeholder="-">
           <span class="tip"><span class="alerticon"></span><!--不能超过28个字符--><i class="closeicon"></i></span>
     </li>
     <li class="clear">
         <div class="userTypeName">
           生日：
         </div>
-          <input class="span3 js-userTnp userInp otherBorder" oType="birthday"  type="text" id="dp" placeholder="0000-00-00" data-date-format="yyyy-mm-dd">
+          <input class="span3 js-userTnp userInp otherBorder" oType="birthday" readonly="readonly"  type="text" id="dp" placeholder="0000-00-00" value="{{=it.item.userData["birthday"]}}" data-date-format="yyyy-mm-dd">
           <span class="tip"><span class="alerticon"></span><i class="closeicon"></i></span>
     </li>
     <li class="clear">
@@ -54,14 +68,14 @@
         <div class="userTypeName">
             电话：
         </div>
-        <input type="text" class="js-userTnp userInp otherBorder" oType="tel" value="{{=it.item["tel"]}}" placeholder="-">
+        <input type="text" class="js-userTnp userInp otherBorder" oType="tel" value="{{=it.item.userData["tel"]}}" placeholder="-">
           <span class="tip"><span class="alerticon"></span><!--不能超过28个字符--><i class="closeicon"></i></span>
     </li>
     <li>
         <div class="userTypeName">
             邮箱：
         </div>
-        <input type="text" class="js-userTnp userInp otherBorder" oType="email" value="{{=it.item["email"]}}" placeholder="-">
+        <input type="text" class="js-userTnp userInp otherBorder" oType="email" value="{{=it.item.userData["email"]}}" placeholder="-">
           <span class="tip"><span class="alerticon"></span><!--不能超过28个字符--><i class="closeicon"></i></span>
     </li>
 
@@ -69,7 +83,7 @@
         <div class="userTypeName">
             Q Q：
         </div>
-        <input type="text" class="js-userTnp userInp otherBorder" oType="qq" value="{{=it.item["qq"]}}" placeholder="-">
+        <input type="text" class="js-userTnp userInp otherBorder" oType="qq" value="{{=it.item.userData["qq"]}}" placeholder="-">
           <span class="tip"><span class="alerticon"></span><!--不能超过28个字符--><i class="closeicon"></i></span>
     </li>
 
@@ -77,14 +91,14 @@
         <div class="userTypeName">
             微信：
         </div>
-        <input type="text" class="js-userTnp userInp otherBorder" oType="weixin" value="{{=it.item["weixin"]}}" placeholder="-">
+        <input type="text" class="js-userTnp userInp otherBorder" oType="weixin" value="{{=it.item.userData["weixin"]}}" placeholder="-">
           <span class="tip"><span class="alerticon"></span><!--不能超过28个字符--><i class="closeicon"></i></span>
     </li>
     <li>
         <div class="userTypeName">
             微博：
         </div>
-        <input type="text" class="js-userTnp userInp otherBorder" oType="weibo" value="{{=it.item["weibo"]}}" placeholder="-">
+        <input type="text" class="js-userTnp userInp otherBorder" oType="weibo" value="{{=it.item.userData["weibo"]}}" placeholder="-">
           <span class="tip"><span class="alerticon"></span><!--不能超过28个字符--><i class="closeicon"></i></span>
     </li>
     <li class="clearfix">
@@ -92,7 +106,7 @@
             备注：
         </div>
         <div class="remarkTxt ">
-            <textarea   class="js-userTnp userInp othe remark form-control" maxlength="200" oType="remark" placeholder="上限200字">{{=it.item["remark"]}}</textarea>
+            <textarea   class="js-userTnp userInp othe remark form-control" maxlength="200" oType="remark" placeholder="上限200字">{{=it.item.userData["remark"]}}</textarea>
         </div>
     </li>
 </ul>
