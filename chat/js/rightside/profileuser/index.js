@@ -81,7 +81,7 @@ var ProfileUser = function(node,core,userData) {
 					}else{
 						reviceData.name='';
 					}
-					$(document.body).trigger('rightside.onGetName',[{
+					$(document.body).trigger('rightside.onProfileUserInfo',[{
 							'data':reviceData
 					}]);
 				}
