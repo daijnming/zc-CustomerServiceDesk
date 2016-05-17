@@ -171,6 +171,7 @@ function Online(node,core,window) {
     init();
     that.hide = hide;
     that.getCurrentUid = getCurrentUid;
+    that.setCurrentUid = setCurrentUid;
     that.show = show;
     return that;
 };
