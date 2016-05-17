@@ -24,7 +24,11 @@ function Offline(node,core,window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var item = list[i];
+
             item.source_type = USOURCE[item.source];
+            if(item.source == 1) {
+                item.imgUrl = "img/weixinType.png";
+            }
             item.uid = item.id;
         }
     };

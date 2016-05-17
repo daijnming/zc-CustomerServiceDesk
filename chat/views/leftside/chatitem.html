@@ -1,6 +1,6 @@
 {{ var item = it;}}
 <li titemle="{{=item.uname}}" class="user-list-item" data-uid="{{=item.uid}}">
-    <i class="icon {{=item.source_type || ''}} js-icon"><span class="badge badge-red js-unread-count">1</span></i>
+    <i class="icon {{=item.source_type || ''}} js-icon"><img src="{{=item.imgUrl}}" /><span class="badge badge-red js-unread-count">1</span></i>
     <div class="item-detail">
         <div class="uname" style="width: 230px;">
             {{=item.uname}}

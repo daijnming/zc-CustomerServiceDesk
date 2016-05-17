@@ -6,7 +6,7 @@ function Online(node,core,window) {
     var that = {};
     var chatItemList = {};
     var global;
-    var USOURCE = ['laptop','','','','mobile'];
+    var USOURCE = require('./source.json');
     var Item = require('./chatItem.js');
     var Alert = require('../util/modal/alert.js');
     var loadFile = require('../util/load.js')();
@@ -61,6 +61,10 @@ function Online(node,core,window) {
                         var item = ret.userList[i];
                         if(item.isTransfer === undefined) {
                             item.isTransfer = item.chatType;
+                        }
+                        if(item.usource == 1) {
+                            //微信
+                            item.imgUrl = "img/weixinType.png";
                         }
                         item.source_type = USOURCE[item.usource];
                     }
