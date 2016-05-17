@@ -78,6 +78,7 @@ function TextArea(node,core,window) {
         //showMsg(uid,"daijm","img/qqarclist/jianjiao.gif",str,null,null,null);//显示气泡
     };
     var onIntelligencereplyHandler = function(evt,data) {//智能回复
+        console.log("ddddd"+data);
         $sendMessage.val(data.data)
     }
     var onQuickreplyHandler = function(evn,data) {//快捷回复
@@ -132,7 +133,7 @@ function TextArea(node,core,window) {
         //监听历史用户、在线用户，控制输入框
         $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);
         //监听快捷回复
-        $(document.body).on('rightside.onselectedmsg',onIntelligencereplyHandler);
+        $(document.body).on('rightside.onChatSmartReply',onIntelligencereplyHandler);
         //监听智能回复
         $(window || document.body).on("resize",botTextBoxPosition);
         //控制输入框的位置
