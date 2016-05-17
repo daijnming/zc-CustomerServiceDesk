@@ -85,15 +85,18 @@ var HomeUser = function(node,core,config) {
 		if($this.hasClass('quickSendBtn')){
 			//直接发送
 			obj.msg = $(robotAnswer).find('a').html();
+			obj.stats='1';
 		}else{
 			//存到发送框
 			obj.msg = $($this[0]).html();
+			obj.stats='2';
 		}
 		obj.uid = user.uid;
 		//TODO 调取外部接口 直接给用户发送智能回复答案
 		$(document.body).trigger('rightside.onChatSmartReply',[{
 				'data':obj
 		}]);
+		console.log('aa');
 		// console.log(obj);
 	};
 
@@ -160,13 +163,15 @@ $(sugguestions).on('click','li',function(ev) {
 
 	};
 	var bindLitener = function() {
-			$(oHomeuser).delegate('#quickSerch','keyup',onSerchContent);
-			// $(robotDirectHideBtn).delegate('a.quickSendBtn','click',onDirectSendBtn);
-			// $(robotAnswer).delegate('a','click',onSendAnswer);
-			$(robotDirectHideBtn).delegate('a.quickSendBtn','click',onChatSmartReply);
-			$(robotAnswer).delegate('a','click',onChatSmartReply);
-			$(document.body).on('scrollcontent.onSearchUserChat',onGetReplyByChat);//点击聊天内容获取智能回复
-			$(document.body).on('leftside.onselected',onLoadUserInfo);//加载用户信息 点击左侧用户列表才会触发
+		$(document.body).on('leftside.onselected',onLoadUserInfo);//加载用户信息 点击左侧用户列表才会触发
+		$(document.body).on('scrollcontent.onSearchUserChat',onGetReplyByChat);//点击聊天内容获取智能回复
+		$(oHomeuser).delegate('#quickSerch','keyup',onSerchContent);
+		// $(robotDirectHideBtn).delegate('a.quickSendBtn','click',onDirectSendBtn);
+		// $(robotAnswer).delegate('a','click',onSendAnswer);
+		$(robotDirectHideBtn).delegate('a.quickSendBtn','click',onChatSmartReply);
+		$(robotAnswer).delegate('a','click',onChatSmartReply);
+
+
 	};
 
 	//点击聊天内容进行智能回复搜索
