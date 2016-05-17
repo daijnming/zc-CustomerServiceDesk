@@ -50,7 +50,6 @@ function Queue(core,window) {
 
     var fetchData = function() {
         loadFile.load(global.baseUrl + TEMPLATELIST[currentTab]).then(getQueryUsers).then(function(ret,promise) {
-            console.log(ret.data);
             totalPage = ret.data.countPage;
             $totalpage.html(totalPage);
             $currentPage.html(currentPage);

@@ -103,13 +103,13 @@ var ProfileUser = function(node,core,userData) {
 							//重新赋值
 							$this.val(oFieldRegex.This.inputText);
 							var $span = $this.siblings('span.tip');
-							$span.addClass('show');
+							$span.find('.alerticon').text(item.alert);
 							var top = $this.offset().top-68;
 							var left= 63;
 							$span.css({
 								left:left+'px',
 								top:top+'px'
-							}).text(item.alert).addClass('show').on('click',function(){
+							}).addClass('show').on('click',function(){
 								$(this).removeClass('show');
 								$this.removeClass('warm');
 							});
@@ -117,7 +117,7 @@ var ProfileUser = function(node,core,userData) {
 						}
 					}
 					if(_boo){
-						$this.siblings('span.tip').text('').removeClass('show');
+						$this.siblings('span.tip').removeClass('show').find('.alerticon').text('');
 						$this.removeClass('warm');
 						isSubmit = true;
 					}
@@ -150,6 +150,7 @@ var ProfileUser = function(node,core,userData) {
 		$(node).delegate('.js-userTnp','blur',oFieldRegex.onTextBlurRegex);
 		$(node).delegate('.js-userTnp','focus',oFieldRegex.onTextFocusRegex);
 		$(node).delegate('#sex','change',onSelected);
+		$(node).find('#dp').datepicker();
 	};
 
 	var initConfig = function(){
@@ -161,7 +162,7 @@ var ProfileUser = function(node,core,userData) {
 			nick:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'长度错误'}],
 			uname:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
 			tel:[{'regex':/^[0-9]{8,13}$/,'alert':'格式错误'}],
-			birthday:[{'regex':/^[0-9]{2}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
+			birthday:[{'regex':/^[1-2][0-9]{3}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
 			email:[{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'格式错误'}],
 			qq:[{'regex':/[1-9][0-9]{4,13}/,'alert':'格式错误'}],
 			weixin:[{'regex':/\w{5,28}/,'alert':'格式错误'}],

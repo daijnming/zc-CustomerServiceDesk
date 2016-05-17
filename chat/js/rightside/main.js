@@ -38,7 +38,7 @@ function RightSide(node,core,window) {
     $(node).find(".js-users-list").append(li);
   };
   var onReceive = function(value,data) {
-    console.log(Object.prototype.toString.call(data));
+    // console.log(Object.prototype.toString.call(data));
     if(data.type == 102) {
       newUserMessage(data);
     }

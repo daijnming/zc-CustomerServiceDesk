@@ -3,7 +3,7 @@
  * @author Treagzhao
  */
 
-function Item(data,core,outer,from) {
+function Item(data,core,outer,from,manager) {
     var node,
         $node,
         $unRead,
@@ -18,7 +18,7 @@ function Item(data,core,outer,from) {
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
-    var USOURCE = ['laptop','','','','mobile'];
+    var USOURCE = require('./source.json');
     this.token = +new Date();
 
     var shake = function($elm) {
@@ -31,6 +31,9 @@ function Item(data,core,outer,from) {
     };
 
     var onReceive = function(evt,list) {
+        if(data.uid === manager.getCurrentUid()) {
+            return;
+        }
         for(var i = 0,
             len = list.length;i < len;i++) {
             var msg = list[i];
@@ -122,6 +125,9 @@ function Item(data,core,outer,from) {
         } else {
             loadFile.load(global.baseUrl + "views/leftside/chatitem.html").then(function(value) {
                 data['source_type'] = USOURCE[data.usource];
+                if(data.usource == 1) {
+                    data.imgUrl = "img/weixinType.png";
+                }
                 var _html = doT.template(value)(data);
                 $node = $(_html);
                 insert($node);
@@ -171,6 +177,8 @@ function Item(data,core,outer,from) {
             }
             return promise;
         }).then(function(userData) {
+            if(data.uid == manager.getCurrentUid())
+                return;
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,
                 'userData' : userData
