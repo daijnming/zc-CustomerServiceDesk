@@ -72,7 +72,7 @@ var HomeUser = function(node,core,config) {
 	};
 	var onLoadUserInfo = function(evn,data){
 		user.uid = data?data.userData.uid:'';
-		console.log(user.uid);
+		// console.log(data);
 	};
 	//智能回复
 	var onChatSmartReply = function(){
@@ -97,7 +97,7 @@ var HomeUser = function(node,core,config) {
 		// console.log(obj);
 	};
 
-	//点击智能回复答案 进行回复
+	//点击智能回复答案 进行回复  废弃掉 不在使用
 	var onSendAnswer = function(){
 		var $this = $(this);
 		console.log($this);
@@ -105,7 +105,7 @@ var HomeUser = function(node,core,config) {
 			'data':$($this[0]).html()
 		}]);
 	};
-	//直接发送按钮
+	//直接发送按钮  废弃掉 不在使用
 	var onDirectSendBtn = function(){
 		var $this = $(this);
 		var _answer = $(robotAnswer).find('a');

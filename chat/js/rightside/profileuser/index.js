@@ -11,6 +11,11 @@ var ProfileUser = function(node,core,userData) {
 	//加载模版
 	var loadFile = require('../../util/load.js')();
 	var Promise = require('../../util/promise.js');
+	String.prototype.visualLength = function(){
+		var ruler = $('.aChat');
+		ruler.text(this);
+		return ruler[0].offsetWidth;
+	};
 
 	//TODO 处理对话页显示  此处只是页面显示 不影响页面重构 不需要使用模版
 	var onVisitHandle = function(url,title){
@@ -18,20 +23,18 @@ var ProfileUser = function(node,core,userData) {
 		if(url){
 			if(!url.match(regexUrl))url='http://'+url;
 		}
-		var subTitle= title&&title.length>15?title.substr(0,15)+'..':title;
+		// var subTitle= title&&title.length>15?title.substr(0,15)+'..':title;
 		//暂定成35个字符
 		if(!url&&!title) return '未获取到';
 		if(url&&!title) {
-				var urlTitle = url.length>25?url.substr(0,25)+'..':url;
-				return	'<a target="_black" style="font-size:14px;" href="'+url+'" title="'+url+'">'+urlTitle+'</a>';
+				// var urlTitle = url.length>25?url.substr(0,25)+'..':url;
+				return	'<a target="_black" class="aChat" style="font-size:14px;" href="'+url+'" title="'+url+'">'+url+'</a>';
 		}
 		if(!url&&title) {
-				return  subTitle;
+				return  title;
 		}
-		return '<a target="_black" style="font-size:14px;" href="'+url+'" title="'+title+'">'+subTitle+'</a>';
-
+		return '<a target="_black" class="aChat" style="font-size:14px;" href="'+url+'" title="'+title+'">'+title+'</a>';
 	};
-
 	//初始化页面
 	var initUserInfo = function(){
 			var promise =  new Promise();
@@ -44,7 +47,7 @@ var ProfileUser = function(node,core,userData) {
 					// console.log(data);
 					data.userData["visit"] = onVisitHandle(data.userData['visitUrl'],data.userData['visitTitle']);
 					var _html = doT.template(value)({
-							'item':data.userData
+							'item':data
 					});
 					$(node).append(_html);
 					//显示性别
@@ -53,6 +56,7 @@ var ProfileUser = function(node,core,userData) {
 				});
 				// console.log(data.userData);
 			}
+
 			return promise;
 	};
 
@@ -182,7 +186,14 @@ var ProfileUser = function(node,core,userData) {
 	};
 	initUserInfo().then(function(){
 		init();
-		//console.log(data);
+		var ruler = $('.aChat');
+		var chatWarpW = $('.chatWarp').width();
+		var aChatW = $('.aChat').text($('.aChat').text())[0].offsetWidth
+		if(aChatW >= chatWarpW){
+			$('.chatWarpi').addClass('show');
+		}else{
+			$('.chatWarpi').removeClass('show');
+		}
 	});
 	var init = function() {
 		initConfig();

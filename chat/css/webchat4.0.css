@@ -832,6 +832,13 @@ body,html{
   height: 20px;
   display: inline-block;
 }
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li.active a i.fa.fa-navicon1 {
+	background: url("../assets/images/newChat2.png");
+  background-position: -209px -713px;
+  width: 40px;
+  height: 20px;
+  display: inline-block;
+}
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li a:hover i.fa.fa-navicon1 {
   background: url("../assets/images/newChat2.png");
   background-position: -209px -713px;
@@ -1786,17 +1793,19 @@ body,html{
 #clientSystems a:hover {color: #a4b2b3} /* 鼠标移动到链接上 */
 #clientSystems a:active {color: #a4b2b3} /* 选定的链接 */
 
-#profileuser:i.systemicon.pc{
+#profileuser i.pcicon{
   width:14px;
   height: 14px;
   background: url("../assets/images/comptuer.png") no-repeat;
   background-position: center center;
   display: inline-block;
-  margin-bottom: 3px;
 }
-#profileuser i.systemicon.mobile{
+#profileuser i.mobileicon{
+	width:14px;
+  height: 14px;
   background: url("../assets/images/mobile.png") no-repeat;
   background-position: center center;
+	display: inline-block;
 }
 #profileuser i.closeicon::before{
   -webkit-transform:rotate(45deg);
@@ -1848,7 +1857,7 @@ body,html{
 }
 .remarkTxt{
   float: left;
-  width: 83%;
+  width: 79%;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li input.userInp.over{
   border:1px solid #ccc;
