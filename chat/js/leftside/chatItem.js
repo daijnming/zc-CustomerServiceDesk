@@ -209,6 +209,7 @@ function Item(data,core,outer,from,manager) {
 
     var onTransfer = function(evt,data) {
         var uid = data.uid;
+        manager.setCurrentUid(undefined);
         if(true) {
             onRemove();
         }

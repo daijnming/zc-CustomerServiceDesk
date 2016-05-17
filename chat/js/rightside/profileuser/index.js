@@ -86,7 +86,6 @@ var ProfileUser = function(node,core,userData) {
 					}]);
 				}
 			});
-
 	};
 
 	var oFieldRegex={
@@ -99,37 +98,42 @@ var ProfileUser = function(node,core,userData) {
 				var _cur = regExUserInfo[$this.attr('otype')];
 				(function(_cur,val,$this){
 					var _boo=true;
-					//正则匹配
-					for(var i=0;i<_cur.length;i++){
-						var item = _cur[i];
-						if(!item.regex.test(val)){
-							_boo=false;
-							//加警告框
-							$this.addClass('warm');
-							//重新赋值
-							$this.val(oFieldRegex.This.inputText);
-							var $span = $this.siblings('span.tip');
-							$span.find('.alerticon').text(item.alert);
-							var top = $this.offset().top-68;
-							var left= 63;
-							$span.css({
-								left:left+'px',
-								top:top+'px'
-							}).addClass('show').on('click',function(){
-								$(this).removeClass('show');
-								$this.removeClass('warm');
-							});
-							break;
+					//判断值是否有改变 没改变就不提接口
+					if(oFieldRegex.This.inputText == val){
+						isSubmit=false;
+					}else{
+						//正则匹配
+						for(var i=0;i<_cur.length;i++){
+							var item = _cur[i];
+							if(!item.regex.test(val)){
+								_boo=false;
+								//加警告框
+								$this.addClass('warm');
+								//重新赋值
+								$this.val(oFieldRegex.This.inputText);
+								var $span = $this.siblings('span.tip');
+								$span.find('.alerticon').text(item.alert);
+								var top = $this.offset().top-68;
+								var left= 63;
+								$span.css({
+									left:left+'px',
+									top:top+'px'
+								}).addClass('show').on('click',function(){
+									$(this).removeClass('show');
+									$this.removeClass('warm');
+								});
+								break;
+							}
+						}
+						if(_boo){
+							$this.siblings('span.tip').removeClass('show').find('.alerticon').text('');
+							$this.removeClass('warm');
+							isSubmit = true;
 						}
 					}
-					if(_boo){
-						$this.siblings('span.tip').removeClass('show').find('.alerticon').text('');
-						$this.removeClass('warm');
-						isSubmit = true;
-					}
-						//保存
-						if(isSubmit)
-							onTextSaveData(val,$this);
+					//保存 提接口
+					if(isSubmit)
+						onTextSaveData(val,$this);
 				})(_cur,val,$this);
 			}
 		},
