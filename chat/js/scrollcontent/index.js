@@ -1,4 +1,4 @@
-function Content(node,core,window) {
+ function Content(node,core,window) {
     var loadFile = require('../util/load.js')();
     var Dialog = require('../util/modal/dialog.js');
     var $rootNode;
@@ -17,8 +17,7 @@ function Content(node,core,window) {
                     add : 'admin/add_blacklist.action',
                     del : 'admin/delete_blacklist.action'
                 },
-
-                star : {
+                   star : {
                     add : 'admin/add_marklist.action',
                     del : 'admin/delete_marklist.action'
                 }
@@ -190,7 +189,9 @@ function Content(node,core,window) {
               if (ret.data[0] && ret.data[0].content[0]) {
                 userChatCache[userId].date = ret.data[0].content[0].t;
               }
-              if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
+              console.log(1);
+              // console.log($('.scrollBoxParent').scrollTop(100));
+              if (isRender) parseList(type , userChatCache[userId], isScrollBottom, true);
             });
           } else {
             if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
@@ -355,6 +356,8 @@ function Content(node,core,window) {
             // console.log('缓存');
             // console.log(userChatCache)
 
+            // list = list.splice(0, 1000);
+
             _html = doT.template(tpl)({
                 list : list
             });
@@ -364,7 +367,7 @@ function Content(node,core,window) {
         });
     }
 
-    var parseList = function(type, data, isScrollBottom) {
+    var parseList = function(type, data, isScrollBottom, isToTop) {
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
             var _html;
@@ -374,7 +377,13 @@ function Content(node,core,window) {
             });
 
             $rootNode.find('#' + type).find('.js-panel-body').html(_html);
-            if (isScrollBottom) $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+
+            if (isScrollBottom) {
+              $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+            }
+            else if (isToTop) {
+              $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
+            }
         });
     }
 
@@ -539,6 +548,29 @@ function Content(node,core,window) {
 
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
+
+
+
+        // var scrollFunc = function (e) {
+        //     var direct = 0;
+        //     var e = e || window.event;
+        //     if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
+        //         if (e.wheelDelta > 0) { //当滑轮向上滚动时
+        //             console.log("滑轮向上滚动");
+        //         }
+        //     } else if (e.detail) {  //Firefox滑轮事件
+        //         if (e.detail> 0) { //当滑轮向上滚动时
+        //             console.log("滑轮向上滚动");
+        //         }
+        //     }
+        //     console.log('direct => ' + direct);
+        // }
+        // //给页面绑定滑轮滚动事件
+        // if (document.addEventListener) {
+        //     document.addEventListener('DOMMouseScroll', scrollFunc, false);
+        // }
+        // //滚动滑轮触发scrollFunc方法
+        // window.onmousewheel = document.onmousewheel = scrollFunc;
     };
 
     var bindLitener = function() {
