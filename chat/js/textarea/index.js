@@ -74,12 +74,12 @@ function TextArea(node,core,window) {
         }]);
         $sendMessage.val("");
         //清空待发送框
-        //清空待发送框
-        //showMsg(uid,"daijm","img/qqarclist/jianjiao.gif",str,null,null,null);//显示气泡
     };
     var onIntelligencereplyHandler = function(evt,data) {//智能回复
-        console.log(data);
-        $sendMessage.val(data.data.msg)
+        if(data.data.stats=="2"){
+            $sendMessage.val(data.data.msg)
+        }
+        
     }
     var onQuickreplyHandler = function(evn,data) {//快捷回复
         $sendMessage.val(data.data)

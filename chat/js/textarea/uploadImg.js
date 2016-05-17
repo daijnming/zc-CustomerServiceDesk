@@ -37,7 +37,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
 
         if(FormData) {//支持formData则使用formData上传
             var oData = new FormData();
-            var input = $node.find(".js-upload")[0];
+            var input = $uploadBtn[0];
             for(var i = 0;i < input.files.length;i++) {
                 var file = input.files[i];
                 oData.append(file.name,file);
@@ -55,9 +55,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     'cid' : cid,
                     'url' : url
                 }]);
-               /* var file = $node.find(".js-upload"); 
-                file.after(file.clone().val("")); 
-                file.remove(); */
+                  $uploadBtn.val("");//上传完成,清空文本域
             }).fail(function(ret) {
                 console.log("fail")
             });
@@ -84,6 +82,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         });
         $(document.body).append($iframe);
         $form.submit();
+        $uploadBtn.val("");//上传完成,清空文本域
     };
     var bindLitener = function() {
 
