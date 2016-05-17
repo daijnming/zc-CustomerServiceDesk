@@ -94,7 +94,7 @@ var HomeUser = function(node,core,config) {
 		$(document.body).trigger('rightside.onChatSmartReply',[{
 				'data':obj
 		}]);
-		console.log(obj);
+		// console.log(obj);
 	};
 
 	//点击智能回复答案 进行回复
