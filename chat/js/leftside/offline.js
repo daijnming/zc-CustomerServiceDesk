@@ -64,7 +64,7 @@ function Offline(node,core,window) {
                 $ulOuter.html(_html);
                 for(var i = 0,
                     len = list.length;i < len;i++) {
-                    var item = new Item(list[i],core,node,'history');
+                    var item = new Item(list[i],core,node,'history',that);
                 }
             });
         });
