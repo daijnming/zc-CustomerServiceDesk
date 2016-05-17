@@ -58,7 +58,7 @@ function TextArea(node,core,window) {
     var onbtnSendHandler = function() {
 
         var str = $sendMessage.val();
-        str = ZC_Face.analysis(str);
+        //str = ZC_Face.analysis(str);
         //str已做表情处理
         $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
             'answer' : str,
@@ -190,7 +190,7 @@ function TextArea(node,core,window) {
         // that.getCurrentUserInfo = getCurrentUserInfo;
         initFace();
         //console.log(perfectScrollbar);
-        //$node.find(".item").perfectScrollbar();
+        $node.find(".item").perfectScrollbar();//qq表情滚动插件
     };
     var init = function() {
         parseDOM();
