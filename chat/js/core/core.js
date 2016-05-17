@@ -107,7 +107,7 @@ function Core(window) {
                 }
             });
         }).then(function(value,promise) {
-            new HearBeat().start();
+            new HearBeat(that).start();
             $(document.body).trigger("core.onload",[global]);
             getMessage();
         });
@@ -180,6 +180,7 @@ function Core(window) {
     var bindListener = function() {
         $(document.body).on("emergency.netclose", function() {
             alert('与服务器连接中断！');
+            $(window).unbind("beforeunload");
             window.close();
             window.location.href = "/console/login";
         });
