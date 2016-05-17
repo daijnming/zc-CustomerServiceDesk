@@ -126,8 +126,12 @@ function LeftSide(node,core,window) {
     var bindLitener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
+        $(document.body).on("click", function() {
+            $statusMenu.removeClass("active");
+        });
         $node.delegate(".js-tab-item",'click',tabItemClickHandler);
-        $statusBtn.on("click", function() {
+        $statusBtn.on("click", function(e) {
+            e.stopPropagation();
             $statusMenu.toggleClass("active");
         });
         $node.delegate(".js-status",'click',onStatusItemClickHandler);

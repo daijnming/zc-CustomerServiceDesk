@@ -1,4 +1,4 @@
-function Content(node,core,window) {
+ function Content(node,core,window) {
     var loadFile = require('../util/load.js')();
     var Dialog = require('../util/modal/dialog.js');
     var $rootNode;
@@ -17,8 +17,7 @@ function Content(node,core,window) {
                     add : 'admin/add_blacklist.action',
                     del : 'admin/delete_blacklist.action'
                 },
-
-                star : {
+                   star : {
                     add : 'admin/add_marklist.action',
                     del : 'admin/delete_marklist.action'
                 }
@@ -56,8 +55,6 @@ function Content(node,core,window) {
         // userChatCache[data.uid].list.push({
         //
         // })
-        console.log(arguments);
-        console.log(arguments[1]);
 
         // if (arguments[1].uid ? )
         // 插入客服输入内容
@@ -70,8 +67,6 @@ function Content(node,core,window) {
     });
 
     $(document.body).on("leftside.onselected", function() {
-      console.log(arguments);
-
       var params = arguments[1];
 
       userInfo = {
@@ -105,8 +100,6 @@ function Content(node,core,window) {
     });
 
     $(document.body).on("rightside.directsendreply", function() {
-      console.log('智能回复');
-      console.log(arguments);
       var data = {
         answer: arguments[1].data ,
         uid: userInfo.userId ,
@@ -151,12 +144,9 @@ function Content(node,core,window) {
         } else {
           userId = userData.uid;
         }
-        console.log(userId);
+
         // 假如用户在缓存里
         if (userChatCache[userId]) {
-          console.log('加入用户缓存后');
-          console.log(userChatCache);
-
 
           if (pageNo) {
             $.ajax({
@@ -185,12 +175,12 @@ function Content(node,core,window) {
 
               list = list.concat(userChatCache[userId].list);
               userChatCache[userId].list = list;
-              console.log(userChatCache[userId].list.length);
 
               if (ret.data[0] && ret.data[0].content[0]) {
                 userChatCache[userId].date = ret.data[0].content[0].t;
               }
-              if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
+
+              if (isRender) parseList(type , userChatCache[userId], isScrollBottom, true);
             });
           } else {
             if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
@@ -229,7 +219,6 @@ function Content(node,core,window) {
                 receiver : userInfo.uid
             }
         }).success(function(ret) {
-            console.log(ret);
             callback && callback(type,handleType);
         });
     }
@@ -246,8 +235,6 @@ function Content(node,core,window) {
                 'title' : '转接给新的客服',
                 'footer' : false
             });
-
-            // ret = [{"maxcount":2,"id":"d2d94e70e0884a47a734f6860b541e79","face":"http://img.sobot.com/console/common/face/admin.png","groupId":["61da00ab8aae43b6932ef83635b0912f"],"groupName":["100"],"count":0,"status":1,"uname":"10041n"}];
 
             dialog.show();
 
@@ -271,14 +258,6 @@ function Content(node,core,window) {
             var uid = $(this).attr('uid'),
                 uname = $(this).attr('uname');
 
-            console.log({
-                uid : userInfo.sender,
-                cid : userInfo.cid,
-                joinUid : uid,
-                userId : userInfo.userId,
-                userName : uname
-            });
-
             $.ajax({
                 'url' : API.http.userTransfer,
                 'dataType' : 'json',
@@ -291,7 +270,6 @@ function Content(node,core,window) {
                     userName : uname
                 }
             }).success(function(ret) {
-                console.log(ret);
 
                 if(ret.status === 1)
                     onTransfer(uid,uname);
@@ -315,7 +293,6 @@ function Content(node,core,window) {
                 requestText : requestText
             }
         }).success(function(ret) {
-            console.log(ret);
             callback && callback(ret);
         });
     }
@@ -323,8 +300,6 @@ function Content(node,core,window) {
 
     var parseTpl = function(type,ret, uid, isScrollBottom) {
 
-        console.log(uid);
-        // console.log(type, ret);
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
             var list = [],
@@ -342,18 +317,13 @@ function Content(node,core,window) {
                 });
             });
 
-            // console.log(list);
-
-            // console.log('首次加载历史记录到缓存');
-            // userChatCache[uid].list = list;
-            // console.log('缓存添加新用户')
             userChatCache[uid] = {
               list: list ,
               scrollTop: 0,
               pageNo: 1
             }
-            // console.log('缓存');
-            // console.log(userChatCache)
+
+            // list = list.splice(0, 1000);
 
             _html = doT.template(tpl)({
                 list : list
@@ -364,7 +334,7 @@ function Content(node,core,window) {
         });
     }
 
-    var parseList = function(type, data, isScrollBottom) {
+    var parseList = function(type, data, isScrollBottom, isToTop) {
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
             var _html;
@@ -374,7 +344,13 @@ function Content(node,core,window) {
             });
 
             $rootNode.find('#' + type).find('.js-panel-body').html(_html);
-            if (isScrollBottom) $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+
+            if (isScrollBottom) {
+              $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+            }
+            else if (isToTop) {
+              $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
+            }
         });
     }
 
@@ -430,9 +406,6 @@ function Content(node,core,window) {
         parseChat[data.type] && parseChat[data.type](data);
 
         if (data[0].type === 111) {
-          console.log(data);
-          console.log(' 用户' + data.uname +'正在:' + data.description + ' :' + data.content);
-
           loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
               var _html;
               _html = doT.template(tpl)({
@@ -444,13 +417,9 @@ function Content(node,core,window) {
 
 
           if (userChatCache[data[0].uid]) {
-            // console.log('用户发送消息 ');
-            // console.log(data)
-            // console.log('准备加入用户缓存');
+
             for (var i = 0;i < data.length;i++) {
               // userChatCache[data[0].uid].list.push(data[i]);
-
-              console.log(data[i].type);
               // 聊天
               if (data[i].type === 103) {
                 userChatCache[data[0].uid].list.push({
@@ -461,12 +430,8 @@ function Content(node,core,window) {
                   ts: data[i].ts
                 })
               }
-
-
             }
 
-            console.log('userInfo.userId => ' + userInfo.userId);
-            console.log('data[0].uid => ' + data[0].uid);
             var isRender = userInfo.userId === data[0].uid;
             // 是否渲染 isRender
             getChatListByOnline('chat', parseList , null, null, data, isRender);
@@ -501,7 +466,6 @@ function Content(node,core,window) {
         // for (var i = 0;i < data.length;i++) {
         //   // userChatCache[data[0].uid].list.push(data[i]);
         //
-        //   console.log(data[i].type);
         //   // 聊天
         //   if (data[i].type === 103) {
         //     userChatCache[data[0].uid].list.push({
@@ -515,8 +479,6 @@ function Content(node,core,window) {
         //
         //
         // }
-        console.log('userInfo.userId => ' + userInfo.userId);
-        console.log('data.uid => ' + data.uid);
         var isRender = userInfo.userId === data.uid;
         getChatListByOnline('chat', parseList , null, null, data, isRender, true);
       // }
@@ -528,8 +490,6 @@ function Content(node,core,window) {
     };
 
     var onReceive = function(value,data) {
-        console.log(data);
-
         // if (data[0].type === 102) {
         //
         // }
@@ -565,11 +525,8 @@ function Content(node,core,window) {
         })
         // 滚动加载分页
         $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e) {
-            // console.log($(this).scrollTop());
 
             if ($(this).scrollTop() === 0) {
-              // console.log('滚动')
-              // alert($(this).scrollTop());
               userChatCache[userInfo.userId].pageNo++;
               getChatListByOnline('chat', parseTpl, userChatCache[userInfo.userId].pageNo, null, {
                 uid: userInfo.userId ,

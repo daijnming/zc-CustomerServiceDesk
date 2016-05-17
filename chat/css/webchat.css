@@ -571,3 +571,14 @@ label.active .c-redio {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
+
+.zc-newchat-tag {
+	background-image: url('../img/newChatTag.png');
+	background-repeat: no-repeat;
+	position:absolute;
+	height: 37px;
+	bottom: 4px;
+	width: 65px;
+	right: 10px;
+	display: none;
+}

@@ -6,11 +6,11 @@ function Online(node,core,window) {
     var that = {};
     var chatItemList = {};
     var global;
-    var USOURCE = ['laptop','','','','mobile'];
+    var USOURCE = require('./source.json');
     var Item = require('./chatItem.js');
     var Alert = require('../util/modal/alert.js');
     var loadFile = require('../util/load.js')();
-
+    var currentUid;
     var checkOnlineListLength = function() {
         var count = 0;
         for(var el in chatItemList) {
@@ -21,6 +21,14 @@ function Online(node,core,window) {
         } else {
             $node.removeClass("noOnline");
         }
+    };
+
+    var setCurrentUid = function(uid) {
+        currentUid = uid;
+    };
+
+    var getCurrentUid = function() {
+        return currentUid;
     };
 
     var onChatItemListLengthChange = function(evt,data) {
@@ -36,7 +44,7 @@ function Online(node,core,window) {
         if(chatItemList[uid] && chatItemList[uid].getStatus() == 'offline') {
             chatItemList[uid].onOnline();
         } else {
-            var item = new Item(data,core,node);
+            var item = new Item(data,core,node,null,that);
             chatItemList[data.uid] = item;
         }
         checkOnlineListLength();
@@ -62,6 +70,10 @@ function Online(node,core,window) {
                         if(item.isTransfer === undefined) {
                             item.isTransfer = item.chatType;
                         }
+                        if(item.usource == 1) {
+                            //微信
+                            item.imgUrl = "img/weixinType.png";
+                        }
                         item.source_type = USOURCE[item.usource];
                     }
                     var _html = doT.template(value)({
@@ -71,7 +83,7 @@ function Online(node,core,window) {
                     for(var i = 0,
                         len = ret.userList.length;i < len;i++) {
                         var item = ret.userList[i];
-                        chatItemList[item.uid] = new Item(item,core,node);
+                        chatItemList[item.uid] = new Item(item,core,node,null,that);
                     }
                 });
             } else {
@@ -81,6 +93,9 @@ function Online(node,core,window) {
         });
     };
 
+    var onLeftSideSelected = function(evt,data) {
+        currentUid = data.data.uid;
+    };
     var removeBtnClickHandler = function(e) {
         var elm = e.currentTarget;
         var uid = $(elm).attr("data-uid");
@@ -126,6 +141,7 @@ function Online(node,core,window) {
     var bindListener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
+        $(document.body).on("leftside.onselected",onLeftSideSelected);
         $(document.body).on("leftside.onremove",onChatItemListLengthChange);
         $node.delegate(".js-remove",'click',removeBtnClickHandler);
 
@@ -144,6 +160,7 @@ function Online(node,core,window) {
 
     init();
     that.hide = hide;
+    that.getCurrentUid = getCurrentUid;
     that.show = show;
     return that;
 };
