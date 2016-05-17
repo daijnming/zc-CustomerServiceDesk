@@ -2,10 +2,10 @@
 function TextArea(node,core,window){
     //var that = {};
 	var loadFile = require('../util/load.js')();
-	var showMsg=require('./showMsg.js');//会话气泡
+	//var showMsg=require('./showMsg.js');//会话气泡
 	var ZC_Face=require('../util/qqFace.js');//表情
 	var uploadImg=require('./uploadImg.js');//上传附件
-	var apihost = "http://test.sobot.com/chat/";
+	var apihost = "chat/";
     var global,uploadFun;
     var $node, $uploadBtn;
     var currentCid,currentUid;

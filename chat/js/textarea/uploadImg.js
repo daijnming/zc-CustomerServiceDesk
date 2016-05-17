@@ -156,7 +156,7 @@ function uploadImg(uploadBtn,node,core,window){//,oChat | uploadBtn上传图片�
 		     	       });
 		        		 return;
 		        	 }
-alert('上传成功');
+                     alert('上传成功');
 		        	 $(document.body).trigger('textarea.uploadImgUrl',[{//通过textarea.uploadImgUrl事件将图片地址传到聊天窗体
 						'uid':uid,
 						'cid':cid,
@@ -164,7 +164,7 @@ alert('上传成功');
 		        		}]);
 		        	 
 		      
-		    } 
+		    }
 	    
 		}
 		new AjaxUpload($uploadBtn, uploadOption);
