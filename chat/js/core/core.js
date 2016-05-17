@@ -207,7 +207,6 @@ function Core(window) {
                 notificationPermission = Notification.requestPermission();
             });
         } else {
-            notificationPermission = 'granted';
         }
     };
 
