@@ -50,28 +50,6 @@
 
     var userInfo = {};
 
-    // var userStateMap = {
-    //   star: {
-    //     add: function(callback) {
-    //       callback();
-    //     },
-    //
-    //     del: function() {
-    //
-    //     }
-    //   },
-    //
-    //   black: {
-    //     add: function() {
-    //
-    //     },
-    //
-    //     del: function() {
-    //
-    //     }
-    //   }
-    // }
-
     // --------------------------- 接收推送函数 ---------------------------
 
     $(document.body).on('textarea.send', function(ev) {
@@ -145,7 +123,8 @@
         $(document.body).trigger('scrollcontent.onUpdateUserState',[{
             type : type,
             handleType : handleType,
-            userId: userInfo.userId
+            userId: userInfo.userId,
+            test: 11111
         }]);
     }
     // 推送转接事件
@@ -361,6 +340,12 @@
     }
     // --------------------------- dom操作 ---------------------------
 
+    // 清理聊天主体页面
+    var clearScrollContent = function() {
+      $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
+      $rootNode.find('#chat').find('.js-panel-body').parent().empty();
+    }
+
     var parseTpl = function(type,ret, uid, isScrollBottom) {
 
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
@@ -432,6 +417,9 @@
     var updateHeaderTag = function(type,handleType) {
         $rootNode.find('.js-addButton').children('[data-type="' + type + '"]').removeClass('hide');
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
+
+        // 如果是添加拉黑
+        if (type === 'black' && handleType === 'add') clearScrollContent();
         onUpdateUserState(type,handleType);
     }
     var initUserState = function(data) {
