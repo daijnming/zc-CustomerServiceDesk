@@ -603,7 +603,7 @@ body,html{
   transition: all 0.3s ease-in-out;
 }
 #main-container #left-navigation   .tab-content #history .radio-box-yy {
-  padding: 15px 30px;
+  padding: 15px 16px;
   height: 48px;
   line-height: 18px;
   width: 290px;
