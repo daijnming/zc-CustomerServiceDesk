@@ -170,26 +170,31 @@
                 }
             }).success(function(ret) {
               var list = [];
-              ret.data.map(function(item) {
-                  list.push({
-                      action : 'dateline',
-                      date : item.date
-                  });
 
-                  item.content.map(function(obj) {
-                      obj.msg = obj.msg ? Face.analysis(obj.msg) : null;
-                      list.push(obj);
-                  });
-              });
+              // console.log(ret);
 
-              list = list.concat(userChatCache[userId].list);
-              userChatCache[userId].list = list;
+              if (ret.data.length > 0) {
+                ret.data.map(function(item) {
+                    list.push({
+                        action : 'dateline',
+                        date : item.date
+                    });
 
-              if (ret.data[0] && ret.data[0].content[0]) {
-                userChatCache[userId].date = ret.data[0].content[0].t;
+                    item.content.map(function(obj) {
+                        obj.msg = obj.msg ? Face.analysis(obj.msg) : null;
+                        list.push(obj);
+                    });
+                });
+
+                list = list.concat(userChatCache[userId].list);
+                userChatCache[userId].list = list;
+
+                if (ret.data[0] && ret.data[0].content[0]) {
+                  userChatCache[userId].date = ret.data[0].content[0].t;
+                }
+
+                if (isRender) parseList(type , userChatCache[userId], isScrollBottom, true, typeNo);
               }
-
-              if (isRender) parseList(type , userChatCache[userId], isScrollBottom, true, typeNo);
             });
           } else {
             if (isRender) parseList(type , userChatCache[userId], isScrollBottom);
