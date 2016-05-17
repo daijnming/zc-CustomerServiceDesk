@@ -55,8 +55,6 @@
         // userChatCache[data.uid].list.push({
         //
         // })
-        console.log(arguments);
-        console.log(arguments[1]);
 
         // if (arguments[1].uid ? )
         // 插入客服输入内容
@@ -69,8 +67,6 @@
     });
 
     $(document.body).on("leftside.onselected", function() {
-      console.log(arguments);
-
       var params = arguments[1];
 
       userInfo = {
@@ -104,8 +100,6 @@
     });
 
     $(document.body).on("rightside.directsendreply", function() {
-      console.log('智能回复');
-      console.log(arguments);
       var data = {
         answer: arguments[1].data ,
         uid: userInfo.userId ,
@@ -150,12 +144,9 @@
         } else {
           userId = userData.uid;
         }
-        console.log(userId);
+
         // 假如用户在缓存里
         if (userChatCache[userId]) {
-          console.log('加入用户缓存后');
-          console.log(userChatCache);
-
 
           if (pageNo) {
             $.ajax({
@@ -184,13 +175,11 @@
 
               list = list.concat(userChatCache[userId].list);
               userChatCache[userId].list = list;
-              console.log(userChatCache[userId].list.length);
 
               if (ret.data[0] && ret.data[0].content[0]) {
                 userChatCache[userId].date = ret.data[0].content[0].t;
               }
-              console.log(1);
-              // console.log($('.scrollBoxParent').scrollTop(100));
+
               if (isRender) parseList(type , userChatCache[userId], isScrollBottom, true);
             });
           } else {
@@ -230,7 +219,6 @@
                 receiver : userInfo.uid
             }
         }).success(function(ret) {
-            console.log(ret);
             callback && callback(type,handleType);
         });
     }
@@ -247,8 +235,6 @@
                 'title' : '转接给新的客服',
                 'footer' : false
             });
-
-            // ret = [{"maxcount":2,"id":"d2d94e70e0884a47a734f6860b541e79","face":"http://img.sobot.com/console/common/face/admin.png","groupId":["61da00ab8aae43b6932ef83635b0912f"],"groupName":["100"],"count":0,"status":1,"uname":"10041n"}];
 
             dialog.show();
 
@@ -272,14 +258,6 @@
             var uid = $(this).attr('uid'),
                 uname = $(this).attr('uname');
 
-            console.log({
-                uid : userInfo.sender,
-                cid : userInfo.cid,
-                joinUid : uid,
-                userId : userInfo.userId,
-                userName : uname
-            });
-
             $.ajax({
                 'url' : API.http.userTransfer,
                 'dataType' : 'json',
@@ -292,7 +270,6 @@
                     userName : uname
                 }
             }).success(function(ret) {
-                console.log(ret);
 
                 if(ret.status === 1)
                     onTransfer(uid,uname);
@@ -316,7 +293,6 @@
                 requestText : requestText
             }
         }).success(function(ret) {
-            console.log(ret);
             callback && callback(ret);
         });
     }
@@ -324,8 +300,6 @@
 
     var parseTpl = function(type,ret, uid, isScrollBottom) {
 
-        console.log(uid);
-        // console.log(type, ret);
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
             var list = [],
@@ -343,18 +317,11 @@
                 });
             });
 
-            // console.log(list);
-
-            // console.log('首次加载历史记录到缓存');
-            // userChatCache[uid].list = list;
-            // console.log('缓存添加新用户')
             userChatCache[uid] = {
               list: list ,
               scrollTop: 0,
               pageNo: 1
             }
-            // console.log('缓存');
-            // console.log(userChatCache)
 
             // list = list.splice(0, 1000);
 
@@ -439,9 +406,6 @@
         parseChat[data.type] && parseChat[data.type](data);
 
         if (data[0].type === 111) {
-          console.log(data);
-          console.log(' 用户' + data.uname +'正在:' + data.description + ' :' + data.content);
-
           loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
               var _html;
               _html = doT.template(tpl)({
@@ -453,13 +417,9 @@
 
 
           if (userChatCache[data[0].uid]) {
-            // console.log('用户发送消息 ');
-            // console.log(data)
-            // console.log('准备加入用户缓存');
+
             for (var i = 0;i < data.length;i++) {
               // userChatCache[data[0].uid].list.push(data[i]);
-
-              console.log(data[i].type);
               // 聊天
               if (data[i].type === 103) {
                 userChatCache[data[0].uid].list.push({
@@ -470,12 +430,8 @@
                   ts: data[i].ts
                 })
               }
-
-
             }
 
-            console.log('userInfo.userId => ' + userInfo.userId);
-            console.log('data[0].uid => ' + data[0].uid);
             var isRender = userInfo.userId === data[0].uid;
             // 是否渲染 isRender
             getChatListByOnline('chat', parseList , null, null, data, isRender);
@@ -510,7 +466,6 @@
         // for (var i = 0;i < data.length;i++) {
         //   // userChatCache[data[0].uid].list.push(data[i]);
         //
-        //   console.log(data[i].type);
         //   // 聊天
         //   if (data[i].type === 103) {
         //     userChatCache[data[0].uid].list.push({
@@ -524,8 +479,6 @@
         //
         //
         // }
-        console.log('userInfo.userId => ' + userInfo.userId);
-        console.log('data.uid => ' + data.uid);
         var isRender = userInfo.userId === data.uid;
         getChatListByOnline('chat', parseList , null, null, data, isRender, true);
       // }
@@ -537,8 +490,6 @@
     };
 
     var onReceive = function(value,data) {
-        console.log(data);
-
         // if (data[0].type === 102) {
         //
         // }
@@ -548,29 +499,6 @@
 
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
-
-
-
-        // var scrollFunc = function (e) {
-        //     var direct = 0;
-        //     var e = e || window.event;
-        //     if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
-        //         if (e.wheelDelta > 0) { //当滑轮向上滚动时
-        //             console.log("滑轮向上滚动");
-        //         }
-        //     } else if (e.detail) {  //Firefox滑轮事件
-        //         if (e.detail> 0) { //当滑轮向上滚动时
-        //             console.log("滑轮向上滚动");
-        //         }
-        //     }
-        //     console.log('direct => ' + direct);
-        // }
-        // //给页面绑定滑轮滚动事件
-        // if (document.addEventListener) {
-        //     document.addEventListener('DOMMouseScroll', scrollFunc, false);
-        // }
-        // //滚动滑轮触发scrollFunc方法
-        // window.onmousewheel = document.onmousewheel = scrollFunc;
     };
 
     var bindLitener = function() {
@@ -597,11 +525,8 @@
         })
         // 滚动加载分页
         $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e) {
-            // console.log($(this).scrollTop());
 
             if ($(this).scrollTop() === 0) {
-              // console.log('滚动')
-              // alert($(this).scrollTop());
               userChatCache[userInfo.userId].pageNo++;
               getChatListByOnline('chat', parseTpl, userChatCache[userInfo.userId].pageNo, null, {
                 uid: userInfo.userId ,
