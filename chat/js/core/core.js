@@ -7,6 +7,7 @@ function Core(window) {
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var notificationPermission;
+    var $body;
     var socket,
         Notification = window.Notification || window.webkitNotifications;
     var audioNewMessage,
@@ -108,7 +109,7 @@ function Core(window) {
             });
         }).then(function(value,promise) {
             new HearBeat(that).start();
-            $(document.body).trigger("core.onload",[global]);
+            $body.trigger("core.onload",[global]);
             getMessage();
         });
     };
@@ -149,7 +150,14 @@ function Core(window) {
             'body' : desc,
             'tag' : type + data.uid
         });
-        setTimeout(noti.close,5000);
+        noti.onclick = (function(id) {
+            return function() {
+                $body.trigger('notification.click',[id]);
+            };
+        })(data.uid);
+        setTimeout(function() {
+            noti.close();
+        },5000);
     };
 
     var messageAdapter = function(list) {
@@ -175,10 +183,11 @@ function Core(window) {
     };
 
     var parseDOM = function() {
+        $body = $(document.body);
     };
 
     var bindListener = function() {
-        $(document.body).on("emergency.netclose", function() {
+        $body.on("emergency.netclose", function() {
             alert('与服务器连接中断！');
             $(window).unbind("beforeunload");
             window.close();
@@ -198,7 +207,7 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             messageAdapter(list);
-            $(document.body).trigger('core.receive',[list]);
+            $body.trigger('core.receive',[list]);
         });
     };
 

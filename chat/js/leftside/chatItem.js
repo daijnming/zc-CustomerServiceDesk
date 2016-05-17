@@ -187,9 +187,12 @@ function Item(data,core,outer,from,manager) {
 
     };
 
-    var onBlackListChange = function(evt,data) {
-        if(data.type == "black" && data.handleType == 'add') {
+    var onUserStatusChange = function(evt,data) {
+        if(data.type == "black" && data.handleType == 'add' && data.uid === data.id) {
             onRemove();
+        }
+        if(data.type == 'star') {
+            delete userDataCache[data.uid];
         }
     };
 
@@ -200,7 +203,7 @@ function Item(data,core,outer,from,manager) {
         }
     };
     var bindListener = function() {
-        $body.on("scrollcontent.onUpdateUserState",onBlackListChange);
+        $body.on("scrollcontent.onUpdateUserState",onUserStatusChange);
         $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);
         $node.on("click",onNodeClickHandler);
