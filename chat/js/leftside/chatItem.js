@@ -197,11 +197,11 @@ function Item(data,core,outer,from,manager) {
         }
     };
 
-    var onUserStatusChange = function(evt,data) {
-        if(data.type == "black" && data.handleType == 'add' && data.uid === data.id) {
+    var onUserStatusChange = function(evt,ret) {
+        if(ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             onRemove();
         }
-        if(data.type == 'star') {
+        if(ret.type == 'star') {
             delete userDataCache[data.uid];
             getUserData();
         }
