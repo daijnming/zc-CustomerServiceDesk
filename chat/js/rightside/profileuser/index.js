@@ -98,24 +98,27 @@ var ProfileUser = function(node,core,userData) {
 						var item = _cur[i];
 						if(!item.regex.test(val)){
 							_boo=false;
+							//加警告框
+							$this.addClass('warm');
 							//重新赋值
 							$this.val(oFieldRegex.This.inputText);
 							var $span = $this.siblings('span.tip');
-							var top = $this.offset().top-70;
-							var left= 58;
+							$span.addClass('show');
+							var top = $this.offset().top-68;
+							var left= 63;
 							$span.css({
-						    position: "absolute",
-						    zIndex: 99, margin: 0,
-						    left: left+'px', top: top+'px',
-								width:'150px',background:'#ddd'
-							}).text(item.alert).show().on('click',function(){
-								$(this).hide();
+								left:left+'px',
+								top:top+'px'
+							}).text(item.alert).addClass('show').on('click',function(){
+								$(this).removeClass('show');
+								$this.removeClass('warm');
 							});
 							break;
 						}
 					}
 					if(_boo){
-						$this.siblings('span.tip').text('').hide();
+						$this.siblings('span.tip').text('').removeClass('show');
+						$this.removeClass('warm');
 						isSubmit = true;
 					}
 						//保存
