@@ -147,7 +147,7 @@ function Core(window) {
         var desc = type == 103 ? data.desc : data.uname;
         var noti = new Notification(title, {
             'body' : desc,
-            'tag' : type + desc.uid
+            'tag' : type + data.uid
         });
         setTimeout(noti.close,5000);
     };
