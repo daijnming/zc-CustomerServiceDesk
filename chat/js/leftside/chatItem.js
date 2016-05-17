@@ -7,7 +7,8 @@ function Item(data,core,outer,from,manager) {
     var node,
         $node,
         $unRead,
-        $lastMessage;
+        $lastMessage,
+        $userName;
     var from = from || 'online';
     var global = core.getGlobal();
     var $body;
@@ -148,35 +149,37 @@ function Item(data,core,outer,from,manager) {
         });
     };
 
+    var getUserData = function() {
+        var promise = new Promise();
+        var uid = data.uid;
+        if(userDataCache[uid]) {
+            setTimeout(function() {
+                promise.resolve(userDataCache[uid]);
+            },0);
+        } else {
+            $.ajax({
+                'url' : '/chat/admin/get_userinfo.action',
+                'dataType' : "json",
+                'data' : {
+                    'sender' : global.id,
+                    'uid' : data.uid
+                }
+            }).success(function(ret) {
+                if(ret.retcode == 0) {
+                    userDataCache[uid] = ret.data;
+                    promise.resolve(ret.data);
+                }
+            });
+        }
+        return promise;
+    };
+
     var onNodeClickHandler = function() {
         clearUnread();
         $node.addClass("active").siblings().removeClass("active");
         data.from = from;
         data.status = status;
-        Promise.when(function() {
-            var promise = new Promise();
-            var uid = data.uid;
-            if(userDataCache[uid]) {
-                setTimeout(function() {
-                    promise.resolve(userDataCache[uid]);
-                },0);
-            } else {
-                $.ajax({
-                    'url' : '/chat/admin/get_userinfo.action',
-                    'dataType' : "json",
-                    'data' : {
-                        'sender' : global.id,
-                        'uid' : data.uid
-                    }
-                }).success(function(ret) {
-                    if(ret.retcode == 0) {
-                        userDataCache[uid] = ret.data;
-                        promise.resolve(ret.data);
-                    }
-                });
-            }
-            return promise;
-        }).then(function(userData) {
+        Promise.when(getUserData).then(function(userData) {
             if(data.uid == manager.getCurrentUid())
                 return;
             $(document.body).trigger("leftside.onselected",[{
@@ -214,11 +217,17 @@ function Item(data,core,outer,from,manager) {
         $unRead = $node.find(".js-unread-count");
         $ulOuter = $(outer).find("ul.js-users-list");
         $lastMessage = $node.find(".js-last-message");
+        $userName = $node.find(".js-user-name");
+    };
+
+    var initPlugins = function() {
 
     };
+
     var init = function() {
         parseDOM();
         bindListener();
+        initPlugins();
     };
     initNode().then(function() {
         init();
