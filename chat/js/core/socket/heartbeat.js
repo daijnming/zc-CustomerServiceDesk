@@ -1,14 +1,18 @@
 /**
  * @author Treagzhao
  */
-function HeartBeat() {
+function HeartBeat(core) {
+    var global = core.getGlobal();
     var count = 0;
     var TEN_SECOND = 10 * 1000;
     var send = function() {
         $.ajax({
             'url' : '/chat/admin/msgt.action',
             'type' : 'post',
-            'data' : {},
+            'data' : {
+                'pid' : global.pid,
+                'uid' : global.id
+            },
             'dataType' : 'json'
         }).success(function() {
             setTimeout(send,TEN_SECOND);

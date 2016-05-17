@@ -107,7 +107,7 @@ function Core(window) {
                 }
             });
         }).then(function(value,promise) {
-            new HearBeat().start();
+            new HearBeat(that).start();
             $(document.body).trigger("core.onload",[global]);
             getMessage();
         });
@@ -147,7 +147,7 @@ function Core(window) {
         var desc = type == 103 ? data.desc : data.uname;
         var noti = new Notification(title, {
             'body' : desc,
-            'tag' : type + desc.uid
+            'tag' : type + data.uid
         });
         setTimeout(noti.close,5000);
     };
@@ -160,7 +160,7 @@ function Core(window) {
                 audioNewMessage.play();
                 normalMessageAdapter(value);
                 createNotification(value,103);
-            } else if(value.type == 109) {
+            } else if(value.type == 109 && value.status == 2) {
                 alert('另外一个窗口已经登录，您被强迫下线！');
                 window.close();
                 window.location.href = "/console/login/";
@@ -180,6 +180,7 @@ function Core(window) {
     var bindListener = function() {
         $(document.body).on("emergency.netclose", function() {
             alert('与服务器连接中断！');
+            $(window).unbind("beforeunload");
             window.close();
             window.location.href = "/console/login";
         });
@@ -207,7 +208,6 @@ function Core(window) {
                 notificationPermission = Notification.requestPermission();
             });
         } else {
-            notificationPermission = 'granted';
         }
     };
 
