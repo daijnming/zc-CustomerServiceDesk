@@ -15,6 +15,7 @@ function polling(global) {
     };
 
     var onsend = function(evt,data) {
+        console.log(data);
         $.ajax({
             'url' : '/chat/admin/send1.action',
             'dataType' : 'json',
@@ -32,8 +33,7 @@ function polling(global) {
     };
 
     var onDirectSend = function(evt,ret) {
-        ret = ret.data;
-        console.log(ret);
+        var data = ret.data;
         if(ret.status == 1 || ret.stats == 1) {
             $.ajax({
                 'url' : '/chat/admin/send1.action',
@@ -46,7 +46,6 @@ function polling(global) {
                 })
             });
         }
-        alert();
     };
 
     var bindListener = function() {
