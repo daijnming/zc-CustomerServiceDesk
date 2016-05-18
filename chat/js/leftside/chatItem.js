@@ -154,7 +154,6 @@ function Item(data,core,outer,from,manager) {
                     data.imgUrl = "img/weixinType.png";
                 }
                 console.log(data);
-                alert();
                 if(data.face && data.face.length) {
                     data.source_type = 'face';
                     data.imgUrl = data.face;
