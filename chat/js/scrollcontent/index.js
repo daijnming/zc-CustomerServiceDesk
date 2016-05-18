@@ -116,9 +116,12 @@
     // --------------------------- 推送函数 ---------------------------
 
     // 智能搜索事件
-    var onSearchUserChat = function(data) {
+    var onSearchUserChat = function(str) {
         console.log('onSearchUserChat');
-        $(document.body).trigger('scrollcontent.onSearchUserChat',[data]);
+        $(document.body).trigger('scrollcontent.onSearchUserChat',[{
+          uid: userInfo.userId ,
+          str: str
+        }]);
     }
     // 暴露修改状态事件
     var onUpdateUserState = function(type,handleType) {
@@ -336,24 +339,14 @@
             if (chatText.indexOf('webchat_img_upload') !== -1) {
               window.open()
             } else {
-              searchUserChat(userInfo.sender,chatText,onSearchUserChat);
+              onSearchUserChat(chatText);
             }
         })
     }
-    // 智能搜索
-    var searchUserChat = function(sender,requestText,callback) {
-        $.ajax({
-            'url' : API.http.searchChat,
-            'dataType' : 'json',
-            'type' : 'get',
-            'data' : {
-                uid : sender,
-                requestText : requestText
-            }
-        }).success(function(ret) {
-            callback && callback(ret);
-        });
-    }
+    // // 智能搜索
+    // var searchUserChat = function(sender,requestText,callback) {
+    //     onSearchUserChat
+    // }
     // --------------------------- dom操作 ---------------------------
 
     // 清理聊天主体页面
