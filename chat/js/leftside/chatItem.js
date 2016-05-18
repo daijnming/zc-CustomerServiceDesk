@@ -59,7 +59,7 @@ function Item(data,core,outer,from,manager) {
     };
     var onOffLine = function() {
         $node.find(".js-icon").addClass("offline");
-        var $statusText = $node.find(".js-status");
+        var $statusText = $node.find(".js-user-status");
         $statusText.css({
             'display' : 'inline-block'
         }).html('[离线]');
