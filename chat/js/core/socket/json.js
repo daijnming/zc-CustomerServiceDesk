@@ -90,6 +90,7 @@ function polling(global) {
     };
 
     var init = function() {
+        parseDOM();
         bindListener();
     };
 
