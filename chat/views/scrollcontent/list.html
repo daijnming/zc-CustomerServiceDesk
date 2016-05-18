@@ -107,7 +107,7 @@
     {{ if (it.list[prop].senderType === 0) { }}
       <div class="msg userCus">
         <div class="msg_user fl">
-          <img src="http://img.sobot.com/chatres/common/face/pcType.png" class="msg_user_img">
+          <img src="{{=it.userSourceImage}}" class="msg_user_img">
         </div>
         <div class="msgContBox fl">
           <span class="msg_name">{{=it.list[prop].senderName}}</span>
