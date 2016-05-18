@@ -180,3 +180,8 @@ ul{
 .sessionWarp{
   padding-bottom: 20px;
 }
+
+/*****messagesuser*****/
+.rightBox .js-tab-pane .js-rightQuickLeft,.rightBox .js-tab-pane .js-rightQuickLRight{
+  overflow: scroll;
+}
