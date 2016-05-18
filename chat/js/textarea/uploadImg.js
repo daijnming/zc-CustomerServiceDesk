@@ -101,9 +101,9 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
          //获取文件扩展名
         var val= $uploadBtn.val();
         
-        var extension = val.substr(val.indexOf("."));alert(extension);
-        if (/^(.jpg|.JPG|.png|.PNG|.gif|.GIF|.txt|.TXT|.DOC|.doc|.docx|.DOCX|.pdf|.PDF|.ppt|.PPT|.pptx|.PPTX|.xls|.XLS|.xlsx|.XLSX|.RAR|.rar|.zip|.ZIP)$/.test(extension)) {
-            
+        var extension = val.substr(val.indexOf("."));
+        var reg=/^(.jpg|.JPG|.png|.PNG|.gif|.GIF|.txt|.TXT|.DOC|.doc|.docx|.DOCX|.pdf|.PDF|.ppt|.PPT|.pptx|.PPTX|.xls|.XLS|.xlsx|.XLSX|.RAR|.rar|.zip|.ZIP|.mp3|.MP3|.mp4|.MP4|.wma|.WMA|.wmv|.WMV|.rmvb|.RMVB)$/
+        if (reg.test(extension)) {
             return true;
         }else{
              var dialog = new Alert({

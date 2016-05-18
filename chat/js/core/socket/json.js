@@ -9,6 +9,7 @@ function polling(global) {
         questionId : "",
         uid : ""
     };
+    var $body;
 
     var on = function(evt,cbk) {
         eventCache[evt] = cbk;
@@ -24,13 +25,39 @@ function polling(global) {
                 'cid' : data.cid,
                 'uid' : global.id
             })
+        }).success(function() {
+            $body.trigger("core.sendresult",[{
+                'token' : data.date,
+                'type' : "success"
+            }]);
+        }).fail(function() {
+            $body.trigger("core.sendresult",[{
+                'token' : data.date,
+                'type' : "fail"
+            }]);
         });
     };
 
-    var bindListener = function(){
-        $(document.body).on("textarea.send",onsend);
+    var onDirectSend = function(evt,ret) {
+        var data = ret.data;
+        if(ret.status == 1 || ret.stats == 1) {
+            $.ajax({
+                'url' : '/chat/admin/send1.action',
+                'dataType' : 'json',
+                'type' : "post",
+                'data' : $.extend(defaultParams, {
+                    'answer' : ret.msg,
+                    'cid' : data.cid,
+                    'uid' : global.id
+                })
+            });
+        }
     };
 
+    var bindListener = function() {
+        $body.on("textarea.send",onsend);
+        $body.on("rightside.onChatSmartReply",onDirectSend);
+    };
 
     var messageAdapter = function(ret) {
         var arr = [];
@@ -58,12 +85,17 @@ function polling(global) {
         setTimeout(start,1500);
     };
 
-    var init = function(){
+    var parseDOM = function() {
+        $body = $(document.body);
+    };
+
+    var init = function() {
+        parseDOM();
         bindListener();
     };
 
     init();
-    
+
     this.on = on;
     this.start = start;
 }
