@@ -59,7 +59,8 @@ function TextArea(node,core,window) {
         $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
             'answer' : '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />',
             'uid' : currentUid,
-            'cid' : currentCid
+            'cid' : currentCid,
+            'date': +new Date()
         }]);
     };
 
@@ -71,7 +72,7 @@ function TextArea(node,core,window) {
             'answer' : str,
             'uid' : currentUid,
             'cid' : currentCid,
-            'date': new Date()
+            'date': +new Date()
         }]);
         $sendMessage.val("");
         //清空待发送框
