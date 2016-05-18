@@ -57,7 +57,7 @@ function TextArea(node,core,window) {
 
     var onImageUpload = function(evt,data) {
         $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
-            'answer' : '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />"',
+            'answer' : '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />',
             'uid' : currentUid,
             'cid' : currentCid
         }]);
@@ -70,29 +70,41 @@ function TextArea(node,core,window) {
         $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
             'answer' : str,
             'uid' : currentUid,
-            'cid' : currentCid
+            'cid' : currentCid,
+            'date': new Date()
         }]);
         $sendMessage.val("");
         //清空待发送框
     };
-    var onIntelligencereplyHandler = function(evt,data) {//智能回复
-        console.log(data);
+    //智能回复
+    var onIntelligencereplyHandler = function(evt,data) {
         if(data.data.stats=="2"){
-            $sendMessage.val(data.data.msg)
+            $sendMessage.val(data.data.msg).focus();
         }
         
     }
-    var onQuickreplyHandler = function(evn,data) {//快捷回复
-        $sendMessage.val(data.data)
+    //快捷回复
+    var onQuickreplyHandler = function(evn,data) {
+        $sendMessage.val(data.data).focus();
     };
     var onEnterSendHandler = function(evt) {
         //监听文本框回车
-        if(evt.keyCode == 13) {
-            if($sendMessage.val() == "") {
+        var value=$sendMessage.val()
+        console.log(value);
+        if(evt.keyCode == 13) {//\n\r
+
+            //是否为空
+            if(value.length == 0 || /^\s+$/g.test(value)) {
                 return false;
             } else {
                 onbtnSendHandler()
             }
+            if(/^\n+$/g.test(value)||/^\r+$/g.test(value)){
+                 $sendMessage.val("")
+            }
+            
+            
+            
         }
 
     };
@@ -110,15 +122,15 @@ function TextArea(node,core,window) {
         var status = 1;
 
         if($node.find(".js-botTextBox").css("display") == "block") {
-            status = 2
+            status = 2;
         }
         switch (status) {
             case 1:
-                $('#chatlist').height(($(window).height() - (50 + 52 )) + 'px');
+                $('.scrollBoxParent').height(($(window).height() - (50 + 52 )) + 'px');
                 //聊天体默认高度
                 break;
             case 2:
-                $('#chatlist').height(($(window).height() - (50 + 52 + botTextBoxHeight)) + 'px');
+                $('.scrollBoxParent').height(($(window).height() - (50 + 52 + botTextBoxHeight)) + 'px');
                 break;
         }
         $botTextBox.css("bottom","-230px")
