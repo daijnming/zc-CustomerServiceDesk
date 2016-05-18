@@ -19,16 +19,13 @@ var ProfileUser = function(node,core,userData) {
 
 	//TODO 处理对话页显示  此处只是页面显示 不影响页面重构 不需要使用模版
 	var onVisitHandle = function(url,title){
-
-		// var subTitle= title&&title.length>15?title.substr(0,15)+'..':title;
 		//暂定成35个字符
-		if(!url&&!title) return '未获取到';
+		if(!url&&!title) return '-';
 		var regexUrl = /^(https?)/;
 		if(url){
 			if(!url.match(regexUrl))url='http://'+url;
 		}
 		if(url&&!title) {
-				// var urlTitle = url.length>25?url.substr(0,25)+'..':url;
 				return	'<a target="_black" class="aChat" style="font-size:14px;" href="'+url+'" title="'+url+'">'+url+'</a>';
 		}
 		if(!url&&title) {
@@ -192,8 +189,8 @@ var ProfileUser = function(node,core,userData) {
 		config.url_id = global.id;//url地址栏id
 
 		regExUserInfo = {
-			nick:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'长度错误'}],
-			uname:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			uname:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'长度错误'}],
+			realname:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'格式错误'}],
 			tel:[{'regex':/\S/,alert:'不允许为空'},{'regex':/^[0-9]{8,13}$/,'alert':'格式错误'}],
 			birthday:[{'regex':/\S/,alert:'不允许为空'},{'regex':/^[1-2][0-9]{3}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
 			email:[{'regex':/\S/,alert:'不允许为空'},{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'格式错误'}],

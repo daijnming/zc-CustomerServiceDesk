@@ -23,12 +23,12 @@
     <li>
         <div class="userTypeName">
             浏览器：
-        </div><p  oType="browser" class="userInp" style="display:inline-block;">{{=it.item.userData["browser"]}}</p>
+        </div><p  oType="browser" class="userInp" style="display:inline-block;">{{=it.item.userData["browser"]?it.item.userData["browser"]:'-'}}</p>
     </li>
     <li>
         <div class="userTypeName">
             系  统：
-        </div><i class="{{=clsName}}"></i><p oType="os" class="userInp" style="display: inline-block;">{{=it.item.userData["os"]?it.item.userData["os"]:''}}</p>
+        </div><i class="{{=clsName}}"></i><p oType="os" class="userInp" style="display: inline-block;">{{=it.item.userData["os"]?it.item.userData["os"]:'-'}}</p>
     </li>
 </ul>
 <h4 style="margin-top: 40px;">用户信息</h4>
@@ -37,14 +37,14 @@
         <div class="userTypeName">
             昵称：
         </div>
-        <input type="text" class="js-userTnp userInp otherBorder" value="{{=it.item.userData["nick"]?it.item.userData["nick"]:''}}" oType="nick" placeholder="-">
+        <input type="text" class="js-userTnp userInp otherBorder userNameDyy" value="{{=it.item.userData["uname"]?it.item.userData["uname"]:''}}" oType="uname" placeholder="-">
         <span class="tip"><span class="alerticon"></span><!--不能超过28个字符--><i class="closeicon"></i></span>
     </li>
     <li class="clear">
         <div class="userTypeName">
             姓名：
         </div>
-        <input type="text" class="js-userTnp userInp otherBorder userNameDyy" value="{{=it.item.userData["uname"]?it.item.userData["uname"]:''}}" oType="uname" placeholder="-">
+        <input type="text" class="js-userTnp userInp otherBorder" value="{{=it.item.userData["realname"]?it.item.userData["realname"]:''}}" oType="realname" placeholder="-">
           <span class="tip"><span class="alerticon"></span><!--不能超过28个字符--><i class="closeicon"></i></span>
     </li>
     <li class="clear">
