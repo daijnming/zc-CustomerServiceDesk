@@ -139,7 +139,6 @@ function Item(data,core,outer,from,manager) {
         if(elm.length > 0) {
             node = elm[0];
             $node = $(node);
-            console.log(data);
             if(!$imageFace) {
                 $imageFace = $node.find(".js-image-face");
             }
@@ -153,13 +152,15 @@ function Item(data,core,outer,from,manager) {
                 if(data.usource == 1) {
                     data.imgUrl = "img/weixinType.png";
                 }
-                console.log(data);
                 if(data.face && data.face.length) {
                     data.source_type = 'face';
-                    data.imgUrl = data.face;
                 }
                 var _html = doT.template(value)(data);
                 $node = $(_html);
+                if(!$imageFace) {
+                    $imageFace = $node.find(".js-image-face");
+                }
+                initFace();
                 insert($node);
                 promise.resolve();
             });
