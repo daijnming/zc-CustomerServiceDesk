@@ -49,12 +49,10 @@ function RightSide(node,core,window) {
     // $("#homeuser").css('height',newHeight-52 +'px');
     $("#homeuser .homeUserBox").css('height',newHeight-52-40-52 +'px');
     //快捷回复，左，右侧列表
-    $('.rightQuickLeft,.rightQuickRight').css('height',newHeight  -80 +'px');
+    $('.rightQuickLeft,.rightQuickRight').css('height',newHeight-52+'px');
     //iframe
-    // $("#clientSystem").css('height',newHeight-52 +'px');
     $("#clientSysIframe").css('height',newHeight-52 +'px');
-
-    $('.js-tab-pane#profileuser').css('height',newHeight-100+'px');
+    $('.js-tab-pane#profileuser').css('height',newHeight-52+'px');
 
 	};
   //tab切换
@@ -160,7 +158,7 @@ function RightSide(node,core,window) {
   var initData = function(data,userData){
       //初始化用户数据 -- 客户资料
       profileuser($('.js-tab-pane#profileuser'),core,userData);
-      // console.log(userData);
+      console.log(userData);
       //初始化用户自定义配置
       client(node,core,userData);
       //获取用户偏好设置
