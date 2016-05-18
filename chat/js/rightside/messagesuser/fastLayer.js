@@ -35,7 +35,6 @@ var Fastlayer = function(node,core,config){
   	var parseDOM = function() {
       fastNode = node;
       oFastLeft = $(fastNode).find('.js-leftContent ul');
-
       oFastRight = $(fastNode).find('.js-rightContent ul');
       oAddNewGroup = $(fastNode).find('.js-addNewGroup');
       oAddNewRep = $(fastNode).find('.js-addNewRep');
@@ -93,28 +92,33 @@ var Fastlayer = function(node,core,config){
             'userId':id
           };
       }
-      if(confirm(title)){
-						if(cId)
-						{
-							$.ajax({
-								type:"post",
-								url:url,
-								data:data,
-								dataType:"json",
-								success:function(data){
-									if(data.status)
-									{
-										$this.parent('.detalBar').remove();
-										onReLoadHandler(true);
-									}
-								}
-							});
-						}
-						else
-						{
-							$this.parent('.detalBar').remove();
-						}
-    }
+      console.log(cId);
+      $this.text('确认删除');
+      //确认删除
+      if($this.hasClass('sureDel')){
+        // if(confirm(title)){
+          if(cId)
+          {
+            $.ajax({
+              type:"post",
+              url:url,
+              data:data,
+              dataType:"json",
+              success:function(data){
+                if(data.status)
+                {
+                  $this.parent('.detalBar').remove();
+                  onReLoadHandler(true);
+                }
+              }
+            });
+          }
+          else
+          {
+            $this.parent('.detalBar').remove();
+          }
+      // }
+      }else $this.addClass('sureDel');
   };
 
     //快捷置顶
@@ -359,33 +363,41 @@ var Fastlayer = function(node,core,config){
       						});
       					}
     }
-  };
+};
+//取消删除
+var onCancalDel = function(){
+  $(node).find('.delLeftGroup').removeClass('sureDel');
+  $(node).find('.delRightRep').removeClass('sureDel');
+  $(oFastLeft).find('.delLeftGroup').text('删除');
+  $(oFastRight).find('.delLeftRep').text('删除');
+};
+var bindLitener = function() {
+  onloadHandler();
+  $(oFastLeft).on('click','li',onFastTap);
+  $(oFastLeft).on('click','span.delLeftGroup',onDelFast);
+  $(oFastLeft).on('click','span.upLeftGroup',onUpFast);
+  $(oFastLeft).on('keypress','input',onFastkeyParess);
+  $(oFastLeft).on('blur','input',onFastBlur);
+  $(oFastLeft).on('focus','input',onFastFocus);
+  ///
+  $(oFastRight).on('click','span.delRightRep',onDelFast);
+  $(oFastRight).on('click','span.upRightRep',onUpFast);
+  $(oFastRight).on('keypress','input',onFastkeyParess);
+  $(oFastRight).on('blur','input',onFastBlur);
+  $(oFastRight).on('focus','input',onFastFocus);
+  //
+  $(oAddNewGroup).on('click',onAddNewFast);
+  $(oAddNewRep).on('click',onAddNewFast);
+  //取消删除
+  $(oFastLeft).delegate('li','mouseleave',onCancalDel);
 
-  	var bindLitener = function() {
-      onloadHandler();
-      $(oFastLeft).on('click','li',onFastTap);
-      $(oFastLeft).on('click','span.delLeftGroup',onDelFast);
-      $(oFastLeft).on('click','span.upLeftGroup',onUpFast);
-      $(oFastLeft).on('keypress','input',onFastkeyParess);
-      $(oFastLeft).on('blur','input',onFastBlur);
-      $(oFastLeft).on('focus','input',onFastFocus);
-      ///
-      $(oFastRight).on('click','span.delRightRep',onDelFast);
-      $(oFastRight).on('click','span.upRightRep',onUpFast);
-      $(oFastRight).on('keypress','input',onFastkeyParess);
-      $(oFastRight).on('blur','input',onFastBlur);
-      $(oFastRight).on('focus','input',onFastFocus);
-      //
-      $(oAddNewGroup).on('click',onAddNewFast);
-      $(oAddNewRep).on('click',onAddNewFast);
+};
 
-  	};
-
-  	var init = function() {
-  		parseDOM();
-  		bindLitener();
-      onReLoadHandler();
-  	};
-  	init();
+var init = function() {
+	parseDOM();
+	bindLitener();
+  onReLoadHandler();
+};
+init();
 };
 module.exports = Fastlayer;
