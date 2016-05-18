@@ -154,6 +154,11 @@ $(sugguestions).on('click','li',function(ev) {
 			$(homeuser).find('.js-robotBackHideBtn').hide();
 		}
 	};
+	//用户tab保存切换保存智能搜索信息
+	var onTabSwitch = function(evn,data){
+		// console.log(data.data);
+		quickSearch(data.data);
+	};
 	//聊天页面点击内容获取智能搜索答案
 	var onGetReplyByChat = function(evn,data){
 		// data.str data.uid
@@ -192,6 +197,7 @@ $(sugguestions).on('click','li',function(ev) {
 		// $(robotAnswer).delegate('a','click',onSendAnswer);
 		$(robotDirectHideBtn).delegate('a.quickSendBtn','click',onChatSmartReply);
 		$(robotAnswer).delegate('a','click',onChatSmartReply);
+		$(document.body).on('rightside.onTabSwitch',onTabSwitch);
 
 
 	};

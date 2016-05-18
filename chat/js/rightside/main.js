@@ -103,6 +103,9 @@ function RightSide(node,core,window) {
         $(tabSwitchNav).find('li.js-menu').each(function(i,o){
           if($(o).attr('id')==item['item']['zIndex']){
             onSetSwitchTab($(o),_val);
+            $(document.body).trigger('rightside.onTabSwitch',{
+              'data':_val
+            });
           }
         });
       }
