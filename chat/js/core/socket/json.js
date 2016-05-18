@@ -27,10 +27,13 @@ function polling(global) {
         });
     };
 
-    var bindListener = function(){
-        $(document.body).on("textarea.send",onsend);
+    var onDirectSend = function(evt,ret) {
     };
 
+    var bindListener = function() {
+        $(document.body).on("textarea.send",onsend);
+        $(document.body).on("rightsie.onChatSmartReply",onDirectSend);
+    };
 
     var messageAdapter = function(ret) {
         var arr = [];
@@ -58,12 +61,12 @@ function polling(global) {
         setTimeout(start,1500);
     };
 
-    var init = function(){
+    var init = function() {
         bindListener();
     };
 
     init();
-    
+
     this.on = on;
     this.start = start;
 }
