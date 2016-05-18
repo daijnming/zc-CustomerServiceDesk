@@ -402,7 +402,7 @@ ul.mainNav  .tab-content{
 .bootbox .listBox #addList .col-sm-4 .oHide{display: none;}
 .bootbox .listBox .list-group .list-group-item .onLineNum{color: #f90;}
 
-.rightBox{overflow:scroll;height:100%;border-left: 1px solid #dee8e9;}
+.rightBox{overflow:scroll;border-left: 1px solid #dee8e9;}
 .rightBox .panel-body{padding: 0;min-height:100px;}
 .rightBox .tab-border.tab-content{border-bottom: 0;height: 100%;}
 /*.rightBox .tab-content #profileuser li{list-style: none;  margin-left: -35px;margin-bottom: 10px;}*/
