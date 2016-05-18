@@ -114,11 +114,11 @@ function TextArea(node,core,window) {
         }
         switch (status) {
             case 1:
-                $('.scrollBoxParent').height(($(window).height() - (50 + 52 )) + 'px');
+                $('#chatlist').height(($(window).height() - (50 + 52 )) + 'px');
                 //聊天体默认高度
                 break;
             case 2:
-                $('.scrollBoxParent').height(($(window).height() - (50 + 52 + botTextBoxHeight)) + 'px');
+                $('#chatlist').height(($(window).height() - (50 + 52 + botTextBoxHeight)) + 'px');
                 break;
         }
         $botTextBox.css("bottom","-230px")
