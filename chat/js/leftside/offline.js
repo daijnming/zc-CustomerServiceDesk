@@ -31,6 +31,7 @@ function Offline(node,core,window) {
             var item = list[i];
 
             item.source_type = USOURCE[item.source];
+            console.log(item.source_type);
             if(item.source == 1) {
                 item.imgUrl = "img/weixinType.png";
             }
@@ -59,6 +60,7 @@ function Offline(node,core,window) {
             });
             return promise;
         }).then(function(list,promise) {
+            console.log(list);
             loadFile.load(global.baseUrl + "views/leftside/chatlist.html").then(function(value) {
                 var className = CLASSNAME[index];
                 var _html = doT.template(value)({
