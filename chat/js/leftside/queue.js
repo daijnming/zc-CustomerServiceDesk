@@ -32,7 +32,6 @@ function Queue(core,window) {
         var index = $(elm).attr("data-index");
         currentPage = 1;
         currentTab = index;
-        console.log(elm);
         $(elm).addClass("active").siblings().removeClass("active");
         fetchData();
     };
@@ -60,12 +59,10 @@ function Queue(core,window) {
             var arr = ['waitSize','visitSize'];
             var btns = [$waitSize,$visitSize];
             var key = ret.data[arr[currentTab]];
-            console.log(key);
             if( typeof key === 'number') {
                 btns[currentTab].html(key);
                 userSize[currentTab] = key;
             }
-            console.log(userSize);
             $totalpage.html(totalPage);
             $currentPage.html(currentPage);
             $refreshTime.html(dateTimeUtil.getTime(new Date()));
@@ -140,15 +137,15 @@ function Queue(core,window) {
                 'uid' : global.id,
                 'userId' : uid
             }
-        }).done(function(ret) {
+        }).success(function(ret) {
             if(ret.status == 1) {
-                console.log(userSize)
                 userSize[currentTab];
                 $node.find(".js-size-btn").eq(currentTab).html(--userSize[currentTab]);
                 $(elm).html('已邀请').addClass('disabled').css({
                     'color' : '#808080'
                 });
             }
+        }).fail(function(ret,err) {
         });
 
     };
@@ -180,7 +177,17 @@ function Queue(core,window) {
         });
         loadFile.load(global.baseUrl + "views/leftside/queuelist.html").then(function(value,promise) {
             return getQueryUsers(value,promise);
-        }).then(initContent).then();
+        }).then(initContent).then(function() {
+            $.ajax({
+                'url' : urlList[1],
+                'dataType' : 'json',
+                'data' : {},
+                'type' : "post"
+            }).success(function(ret) {
+                userSize[1] = ret.visitSize;
+                $node.find(".js-size-btn").eq(1).html(ret.visitSize);
+            });
+        });
     };
 
     var init = function() {
