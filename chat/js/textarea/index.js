@@ -76,6 +76,7 @@ function TextArea(node,core,window) {
         //清空待发送框
     };
     var onIntelligencereplyHandler = function(evt,data) {//智能回复
+        console.log(data);
         if(data.data.stats=="2"){
             $sendMessage.val(data.data.msg)
         }
