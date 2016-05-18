@@ -147,8 +147,22 @@ $(sugguestions).on('click','li',function(ev) {
 			$(homeuser).find('.js-robotBackHideBtn').hide();
 		}
 	};
+	//聊天页面点击内容获取智能搜索答案
 	var onGetReplyByChat = function(evn,data){
-		console.log(data);
+		// data.str data.uid
+		//显示智能回复页面
+		var homeNav = $(node).find('.js-panel-body .js-nav-tabs li#homeuser');
+		var homeBody = $(node).find('.js-panel-body .js-tab-content');
+		var oId = $(homeNav).attr('id');
+		$(homeNav).addClass('active').siblings('li').removeClass('active');
+		$(homeBody).find('.js-tab-pane').each(function(i,v){
+			if($(v).attr('id') == oId.toString()){
+				$(v).addClass('active in').siblings('div').removeClass('active in');
+				$(v).find('input').val(data.str);
+				quickSearch(data.str);
+				return;
+			}
+		});
 	};
 	var parseDOM = function() {
     oHomeuser = $(node).find('.js-tab-pane#homeuser');
