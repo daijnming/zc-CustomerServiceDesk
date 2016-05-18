@@ -34,7 +34,7 @@ var Client = function(node,core,data){
   		success:function(data){
         // console.log(data);
         // data=[];
-        // data = [{'机器人':'http://baidu.com'}];
+        data = [{'机器人':'http://baidu.com'}];
         // data = [{'机器人机器人机器人机器人':'http://baidu.com'},{'qq':'http://www.qq.com'}];
         // data=[{'机器人':'http://www.baidu.com?partnerId=&email=422293027@qq.com&sign=55230d63f78ffb668ea4db4c6006a3b2'},
       //     {'qq':'http://www.qq.com?partnerId=&email=422293027@qq.com&sign=55230d63f78ffb668ea4db4c6006a3b2'}

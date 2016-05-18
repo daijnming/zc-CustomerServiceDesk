@@ -78,7 +78,8 @@
         uid: global.id,
         pid: params.data.pid,
         sender : global.id,
-        userId: params.data.uid
+        userId: params.data.uid,
+        userSourceImage: userSourceMap[params.data.usource]
       }
 
       // 初始化历史记录
@@ -391,8 +392,14 @@
 
             // list = list.splice(0, 1000);
 
-            _html = doT.template(tpl)({
+            console.log({
+                userSourceImage: userInfo.userSourceImage ,
                 list : list
+            });
+
+            _html = doT.template(tpl)({
+              userSourceImage: userInfo.userSourceImage ,
+              list : list
             });
 
             $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
@@ -410,7 +417,13 @@
             //   item.msg = item.msg ? Face.analysis(item.msg) : null;
             // })
 
+            console.log({
+                userSourceImage: userInfo.userSourceImage ,
+                list : data.list
+            });
+
             _html = doT.template(tpl)({
+                userSourceImage: userInfo.userSourceImage ,
                 list : data.list
             });
 
