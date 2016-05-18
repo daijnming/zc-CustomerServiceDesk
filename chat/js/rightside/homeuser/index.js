@@ -13,7 +13,7 @@ var HomeUser = function(node,core,config) {
 			robotAnswer,
 			sugguestions;
 
-	var user={
+	var cnf={
 		uid:''
 	};//用户信息
   //TODO 模板/js/资源引用
@@ -71,40 +71,48 @@ var HomeUser = function(node,core,config) {
 		}
 	};
 	var onLoadUserInfo = function(evn,data){
-		user.uid = data?data.userData.uid:'';
+		cnf.uid = data?data.userData.uid:'';
+		cnf.cid = data?data.data.cid:'';
+
 		// console.log(data);
 	};
 	//智能回复
-	var onChatSmartReply = function(){
-		console.log('aaa');
+	var onChatSmartReply = function(e){
+		//阻止默认事件
+		// e.preventDefault();
+		// e.stopPropageation();
+		// console.log('aaa');
+
 		var $this = $(this);
 		var obj={},
 			_answer = $(robotAnswer).find('a');
 		//type=3 未搜索到智能回复答案 不进行发送
-		if(_answer.html()===''||_answer.attr('answerType')==='3'||user.uid=='')return;
+		if(_answer.html()===''||_answer.attr('answerType')==='3'||cnf.uid===''||cnf.cid==='')return;
 
 		if($this.hasClass('quickSendBtn')){
 			//直接发送
+			obj.status='1';
 			obj.msg = $(robotAnswer).find('a').html();
-			obj.stats='1';
+			obj.docid = $(robotAnswer).find('a').attr('docid');
 		}else{
 			//存到发送框
-			obj.msg = $($this[0]).html();
-			obj.stats='2';
+			obj.status='2';
+			obj.txt = $this.text();//纯文本
+			obj.msg = $this.html();//富文本
 		}
-		obj.uid = user.uid;
+		// console.log(obj.txt+':'+obj.msg);
+		obj.uid = cnf.uid;
+		obj.cid = cnf.cid;
 		//TODO 调取外部接口 直接给用户发送智能回复答案
 		$(document.body).trigger('rightside.onChatSmartReply',[{
 				'data':obj
 		}]);
-		console.log('aa');
-		// console.log(obj);
 	};
 
 	//点击智能回复答案 进行回复  废弃掉 不在使用
 	var onSendAnswer = function(){
 		var $this = $(this);
-		console.log($this);
+		// console.log($this);
 		$(document.body).trigger('rightside.onselectedmsg',[{
 			'data':$($this[0]).html()
 		}]);
