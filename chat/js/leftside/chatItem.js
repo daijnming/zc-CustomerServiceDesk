@@ -11,7 +11,8 @@ function Item(data,core,outer,from,manager) {
         $userName;
     var from = from || 'online';
     var global = core.getGlobal();
-    var $body;
+    var $body,
+        $imageFace;
     var messageAdapter = require('../util/normatMessageAdapter.js');
     var userDataCache = {};
     var baseUrl = global.baseUrl;
@@ -65,6 +66,19 @@ function Item(data,core,outer,from,manager) {
         }).html('[离线]');
         status = 'offline';
     };
+
+    var hide = function() {
+        $body.trigger("leftside.onremove",[{
+            'cid' : data.cid,
+            'uid' : data.uid
+        }]);
+        $node.animate({
+            'height' : 0
+        },300, function() {
+            $node.remove();
+        });
+    };
+
     var onRemove = function() {
         $.ajax({
             'url' : '/chat/admin/leave.action',
@@ -77,15 +91,7 @@ function Item(data,core,outer,from,manager) {
             'dataType' : "json"
         }).success(function(ret) {
             if(ret.status === 1) {
-                $body.trigger("leftside.onremove",[{
-                    'cid' : data.cid,
-                    'uid' : data.uid
-                }]);
-                $node.animate({
-                    'height' : 0
-                },300, function() {
-                    $node.remove();
-                });
+                hide();
             }
         });
     };
@@ -116,12 +122,27 @@ function Item(data,core,outer,from,manager) {
         }
     };
 
+    var initFace = function() {
+        var url = data.face;
+        var img = new Image();
+        img.onload = function() {
+            $imageFace.attr("src",url).css({
+                'display' : 'inline-block'
+            });
+        };
+        img.src = url;
+    };
+
     var initNode = function() {
         var promise = new Promise();
         var elm = $(outer).find('li[data-uid="' + data.uid + '"]');
         if(elm.length > 0) {
             node = elm[0];
             $node = $(node);
+            if(!$imageFace) {
+                $imageFace = $node.find(".js-image-face");
+            }
+            initFace();
             setTimeout(function() {
                 promise.resolve();
             },0);
@@ -131,8 +152,15 @@ function Item(data,core,outer,from,manager) {
                 if(data.usource == 1) {
                     data.imgUrl = "img/weixinType.png";
                 }
+                if(data.face && data.face.length) {
+                    data.source_type = 'face';
+                }
                 var _html = doT.template(value)(data);
                 $node = $(_html);
+                if(!$imageFace) {
+                    $imageFace = $node.find(".js-image-face");
+                }
+                initFace();
                 insert($node);
                 promise.resolve();
             });
@@ -201,7 +229,7 @@ function Item(data,core,outer,from,manager) {
 
     var onUserStatusChange = function(evt,ret) {
         if(ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
-            onRemove();
+            hide();
         }
         if(ret.type == 'star') {
             delete userDataCache[data.uid];
@@ -220,7 +248,7 @@ function Item(data,core,outer,from,manager) {
         var uid = data.uid;
         manager.setCurrentUid(undefined);
         if(true) {
-            onRemove();
+            hide();
         }
     };
     var bindListener = function() {

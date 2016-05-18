@@ -57,6 +57,7 @@
     width: 40px;
     display: block;
     border-radius: 50%;
+    overflow: hidden;
     position: relative;
     margin-top: 20px;
     margin-left: 20px;
@@ -93,6 +94,10 @@
 
 .tab-content  li.user-list-item .icon.app {
     background-position: -157px -235px;
+}
+.tab-content  li.user-list-item .icon.face {
+    background-color: #60adf6;
+    background-position: -98px -235px;
 }
 .tab-content  li.user-list-item .icon.laptop {
 

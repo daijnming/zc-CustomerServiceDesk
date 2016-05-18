@@ -76,6 +76,9 @@ function Online(node,core,window) {
                             item.imgUrl = "img/weixinType.png";
                         }
                         item.source_type = USOURCE[item.usource];
+                        if(item.face && item.face.length) {
+                            item.source_type = 'face';
+                        }
                     }
                     var _html = doT.template(value)({
                         'list' : ret.userList
