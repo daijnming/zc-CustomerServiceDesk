@@ -9,6 +9,7 @@ function polling(global) {
         questionId : "",
         uid : ""
     };
+    var $body;
 
     var on = function(evt,cbk) {
         eventCache[evt] = cbk;
@@ -25,9 +26,15 @@ function polling(global) {
                 'uid' : global.id
             })
         }).success(function() {
-
+            $body.trigger("core.sendresult",[{
+                'token' : data.date,
+                'type' : "success"
+            }]);
         }).fail(function() {
-
+            $body.trigger("core.sendresult",[{
+                'token' : data.date,
+                'type' : "fail"
+            }]);
         });
     };
 
@@ -48,8 +55,8 @@ function polling(global) {
     };
 
     var bindListener = function() {
-        $(document.body).on("textarea.send",onsend);
-        $(document.body).on("rightside.onChatSmartReply",onDirectSend);
+        $body.on("textarea.send",onsend);
+        $body.on("rightside.onChatSmartReply",onDirectSend);
     };
 
     var messageAdapter = function(ret) {
@@ -76,6 +83,10 @@ function polling(global) {
         }).fail(function(ret,err) {
         });
         setTimeout(start,1500);
+    };
+
+    var parseDOM = function() {
+        $body = $(document.body);
     };
 
     var init = function() {
