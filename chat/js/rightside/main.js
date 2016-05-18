@@ -103,6 +103,9 @@ function RightSide(node,core,window) {
         $(tabSwitchNav).find('li.js-menu').each(function(i,o){
           if($(o).attr('id')==item['item']['zIndex']){
             onSetSwitchTab($(o),_val);
+            $(document.body).trigger('rightside.onTabSwitch',{
+              'data':_val
+            });
           }
         });
       }
@@ -157,6 +160,7 @@ function RightSide(node,core,window) {
   var initData = function(data,userData){
       //初始化用户数据 -- 客户资料
       profileuser($('.js-tab-pane#profileuser'),core,userData);
+      // console.log(userData);
       //初始化用户自定义配置
       client(node,core,userData);
       //获取用户偏好设置

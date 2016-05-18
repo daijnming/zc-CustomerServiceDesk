@@ -128,7 +128,7 @@
 					str = str.replace(_this.reg2,'<img src="'+_this.path+_this.tip2[ico[0]]+'.gif" border="0" />',1);
 				}
 			}
-			str = str.replace(_this.emojiReg,'<img src="'+_this.emojiPath+'$1.png" border="0" />');
+			str = str.replace(_this.emojiReg,'<img stylt="width:20px;height:20px;" src="'+_this.emojiPath+'$1.png" border="0" />');
 			return str
 		},
 		hasEmotion:function(str){//将文本框内的表情字符转化为表情
