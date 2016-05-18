@@ -58,12 +58,12 @@
         adminPushMessage(arguments[1]);
     });
 
-    $(document.body).on('textarea.uploadImgUrl', function(ev) {
-        console.log('上传图片');
-        console.log(arguments);
-        // 插入客服输入内容
-        // adminPushMessage(arguments[1]);
-    });
+    // $(document.body).on('textarea.uploadImgUrl', function(ev) {
+    //     console.log('上传图片');
+    //     console.log(arguments);
+    //     // 插入客服输入内容
+    //     // adminPushMessage(arguments[1]);
+    // });
 
     $(document.body).on("leftside.onselected", function() {
       var params = arguments[1];
@@ -82,6 +82,7 @@
       $rootNode.find('#chat').show();
       $rootNode.find('#chat').find('.zc-newchat-tag').hide();
       $rootNode.find('#chat').find('.js-user-ready-input').hide();
+      $(window).resize();
 
       // 初始化历史记录
       getChatListByOnline('chat', parseTpl, null, null, {
@@ -102,12 +103,18 @@
     });
 
     $(document.body).on("rightside.onChatSmartReply", function() {
+
+      console.log(arguments[1]);
+
       var data = {
         answer: arguments[1].data.msg ,
         uid: userInfo.userId ,
         pid: userInfo.pid
       }
-      adminPushMessage(data);
+
+      if (arguments[1].data.stats === "1") {
+        adminPushMessage(data);
+      }
     });
 
     // --------------------------- 推送函数 ---------------------------
