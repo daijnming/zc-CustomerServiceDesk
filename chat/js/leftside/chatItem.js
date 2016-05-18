@@ -210,8 +210,10 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onServerSend = function(evt,ret) {
-        messageAdapter(ret);
-        $lastMessage.html(ret.desc).removeClass("orange");
+        if(ret.uid == data.uid && ret.cid == data.cid) {
+            messageAdapter(ret);
+            $lastMessage.html(ret.desc).removeClass("orange");
+        }
     };
 
     var onTransfer = function(evt,data) {
