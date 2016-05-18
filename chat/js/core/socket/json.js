@@ -24,13 +24,35 @@ function polling(global) {
                 'cid' : data.cid,
                 'uid' : global.id
             })
+        }).success(function() {
+
+        }).fail(function() {
+
         });
     };
 
-    var bindListener = function(){
-        $(document.body).on("textarea.send",onsend);
+    var onDirectSend = function(evt,ret) {
+        ret = ret.data;
+        console.log(ret);
+        if(ret.status == 1 || ret.stats == 1) {
+            $.ajax({
+                'url' : '/chat/admin/send1.action',
+                'dataType' : 'json',
+                'type' : "post",
+                'data' : $.extend(defaultParams, {
+                    'answer' : ret.msg,
+                    'cid' : data.cid,
+                    'uid' : global.id
+                })
+            });
+        }
+        alert();
     };
 
+    var bindListener = function() {
+        $(document.body).on("textarea.send",onsend);
+        $(document.body).on("rightside.onChatSmartReply",onDirectSend);
+    };
 
     var messageAdapter = function(ret) {
         var arr = [];
@@ -58,12 +80,12 @@ function polling(global) {
         setTimeout(start,1500);
     };
 
-    var init = function(){
+    var init = function() {
         bindListener();
     };
 
     init();
-    
+
     this.on = on;
     this.start = start;
 }

@@ -454,7 +454,7 @@ ul.mainNav  .tab-content{
 .rightQuick{margin: 0;border-top: 1px solid rgb(213, 208, 208);  height: 100%;}
 .rightQuick li,.rightQuick ul{list-style: none;padding:0;}
 .rightQuick .rightQuickLeft{border-right: 1px solid rgb(213, 208, 208); min-height: 100%;padding: 0;}
-.rightQuick .rightQuickLeft li{line-height: 40px;height: 40px;margin: 0;cursor: pointer;text-align: center;  overflow: hidden;}
+.rightQuick .rightQuickLeft li{line-height: 40px;height: 40px;margin: 0;cursor: pointer; overflow: hidden;}
 .rightQuick .rightQuickLeft li:hover,.rightQuick .rightQuickLeft .active{background-color: #25B2A2; color: #fff;}
 
 .rightQuick .rightQuickRight{padding: 0;}
