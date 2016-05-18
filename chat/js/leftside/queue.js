@@ -146,6 +146,9 @@ function Queue(core,window) {
                 });
             }
         }).fail(function(ret,err) {
+            $(elm).html('失败').addClass('disabled').css({
+                'color' : '#808080'
+            });
         });
 
     };
