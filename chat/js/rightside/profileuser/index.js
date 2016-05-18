@@ -19,13 +19,14 @@ var ProfileUser = function(node,core,userData) {
 
 	//TODO 处理对话页显示  此处只是页面显示 不影响页面重构 不需要使用模版
 	var onVisitHandle = function(url,title){
+
+		// var subTitle= title&&title.length>15?title.substr(0,15)+'..':title;
+		//暂定成35个字符
+		if(!url&&!title) return '未获取到';
 		var regexUrl = /^(https?)/;
 		if(url){
 			if(!url.match(regexUrl))url='http://'+url;
 		}
-		// var subTitle= title&&title.length>15?title.substr(0,15)+'..':title;
-		//暂定成35个字符
-		if(!url&&!title) return '未获取到';
 		if(url&&!title) {
 				// var urlTitle = url.length>25?url.substr(0,25)+'..':url;
 				return	'<a target="_black" class="aChat" style="font-size:14px;" href="'+url+'" title="'+url+'">'+url+'</a>';
@@ -46,6 +47,7 @@ var ProfileUser = function(node,core,userData) {
 					//组装对话页
 					// console.log(data);
 					data.userData["visit"] = onVisitHandle(data.userData['visitUrl'],data.userData['visitTitle']);
+					// data.userData['visit']=onVisitHandle();
 					var _html = doT.template(value)({
 							'item':data
 					});
@@ -76,6 +78,8 @@ var ProfileUser = function(node,core,userData) {
 				data:sendData,
 				dataType:'json',
 				success:function(data){
+					//去掉两端空格显示
+					$(obj).val(val);
 					reviceData.status=true;
 					reviceData.uid = config.uid;
 					//如果编辑的是姓名字段 则要传值给左侧栏显示
@@ -150,6 +154,19 @@ var ProfileUser = function(node,core,userData) {
 			var val = $(this).find('option:selected').val();
 			onTextSaveData(val,$(this)[0]);
 	};
+	//对话页 url显示
+	var onSessionUrl = function(){
+		var ruler = $('.aChat');
+		if(ruler.length>0){
+			var chatWarpW = $('.chatWarp').width();
+			var aChatW = $('.aChat').text($('.aChat').text())[0].offsetWidth
+			if(aChatW >= chatWarpW){
+				$('.chatWarpi').addClass('show');
+			}else{
+				$('.chatWarpi').removeClass('show');
+			}
+		}
+	};
 	var parseDOM = function() {
     // someOne = $(node).find('.js-xx');
 	};
@@ -166,7 +183,9 @@ var ProfileUser = function(node,core,userData) {
 		$(node).delegate('#sex','change',onSelected);
 		$(node).find('#dp').datepicker();
 	};
-
+	var initPlusin = function(){
+		onSessionUrl();
+	};
 	var initConfig = function(){
 
 		config.uid = data.data.uid;//用户id
@@ -174,31 +193,24 @@ var ProfileUser = function(node,core,userData) {
 
 		regExUserInfo = {
 			nick:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'长度错误'}],
-			uname:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
-			tel:[{'regex':/^[0-9]{8,13}$/,'alert':'格式错误'}],
-			birthday:[{'regex':/^[1-2][0-9]{3}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
-			email:[{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'格式错误'}],
-			qq:[{'regex':/[1-9][0-9]{4,13}/,'alert':'格式错误'}],
-			weixin:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
-			weibo:[{'regex':/\w{5,28}/,'alert':'格式错误'}],
-			remark:[{'regex':/\w{0,200}/,'alert':'格式错误'}]
+			uname:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			tel:[{'regex':/\S/,alert:'不允许为空'},{'regex':/^[0-9]{8,13}$/,'alert':'格式错误'}],
+			birthday:[{'regex':/\S/,alert:'不允许为空'},{'regex':/^[1-2][0-9]{3}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
+			email:[{'regex':/\S/,alert:'不允许为空'},{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'格式错误'}],
+			qq:[{'regex':/\S/,alert:'不允许为空'},{'regex':/[1-9][0-9]{4,13}/,'alert':'格式错误'}],
+			weixin:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			weibo:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'格式错误'}],
+			remark:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{0,200}/,'alert':'格式错误'}]
 		};
 	};
 	initUserInfo().then(function(){
 		init();
-		var ruler = $('.aChat');
-		var chatWarpW = $('.chatWarp').width();
-		var aChatW = $('.aChat').text($('.aChat').text())[0].offsetWidth
-		if(aChatW >= chatWarpW){
-			$('.chatWarpi').addClass('show');
-		}else{
-			$('.chatWarpi').removeClass('show');
-		}
 	});
 	var init = function() {
 		initConfig();
 		parseDOM();
 		bindLitener();
+		initPlusin();
 	};
 };
 module.exports = ProfileUser;

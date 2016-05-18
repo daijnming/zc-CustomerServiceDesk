@@ -10,11 +10,14 @@ function Queue(core,window) {
     var dialog;
     var currentTab = 0;
     var prevPage = 1;
+    var userSize = [0,0];
     var $node,
         $totalpage,
         $currentPage,
         $pageJump,
         $refreshTime,
+        $waitSize,
+        $visitSize,
         $refreshBtn,
         $tableOuter,
         $input;
@@ -29,6 +32,7 @@ function Queue(core,window) {
         var index = $(elm).attr("data-index");
         currentPage = 1;
         currentTab = index;
+        $(elm).addClass("active").siblings().removeClass("active");
         fetchData();
     };
 
@@ -36,6 +40,7 @@ function Queue(core,window) {
         var html = data.html;
         var ret = data.data;
         ret.isInvite = global.isInvite;
+        userSize[currentTab] = ret.waitSize;
         totalPage = ret.countPage;
         ret.currentTime = dateTimeUtil.getTime(new Date());
         var _html = doT.template(html)(ret);
@@ -51,6 +56,13 @@ function Queue(core,window) {
     var fetchData = function() {
         loadFile.load(global.baseUrl + TEMPLATELIST[currentTab]).then(getQueryUsers).then(function(ret,promise) {
             totalPage = ret.data.countPage;
+            var arr = ['waitSize','visitSize'];
+            var btns = [$waitSize,$visitSize];
+            var key = ret.data[arr[currentTab]];
+            if( typeof key === 'number') {
+                btns[currentTab].html(key);
+                userSize[currentTab] = key;
+            }
             $totalpage.html(totalPage);
             $currentPage.html(currentPage);
             $refreshTime.html(dateTimeUtil.getTime(new Date()));
@@ -107,6 +119,8 @@ function Queue(core,window) {
         $refreshBtn = $node.find(".js-refresh-btn");
         $tableOuter = $node.find(".js-table-outer");
         $refreshTime = $node.find(".js-refresh-time");
+        $waitSize = $node.find(".js-wait-size");
+        $visitSize = $node.find(".js-visit-size");
     };
 
     var onInviteBtnClickHandler = function(e) {
@@ -123,12 +137,18 @@ function Queue(core,window) {
                 'uid' : global.id,
                 'userId' : uid
             }
-        }).done(function(ret) {
+        }).success(function(ret) {
             if(ret.status == 1) {
+                userSize[currentTab];
+                $node.find(".js-size-btn").eq(currentTab).html(--userSize[currentTab]);
                 $(elm).html('已邀请').addClass('disabled').css({
                     'color' : '#808080'
                 });
             }
+        }).fail(function(ret,err) {
+            $(elm).html('失败').addClass('disabled').css({
+                'color' : '#808080'
+            });
         });
 
     };
@@ -160,7 +180,17 @@ function Queue(core,window) {
         });
         loadFile.load(global.baseUrl + "views/leftside/queuelist.html").then(function(value,promise) {
             return getQueryUsers(value,promise);
-        }).then(initContent).then();
+        }).then(initContent).then(function() {
+            $.ajax({
+                'url' : urlList[1],
+                'dataType' : 'json',
+                'data' : {},
+                'type' : "post"
+            }).success(function(ret) {
+                userSize[1] = ret.visitSize;
+                $node.find(".js-size-btn").eq(1).html(ret.visitSize);
+            });
+        });
     };
 
     var init = function() {

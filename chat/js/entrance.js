@@ -8,13 +8,15 @@
     var Promise = require('./util/promise.js');
     var Modal = require('./util/modal/dialog.js');
     var fileLoader = require('./util/load.js')();
+    var TOOLBARHEIGHT = 50;
     var parseDOM = function() {
     };
 
     var initPlugins = function() {
-        var height = ($(window).outerHeight());
-        $("#main-container").height($(window).outerHeight());
+        var height = ($(window).outerHeight()) - TOOLBARHEIGHT;
+        $("#main-container").height(height);
         $("#chatlist").height(height);
+        $("#left-navigation").height(height);
         LeftSide($("section#left-navigation")[0],core,window);
         RightSide($('.rightBox')[0],core,window);
         TextArea($('.js-TextArea'),core,window);
@@ -23,9 +25,10 @@
     };
     var bindListener = function() {
         $(window).on("resize", function(e) {
-            var height = ($(window).outerHeight());
-            $("#main-container").height($(window).outerHeight());
+            var height = ($(window).outerHeight()) - TOOLBARHEIGHT;
+            $("#main-container").height(height);
             $("#chatlist").height(height);
+            $("#left-navigation").height(height);
         });
     };
 

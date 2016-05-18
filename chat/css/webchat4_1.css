@@ -90,6 +90,10 @@
 .tab-content  li.user-list-item .icon.offline, .tab-content  li.user-list-item .icon.laptop.offline, .tab-content  li.user-list-item .icon.mobile.offline {
     background-color: #ccc;
 }
+
+.tab-content  li.user-list-item .icon.app {
+    background-position: -157px -235px;
+}
 .tab-content  li.user-list-item .icon.laptop {
 
     background-color: #60adf6;
@@ -149,4 +153,12 @@
     color: #ea8f57;
     display: inline-block;
     margin-left: 5px;
+}
+.badge.badge-red {
+    background: #ff7878;
+}
+.bootbox .modal-dialog .modal-body .bootbox-body .reqTableBox .reqMenuBox .fl .ls-light-green-btn.active {
+    border: 1px solid #09aeb0;
+    background: #09aeb0;
+    color: white;
 }

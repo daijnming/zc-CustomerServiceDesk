@@ -35,7 +35,6 @@ var Fastlayer = function(node,core,config){
   	var parseDOM = function() {
       fastNode = node;
       oFastLeft = $(fastNode).find('.js-leftContent ul');
-
       oFastRight = $(fastNode).find('.js-rightContent ul');
       oAddNewGroup = $(fastNode).find('.js-addNewGroup');
       oAddNewRep = $(fastNode).find('.js-addNewRep');
@@ -48,6 +47,7 @@ var Fastlayer = function(node,core,config){
       $($(node).find('.js-quickRight ul li')[0]).find('span.upRightRep').addClass('hide');
       if(boo)$(document.body).trigger('rightside.oReLoadRightGroup');
     };
+    //点击左侧快捷回复分组条
     var onFastTap = function(){
       var $this = $(this);
       $this.addClass('activeLine').siblings('li').removeClass('activeLine');
@@ -93,84 +93,91 @@ var Fastlayer = function(node,core,config){
             'userId':id
           };
       }
-      if(confirm(title)){
-						if(cId)
-						{
-							$.ajax({
-								type:"post",
-								url:url,
-								data:data,
-								dataType:"json",
-								success:function(data){
-									if(data.status)
-									{
-										$this.parent('.detalBar').remove();
-										onReLoadHandler(true);
-									}
-								}
-							});
-						}
-						else
-						{
-							$this.parent('.detalBar').remove();
-						}
-    }
+      $this.text('确认删除');
+      //确认删除
+      if($this.hasClass('sureDel')){
+        // if(confirm(title)){
+          if(cId)
+          {
+            $.ajax({
+              type:"post",
+              url:url,
+              data:data,
+              dataType:"json",
+              success:function(data){
+                if(data.status)
+                {
+                  $this.parent('.detalBar').animate({
+                    'height':0
+                  },300,function(){
+                    $this.parent('.detalBar').remove();
+                  });
+                  onReLoadHandler(true);
+                }
+              }
+            });
+          }
+      // }
+      }else $this.addClass('sureDel');
   };
 
-    //快捷置顶
-    var onUpFast = function(){
-      var $this = $(this);
-      var url,
-          sendId,
-          cId,
-          data;
-      if($this.siblings('input').attr('utype')=='left'){
-        url = 'reply/setTopGroup.action';
-        cId = $this.parent('.detalBar').attr('gid');
-        sendId = 'groupId';
-        data ={
-          'groupId':cId,
-          'userId':id
-        };
+  //快捷置顶
+  var onUpFast = function(){
+    var $this = $(this);
+    var url,
+        sendId,
+        cId,
+        data;
+    if($this.siblings('input').attr('utype')=='left'){
+      url = 'reply/setTopGroup.action';
+      cId = $this.parent('.detalBar').attr('gid');
+      sendId = 'groupId';
+      data ={
+        'groupId':cId,
+        'userId':id
+      };
 
-      }else{
-        url = 'quick/setTopReply.action';
-        cId = $this.parent('.detalBar').attr('qid');
-        sendId="id";
-        data={
-          'id':cId,
-          'userId':id
-        };
-      }
-      if(sendId){
-        $.ajax({
-          type:"post",
-          url:url,
-          data:data,
-          dataType:"json",
-          success:function(data){
-            if(data.status)
-            {
-              var oLi = $this.parent('li');
-              var oUl = $this.parents('ul');
+    }else{
+      url = 'quick/setTopReply.action';
+      cId = $this.parent('.detalBar').attr('qid');
+      sendId="id";
+      data={
+        'id':cId,
+        'userId':id
+      };
+    }
+    if(sendId){
+      $.ajax({
+        type:"post",
+        url:url,
+        data:data,
+        dataType:"json",
+        success:function(data){
+          if(data.status)
+          {
+            var oLi = $this.parent('li');
+            var oUl = $this.parents('ul');
+            $(oLi).find('input').animate({
+              'height':35
+            },200,function(){
               $(oUl).prepend(oLi);
-              onReLoadHandler(true);
-
-            }
+              $(oLi).find('input').css('height',30);
+            });
+            onReLoadHandler(true);
           }
-        });
-      }
-					// $('.quickLeft .addGroupBtn').show();
-    };
-    var onFastkeyParess = function(e){
-      var $that = $(this);
-      var key = e.which;
-        if (key == 13&&!e.shiftKey) {
-          $that.blur();
-          // console.log('e');
-          return false;
         }
-    };
+      });
+    }
+  };
+  var onFastkeyParess = function(e){
+    var $that = $(this);
+    var key = e.which;
+      if (key == 13&&!e.shiftKey) {
+        $that.blur();
+        // console.log('e');
+        return false;
+      }
+  };
     var onFastBlur = function(evn){
       if($(oFastLeft).find('li').hasClass('activeLine'))$(oAddNewRep).show();else $(oAddNewRep).hide();
       var $this = $(this);
@@ -201,16 +208,14 @@ var Fastlayer = function(node,core,config){
     var onFastFocus = function(){
       That.inputText = $(this).val();
     };
-    //
-    // var onReceive = function(value,data) {
-    //
-    // };
     //初始化数据
   	var onloadHandler = function() {
       config.repBtnType = false;
   };
 
   var onAddNewFast = function(evn){
+    //清除新加框 class
+    $(node).find('.js-content ul li').find('input').removeClass('newInput');
     var obj = evn.target.className==='js-addNewGroup'?oFastLeft:oFastRight;
     var clsDelName,
         clsUpName,
@@ -231,7 +236,6 @@ var Fastlayer = function(node,core,config){
         "clsDelName" : clsDelName,
         'clsUpName' : clsUpName
     });
-      // $layer = $(template.zcReplyOuter);
       var _html = doT.template(template.zcReplyOuter)(conf);
       var oListInput = $(obj).find('li')[$(obj).find('li').length-1];
     if($(obj).find('li').length > 0){
@@ -239,11 +243,10 @@ var Fastlayer = function(node,core,config){
         $(oListInput).remove();
       }else{
         $(obj).append(_html);
-        // $(oFastLeft).find('input').focus();
+        $(node).find('.js-content li input.newInput').focus();
       }
     }else{
       $(obj).append(_html);
-      // $(oFastLeft).find('input').focus();
     }
   };
   var onDialogArea = function(){
@@ -359,33 +362,45 @@ var Fastlayer = function(node,core,config){
       						});
       					}
     }
-  };
+};
+//取消删除
+var onCancalDel = function(){
+  $(node).find('.delLeftGroup').removeClass('sureDel');
+  $(node).find('.delRightRep').removeClass('sureDel');
+  $(oFastLeft).find('.delLeftGroup').text('删除');
+  $(oFastRight).find('.delLeftRep').text('删除');
+};
+var bindLitener = function() {
+  onloadHandler();
+  $(oFastLeft).on('click','li',onFastTap);
+  $(oFastLeft).on('click','span.delLeftGroup',onDelFast);
+  $(oFastLeft).on('click','span.upLeftGroup',onUpFast);
+  $(oFastLeft).on('keypress','input',onFastkeyParess);
+  $(oFastLeft).on('blur','input',onFastBlur);
+  $(oFastLeft).on('focus','input',onFastFocus);
+  ///
+  $(oFastRight).on('click','span.delRightRep',onDelFast);
+  $(oFastRight).on('click','span.upRightRep',onUpFast);
+  $(oFastRight).on('keypress','input',onFastkeyParess);
+  $(oFastRight).on('blur','input',onFastBlur);
+  $(oFastRight).on('focus','input',onFastFocus);
+  //
+  $(oAddNewGroup).on('click',onAddNewFast);
+  $(oAddNewRep).on('click',onAddNewFast);
+  //取消删除
+  $(oFastLeft).delegate('li','mouseleave',onCancalDel);
 
-  	var bindLitener = function() {
-      onloadHandler();
-      $(oFastLeft).on('click','li',onFastTap);
-      $(oFastLeft).on('click','span.delLeftGroup',onDelFast);
-      $(oFastLeft).on('click','span.upLeftGroup',onUpFast);
-      $(oFastLeft).on('keypress','input',onFastkeyParess);
-      $(oFastLeft).on('blur','input',onFastBlur);
-      $(oFastLeft).on('focus','input',onFastFocus);
-      ///
-      $(oFastRight).on('click','span.delRightRep',onDelFast);
-      $(oFastRight).on('click','span.upRightRep',onUpFast);
-      $(oFastRight).on('keypress','input',onFastkeyParess);
-      $(oFastRight).on('blur','input',onFastBlur);
-      $(oFastRight).on('focus','input',onFastFocus);
-      //
-      $(oAddNewGroup).on('click',onAddNewFast);
-      $(oAddNewRep).on('click',onAddNewFast);
-
-  	};
-
-  	var init = function() {
-  		parseDOM();
-  		bindLitener();
-      onReLoadHandler();
-  	};
-  	init();
+};
+var initConfig = function(){
+  if($(node).find('.js-content .js-leftContent li.activeLine').length<=0)  $(oAddNewRep).hide();
+  else  $(oAddNewRep).show();
+};
+var init = function() {
+	parseDOM();
+	bindLitener();
+  onReLoadHandler();
+  initConfig();
+};
+init();
 };
 module.exports = Fastlayer;

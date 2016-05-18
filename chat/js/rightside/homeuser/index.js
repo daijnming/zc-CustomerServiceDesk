@@ -76,6 +76,7 @@ var HomeUser = function(node,core,config) {
 	};
 	//智能回复
 	var onChatSmartReply = function(){
+		console.log('aaa');
 		var $this = $(this);
 		var obj={},
 			_answer = $(robotAnswer).find('a');
