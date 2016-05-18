@@ -53,7 +53,9 @@ function Item(data,core,outer,from,manager) {
                 });
             }
         }
-        $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
+        if(lastMessage.cid == data.cid) {
+            $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
+        }
     };
     var onOffLine = function() {
         $node.find(".js-icon").addClass("offline");

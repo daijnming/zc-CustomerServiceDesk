@@ -150,3 +150,6 @@
     display: inline-block;
     margin-left: 5px;
 }
+.badge.badge-red{
+    background:#ff7878;
+}
