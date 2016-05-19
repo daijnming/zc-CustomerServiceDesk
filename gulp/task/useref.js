@@ -7,7 +7,10 @@ var gulpIf = require("gulp-if");
 var uglify = require('gulp-uglify');
 var minifyCss = require("gulp-minify-css");
 var autoPrefixed = require("gulp-autoprefixer");
-gulp.task('useref',['browserify'], function() {
+
+
+
+gulp.task('useref',['browserify','imagemin'], function() {
    return gulp.src('chat/chat.html').
     pipe(useref()).
     pipe(gulpIf("*.css",minifyCss())).

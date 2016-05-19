@@ -23,12 +23,12 @@
     <li>
         <div class="userTypeName">
             浏览器：
-        </div><p  oType="browser" class="userInp" style="display:inline-block;">{{=it.item.userData["browser"]?it.item.userData["browser"]:'-'}}</p>
+        </div><p  oType="browser" class="" style="display:inline-block;">{{=it.item.userData["browser"]?it.item.userData["browser"]:'-'}}</p>
     </li>
     <li>
         <div class="userTypeName">
             系  统：
-        </div><i class="{{=clsName}}"></i><p oType="os" class="userInp" style="display: inline-block;">{{=it.item.userData["os"]?it.item.userData["os"]:'-'}}</p>
+        </div><i class="{{=clsName}}"></i><p oType="os" class="" style="display: inline-block;">{{=it.item.userData["os"]?it.item.userData["os"]:'-'}}</p>
     </li>
 </ul>
 <h4 style="margin-top: 40px;">用户信息</h4>
@@ -51,7 +51,7 @@
         <div class="userTypeName">
           生日：
         </div>
-          <input class="span3 js-userTnp userInp otherBorder" oType="birthday" readonly="readonly"  type="text" id="dp" placeholder="0000-00-00" value="{{=it.item.userData["birthday"]?it.item.userData["birthday"]:''}}" data-date-format="yyyy-mm-dd">
+          <input class="span3 js-userTnp userInp otherBorder" oType="birthday" readonly="readonly" id="dp" type="text"  placeholder="0000-00-00" value="{{=it.item.userData["birthday"]?it.item.userData["birthday"]:''}}" data-date-format="yyyy-mm-dd">
           <span class="tip"><span class="alerticon"></span><i class="closeicon"></i></span>
     </li>
     <li class="clear">

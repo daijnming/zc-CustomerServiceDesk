@@ -9,49 +9,67 @@ function polling(global) {
         questionId : "",
         uid : ""
     };
+    var $body;
 
     var on = function(evt,cbk) {
         eventCache[evt] = cbk;
     };
 
     var onsend = function(evt,data) {
+<<<<<<< HEAD
 
+=======
+        var answer = unescape(data.answer.replace("\\u","%u"));
+>>>>>>> 4ccf7dfb42742c56481b58b2656e298bbed2af26
         $.ajax({
             'url' : '/chat/admin/send1.action',
             'dataType' : 'json',
             'type' : "post",
             'data' : $.extend(defaultParams, {
+<<<<<<< HEAD
                 'answer' : '\ue416',
+=======
+                'answer' : answer,
+>>>>>>> 4ccf7dfb42742c56481b58b2656e298bbed2af26
                 'cid' : data.cid,
                 'uid' : global.id
             })
         }).success(function() {
-
+            $body.trigger("core.sendresult",[{
+                'token' : data.date,
+                'type' : "success"
+            }]);
         }).fail(function() {
+<<<<<<< HEAD
+=======
+            $body.trigger("core.sendresult",[{
+                'token' : data.date,
+                'type' : "fail"
+            }]);
+>>>>>>> 4ccf7dfb42742c56481b58b2656e298bbed2af26
         });
     };
 
     var onDirectSend = function(evt,ret) {
-        ret = ret.data;
-        console.log(ret);
-        if(ret.status == 1 || ret.stats == 1) {
+        if(ret.data.status == 1) {
             $.ajax({
                 'url' : '/chat/admin/send1.action',
                 'dataType' : 'json',
                 'type' : "post",
                 'data' : $.extend(defaultParams, {
-                    'answer' : ret.msg,
-                    'cid' : data.cid,
+                    'answer' : ret.data.msg,
+                    'docId' : ret.data.docid || '',
+                    'answerType' : ret.data.docid && ret.data.docid.length ? ret.data.docid : '',
+                    'cid' : ret.data.cid,
                     'uid' : global.id
                 })
             });
         }
-        alert();
     };
 
     var bindListener = function() {
-        $(document.body).on("textarea.send",onsend);
-        $(document.body).on("rightside.onChatSmartReply",onDirectSend);
+        $body.on("textarea.send",onsend);
+        $body.on("rightside.onChatSmartReply",onDirectSend);
     };
 
     var messageAdapter = function(ret) {
@@ -80,7 +98,12 @@ function polling(global) {
         setTimeout(start,1500);
     };
 
+    var parseDOM = function() {
+        $body = $(document.body);
+    };
+
     var init = function() {
+        parseDOM();
         bindListener();
     };
 

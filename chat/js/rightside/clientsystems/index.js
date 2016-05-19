@@ -20,7 +20,6 @@ var Client = function(node,core,data){
   //初始化iframe
   var initData = function(){
     parseDOM();
-
     var promise = new Promise();
     $.ajax({
   		type:"post",
@@ -34,7 +33,7 @@ var Client = function(node,core,data){
   		success:function(data){
         // console.log(data);
         // data=[];
-        data = [{'机器人':'http://baidu.com'}];
+        // data = [{'机器人':'http://baidu.com'}];
         // data = [{'机器人机器人机器人机器人':'http://baidu.com'},{'qq':'http://www.qq.com'}];
         // data=[{'机器人':'http://www.baidu.com?partnerId=&email=422293027@qq.com&sign=55230d63f78ffb668ea4db4c6006a3b2'},
       //     {'qq':'http://www.qq.com?partnerId=&email=422293027@qq.com&sign=55230d63f78ffb668ea4db4c6006a3b2'}
@@ -55,6 +54,7 @@ var Client = function(node,core,data){
                   $(dropdownMenu).on('click',function(){
                       $(clientSysIframe).attr("src", $(dropdownMenu).attr('addrurl')).ready();
                   });
+                  $(clientSysIframe).attr("src", $(dropdownMenu).attr('addrurl')).ready();
               }
           }
           }else{
@@ -64,6 +64,7 @@ var Client = function(node,core,data){
                   'list':data
                 });
                 parentDom.after(_html);
+
               });
               if(mainJson.showClientSys)
               {
@@ -77,10 +78,6 @@ var Client = function(node,core,data){
                   //判断列表中是否有数据
                   $(clientNav).removeClass('hide');
               }
-              // $(drowdownListMenu).hide();
-              // $(drowdownMenu).on('click',function(){
-              //   $(drowdownListMenu).show();
-              // });
           }
           promise.resolve();
   		}
@@ -88,46 +85,36 @@ var Client = function(node,core,data){
     return promise;
   };
   function showClientSys(obj){
+    alert();
+    return;
   	mainJson.showClientSys = $(obj).parent().index() + 1;
   	$(clientSysIframe).height($(".rightBox .tab-content").height());
   	$(clientSysIframe).width($(".rightBox .tab-content").width());
   	$(clientSysIframe).attr("src", $(obj).attr('addrurl')).ready();
-
   }
+  //二级菜单点击事件
+  var onDropdownListMenu = function(){
+    console.log('dd');
+  };
   var parseDOM = function() {
     clientNav = $(node).find('.js-nav-tabs #clientSystem');
     clientBody = $(node).find('.js-tab-content #clientSystem');
-    dropdownMenu = $(clientNav).find('.js-dropdown-toggle');
+    dropdownMenu = $(clientNav).find('.js-dropdown-toggle');//a标签
     clientSysIframe = $(clientBody).find('#clientSysIframe');
-    dropdownListMenu = $(clientNav).find('.js-dropdown-menu');
-  };
-
-  var onReceive = function(value,data) {
-
-  };
-  var onloadHandler = function(evt,data) {
-
+    dropdownListMenu = $(clientNav).find('.js-dropdown-menu');//ul菜单
   };
   var bindLitener = function() {
-    // $(document.body).on("RightSide.onload",onloadHandler);
-    $(dropdownListMenu).hide();
-    $(dropdownListMenu).on('click',function(){
-      $(dropdownListMenu).show();
-    });
-  };
-
-  var initPlugsin = function() {
-    // initData();
+    $(dropdownListMenu).delegate('a','click',onDropdownListMenu);
+    // $(dropdownListMenu).hide();
+    // $(dropdownMenu).on('click',function(){
+    //   $(dropdownListMenu).show();
+    // });
   };
 	var init = function() {
-		// parseDOM();
-		bindLitener();
-		initPlugsin();
+		// bindLitener();
 	};
-  // init();
   initData().then(function(){
     init();
-    // console.log($(dropdownListMenu));
   });
 
 };

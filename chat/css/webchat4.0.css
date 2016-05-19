@@ -1378,6 +1378,7 @@ body,html{
   background-color: #f7fafa;
   font-family: 'microsoft yahei';
   font-weight: bold;
+	width:200px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .tip{
   display: none;
@@ -1386,7 +1387,7 @@ body,html{
   position: absolute;
   z-index: 99;
   margin: 0;
-  width:150px;
+  width:200px;
   height:20px;
   background:#fff;
   border:1px solid #f90;
@@ -1426,6 +1427,7 @@ body,html{
   color: #555556;
   font-size: 14px;
   font-weight: bold;
+	padding-left: 5px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy .rightQuick .rightQuickLeft li:hover {
   background-color: #eff4f5;
@@ -1824,7 +1826,7 @@ body,html{
   height: 1px;
   width: 10px;
   top:50%;
-  left:130px;
+  left:183px;
   background-color: red;
 }
 #profileuser select {
