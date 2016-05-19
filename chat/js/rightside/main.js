@@ -58,6 +58,9 @@ function RightSide(node,core,window) {
   //tab切换
   var onSetSwitchTab = function(obj,val){
     var $this = $(obj);
+    //自定义iframe 隐藏菜单
+    if($this.attr('id')!='clientSystem')
+      $(node).find('.js-dropdown-menu').removeClass('show').animate({'margin-top':-200},500);
     var oId = $this.attr('id');
     $(tabSwitchBody).find('.js-tab-pane').each(function(i,v){
       if($(v).attr('id') == oId.toString()){

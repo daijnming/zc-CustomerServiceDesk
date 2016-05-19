@@ -22,8 +22,6 @@ var FastMsgModal = function(node,core,config) {
     //快捷回复右侧回复列表
     var oShadowLayer;
     //快捷回复弹层
-
-
     var parseDOM = function() {
         oShortcut = $(node).find('.js-panel-body .js-tab-pane#messagesuser .js-shortcut');
         oRightQuickLeft = $(node).find('.js-rightQuickLeft ul');
