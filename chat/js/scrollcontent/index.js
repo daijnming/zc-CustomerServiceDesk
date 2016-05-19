@@ -58,13 +58,6 @@
         adminPushMessage(arguments[1]);
     });
 
-    // $(document.body).on('textarea.uploadImgUrl', function(ev) {
-    //     console.log('上传图片');
-    //     console.log(arguments);
-    //     // 插入客服输入内容
-    //     // adminPushMessage(arguments[1]);
-    // });
-
     $(document.body).on("leftside.onselected", function() {
       var params = arguments[1];
       userInfo = {
@@ -103,9 +96,6 @@
     });
 
     $(document.body).on("rightside.onChatSmartReply", function() {
-
-      console.log(arguments[1]);
-
       var data = {
         answer: arguments[1].data.msg ,
         uid: userInfo.userId ,
@@ -145,7 +135,7 @@
     // --------------------------- http 请求 ---------------------------
 
     // 加载
-    var getChatListByOnline = function(type,callback, pageNo, pageSize, userData, isRender, isScrollBottom, typeNo) {
+    var getChatListByOnline = function(type,callback, pageNo, pageSize, userData, isRender, isScrollBottom, typeNo, appendList) {
         var userId;
         if( typeof arguments[0] === 'function') {
             callback = arguments[0];
@@ -175,33 +165,38 @@
                     pageSize : pageSize || 20
                 }
             }).success(function(ret) {
+              var appendList = [];
               var list = [];
 
               if (ret.data.length > 0) {
                 ret.data.map(function(item) {
-                    list.push({
+                    appendList.push({
                         action : 'dateline',
                         date : item.date
                     });
 
                     item.content.map(function(obj) {
                         obj.msg = obj.msg ? Face.analysis(obj.msg) : null;
-                        list.push(obj);
+                        appendList.push(obj);
                     });
                 });
 
-                list = list.concat(userChatCache[userId].list);
+                list = appendList.concat(userChatCache[userId].list);
                 userChatCache[userId].list = list;
 
                 if (ret.data[0] && ret.data[0].content[0]) {
                   userChatCache[userId].date = ret.data[0].content[0].t;
                 }
 
-                if (isRender) parseList(type , userChatCache[userId], isScrollBottom, true, typeNo);
+                if (isRender) {
+                  parseList(type , userChatCache[userId], isScrollBottom, true, typeNo, appendList);
+                } else {
+                  alert('其他用户有新消息');
+                }
               }
             });
           } else {
-            if (isRender) parseList(type , userChatCache[userId], isScrollBottom, false , typeNo);
+            if (isRender) parseList(type , userChatCache[userId], isScrollBottom, false , typeNo, appendList);
           }
         } else {
           userChatCache[userId] = {};
@@ -342,7 +337,6 @@
     }
 
     var parseTpl = function(type,ret, uid, isScrollBottom) {
-
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
             var list = [],
@@ -372,36 +366,43 @@
             });
 
             $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
-            if (isScrollBottom) $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+
+            setTimeout(function() {
+
+              if (isScrollBottom) $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+            }, 400);
         });
     }
 
-    var parseList = function(type, data, isScrollBottom, isToTop, typeNo) {
-        loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
+    var parseList = function(type, data, isScrollBottom, isToTop, typeNo, appendList) {
+        loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
             var _html;
+
+            var height = $rootNode.find('#' + type).find('.js-panel-body').parent()[0].scrollHeight;
+            var scrollTop = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
 
             _html = doT.template(tpl)({
                 userSourceImage: userInfo.userSourceImage ,
-                list : data.list
+                list : appendList
             });
 
-            $rootNode.find('#' + type).find('.js-panel-body').html(_html);
-
-            if (isScrollBottom) {
-              $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-            }
-            else if (isToTop) {
+            if (isToTop) {
+              $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
               $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
-            }
-            else {
-              var height = $rootNode.find('#' + type).find('.js-panel-body').parent()[0].scrollHeight;
-              var scrollTop = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+            } else {
+              $rootNode.find('#' + type).find('.js-panel-body').append(_html);
 
-              if ((height - scrollTop) > 700) {
-
-                if (typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
-              } else {
+              if (isScrollBottom) {
                 $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+              }
+              else {
+
+                if ((height - scrollTop) > 700) {
+
+                  if (typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
+                } else {
+                  $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                }
               }
             }
         });
@@ -485,7 +486,7 @@
         }
         else {
 
-
+          var list = [];
           if (userChatCache[data[0].uid]) {
 
             for (var i = 0;i < data.length;i++) {
@@ -499,23 +500,21 @@
                   msg: data[i].content ,
                   ts: data[i].ts
                 })
+
+                list.push({
+                  action: 5 ,
+                  senderType: 0 ,
+                  senderName: data[i].uname ,
+                  msg: data[i].content ,
+                  ts: data[i].ts
+                });
               }
             }
 
-            var isRender = userInfo.userId === data[0].uid;
             // 是否渲染 isRender
-            getChatListByOnline('chat', parseList , null, null, data, isRender, false, data[0].type);
+            var isRender = userInfo.userId === data[0].uid;
+            getChatListByOnline('chat', parseList , null, null, data, isRender, false, data[0].type, list);
           }
-
-          // 用户发送消息
-          // loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
-          //     var _html;
-          //     _html = doT.template(tpl)({
-          //         list : data
-          //     });
-          //     // userChatCache.push
-          //     $rootNode.find('#chat').find('.js-panel-body').append(_html);
-          // });
         }
     };
 
@@ -542,6 +541,7 @@
       }
 
       var model = messageMap[data.type][data.handleType];
+      var list = [];
       model.ts = 'date ' + new Date().toTimeString().split(' ')[0];
       model.senderName = global.name;
 
@@ -556,12 +556,16 @@
         pageNo: 1
       }
 
+      list.push(model);
+
       userChatCache[userInfo.userId].list.push(model);
 
-      getChatListByOnline('chat', parseList , null, null, data, true, true);
+      getChatListByOnline('chat', parseList , null, null, data, true, true, null, list);
     }
 
     var adminPushMessage = function(data) {
+      var list = [];
+
       userChatCache[data.uid] = userChatCache[data.uid] || {
         list: [],
         scrollTop: 0,
@@ -575,6 +579,16 @@
         msg: data.answer ? Face.analysis(data.answer) : null,
         ts: 'date ' + new Date().toTimeString().split(' ')[0]
       });
+
+      list.push({
+        action: 5 ,
+        senderType: 2 ,
+        senderName: global.name ,
+        msg: data.answer ? Face.analysis(data.answer) : null,
+        ts: 'date ' + new Date().toTimeString().split(' ')[0]
+      });
+
+
         // for (var i = 0;i < data.length;i++) {
         //   // userChatCache[data[0].uid].list.push(data[i]);
         //
@@ -592,7 +606,7 @@
         //
         // }
       var isRender = userInfo.userId === data.uid;
-      getChatListByOnline('chat', parseList , null, null, data, isRender, true);
+      getChatListByOnline('chat', parseList , null, null, data, isRender, true, null, list);
       // }
     }
     // --------------------------- base ---------------------------
@@ -631,15 +645,18 @@
                 updateUserState(type,handleType,updateHeaderTag);
             }
         })
+
         // 滚动加载分页
         $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e) {
+            var data = {
+              uid: userInfo.userId ,
+              pid: userInfo.pid
+            };
 
             if ($(this).scrollTop() === 0) {
               userChatCache[userInfo.userId].pageNo++;
-              getChatListByOnline('chat', parseTpl, userChatCache[userInfo.userId].pageNo, null, {
-                uid: userInfo.userId ,
-                pid: userInfo.pid
-              }, true, false);
+
+              getChatListByOnline('chat', parseTpl, userChatCache[userInfo.userId].pageNo, null, data, true, false);
             }
         });
 
