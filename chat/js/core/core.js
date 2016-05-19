@@ -1,8 +1,7 @@
 function Core(window) {
     var that = {};
     var token = '';
-    var queryParam,a=1;
-    alert(a);
+    var queryParam;
     var polling = require('./socket/json.js');
     var HearBeat = require("./socket/heartbeat.js");
     var normalMessageAdapter = require('../util/normatMessageAdapter.js');
