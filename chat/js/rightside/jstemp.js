@@ -3,22 +3,21 @@
 * @author denzel
 */
 
-(function() {
+var test = function(node,core,window,config){
+	//TODO 预加载对象
+	// var someOne;
 
-  //TODO 预加载对象
-  // var someOne;
 
-
-  //TODO 模板/js/资源引用
+	//TODO 模板/js/资源引用
 	// var template = require('./template.js');
 
 	var parseDOM = function() {
-    // someOne = $(node).find('.js-xx');
+		// someOne = $(node).find('.js-xx');
 	};
 
-  var onReceive = function(value,data) {
+	var onReceive = function(value,data) {
 
-  };
+	};
 	var onloadHandler = function(evt,data) {
 
 	};
@@ -36,6 +35,5 @@
 		initPlugsin();
 	};
 	init();
-
-
-})();
+};
+module.exports = test;

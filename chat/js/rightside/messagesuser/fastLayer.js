@@ -1,7 +1,8 @@
+/*
+ * @author denzel
+ */
 
 var Fastlayer = function(node,core,config){
-
-  // event();
   //TODO 规定
   /*
   * 没有特殊意义

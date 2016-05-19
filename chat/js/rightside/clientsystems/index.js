@@ -12,15 +12,16 @@ var Client = function(node,core,data){
   var mainJson={'showClientSys':null};
 
   //TODO 模板/js/资源引用
-	// var template = require('./template.js');
   var loadFile = require('../../util/load.js')();
-  var Promise = require('../../util/promise.js');
-
 
   //初始化iframe
   var initData = function(){
-    parseDOM();
-    var promise = new Promise();
+    //初始化数据
+    clientNav = $(node).find('.js-nav-tabs #clientSystem');
+    clientBody = $(node).find('.js-tab-content #clientSystem');
+    clientSysIframe = $(clientBody).find('#clientSysIframe');
+    dropdownMenu = $(clientNav).find('.js-dropdown-toggle');//a标签
+
     $.ajax({
   		type:"post",
   		cache:false,
@@ -31,13 +32,8 @@ var Client = function(node,core,data){
   	   },
   		dataType:"json",
   		success:function(data){
-        // console.log(data);
-        // data=[];
         // data = [{'机器人':'http://baidu.com'}];
         // data = [{'机器人机器人机器人机器人':'http://baidu.com'},{'qq':'http://www.qq.com'}];
-        // data=[{'机器人':'http://www.baidu.com?partnerId=&email=422293027@qq.com&sign=55230d63f78ffb668ea4db4c6006a3b2'},
-      //     {'qq':'http://www.qq.com?partnerId=&email=422293027@qq.com&sign=55230d63f78ffb668ea4db4c6006a3b2'}
-      // ];
         //TODO 三种情况  返回值为空  返回值为1  返回值大于1
   			if(data.length<1)
   			{
@@ -45,7 +41,6 @@ var Client = function(node,core,data){
   				 return;
   			}else if(data.length == 1){
           $(clientNav).removeClass('hide');
-          // $(drowdownMenu).attr('href','.js-clientSystem');
           for(var i=0;i<data.length;i++){
               for(var tmp in data[i]){
                   $(clientSysIframe).height($(".rightBox .tab-content").height());
@@ -64,7 +59,16 @@ var Client = function(node,core,data){
                   'list':data
                 });
                 parentDom.after(_html);
-
+                dropdownListMenu = $(clientNav).find('.js-dropdown-menu');//ul菜单
+                $(dropdownMenu).on('click',function(){
+                  //iframe状态
+                  if($(dropdownListMenu).hasClass('show')){
+                    $(dropdownListMenu).removeClass('show').animate({'margin-top':'-200'},500);
+                  }else{
+                    $(dropdownListMenu).addClass('show').animate({'margin-top':'0'},500);
+                  }
+                });
+                $(dropdownListMenu).on('click','li',showClientSys);
               });
               if(mainJson.showClientSys)
               {
@@ -79,44 +83,23 @@ var Client = function(node,core,data){
                   $(clientNav).removeClass('hide');
               }
           }
-          promise.resolve();
   		}
   	});
-    return promise;
   };
-  function showClientSys(obj){
-    alert();
-    return;
-  	mainJson.showClientSys = $(obj).parent().index() + 1;
+  //二级菜单点击事件
+  function showClientSys(){
+    //移除菜单
+    $(dropdownListMenu).removeClass('show').animate({'margin-top':'-200'},500);
+    var $this = $(this);
+  	mainJson.showClientSys = $this.index() + 1;
   	$(clientSysIframe).height($(".rightBox .tab-content").height());
   	$(clientSysIframe).width($(".rightBox .tab-content").width());
-  	$(clientSysIframe).attr("src", $(obj).attr('addrurl')).ready();
+  	$(clientSysIframe).attr("src", $this.find('a').attr('addrurl')).ready();
   }
-  //二级菜单点击事件
-  var onDropdownListMenu = function(){
-    console.log('dd');
-  };
-  var parseDOM = function() {
-    clientNav = $(node).find('.js-nav-tabs #clientSystem');
-    clientBody = $(node).find('.js-tab-content #clientSystem');
-    dropdownMenu = $(clientNav).find('.js-dropdown-toggle');//a标签
-    clientSysIframe = $(clientBody).find('#clientSysIframe');
-    dropdownListMenu = $(clientNav).find('.js-dropdown-menu');//ul菜单
-  };
-  var bindLitener = function() {
-    $(dropdownListMenu).delegate('a','click',onDropdownListMenu);
-    // $(dropdownListMenu).hide();
-    // $(dropdownMenu).on('click',function(){
-    //   $(dropdownListMenu).show();
-    // });
-  };
+  //二级iframe菜单点击事件
 	var init = function() {
-		// bindLitener();
+		initData();
 	};
-  initData().then(function(){
-    init();
-  });
-
+  init();
 };
-
 module.exports = Client;

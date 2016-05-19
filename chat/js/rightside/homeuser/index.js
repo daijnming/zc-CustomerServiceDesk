@@ -16,9 +16,6 @@ var HomeUser = function(node,core,config) {
 	var cnf={
 		uid:''
 	};//用户信息
-  //TODO 模板/js/资源引用
-	// var template = require('./template.js');
-
 	var quickSearch=function(val){
 	$(robotDirectHideBtn).hide();
 	$(relevantSearchHideBtn).hide();
@@ -77,15 +74,12 @@ var HomeUser = function(node,core,config) {
 	var onLoadUserInfo = function(evn,data){
 		cnf.uid = data?data.userData.uid:'';
 		cnf.cid = data?data.data.cid:'';
-
-		// console.log(data);
 	};
 	//智能回复
 	var onChatSmartReply = function(e){
 		//阻止默认事件
 		// e.preventDefault();
 		// e.stopPropageation();
-		// console.log('aaa');
 		var $this = $(this);
 		var obj={},
 			_answer = $(robotAnswer).find('a');
@@ -180,9 +174,6 @@ var onSuggestions= function(){
 		$(robotDirectHideBtn).delegate('a.quickSendBtn','click',onChatSmartReply);
 		$(robotAnswer).delegate('a','click',onChatSmartReply);
 		$(sugguestions).delegate('li','click',onSuggestions);
-
-
-
 	};
 
 	//点击聊天内容进行智能回复搜索

@@ -118,12 +118,14 @@ ul{
   text-align: center;
   border: 1px solid #ddd;
   border-radius: 5px;
-  width:90%;
+  width:100%;
   margin: 0 auto;
-  /*display: none;*/
+  margin-top: -200px;
+  opacity:1;
 }
 .js-panel-body .dropdown ul.js-dropdown-menu li{
   border-bottom: 1px dashed #ddd;
+  background-color: #f7fafa;
 }
 .js-panel-body .dropdown ul.js-dropdown-menu li a{
   text-align: center;
