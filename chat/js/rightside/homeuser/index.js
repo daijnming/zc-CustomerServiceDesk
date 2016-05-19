@@ -37,7 +37,7 @@ var HomeUser = function(node,core,config) {
 	});
 	function disSearchWeb(data)
 	{
-		if(data.answer !== "")
+		if(data.answer)
 		{
 			if(data.pid===null){
 				data.pid=0;
@@ -83,8 +83,9 @@ var HomeUser = function(node,core,config) {
 		var $this = $(this);
 		var obj={},
 			_answer = $(robotAnswer).find('a');
-		//type=3 未搜索到智能回复答案 不进行发送
-		if(_answer.html()===''||_answer.attr('answerType')==='3'||cnf.uid===''||cnf.cid==='')return;
+		//type=3 未搜索到智能回复答案 不进行发送 暂时考虑不加 type=3
+		// if(_answer.html()===''||_answer.attr('answerType')==='3'||cnf.uid===''||cnf.cid==='')return;
+		if(_answer.html()===''||cnf.uid===''||cnf.cid==='')return;
 
 		if($this.hasClass('quickSendBtn')){
 			//直接发送
@@ -127,6 +128,8 @@ var onSuggestions= function(){
 		{
 			quickSearch($this.val());
 			$(homeuser).find('.js-robotBackHideBtn').hide();
+			// //若没有结果要置灰直接发送
+			// $(robotDirectHideBtn).find('a.quickSendBtn').css('')
 		}
 	};
 	//用户tab保存切换保存智能搜索信息
