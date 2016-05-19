@@ -9,6 +9,7 @@ function RightSide(node,core,window) {
 
   var global = core.getGlobal();
   var tapLastUserData;//最后一次点击用户列表事件
+
   //左侧用户点击保存右侧相应tab选项卡
   var switchPreferenceLibrary=[],//存储用户偏好设置
       switchDefaultLibrary = {};//存储模块默认设置
@@ -46,6 +47,7 @@ function RightSide(node,core,window) {
 
 	var onloadHandler = function(evt,data) {
     //智能回复得高度
+    // $('.js-tab-pane#profileuser').css('height',newHeight-52+'px');
     // $("#homeuser").css('height',newHeight-52 +'px');
     $("#homeuser .homeUserBox").css('height',newHeight-52-40-52 +'px');
     //快捷回复，左，右侧列表
@@ -69,8 +71,8 @@ function RightSide(node,core,window) {
     });
     $this.addClass('active').siblings('li').removeClass('active');
     //智能回复赋值
-    var oInput = $(tabSwitchBody).find('.js-tab-pane#homeuser p.searchBot input');
-    $(oInput).val(val);
+    // var oInput = $(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot input');
+    $(tabInput).val(val);
   };
 
     //设置用户偏好设置
@@ -82,9 +84,9 @@ function RightSide(node,core,window) {
         var _tmp = switchPreferenceLibrary[i];
         if(_tmp['uid']==tapLastUserData.uid){
           //设置id
-          var oInput = $(tabSwitchBody).find('.js-tab-pane#homeuser p.searchBot input');
+          // var oInput = $(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot input');
           _tmp['item']['zIndex']=curTabId;
-          _val = $(oInput).val();
+          _val = $(tabInput).val();
           _tmp['item']['homeuser']=_val;
         }
       }
@@ -143,7 +145,7 @@ function RightSide(node,core,window) {
   var setUid = function(){
     for(var i=0;i<switchPreferenceLibrary.length;i++){
       if(tapLastUserData.uid==switchPreferenceLibrary[i]['uid']){
-        var val = $(tabSwitchBody).find('.js-tab-pane#homeuser p.searchBot input').val();
+        var val = $(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot input').val();
         switchPreferenceLibrary[i]['item']['homeuser']=val;
       }
     }
@@ -172,15 +174,15 @@ function RightSide(node,core,window) {
   };
 
 	var parseDOM = function() {
-    tabSwitchNav = $(node).find('.js-panel-body ul.js-nav-tabs');
+    tabSwitchNav = $(node).find('.js-panel-body .js-nav-tabs');
     tabSwitchBody = $(node).find('.js-panel-body .js-tab-content');
     $(node).find('.js-tab-pane#profileuser').addClass('showBg');
-    tabInput = $(tabSwitchBody).find('.js-tab-pane#homeuser p.searchBot');
+    tabInput = $(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot');
 	};
 
 	var bindListener = function() {
     $(window).on('core.onload',onloadHandler);
-    $(tabSwitchNav).on('click','li.js-menu',setPreferenceInfo);
+    $(tabSwitchNav).on('click','.js-menu',setPreferenceInfo);
     $(document.body).on('leftside.onselected',initData);
     $(tabInput).delegate('input','keyup',onGetSearch);
     $(tabInput).delegate('input','blur',onGetSearch1);
