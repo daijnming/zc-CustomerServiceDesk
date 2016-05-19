@@ -52,9 +52,9 @@ var Fastlayer = function(node,core,config) {
     };
     //触发快捷回复更新
     var onReLoadHandler = function(boo) {
-        $(node).find('.js-quickContent ul li.detalBar span').removeClass('hide');
-        $($(node).find('.js-quickLeft ul li')[0]).find('span.upLeftGroup').addClass('hide');
-        $($(node).find('.js-quickRight ul li')[0]).find('span.upRightRep').addClass('hide');
+        $(node).find('.js-quickContent ul .detalBar span').removeClass('hide');
+        $($(node).find('.js-quickLeft ul li')[0]).find('.js-upLeftGroup').addClass('hide');
+        $($(node).find('.js-quickRight ul li')[0]).find('.js-upRightRep').addClass('hide');
         if(boo) {
             $(document.body).trigger('rightside.oReLoadRightGroup');
         }
@@ -92,7 +92,7 @@ var Fastlayer = function(node,core,config) {
             data;
         if($this.siblings('input').attr('utype') == 'left') {
             title = alertList.l001;
-            cId = $this.parent('.detalBar').attr('gid');
+            cId = $this.parent('.js-detalBar').attr('gid');
             url = 'reply/delreplyGroup.action';
             sendId = 'groupId';
             data = {
@@ -101,11 +101,11 @@ var Fastlayer = function(node,core,config) {
             };
         } else {
             title = alertList.l002;
-            cId = $this.parent('.detalBar').attr('qid');
+            cId = $this.parent('.js-detalBar').attr('qid');
             url = 'quick/delquickReply.action';
             sendId = 'id';
             data = {
-                'groupId' : cId,
+                'id' : cId,
                 'userId' : id
             };
         }
@@ -121,10 +121,10 @@ var Fastlayer = function(node,core,config) {
                     dataType : "json",
                     success : function(data) {
                         if(data.status) {
-                            $this.parent('.detalBar').animate({
+                            $this.parent('.js-detalBar').animate({
                                 'height' : 0
                             },300, function() {
-                                $this.parent('.detalBar').remove();
+                                $this.parent('.js-detalBar').remove();
                                 onReLoadHandler(true);
                             });
                         }
@@ -132,8 +132,9 @@ var Fastlayer = function(node,core,config) {
                 });
             }
             // }
-        } else
-            $this.addClass('sureDel');
+        } else{
+          $this.addClass('sureDel');
+        }
     };
 
     //快捷置顶
@@ -145,7 +146,7 @@ var Fastlayer = function(node,core,config) {
             data;
         if($this.siblings('input').attr('utype') == 'left') {
             url = 'reply/setTopGroup.action';
-            cId = $this.parent('.detalBar').attr('gid');
+            cId = $this.parent('.js-detalBar').attr('gid');
             sendId = 'groupId';
             data = {
                 'groupId' : cId,
@@ -154,7 +155,7 @@ var Fastlayer = function(node,core,config) {
 
         } else {
             url = 'quick/setTopReply.action';
-            cId = $this.parent('.detalBar').attr('qid');
+            cId = $this.parent('.js-detalBar').attr('qid');
             sendId = "id";
             data = {
                 'id' : cId,
@@ -171,7 +172,9 @@ var Fastlayer = function(node,core,config) {
                     if(data.status) {
                         var oLi = $this.parent('li');
                         var oUl = $this.parents('ul');
-                        toTopAnimate(oUl,oLi);
+                        toTopAnimate(oUl,oLi,function(){
+                            onReLoadHandler(true);
+                        });
                     }
                 }
             });
@@ -193,7 +196,7 @@ var Fastlayer = function(node,core,config) {
             $(oAddNewRep).hide();
         var $this = $(this);
         if($this.val().replace(/(^\s*)|(\s*$)/g,"") === "" || $this.val() === null || $this.val() === undefined) {
-            var oGroupId = $this.parent('li.detalBar').attr('gid');
+            var oGroupId = $this.parent('.js-detalBar').attr('gid');
             //
             if(oGroupId)//修改分组名
             {
@@ -201,9 +204,8 @@ var Fastlayer = function(node,core,config) {
 
             } else {
 
-                $this.parent('li.detalBar').remove();
+                $this.parent('.js-detalBar').remove();
             }
-            // This.leftfocus=false;
             return;
         }
         // console.log($this.val()+":"+That.inputText);
@@ -236,12 +238,12 @@ var Fastlayer = function(node,core,config) {
             utype;
         //判断分组还是回复
         if(obj == oFastLeft) {
-            clsDelName = 'delLeftGroup';
-            clsUpName = 'upLeftGroup';
+            clsDelName = 'js-delLeftGroup delLeftGroup';
+            clsUpName = 'js-upLeftGroup upLeftGroup';
             utype = 'left';
         } else {
-            clsDelName = 'delRightGroup';
-            clsUpName = 'upRightGroup';
+            clsDelName = 'js-delRightRep delRightRep';
+            clsUpName = 'js-upRightRep upRightRep';
             utype = 'right';
         }
         var template = require('./template.js');
@@ -276,7 +278,7 @@ var Fastlayer = function(node,core,config) {
         //左侧快捷分组
         onFastLeftBlurSaveData : function(obj) {
             var $this = $(obj);
-            var oGroupId = $this.parent('li.detalBar').attr('gid');
+            var oGroupId = $this.parent('.js-detalBar').attr('gid');
             var groupName = $(obj).val().replace(/(^\s*)|(\s*$)/g,"");
             if(oGroupId)//修改分组名
             {
@@ -312,7 +314,7 @@ var Fastlayer = function(node,core,config) {
                     dataType : "json",
                     success : function(data) {
                         if(data.status) {
-                            $(obj).parent('li.detalBar').attr('gid',data.groupId);
+                            $(obj).parent('.js-detalBar').attr('gid',data.groupId);
                             onReLoadHandler(true);
                         }
                     }
@@ -322,7 +324,7 @@ var Fastlayer = function(node,core,config) {
         //右侧快捷回复
         onFastRightBlurSaveData : function(obj) {
             var $this = $(obj);
-            var oLi = $this.parent('.detalBar');
+            var oLi = $this.parent('.js-detalBar');
             var oInde = $(oLi).index();
             var oGroupId = $(oLi).attr('gid');
             var oText = $this.val();
@@ -370,8 +372,8 @@ var Fastlayer = function(node,core,config) {
                     dataType : "json",
                     success : function(data) {
                         if(data.status) {
-                            $(obj).parent('li.detalBar').attr('qid',data.id);
-                            $(obj).parent('li.detalBar').attr('gid',oGroupId);
+                            $(obj).parent('.js-detalBar').attr('qid',data.id);
+                            $(obj).parent('.js-detalBar').attr('gid',oGroupId);
                             onReLoadHandler(true);
                         }
                     }
@@ -381,22 +383,22 @@ var Fastlayer = function(node,core,config) {
     };
     //取消删除
     var onCancalDel = function() {
-        $(node).find('.delLeftGroup').removeClass('sureDel');
-        $(node).find('.delRightRep').removeClass('sureDel');
-        $(oFastLeft).find('.delLeftGroup').text('删除');
-        $(oFastRight).find('.delLeftRep').text('删除');
+        $(node).find('.js-delLeftGroup').removeClass('sureDel');
+        $(node).find('.js-delRightRep').removeClass('sureDel');
+        $(oFastLeft).find('.js-delLeftGroup').text('删除');
+        $(oFastRight).find('.js-delLeftRep').text('删除');
     };
     var bindLitener = function() {
         onloadHandler();
         $(oFastLeft).on('click','li',onFastTap);
-        $(oFastLeft).on('click','span.delLeftGroup',onDelFast);
-        $(oFastLeft).on('click','span.upLeftGroup',onUpFast);
+        $(oFastLeft).on('click','.js-delLeftGroup',onDelFast);
+        $(oFastLeft).on('click','.js-upLeftGroup',onUpFast);
         $(oFastLeft).on('keypress','input',onFastkeyParess);
         $(oFastLeft).on('blur','input',onFastBlur);
         $(oFastLeft).on('focus','input',onFastFocus);
         ///
-        $(oFastRight).on('click','span.delRightRep',onDelFast);
-        $(oFastRight).on('click','span.upRightRep',onUpFast);
+        $(oFastRight).on('click','.js-delRightRep',onDelFast);
+        $(oFastRight).on('click','.js-upRightRep',onUpFast);
         $(oFastRight).on('keypress','input',onFastkeyParess);
         $(oFastRight).on('blur','input',onFastBlur);
         $(oFastRight).on('focus','input',onFastFocus);
@@ -408,7 +410,7 @@ var Fastlayer = function(node,core,config) {
 
     };
     var initConfig = function() {
-        if($(node).find('.js-content .js-leftContent li.activeLine').length <= 0)
+        if($(node).find('.js-content .js-leftContent .activeLine').length <= 0)
             $(oAddNewRep).hide();
         else
             $(oAddNewRep).show();
