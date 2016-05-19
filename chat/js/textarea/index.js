@@ -66,14 +66,22 @@ function TextArea(node,core,window) {
 
     var onbtnSendHandler = function(evt) {
         var str = $sendMessage.val();
-        //str = ZC_Face.analysis(str);
-        //str已做表情处理
-        $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
-            'answer' : str,
-            'uid' : currentUid,
-            'cid' : currentCid,
-            'date': +new Date()
-        }]);
+
+           if(/^\n+$/g.test(str)||/^\r+$/g.test(str)){
+                $sendMessage.val("")
+               
+            }
+        if(str.length == 0 || /^\s+$/g.test(str)) {//判断输入框是否为空
+                $sendMessage.val("")
+                return false;
+        } else {
+               $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
+                    'answer' : str,
+                    'uid' : currentUid,
+                    'cid' : currentCid,
+                    'date': +new Date()
+                }]);
+        }
         $sendMessage.val("");
         //清空待发送框
     };
@@ -90,22 +98,13 @@ function TextArea(node,core,window) {
     };
     var onEnterSendHandler = function(evt) {
         //监听文本框回车
-        var value=$sendMessage.val()
-        if(evt.keyCode == 13) {//\n\r
-            //是否为空
-            if(value.length == 0 || /^\s+$/g.test(value)) {
-                $sendMessage.val("")
-                return false;
-            } else {
-                onbtnSendHandler()
-            }
+        //\n\r回车符,,,e.shiftKey是否按住shift键
+        if(evt.keyCode == 13) {
+            onbtnSendHandler()
+            $sendMessage.val("")
           
         }
-        /*if(/^\n+$/g.test(value)||/^\r+$/g.test(value)){
-                alert()
-        }*/
-         
-
+       
     };
     var onloadHandler = function(evt,data) {
         $node.find("img.js-my-logo").attr("src",data.face);

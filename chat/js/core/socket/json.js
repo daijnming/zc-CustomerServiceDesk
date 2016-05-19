@@ -16,21 +16,13 @@ function polling(global) {
     };
 
     var onsend = function(evt,data) {
-<<<<<<< HEAD
-
-=======
         var answer = unescape(data.answer.replace("\\u","%u"));
->>>>>>> 4ccf7dfb42742c56481b58b2656e298bbed2af26
         $.ajax({
             'url' : '/chat/admin/send1.action',
             'dataType' : 'json',
             'type' : "post",
             'data' : $.extend(defaultParams, {
-<<<<<<< HEAD
-                'answer' : '\ue416',
-=======
                 'answer' : answer,
->>>>>>> 4ccf7dfb42742c56481b58b2656e298bbed2af26
                 'cid' : data.cid,
                 'uid' : global.id
             })
@@ -40,13 +32,10 @@ function polling(global) {
                 'type' : "success"
             }]);
         }).fail(function() {
-<<<<<<< HEAD
-=======
             $body.trigger("core.sendresult",[{
                 'token' : data.date,
                 'type' : "fail"
             }]);
->>>>>>> 4ccf7dfb42742c56481b58b2656e298bbed2af26
         });
     };
 
