@@ -48,12 +48,12 @@ var HomeUser = function(node,core,config) {
 			$(robotAnswer).find('a').attr('pid',data.pid);
 			$(robotAnswer).find('a').attr('questionId',data.questionId);
 			//搜索结果 直接发送 按钮显示
-			$(robotDirectHideBtn).show();
 			$(robotDirectHideBtn).find('a').css('color','#f90');
 		}else{
-			//置灰直接发送
+			//置灰 直接发送
 			$(robotDirectHideBtn).find('a').css('color','#ddd');
 		}
+		$(robotDirectHideBtn).show();
 		//yy如果没有 建议选项直接 return
 		if(data.sugguestions === null)return;
 		//yy如果有 显示 相关搜索
@@ -128,13 +128,10 @@ var onSuggestions= function(){
 		{
 			quickSearch($this.val());
 			$(homeuser).find('.js-robotBackHideBtn').hide();
-			// //若没有结果要置灰直接发送
-			// $(robotDirectHideBtn).find('a.quickSendBtn').css('')
 		}
 	};
 	//用户tab保存切换保存智能搜索信息
 	var onTabSwitch = function(evn,data){
-		// console.log(data.data);
 		quickSearch(data.data);
 	};
 	//聊天页面点击内容获取智能搜索答案
@@ -178,23 +175,11 @@ var onSuggestions= function(){
 		$(robotAnswer).delegate('a','click',onChatSmartReply);
 		$(sugguestions).delegate('li','click',onSuggestions);
 	};
-
-	//点击聊天内容进行智能回复搜索
-	var ISearchReplyOuter = function(obj){
-		if(!obj)return;
-	};
-	//初始化接口
-	var initInterface = function(){
-			ISearchReplyOuter();
-	};
-
 	var init = function() {
 		parseDOM();
 		bindLitener();
 		initInterface();
 	};
 	init();
-
-
 };
 module.exports = HomeUser;
