@@ -189,11 +189,9 @@
                   userChatCache[userId].date = ret.data[0].content[0].t;
                 }
 
-                if (isRender) {
-                  parseList(type , userChatCache[userId], isScrollBottom, true, typeNo, appendList);
-                } else {
-                  alert('其他用户有新消息');
-                }
+                if (isRender) parseList(type , userChatCache[userId], isScrollBottom, true, typeNo, appendList);
+              } else {
+
               }
             });
           } else {
@@ -611,7 +609,7 @@
         action: 5 ,
         senderType: 2 ,
         senderName: global.name ,
-        msg: data.answer ? Face.analysis(data.answer) : null,
+        msg: data.answer ,
         ts: 'date ' + new Date().toTimeString().split(' ')[0]
       });
 
@@ -619,7 +617,7 @@
         action: 5 ,
         senderType: 2 ,
         senderName: global.name ,
-        msg: data.answer ? Face.analysis(data.answer) : null,
+        msg: data.answer ,
         ts: 'date ' + new Date().toTimeString().split(' ')[0]
       });
 
