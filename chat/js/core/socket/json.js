@@ -15,19 +15,19 @@ function polling(global) {
     };
 
     var onsend = function(evt,data) {
+
         $.ajax({
             'url' : '/chat/admin/send1.action',
             'dataType' : 'json',
             'type' : "post",
             'data' : $.extend(defaultParams, {
-                'answer' : data.answer,
+                'answer' : '\ue416',
                 'cid' : data.cid,
                 'uid' : global.id
             })
         }).success(function() {
 
         }).fail(function() {
-
         });
     };
 

@@ -60,11 +60,11 @@ function TextArea(node,core,window) {
             'answer' : '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />',
             'uid' : currentUid,
             'cid' : currentCid,
-            'date': +new Date()
+            'date': +new Date()//时间戳
         }]);
     };
 
-    var onbtnSendHandler = function() {
+    var onbtnSendHandler = function(evt) {
         var str = $sendMessage.val();
         //str = ZC_Face.analysis(str);
         //str已做表情处理
@@ -91,22 +91,20 @@ function TextArea(node,core,window) {
     var onEnterSendHandler = function(evt) {
         //监听文本框回车
         var value=$sendMessage.val()
-        console.log(value);
         if(evt.keyCode == 13) {//\n\r
-
             //是否为空
             if(value.length == 0 || /^\s+$/g.test(value)) {
+                $sendMessage.val("")
                 return false;
             } else {
                 onbtnSendHandler()
             }
-            if(/^\n+$/g.test(value)||/^\r+$/g.test(value)){
-                 $sendMessage.val("")
-            }
-            
-            
-            
+          
         }
+        /*if(/^\n+$/g.test(value)||/^\r+$/g.test(value)){
+                alert()
+        }*/
+         
 
     };
     var onloadHandler = function(evt,data) {
