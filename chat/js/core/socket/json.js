@@ -1,5 +1,6 @@
 function polling(global) {
     var eventCache = {};
+    var unicode = require('../../util/unicode.js');
     var defaultParams = {
         answer : "",
         answerType : "",
@@ -16,13 +17,12 @@ function polling(global) {
     };
 
     var onsend = function(evt,data) {
-        var answer = unescape(data.answer.replace("\\u","%u"));
         $.ajax({
             'url' : '/chat/admin/send1.action',
             'dataType' : 'json',
             'type' : "post",
             'data' : $.extend(defaultParams, {
-                'answer' : answer,
+                'answer' : data.answer,
                 'cid' : data.cid,
                 'uid' : global.id
             })
