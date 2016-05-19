@@ -1,10 +1,10 @@
 /**
  * @author Treagzhao
  */
-function toTop($listOuter,$item) {
+function toTop($listOuter,$item,callback) {
     var $nextItem,
         $firstItem;
-    var length = $listOuter.find("li.detalBar").length;
+    var length = $listOuter.find(".js-detalBar").length;
     var index = $item.index(),
         height = $item.outerHeight();
     var DURATION = 300;
@@ -13,8 +13,8 @@ function toTop($listOuter,$item) {
     };
 
     var parseDOM = function() {
-        $firstItem = $listOuter.find("li.detalBar").eq(0);
-        $nextItem = $listOuter.find("li.detalBar").eq(index + 1);
+        $firstItem = $listOuter.find(".js-detalBar").eq(0);
+        $nextItem = $listOuter.find(".js-detalBar").eq(index + 1);
     };
 
     var start = function() {
@@ -24,7 +24,7 @@ function toTop($listOuter,$item) {
         $item.animate({
             'top' : 0
         },DURATION, function() {
-            $item.insertBefore($firstItem).find(".upLeftGroup").addClass("hide");
+            $item.insertBefore($firstItem).find(".js-upLeftGroup").addClass("hide");
             $listOuter.css({
                 'paddingBottom' : 0
             });
@@ -37,7 +37,8 @@ function toTop($listOuter,$item) {
             });
             $firstItem.css({
                 'marginTop' : 0
-            }).find(".upLeftGroup").removeClass("hide");
+            }).find(".js-upLeftGroup").removeClass("hide");
+            callback && callback();
         });
         $nextItem.animate({
             'marginTop' : 0
@@ -74,4 +75,3 @@ function toTop($listOuter,$item) {
 };
 
 module.exports = toTop;
-
