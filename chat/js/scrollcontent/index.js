@@ -58,13 +58,6 @@
         adminPushMessage(arguments[1]);
     });
 
-    // $(document.body).on('textarea.uploadImgUrl', function(ev) {
-    //     console.log('上传图片');
-    //     console.log(arguments);
-    //     // 插入客服输入内容
-    //     // adminPushMessage(arguments[1]);
-    // });
-
     $(document.body).on("leftside.onselected", function() {
       var params = arguments[1];
       userInfo = {
@@ -103,9 +96,6 @@
     });
 
     $(document.body).on("rightside.onChatSmartReply", function() {
-
-      console.log(arguments[1]);
-
       var data = {
         answer: arguments[1].data.msg ,
         uid: userInfo.userId ,
@@ -175,22 +165,23 @@
                     pageSize : pageSize || 20
                 }
             }).success(function(ret) {
+              var appendList = [];
               var list = [];
 
               if (ret.data.length > 0) {
                 ret.data.map(function(item) {
-                    list.push({
+                    appendList.push({
                         action : 'dateline',
                         date : item.date
                     });
 
                     item.content.map(function(obj) {
                         obj.msg = obj.msg ? Face.analysis(obj.msg) : null;
-                        list.push(obj);
+                        appendList.push(obj);
                     });
                 });
 
-                list = list.concat(userChatCache[userId].list);
+                list = appendList.concat(userChatCache[userId].list);
                 userChatCache[userId].list = list;
 
                 if (ret.data[0] && ret.data[0].content[0]) {
@@ -198,7 +189,7 @@
                 }
 
                 if (isRender) {
-                  parseList(type , userChatCache[userId][userChatCache[userId].length - 1], isScrollBottom, true, typeNo);
+                  parseList(type , userChatCache[userId], isScrollBottom, true, typeNo, appendList);
                 } else {
                   alert('其他用户有新消息');
                 }
@@ -346,7 +337,6 @@
     }
 
     var parseTpl = function(type,ret, uid, isScrollBottom) {
-
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
             var list = [],
@@ -385,8 +375,6 @@
     }
 
     var parseList = function(type, data, isScrollBottom, isToTop, typeNo, appendList) {
-        console.log(appendList);
-
         loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
             var _html;
 
@@ -398,27 +386,24 @@
                 list : appendList
             });
 
-            $rootNode.find('#' + type).find('.js-panel-body').append(_html);
-
-            if (isScrollBottom) {
-              $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-            }
-            else if (isToTop) {
+            if (isToTop) {
+              $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
               $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
-            }
-            else {
+            } else {
+              $rootNode.find('#' + type).find('.js-panel-body').append(_html);
 
+              if (isScrollBottom) {
+                $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+              }
+              else {
 
-              // setTimeout(function(){
-
-                // if ((height - scrollTop) > 700 && appendList.length === 1) {
                 if ((height - scrollTop) > 700) {
 
                   if (typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                 } else {
                   $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                 }
-              // }, 400);
+              }
             }
         });
     }
@@ -526,22 +511,10 @@
               }
             }
 
-            var isRender = userInfo.userId === data[0].uid;
             // 是否渲染 isRender
-
-            console.log('userPushMessage');
+            var isRender = userInfo.userId === data[0].uid;
             getChatListByOnline('chat', parseList , null, null, data, isRender, false, data[0].type, list);
           }
-
-          // 用户发送消息
-          // loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
-          //     var _html;
-          //     _html = doT.template(tpl)({
-          //         list : data
-          //     });
-          //     // userChatCache.push
-          //     $rootNode.find('#chat').find('.js-panel-body').append(_html);
-          // });
         }
     };
 
@@ -672,15 +645,18 @@
                 updateUserState(type,handleType,updateHeaderTag);
             }
         })
+
         // 滚动加载分页
         $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e) {
+            var data = {
+              uid: userInfo.userId ,
+              pid: userInfo.pid
+            };
 
             if ($(this).scrollTop() === 0) {
               userChatCache[userInfo.userId].pageNo++;
-              getChatListByOnline('chat', parseTpl, userChatCache[userInfo.userId].pageNo, null, {
-                uid: userInfo.userId ,
-                pid: userInfo.pid
-              }, true, false);
+
+              getChatListByOnline('chat', parseTpl, userChatCache[userInfo.userId].pageNo, null, data, true, false);
             }
         });
 
