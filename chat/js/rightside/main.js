@@ -71,8 +71,8 @@ function RightSide(node,core,window) {
     });
     $this.addClass('active').siblings('li').removeClass('active');
     //智能回复赋值
-    // var oInput = $(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot input');
-    $(tabInput).val(val);
+    var oInput = $(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot input');
+    $(oInput).val(val);
   };
 
     //设置用户偏好设置
@@ -84,9 +84,9 @@ function RightSide(node,core,window) {
         var _tmp = switchPreferenceLibrary[i];
         if(_tmp['uid']==tapLastUserData.uid){
           //设置id
-          // var oInput = $(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot input');
+          var oInput = $(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot input');
           _tmp['item']['zIndex']=curTabId;
-          _val = $(tabInput).val();
+          _val = $(oInput).val();
           _tmp['item']['homeuser']=_val;
         }
       }
@@ -96,14 +96,14 @@ function RightSide(node,core,window) {
     //获取用户偏好设置
   var  getPreferenceInfo=function(uid){
     var that,
-        oInput=$(tabSwitchBody).find('.js-tab-pane#homeuser p.searchBot input'),
+        oInput=$(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot input'),
         _val = $(oInput).val();
 
     for(var i=0;i<switchPreferenceLibrary.length;i++){
       var item = switchPreferenceLibrary[i];
       if(item['uid']==uid){
         _val = item['item']['homeuser'];
-        $(tabSwitchNav).find('li.js-menu').each(function(i,o){
+        $(tabSwitchNav).find('.js-menu').each(function(i,o){
           if($(o).attr('id')==item['item']['zIndex']){
             onSetSwitchTab($(o),_val);
             $(document.body).trigger('rightside.onTabSwitch',{

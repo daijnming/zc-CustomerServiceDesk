@@ -138,7 +138,7 @@ var onSuggestions= function(){
 	var onGetReplyByChat = function(evn,data){
 		// data.str data.uid
 		//显示智能回复页面
-		var homeNav = $(node).find('.js-panel-body .js-nav-tabs li#homeuser');
+		var homeNav = $(node).find('.js-panel-body .js-nav-tabs #homeuser');
 		var homeBody = $(node).find('.js-panel-body .js-tab-content');
 		var oId = $(homeNav).attr('id');
 		$(homeNav).addClass('active').siblings('li').removeClass('active');
@@ -171,14 +171,13 @@ var onSuggestions= function(){
 		$(document.body).on('rightside.onTabSwitch',onTabSwitch);
 		$(robotBack).on('click',onBackAnswer);
 		$(homeuser).delegate('#quickSerch','keyup',onSerchContent);
-		$(robotDirectHideBtn).delegate('a.quickSendBtn','click',onChatSmartReply);
+		$(robotDirectHideBtn).delegate('.js-quickSendBtn','click',onChatSmartReply);
 		$(robotAnswer).delegate('a','click',onChatSmartReply);
 		$(sugguestions).delegate('li','click',onSuggestions);
 	};
 	var init = function() {
 		parseDOM();
 		bindLitener();
-		initInterface();
 	};
 	init();
 };
