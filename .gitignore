@@ -2,7 +2,6 @@
 .idea/
 node_modules/
 dest/
-dist/
 bower_components/
 selfinfo.conf
 rev-manifest.json
