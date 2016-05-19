@@ -115,6 +115,7 @@ function Core(window) {
     var systemMessageAdpater = function(value) {
         if(value.type === 102) {
             audioOnline.play();
+            createNotification(value,102);
         }
         value.description = messageTypeConfig[value.type];
 
@@ -125,6 +126,7 @@ function Core(window) {
         var desc = type == 103 ? data.desc : data.uname;
         var noti = new Notification(title, {
             'body' : desc,
+            'icon' : 'assets/images/logo.png',
             'tag' : type + data.uid
         });
         noti.onclick = (function(id) {
@@ -151,7 +153,6 @@ function Core(window) {
                 window.location.href = "/console/login/";
             } else {
                 systemMessageAdpater(value);
-                createNotification(value,102);
             }
         }
     };

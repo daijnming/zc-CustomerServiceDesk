@@ -65,6 +65,9 @@ function Item(data,core,outer,from,manager) {
             'display' : 'inline-block'
         }).html('[离线]');
         status = 'offline';
+        if(manager.getCurrentUid() === data.uid) {
+            manager.setCurrentUid(null);
+        }
     };
 
     var hide = function() {
@@ -90,6 +93,9 @@ function Item(data,core,outer,from,manager) {
             'type' : 'post',
             'dataType' : "json"
         }).success(function(ret) {
+            if(manager.getCurrentUid() == data.uid) {
+                manager.setCurrentUid(null);
+            }
             if(ret.status === 1) {
                 hide();
             }
