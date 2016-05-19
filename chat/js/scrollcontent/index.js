@@ -7,6 +7,7 @@
     var global;
     // 保存用户对话消息缓存
     var userChatCache = {};
+    var imageUrl = 'http://img.sobot.com/chatres/common/face/';
     var API = {
         http : {
             chatList : {
@@ -39,14 +40,14 @@
         }
     };
 
-    var userSourceMap = {
-        0 : 'http://img.sobot.com/chatres/common/face/pcType.png',
-        1 : 'http://img.sobot.com/chatres/common/face/weixinType.png',
-        2 : 'http://img.sobot.com/chatres/common/face/appType.png',
-        3 : 'http://img.sobot.com/chatres/common/face/weiboType.png',
-        4 : 'http://img.sobot.com/chatres/common/face/moType.png',
-        5 : 'http://img.sobot.com/chatres/common/face/moType.png'
-    };
+    var userSourceMap = [
+        imageUrl + 'pcType.png' ,
+        imageUrl + 'weixinType.png' ,
+        imageUrl + 'appType.png' ,
+        imageUrl + 'weiboType.png' ,
+        imageUrl + 'moType.png' ,
+        imageUrl + 'moType.png'
+    ];
 
     var userInfo = {};
 
@@ -137,11 +138,11 @@
     // 加载
     var getChatListByOnline = function(type,callback, pageNo, pageSize, userData, isRender, isScrollBottom, typeNo, appendList) {
         var userId;
+
         if( typeof arguments[0] === 'function') {
             callback = arguments[0];
             type = 'chat';
         }
-
 
         if ($.isArray(userData)) {
           userId = userData[0].uid;
@@ -251,8 +252,6 @@
         });
         dialog.show();
       }
-
-      // userStateMap[type][handleType](func);
     }
 
 
@@ -316,16 +315,13 @@
             var chatText = $(this).html();
 
             if (chatText.indexOf('webchat_img_upload') !== -1) {
-              window.open()
+              window.open();
             } else {
               onSearchUserChat(chatText);
             }
         })
     }
-    // // 智能搜索
-    // var searchUserChat = function(sender,requestText,callback) {
-    //     onSearchUserChat
-    // }
+
     // --------------------------- dom操作 ---------------------------
 
     // 清理聊天主体页面
@@ -369,43 +365,80 @@
 
             setTimeout(function() {
 
-              if (isScrollBottom) $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+              if (isScrollBottom) {
+                $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+
+                // 获取当前窗口最低scrollTop
+                userChatCache[uid].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+              }
             }, 400);
         });
     }
 
     var parseList = function(type, data, isScrollBottom, isToTop, typeNo, appendList) {
-        loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
-            var _html;
 
-            var height = $rootNode.find('#' + type).find('.js-panel-body').parent()[0].scrollHeight;
-            var scrollTop = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+        if (appendList) {
 
-            _html = doT.template(tpl)({
-                userSourceImage: userInfo.userSourceImage ,
-                list : appendList
-            });
+          appendList.map(function(item) {
+            item.msg = item.msg ? Face.analysis(item.msg) : null;
+          })
 
-            if (isToTop) {
-              $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
-              $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
-            } else {
-              $rootNode.find('#' + type).find('.js-panel-body').append(_html);
+          loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
+              var _html;
 
-              if (isScrollBottom) {
-                $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-              }
-              else {
+              var height = $rootNode.find('#' + type).find('.js-panel-body').parent()[0].scrollHeight;
+              var scrollTop = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
 
-                if ((height - scrollTop) > 700) {
+              _html = doT.template(tpl)({
+                  userSourceImage: userInfo.userSourceImage ,
+                  list : appendList
+              });
 
-                  if (typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
-                } else {
+              if (isToTop) {
+                $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
+                $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
+              } else {
+                $rootNode.find('#' + type).find('.js-panel-body').append(_html);
+
+                if (isScrollBottom) {
                   $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                  userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                }
+                else {
+
+                  if ((height - scrollTop) > 700) {
+
+                    if (typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
+                  } else {
+                    $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                    userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                  }
                 }
               }
-            }
-        });
+          });
+        } else {
+          loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
+
+              var _html;
+
+              _html = doT.template(tpl)({
+                userSourceImage: userInfo.userSourceImage ,
+                list : data.list
+              });
+
+              $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
+
+              setTimeout(function() {
+
+                if (isScrollBottom) {
+                  $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                  userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                }
+              }, 400);
+          });
+        }
+
+
     }
 
     var updateHeaderTag = function(type,handleType) {
@@ -474,6 +507,8 @@
               _html = doT.template(tpl)({
                   data : data[0]
               });
+
+              $rootNode.find('#chat').find('.js-user-ready-input').show();
               $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
 
               setTimeout(function() {
@@ -485,8 +520,8 @@
           clearScrollContent();
         }
         else {
-
           var list = [];
+
           if (userChatCache[data[0].uid]) {
 
             for (var i = 0;i < data.length;i++) {
@@ -653,7 +688,9 @@
               pid: userInfo.pid
             };
 
-            if ($(this).scrollTop() === 0) {
+            if ($(this).scrollTop() >= userChatCache[userInfo.userId].scrollBottom) {
+              $rootNode.find('#chat').find('.zc-newchat-tag').hide();
+            } else if ($(this).scrollTop() === 0) {
               userChatCache[userInfo.userId].pageNo++;
 
               getChatListByOnline('chat', parseTpl, userChatCache[userInfo.userId].pageNo, null, data, true, false);
@@ -662,6 +699,7 @@
 
         $rootNode.find('#chat').on('click', '.zc-newchat-tag', function() {
           $rootNode.find('#chat').find('.js-panel-body')[0].scrollIntoView(false);
+          userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#chat').find('.js-panel-body').parent().scrollTop();
           $rootNode.find('#chat').find('.zc-newchat-tag').hide();
         });
 
