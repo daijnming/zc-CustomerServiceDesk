@@ -103,7 +103,7 @@
         pid: userInfo.pid
       }
 
-      if (arguments[1].data.stats === "1") {
+      if (arguments[1].data.status === "1") {
         adminPushMessage(data);
       }
     });
