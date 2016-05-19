@@ -16,7 +16,6 @@ function polling(global) {
     };
 
     var onsend = function(evt,data) {
-        console.log(data.answer);
         var answer = unescape(data.answer.replace("\\u","%u"));
         $.ajax({
             'url' : '/chat/admin/send1.action',
