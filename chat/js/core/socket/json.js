@@ -16,12 +16,13 @@ function polling(global) {
     };
 
     var onsend = function(evt,data) {
+        var answer = unescape(data.answer.replace("\\u","%u"));
         $.ajax({
             'url' : '/chat/admin/send1.action',
             'dataType' : 'json',
             'type' : "post",
             'data' : $.extend(defaultParams, {
-                'answer' : data.answer,
+                'answer' : answer,
                 'cid' : data.cid,
                 'uid' : global.id
             })
@@ -39,15 +40,16 @@ function polling(global) {
     };
 
     var onDirectSend = function(evt,ret) {
-        var data = ret.data;
-        if(ret.status == 1 || ret.stats == 1) {
+        if(ret.data.status == 1) {
             $.ajax({
                 'url' : '/chat/admin/send1.action',
                 'dataType' : 'json',
                 'type' : "post",
                 'data' : $.extend(defaultParams, {
-                    'answer' : ret.msg,
-                    'cid' : data.cid,
+                    'answer' : ret.data.msg,
+                    'docId' : ret.data.docid || '',
+                    'answerType' : ret.data.docid && ret.data.docid.length ? ret.data.docid : '',
+                    'cid' : ret.data.cid,
                     'uid' : global.id
                 })
             });
