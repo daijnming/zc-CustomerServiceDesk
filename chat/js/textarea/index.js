@@ -67,10 +67,10 @@ function TextArea(node,core,window) {
     var onbtnSendHandler = function(evt) {
         var str = $sendMessage.val();
 
-           if(/^\n+$/g.test(str)||/^\r+$/g.test(str)){
+           /*if(/^\n+$/g.test(str)||/^\r+$/g.test(str)){
+            alert();
                 $sendMessage.val("")
-               
-            }
+            }*/
         if(str.length == 0 || /^\s+$/g.test(str)) {//判断输入框是否为空
                 $sendMessage.val("")
                 return false;
@@ -99,10 +99,15 @@ function TextArea(node,core,window) {
     var onEnterSendHandler = function(evt) {
         //监听文本框回车
         //\n\r回车符,,,e.shiftKey是否按住shift键
+        var str = $sendMessage.val();
         if(evt.keyCode == 13) {
-            onbtnSendHandler()
-            $sendMessage.val("")
-          
+            //有回车符，清空结束
+            if(/^\n+$/g.test(str)||/^\r+$/g.test(str)){
+                $sendMessage.val("")
+                return false;
+            }else{
+                onbtnSendHandler()
+            }
         }
        
     };
