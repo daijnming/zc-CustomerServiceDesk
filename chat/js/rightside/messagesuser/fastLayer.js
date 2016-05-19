@@ -49,6 +49,7 @@ var Fastlayer = function(node,core,config){
     };
     //点击左侧快捷回复分组条
     var onFastTap = function(){
+      $(node).find('.js-rightContent li').addClass('hide');
       var $this = $(this);
       $this.addClass('activeLine').siblings('li').removeClass('activeLine');
        $this.find('input').addClass('activeLine').parent('li').siblings('li').find('input').removeClass('activeLine');
@@ -111,8 +112,8 @@ var Fastlayer = function(node,core,config){
                     'height':0
                   },300,function(){
                     $this.parent('.detalBar').remove();
+                    onReLoadHandler(true);
                   });
-                  onReLoadHandler(true);
                 }
               }
             });
@@ -157,13 +158,15 @@ var Fastlayer = function(node,core,config){
           {
             var oLi = $this.parent('li');
             var oUl = $this.parents('ul');
-            $(oLi).find('input').animate({
-              'height':35
-            },200,function(){
-              $(oUl).prepend(oLi);
-              $(oLi).find('input').css('height',30);
+
+            $(oLi).animate({
+              'height':0
+            },500,function(){
+              $(oUl).prepend(oLi).fadeIn();
+              $(oLi).find('input').focus();
+              $(oLi).css('height',30);
+              onReLoadHandler(true);
             });
-            onReLoadHandler(true);
           }
         }
       });
@@ -299,6 +302,7 @@ var Fastlayer = function(node,core,config){
                 success:function(data){
                   if(data.status)
                   {
+                    $(obj).parent('li.detalBar').attr('gid',data.groupId);
                     onReLoadHandler(true);
                   }
                 }
@@ -356,6 +360,8 @@ var Fastlayer = function(node,core,config){
       							success:function(data){
       								if(data.status)
       								{
+                        $(obj).parent('li.detalBar').attr('qid',data.id);
+                        $(obj).parent('li.detalBar').attr('gid',oGroupId);
       									onReLoadHandler(true);
       								}
       							}

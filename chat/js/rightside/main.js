@@ -49,7 +49,7 @@ function RightSide(node,core,window) {
     // $("#homeuser").css('height',newHeight-52 +'px');
     $("#homeuser .homeUserBox").css('height',newHeight-52-40-52 +'px');
     //快捷回复，左，右侧列表
-    $('.rightQuickLeft,.rightQuickRight').css('height',newHeight-52+'px');
+    $('.rightQuickLeft,.rightQuickRight').css('height',newHeight-80-52+'px');
     //iframe
     $("#clientSysIframe").css('height',newHeight-52 +'px');
     $('.js-tab-pane#profileuser').css('height',newHeight-52+'px');

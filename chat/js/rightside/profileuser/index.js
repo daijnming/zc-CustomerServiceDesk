@@ -6,8 +6,8 @@ var ProfileUser = function(node,core,userData) {
 	//TODO
 	var global=core.getGlobal();//全局对象
 	var data = userData,
-			config ={};
-	var regExUserInfo=[];//保存用户验证信息
+			config ={},
+	 		regExUserInfo=[];//保存用户验证信息
 	//加载模版
 	var loadFile = require('../../util/load.js')();
 	var Promise = require('../../util/promise.js');
@@ -19,7 +19,6 @@ var ProfileUser = function(node,core,userData) {
 
 	//TODO 处理对话页显示  此处只是页面显示 不影响页面重构 不需要使用模版
 	var onVisitHandle = function(url,title){
-		//暂定成35个字符
 		if(!url&&!title) return '-';
 		var regexUrl = /^(https?)/;
 		if(url){
@@ -61,11 +60,10 @@ var ProfileUser = function(node,core,userData) {
 
 	//保存客户资料字段值
 	var onTextSaveData = function(val,obj){
-
 		var oUrl = 'admin/modify_userinfo.action',
 				sendData = {},
 				type = $(obj).attr('otype'),
-				reviceData={};//通知有左侧用户列表
+				reviceData={};//通知左侧用户列表
 				sendData.uid=config.uid;
 				sendData.sender = config.url_id;
 				if(type)sendData[type] = val;
@@ -148,7 +146,7 @@ var ProfileUser = function(node,core,userData) {
 		}
 	};
 	var onSelected = function(){
-			var val = $(this).find('option:selected').val();
+		var val=$(this).find('option:selected').val();
 			onTextSaveData(val,$(this)[0]);
 	};
 	//对话页 url显示
@@ -164,24 +162,26 @@ var ProfileUser = function(node,core,userData) {
 			}
 		}
 	};
-	var parseDOM = function() {
-    // someOne = $(node).find('.js-xx');
-	};
-
-  var onReceive = function(value,data) {
-
-  };
-	var onloadHandler = function(evt,data) {
-
+	//日期控件
+	var onDatePicker = function(){
+		$(node).find('#dp').datepicker().on('changeDate',function(ev){
+			var _date = ev.date;
+			var _y,_m,_d;
+			_y = _date.getFullYear();
+			_m = _date.getMonth()+1 < 10?'0'+ (Number( _date.getMonth())+1):_date.getMonth()+1;
+			_d = _date.getDate()<10? '0'+_date.getDate():_date.getDate();
+			var _bir = _y+'-'+_m+'-'+_d
+			onTextSaveData(_bir,$(this)[0]);
+		});
 	};
 	var bindLitener = function() {
 		$(node).delegate('.js-userTnp','blur',oFieldRegex.onTextBlurRegex);
 		$(node).delegate('.js-userTnp','focus',oFieldRegex.onTextFocusRegex);
 		$(node).delegate('#sex','change',onSelected);
-		$(node).find('#dp').datepicker();
 	};
-	var initPlusin = function(){
+	var initPlugsin = function(){
 		onSessionUrl();
+		onDatePicker();
 	};
 	var initConfig = function(){
 
@@ -189,15 +189,41 @@ var ProfileUser = function(node,core,userData) {
 		config.url_id = global.id;//url地址栏id
 
 		regExUserInfo = {
-			uname:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'长度错误'}],
-			realname:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'格式错误'}],
-			tel:[{'regex':/\S/,alert:'不允许为空'},{'regex':/^[0-9]{8,13}$/,'alert':'格式错误'}],
-			birthday:[{'regex':/\S/,alert:'不允许为空'},{'regex':/^[1-2][0-9]{3}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))*$/,'alert':'格式错误'}],
-			email:[{'regex':/\S/,alert:'不允许为空'},{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'格式错误'}],
-			qq:[{'regex':/\S/,alert:'不允许为空'},{'regex':/[1-9][0-9]{4,13}/,'alert':'格式错误'}],
-			weixin:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'格式错误'}],
-			weibo:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{5,28}/,'alert':'格式错误'}],
-			remark:[{'regex':/\S/,alert:'不允许为空'},{'regex':/\w{0,200}/,'alert':'格式错误'}]
+			uname:[
+				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
+				{'regex':/\w{0,100}/,'alert':'最大输入100字符，请重新输入'}],
+			realname:[
+				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
+				{'regex':/\w{0,32}/,'alert':'最大输入32字符，请重新输入'}],
+			tel:[
+				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^[0-9\-#*]*$/,'alert':'只允许数字、“#”、“*”、“-”'},
+				{'regex':/^[0-9\-#*]{8,30}$/,'alert':'最大输入30字符，请重新输入'}],
+			birthday:[
+				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^[1-2][0-9]{3}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))$/,'alert':'只允许数字、“-”'}],
+			email:[
+				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'只允许字母、数字或下划线'},
+				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,60}$/,'alert':'最大输入限制60字符，请重新输入'}
+			],
+			qq:[
+				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
+				{'regex':/[1-9][0-9]{4,29}/,'alert':'输入5-30位数字，请重新输入'}],
+			weixin:[
+				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'}],
+			weibo:[
+				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
+				{'regex':/\w{4,24}/,'alert':'输入4-24位字符，请重新输入'}],
+			remark:[
+				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
+				{'regex':/\w{0,200}/,'alert':'最大输入限制200字符，请重新输入'}]
 		};
 	};
 	initUserInfo().then(function(){
@@ -205,9 +231,8 @@ var ProfileUser = function(node,core,userData) {
 	});
 	var init = function() {
 		initConfig();
-		parseDOM();
 		bindLitener();
-		initPlusin();
+		initPlugsin();
 	};
 };
 module.exports = ProfileUser;
