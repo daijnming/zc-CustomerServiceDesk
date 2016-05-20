@@ -25,7 +25,9 @@ function Core(window) {
     var global = {};
     var basicInfoHandler = function(value,promise) {
         token = value.token || window.sessionStorage.getItem('temp-id');
-        promise.resolve({});
+        promise.resolve({
+            'success' : !!value.token
+        });
     };
 
     /**
@@ -95,7 +97,7 @@ function Core(window) {
                     for(var el in ret) {
                         global[el] = ret[el];
                     }
-                    global.baseUrl = location.protocol + "//" + location.host + "/chat/";
+                    global.baseUrl = location.protocol + "//" + location.host + "/chat/" + ((!value.success) ? 'admins/' : '');
                     $(".js-loading-layer").hide();
                     promise.resolve(ret);
                 } else {
