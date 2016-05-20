@@ -7,7 +7,7 @@ var gulpIf = require("gulp-if");
 var uglify = require('gulp-uglify');
 var minifyCss = require("gulp-minify-css");
 var autoPrefixed = require("gulp-autoprefixer");
-
+var notify = require('gulp-notify')
 
 
 gulp.task('useref',['browserify','imagemin'], function() {
@@ -16,5 +16,8 @@ gulp.task('useref',['browserify','imagemin'], function() {
     pipe(gulpIf("*.css",minifyCss())).
     pipe(gulpIf("*.css",autoPrefixed())).
     pipe(gulpIf("*.js",uglify())).
+    on("error",notify.onError({
+		"message":"Error: <%= error.message %>"
+	})).
     pipe(gulp.dest('./dest/'));
 });
