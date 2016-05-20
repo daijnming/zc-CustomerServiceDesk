@@ -131,26 +131,27 @@ var ZC_Face = {
 
     },
     analysis : function(str) {//将文本框内的表情字符转化为表情
-        var _this = this;
-        var icoAry = str.match(_this.reg);
-        //将匹配到的结果放到icoAry这个数组里面，来获取长度
-        if(icoAry) {
-            for(var i = 0;i < icoAry.length;i++) {
-                var ico = _this.reg2.exec(str);
-                //重新匹配到第一个符合条件的表情字符
-                //console.log(ico[0]);
-
-                str = str.replace(_this.reg2,'<img src="' + _this.path + _this.tip2[ico[0]] + '.gif" border="0" />',1);
+            var _this = this;
+            var icoAry = str.match(_this.reg);
+            //将匹配到的结果放到icoAry这个数组里面，来获取长度
+            if(icoAry) {
+                for(var i = 0;i < icoAry.length;i++) {
+                    var ico = _this.reg2.exec(str);
+                    //重新匹配到第一个符合条件的表情字符
+                    //console.log(ico[0]);
+                    str = str.replace(_this.reg2,'<img src="' + _this.path + _this.tip2[ico[0]] + '.gif" border="0" />',1);
+                }
             }
-        }
 
-        var arr = str.match(_this.emojiReg);
-        for(var i = 0,
-            len = arr.length;i < len;i++) {
-            var ico = _this.emojiReg.exec(str);
-            var path = _this.emojiImagePath[ico[0]];
-            str = str.replace(ico[0],'<img src="' + _this.emojiPath + path + '" border="0" />',1);
-        }
+            var arr = str.match(_this.emojiReg);
+            if(arr) {
+                for(var i = 0,
+                    len = arr.length;i < len;i++) {
+                    var ico = _this.emojiReg.exec(str);
+                    var path = _this.emojiImagePath[ico[0]];
+                    str = str.replace(ico[0],'<img src="' + _this.emojiPath + path + '" border="0" />',1);
+                }
+            }
         return str;
     },
     hasEmotion : function(str) {//将文本框内的表情字符转化为表情
@@ -159,9 +160,6 @@ var ZC_Face = {
     },
     convertToEmoji : function(src) {
         var _this = this;
-        if(_this.emojiReg.test(src)) {
-            alert();
-        }
         return src;
     }
 };
