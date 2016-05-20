@@ -1,0 +1,40 @@
+<div class="bootbox-body">
+  <div class="listBox">
+
+    {{ if (it.list.length > 0) { }}
+      <div class="row list-group" id="addList" style="overflow-y: auto;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>客户名称</th>
+              <th>接待状态</th>
+              <th>所属分组</th>
+              <th>操作</th></tr>
+          </thead>
+          <tbody class="changeTbody">
+
+            {{ for (var i = 0;i < it.list.length;i++) { }}
+
+              <tr>
+                <td class="">
+                  <span class="glyphicon glyphicon-ok-sign"></span>
+                  {{=it.list[i].uname}}</td>
+                <td class="">{{=it.list[i].count}} / {{=it.list[i].maxcount}}</td>
+                <td>
+                  {{=it.list[i].groupName.join('/')}}
+                </td>
+                <td>
+                  <a class="js-transfer-href" href="javascript:;" uname={{=it.list[i].uname}} uid="{{=it.list[i].id}}" class="">转接</a></td>
+              </tr>
+
+            {{ } }}
+          </tbody>
+        </table>
+      </div>
+    {{ } else { }}
+      <div>暂时没有其他客服在线</div>
+    {{ } }}
+
+
+  </div>
+</div>
