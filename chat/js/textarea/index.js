@@ -87,7 +87,7 @@ function TextArea(node,core,window) {
     };
     //智能回复
     var onIntelligencereplyHandler = function(evt,data) {
-        if(data.data.stats=="2"){
+        if(data.data.status=="2"){
             $sendMessage.val(data.data.msg).focus();
         }
         
@@ -107,6 +107,7 @@ function TextArea(node,core,window) {
                 return false;
             }else{
                 onbtnSendHandler()
+                $sendMessage.val("")
             }
         }
        
@@ -136,7 +137,7 @@ function TextArea(node,core,window) {
                 $('.scrollBoxParent').height(($(window).height() - (50 + 52 + botTextBoxHeight)) + 'px');
                 break;
         }
-        $botTextBox.css("bottom","-230px")
+        $botTextBox.css("bottom","-232px")
     };
     var isHiddenBotTextBox = function() {
         $botTextBox.hide();

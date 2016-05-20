@@ -23,7 +23,7 @@ function polling(global) {
             'dataType' : 'json',
             'type' : "post",
             'data' : $.extend(defaultParams, {
-                'answer' : answer,
+                'answer' : '\u+F600',
                 'cid' : data.cid,
                 'uid' : global.id
             })
