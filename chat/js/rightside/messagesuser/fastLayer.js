@@ -102,7 +102,7 @@ var Fastlayer = function(node,core,config) {
         } else {
             title = alertList.l002;
             cId = $this.parent('.js-detalBar').attr('qid');
-            url = 'quick/delquickReply.action';
+            url = '/chat/quick/delquickReply.action';
             sendId = 'id';
             data = {
                 'id' : cId,
@@ -145,7 +145,7 @@ var Fastlayer = function(node,core,config) {
             cId,
             data;
         if($this.siblings('input').attr('utype') == 'left') {
-            url = 'reply/setTopGroup.action';
+            url = '/chat/reply/setTopGroup.action';
             cId = $this.parent('.js-detalBar').attr('gid');
             sendId = 'groupId';
             data = {
@@ -154,7 +154,7 @@ var Fastlayer = function(node,core,config) {
             };
 
         } else {
-            url = 'quick/setTopReply.action';
+            url = '/chat/quick/setTopReply.action';
             cId = $this.parent('.js-detalBar').attr('qid');
             sendId = "id";
             data = {
@@ -165,7 +165,7 @@ var Fastlayer = function(node,core,config) {
         if(sendId) {
             $.ajax({
                 type : "post",
-                url : url,
+                url :  url,
                 data : data,
                 dataType : "json",
                 success : function(data) {
@@ -282,7 +282,7 @@ var Fastlayer = function(node,core,config) {
             var groupName = $(obj).val().replace(/(^\s*)|(\s*$)/g,"");
             if(oGroupId)//修改分组名
             {
-                var upGroupNameUrl = 'reply/updreplyGroup.action';
+                var upGroupNameUrl = '/chat/reply/updreplyGroup.action';
                 //?groupId='+ oGroupId +'&&groupName=' + groupName;
                 $.ajax({
                     type : "post",
@@ -302,11 +302,11 @@ var Fastlayer = function(node,core,config) {
                 });
             } else//新增分组
             {
-                var addGroupUrl = 'reply/addreplyGroup.action';
+                var addGroupUrl = '/chat/reply/addreplyGroup.action';
                 //?groupName='+ groupName +'&&userId='+ myid +'&&companyId=' + This.companyId;
                 $.ajax({
                     type : "post",
-                    url : addGroupUrl,
+                    url :  addGroupUrl,
                     data : {
                         'groupName' : groupName,
                         'userId' : id
@@ -332,11 +332,11 @@ var Fastlayer = function(node,core,config) {
             // $this.html("正在保存...");
             if(oQuickid)//修改
             {
-                var changeQuickUrl = 'quick/updquickReply.action';
+                var changeQuickUrl = '/chat/quick/updquickReply.action';
                 //?id='+ oQuickid +'&&value='+ oText;
                 $.ajax({
                     type : "post",
-                    url : changeQuickUrl,
+                    url :  changeQuickUrl,
                     data : {
                         'id' : oQuickid,
                         'value' : oText,
@@ -349,8 +349,8 @@ var Fastlayer = function(node,core,config) {
                         }
                     }
                 });
-            } else//添加
-            {
+            } else{
+                //添加
                 //获取分组id
                 var li = $(oFastLeft).find('li');
                 if($(oFastLeft) && li.length > 0) {
@@ -359,11 +359,11 @@ var Fastlayer = function(node,core,config) {
                             oGroupId = $(li[i]).attr('gid');
                     }
                 }
-                var addQuickUrl = 'quick/addquickReply.action';
+                var addQuickUrl = '/chat/quick/addquickReply.action';
                 //?groupId='+ oGroupId +'&&value='+ oText;
                 $.ajax({
                     type : "post",
-                    url : addQuickUrl,
+                    url :  addQuickUrl,
                     data : {
                         'groupId' : oGroupId,
                         'value' : oText,

@@ -8,14 +8,15 @@ var uglify = require('gulp-uglify');
 var minifyCss = require("gulp-minify-css");
 var autoPrefixed = require("gulp-autoprefixer");
 var notify = require('gulp-notify')
-
+var removeLog = require('gulp-removelogs');
 
 gulp.task('useref',['browserify','imagemin'], function() {
    return gulp.src('chat/chat.html').
     pipe(useref()).
-    pipe(gulpIf("*.css",minifyCss())).
+    //pipe(gulpIf("*.css",minifyCss())).
     pipe(gulpIf("*.css",autoPrefixed())).
     pipe(gulpIf("*.js",uglify())).
+  //`  pipe(gulpIf("*.js",removeLog())).
     on("error",notify.onError({
 		"message":"Error: <%= error.message %>"
 	})).
