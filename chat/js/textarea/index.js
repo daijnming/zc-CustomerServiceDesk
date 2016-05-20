@@ -186,8 +186,8 @@ function TextArea(node,core,window) {
             //showId : ".panel-body",
             emotion : ".js-emotion",
             //sub_btn : ".js-btnSend",
-            path : "chatres/common/emotes/qqarclist/",
-            emojiPath : "chatres/common/emotes/emoji/"
+            path : "assets/images/qqarclist/",
+            emojiPath : "assets/images/emoji/"
         }, function() {
             //cbk
         });
