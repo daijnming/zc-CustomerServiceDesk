@@ -170,6 +170,7 @@ function RightSide(node,core,window) {
   };
   var initData = function(data,userData){
       //初始化用户数据 -- 客户资料
+      // console.log(userData);
       profileuser($('.js-tab-pane#profileuser'),core,userData);
       // console.log(userData);
       //初始化用户自定义配置
