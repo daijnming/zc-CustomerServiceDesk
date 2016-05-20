@@ -112,15 +112,18 @@ ul {
 }
 
 /****homeuser css***/
-.js-tab-pane#profileuser.showBg {
-    background: url(../assets/images/noOnlinePerson.png) center no-repeat
+.tab-pane#profileuser.showBg {
+    background: url(../assets/images/noProfileUserInfo.png) center  no-repeat
 }
-.rightBox .js-panel-body .js-tab-pane#homeuser p.searchBot {
+.panel-body.showBg{
+  background: url(../assets/images/noProfileUserInfo.png) center no-repeat
+}
+.rightBox .panel-body .tab-pane#homeuser p.searchBot {
     margin: 0 0 10px;
 }
 
 /****clientSystem*****/
-.js-panel-body  .dropdown  ul.js-dropdown-menu {
+.panel-body  .dropdown  ul.dropdown-menu {
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -129,11 +132,11 @@ ul {
     margin-top: -200px;
     opacity: 1;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li {
+.panel-body .dropdown ul.dropdown-menu li {
     border-bottom: 1px dashed #ddd;
     background-color: #f7fafa;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li a {
+.panel-body .dropdown ul.dropdown-menu li a {
     text-align: center;
     height: 30px;
     line-height: 30px;
@@ -141,14 +144,14 @@ ul {
     color: #999;
     cursor: pointer;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li:hover, .js-panel-body .dropdown ul.js-dropdown-menu li:hover a {
+.panel-body .dropdown ul.dropdown-menu li:hover, .panel-body .dropdown ul.dropdown-menu li:hover a {
     background-color: #09aeb0;
     color: #fff;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li:last-child {
+.panel-body .dropdown ul.dropdown-menu li:last-child {
     border-bottom: 0;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li a, .js-panel-body .dropdown ul.js-dropdown-menu li a:link, .js-panel-body .dropdown ul.js-dropdown-menu li a:visited, .js-panel-body .dropdown ul.js-dropdown-menu li a:active {
+.panel-body .dropdown ul.dropdown-menu li a, .panel-body .dropdown ul.dropdown-menu li a:link, .panel-body .dropdown ul.dropdown-menu li a:visited, .panel-body .dropdown ul.dropdown-menu li a:active {
     text-decoration: none;
 }
 
@@ -192,7 +195,7 @@ ul {
 }
 
 /*****messagesuser*****/
-.rightBox .js-tab-pane .js-rightQuickLeft, .rightBox .js-tab-pane .js-rightQuickLRight {
+.rightBox .tab-pane .rightQuickLeft, .rightBox .tab-pane .rightQuickLRight {
     overflow: scroll;
 }
 

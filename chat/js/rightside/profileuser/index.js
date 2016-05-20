@@ -38,7 +38,7 @@ var ProfileUser = function(node,core,userData) {
 			//有数据再添加dom
 			if(data){
 				//客户资料背景清除
-				$(node).html('').removeClass('showBg');
+				$(node).html('').parents('.js-panel-body').removeClass('showBg');
 				loadFile.load(global.baseUrl+'views/rightside/profileUser.html').then(function(value){
 					//组装对话页
 					// console.log(data);
@@ -54,9 +54,7 @@ var ProfileUser = function(node,core,userData) {
 					$(node).find('#sex').val(data.userData['sex']);
 					promise.resolve();
 				});
-				// console.log(data.userData);
 			}
-
 			return promise;
 	};
 
