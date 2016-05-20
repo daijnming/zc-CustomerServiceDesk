@@ -8,6 +8,15 @@ function Core(window) {
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var notificationPermission;
+    
+    
+    
+    
+    
+    
+    
+    
+    
     var $body;
     var socket,
         Notification = window.Notification || window.webkitNotifications;
