@@ -442,7 +442,7 @@
     // 加入到某一个user的chche内
     var userPushMessage = function(data) {
         parseChat[data.type] && parseChat[data.type](data);
-
+        
         if (data[0].type === 111) {
           loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
               var _html;

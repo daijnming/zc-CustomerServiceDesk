@@ -82,6 +82,9 @@ function polling(global) {
                 'uid' : global.id
             }
         }).success(function(ret) {
+            if(!ret || ret.length == 0) {
+                return;
+            }
             var arr = messageAdapter(ret);
             eventCache['receive'] && eventCache['receive'](arr);
         }).fail(function(ret,err) {
