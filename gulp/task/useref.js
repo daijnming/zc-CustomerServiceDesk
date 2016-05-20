@@ -16,7 +16,7 @@ gulp.task('useref',['browserify','imagemin'], function() {
     pipe(gulpIf("*.css",minifyCss())).
     pipe(gulpIf("*.css",autoPrefixed())).
     pipe(gulpIf("*.js",uglify())).
-    pipe(gulpIf("*.js",removeLog())).
+  //`  pipe(gulpIf("*.js",removeLog())).
     on("error",notify.onError({
 		"message":"Error: <%= error.message %>"
 	})).
