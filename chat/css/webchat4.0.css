@@ -1789,7 +1789,7 @@ body,html{
 }
 .chatCont{
   background: url("../assets/images/noSession.png") no-repeat;
-  background-position:33% 43%;
+  background-position:33% 47.5%;
   height:100%;
 }
 #clientSystems a:link {color: #a4b2b3} /* 未访问的链接 */

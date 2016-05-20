@@ -6,7 +6,7 @@ function LeftSide(node,core,window) {
     var online,
         offline;
     var URLLIST = ['','/chat/admin/online.action','/chat/admin/busy.action'];
-    var STATUSIMAGELIST = ['','img/online.png','img/busy.png'];
+    var STATUSIMAGELIST = ['','online','buzy'];
     var Online = require('./online.js');
     var Offline = require('./offline.js');
     var $node,
@@ -71,7 +71,10 @@ function LeftSide(node,core,window) {
                     'uid' : global.id
                 }
             }).success(function(ret) {
-                $statusImage.attr("src",STATUSIMAGELIST[status]);
+                for(var i = 0;i < STATUSIMAGELIST.length;i++) {
+                    $statusImage.removeClass(STATUSIMAGELIST[i]);
+                }
+                $statusImage.addClass(STATUSIMAGELIST[status]);
             });
         } else {
             var dialog = new Alert({
@@ -118,7 +121,10 @@ function LeftSide(node,core,window) {
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
         initQueueInfo();
-        $statusImage.attr("src",STATUSIMAGELIST[global.status]);
+        for(var i = 0;i < STATUSIMAGELIST.length;i++) {
+            $statusImage.removeClass(STATUSIMAGELIST[i]);
+        }
+        $statusImage.addClass(STATUSIMAGELIST[global.status]);
         $(node).find("img.js-my-logo").attr("src",data.face);
         $(node).find(".js-customer-service").html(data.name);
     };

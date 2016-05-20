@@ -25,7 +25,6 @@ function RightSide(node,core,window) {
       tabInput;//智能回复搜索框
 
   //TODO 模板/js/资源引用
-	// var template = require('./template.js');
   var profileuser =  require('./profileuser/index.js');
   var messageUser =  require('./messagesuser/index.js');
   var homeuser = require('./homeuser/index.js');
@@ -39,7 +38,6 @@ function RightSide(node,core,window) {
     $(node).find(".js-users-list").append(li);
   };
   var onReceive = function(value,data) {
-    // console.log(Object.prototype.toString.call(data));
     if(data.type == 102) {
       newUserMessage(data);
     }
@@ -60,9 +58,19 @@ function RightSide(node,core,window) {
   //tab切换
   var onSetSwitchTab = function(obj,val){
     var $this = $(obj);
+    if($this.attr('id')=='profileuser'){
+      if(tapLastUserData){
+        $(node).find('.js-panel-body').removeClass('showBg');
+      }else{
+        $(node).find('.js-panel-body').addClass('showBg');
+      }
+    }else{
+      $(node).find('.js-panel-body').removeClass('showBg');
+    }
     //自定义iframe 隐藏菜单
-    if($this.attr('id')!='clientSystem')
+    if($this.attr('id')!='clientSystem'){
       $(node).find('.js-dropdown-menu').removeClass('show').animate({'margin-top':-200},500);
+    }
     var oId = $this.attr('id');
     $(tabSwitchBody).find('.js-tab-pane').each(function(i,v){
       if($(v).attr('id') == oId.toString()){
@@ -170,20 +178,21 @@ function RightSide(node,core,window) {
       onSetRightPreferenceInfo(userData.data.uid);
       getPreferenceInfo(userData.data.uid);
       tapLastUserData = userData.data;
-      // console.log(userData);
+      //隐藏用户资料背景
+      $(node).find('.js-panel-body').removeClass('showBg');
   };
 
 	var parseDOM = function() {
     tabSwitchNav = $(node).find('.js-panel-body .js-nav-tabs');
     tabSwitchBody = $(node).find('.js-panel-body .js-tab-content');
-    $(node).find('.js-tab-pane#profileuser').addClass('showBg');
+    $(node).find('.js-panel-body').addClass('showBg');
     tabInput = $(tabSwitchBody).find('.js-tab-pane#homeuser .js-searchBot');
 	};
 
 	var bindListener = function() {
     $(window).on('core.onload',onloadHandler);
-    $(tabSwitchNav).on('click','.js-menu',setPreferenceInfo);
     $(document.body).on('leftside.onselected',initData);
+    $(tabSwitchNav).on('click','.js-menu',setPreferenceInfo);
     $(tabInput).delegate('input','keyup',onGetSearch);
     $(tabInput).delegate('input','blur',onGetSearch1);
 	};

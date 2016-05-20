@@ -63,6 +63,8 @@ function polling(global) {
 
     var messageAdapter = function(ret) {
         var arr = [];
+        if(!ret)
+            return arr;
         for(var i = 0;i < ret.length;i++) {
             var obj = JSON.parse(ret[i]);
             arr.push(obj);
@@ -80,6 +82,9 @@ function polling(global) {
                 'uid' : global.id
             }
         }).success(function(ret) {
+            if(!ret || ret.length == 0) {
+                return;
+            }
             var arr = messageAdapter(ret);
             eventCache['receive'] && eventCache['receive'](arr);
         }).fail(function(ret,err) {
