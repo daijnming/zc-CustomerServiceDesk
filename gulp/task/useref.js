@@ -13,7 +13,7 @@ var removeLog = require('gulp-removelogs');
 gulp.task('useref',['browserify','imagemin'], function() {
    return gulp.src('chat/chat.html').
     pipe(useref()).
-    pipe(gulpIf("*.css",minifyCss())).
+    //pipe(gulpIf("*.css",minifyCss())).
     pipe(gulpIf("*.css",autoPrefixed())).
     pipe(gulpIf("*.js",uglify())).
   //`  pipe(gulpIf("*.js",removeLog())).
