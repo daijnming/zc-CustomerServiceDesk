@@ -3,7 +3,7 @@
  * @author daijm
  */
 var weixinJson = require('./face/weixin.json');
-var weixinSymbol = require('./face/weixinSymbol.json');
+var weixinSymbol = require('./face/weixinsymbol.json');
 var unicode = require('./unicode.js');
 var ZC_Face = {
     initConfig : function(options,callback) {//将表情集合预加载
@@ -141,6 +141,7 @@ var ZC_Face = {
         //将匹配到的结果放到icoAry这个数组里面，来获取长度
         if(icoAry) {
             for(var i = 0;i < icoAry.length;i++) {
+<<<<<<< HEAD
                 var ico = _this.qqfaceReg2.exec(str);
                 var path= _this.tip2[ico[0]];
                 //重新匹配到第一个符合条件的表情字符
@@ -148,6 +149,13 @@ var ZC_Face = {
 
                 str = str.replace(_this.qqfaceReg2,'<img style="width:26px;height:26px;" src="' + _this.path + path + '.gif" border="0" />',1);
 
+=======
+                var ico = _this.reg2.exec(str);
+                var path = _this.tip2[ico[0]];
+                //重新匹配到第一个符合条件的表情字符
+                //console.log(ico[0]);
+                str = str.replace(_this.reg2,'<img src="' + _this.path + path + '.gif" border="0" />',1);
+>>>>>>> 1ffeb6d23af7f83ff5ea88c47120cc86739f7188
             }
         }
 
@@ -157,7 +165,11 @@ var ZC_Face = {
                 len = arr.length;i < len;i++) {
                 var ico = _this.emojiReg.exec(str);
                 var path = _this.emojiImagePath[ico[0]];
+<<<<<<< HEAD
                 str = str.replace(ico[0],'<img style="width:26px;height:26px;" src="' + _this.emojiPath + path + '" border="0" />',1);
+=======
+                str = str.replace(ico[0],'<img src="' + _this.emojiPath + path + '" border="0" />',1);
+>>>>>>> 1ffeb6d23af7f83ff5ea88c47120cc86739f7188
             }
         }
         return str;
@@ -169,7 +181,7 @@ var ZC_Face = {
     convertToEmoji : function(src) {
         var _this = this;
         if(_this.emojiReg.test(src)) {
-             
+
         }
         return src;
     }
