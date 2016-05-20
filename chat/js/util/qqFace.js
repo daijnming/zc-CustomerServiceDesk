@@ -141,9 +141,7 @@ var ZC_Face = {
                 var path = _this.tip2[ico[0]];
                 //重新匹配到第一个符合条件的表情字符
                 //console.log(ico[0]);
-
                 str = str.replace(_this.reg2,'<img src="' + _this.path + path + '.gif" border="0" />',1);
-
             }
         }
 

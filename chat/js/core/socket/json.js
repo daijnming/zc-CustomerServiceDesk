@@ -63,6 +63,8 @@ function polling(global) {
 
     var messageAdapter = function(ret) {
         var arr = [];
+        if(!ret)
+            return arr;
         for(var i = 0;i < ret.length;i++) {
             var obj = JSON.parse(ret[i]);
             arr.push(obj);
