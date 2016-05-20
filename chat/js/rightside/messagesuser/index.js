@@ -74,7 +74,7 @@ var FastMsgModal = function(node,core,config) {
         data:{
           'userId':config.id
         },
-        url:'reply/replyGrouplist.action',
+        url:'/chat/reply/replyGrouplist.action',
         dataType:'json',
         success:function(data){
           onRightGroup(data);
@@ -105,7 +105,7 @@ var FastMsgModal = function(node,core,config) {
     //初始化数据
     var initData = function() {
         var promise = new Promise();
-        var getQuickListUrl = "reply/replyGrouplist.action";
+        var getQuickListUrl = "/chat/reply/replyGrouplist.action";
         $.ajax({
             type : "post",
             cache : false,
