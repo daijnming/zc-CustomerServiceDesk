@@ -51,75 +51,19 @@
 
     var userInfo = {};
 
-    // --------------------------- 接收推送函数 ---------------------------
-
-    $(document.body).on('textarea.send', function(ev) {
-
-        // 插入客服输入内容
-        adminPushMessage(arguments[1]);
-    });
-
-    $(document.body).on("leftside.onselected", function() {
-      var params = arguments[1];
-      userInfo = {
-        isStar: !!params.userData.ismark ,
-        isBlack: !!params.userData.isblack ,
-        isTransfer: !!params.userData.chatType ,
-        cid: params.data.cid ,
-        uid: global.id,
-        pid: params.data.pid,
-        sender : global.id,
-        userId: params.data.uid,
-        userSourceImage: userSourceMap[params.data.usource | params.data.source]
-      }
-
-      $rootNode.find('#chat').show();
-      $rootNode.find('#chat').find('.zc-newchat-tag').hide();
-      $rootNode.find('#chat').find('.js-user-ready-input').hide();
-      $(window).resize();
-
-      // 初始化历史记录
-      getChatListByOnline('chat', parseTpl, null, null, {
-        uid: params.data.uid ,
-        pid: params.data.pid
-      }, true, true);
-
-      // 初始化用户状态
-      initUserState({
-          star: !!params.userData.ismark ,
-          black: !!params.userData.isblack ,
-          transfer: !!params.userData.chatType
-      });
-    });
-
-    $(document.body).on("leftside.onremove", function() {
-      clearScrollContent(arguments[1].uid);
-    });
-
-    $(document.body).on("rightside.onChatSmartReply", function() {
-      var data = {
-        answer: arguments[1].data.msg ,
-        uid: userInfo.userId ,
-        pid: userInfo.pid
-      }
-
-      if (arguments[1].data.status === "1") {
-        adminPushMessage(data);
-      }
-    });
 
     // --------------------------- 推送函数 ---------------------------
 
     // 智能搜索事件
     var onSearchUserChat = function(str) {
-        $(document.body).trigger('scrollcontent.onSearchUserChat',[{
+        $body.trigger('scrollcontent.onSearchUserChat',[{
           uid: userInfo.userId ,
           str: str
         }]);
     }
     // 暴露修改状态事件
     var onUpdateUserState = function(type,handleType) {
-        $(document.body).trigger('scrollcontent.onUpdateUserState',[{
+        $body.trigger('scrollcontent.onUpdateUserState',[{
             type : type,
             handleType : handleType ,
             userId: userInfo.userId
@@ -128,7 +72,7 @@
     // 推送转接事件
     var onTransfer = function(uid,uname) {
         clearScrollContent();
-        $(document.body).trigger('scrollcontent.onTransfer',[{
+        $body.trigger('scrollcontent.onTransfer',[{
             uid : uid,
             userName : uname
         }]);
@@ -646,6 +590,7 @@
 
     var parseDOM = function() {
         $rootNode = $(node);
+        $body = $(document.body);
     };
 
     var onReceive = function(value,data) {
@@ -657,14 +602,61 @@
     };
 
     var bindLitener = function() {
-        $(document.body).on('core.onload',onloadHandler);
-        $(document.body).on('core.receive',onReceive);
+        // --------------------------- 接收推送函数 ---------------------------
+        $body.on('core.onload',onloadHandler);
+        $body.on('core.receive',onReceive);
+        $body.on('textarea.send', function(ev) {
+            adminPushMessage(arguments[1]);
+        });
 
-        // $(document.body).on('scrollcontent.updateUserState', updateUserState);
-        // $(document.body).on('scrollcontent.transfer', onTransfer);
-        // $(document.body).on('scrollcontent.searchUserChat', searchUserChat);
+        $body.on("leftside.onselected", function() {
+          var params = arguments[1] ,
+              $chatContent = $rootNode.find('#chat');
 
-        // $(document.body).tr
+          userInfo = {
+            isStar: !!params.userData.ismark ,
+            isBlack: !!params.userData.isblack ,
+            isTransfer: !!params.userData.chatType ,
+            cid: params.data.cid ,
+            uid: global.id,
+            pid: params.data.pid,
+            sender : global.id,
+            userId: params.data.uid,
+            userSourceImage: userSourceMap[params.data.usource | params.data.source]
+          }
+
+          $chatContent.show();
+          $chatContent.find('.zc-newchat-tag , .js-user-ready-input').hide();
+          $(window).resize();
+
+          // 初始化历史记录
+          getChatListByOnline('chat', parseTpl, null, null, {
+            uid: params.data.uid ,
+            pid: params.data.pid
+          }, true, true);
+
+          // 初始化用户状态
+          initUserState({
+              star: !!params.userData.ismark ,
+              black: !!params.userData.isblack ,
+              transfer: !!params.userData.chatType
+          });
+        });
+
+        $body.on("leftside.onremove", function() {
+          clearScrollContent(arguments[1].uid);
+        });
+
+        $body.on("rightside.onChatSmartReply", function() {
+          var data = {
+            answer: arguments[1].data.msg ,
+            uid: userInfo.userId ,
+            pid: userInfo.pid
+          }
+
+          if (arguments[1].data.status === "1") adminPushMessage(data);
+        });
+
 
         // 拉黑/星标
         $rootNode.find('.js-addButton').on('click','.js-goOut', function(event) {
