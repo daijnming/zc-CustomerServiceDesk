@@ -2840,7 +2840,7 @@ ul {
 .tab-content  li.user-list-item .icon.weixin img {
     display: inline-block;
 }
-.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img {
+.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img,, .tab-content  li.user-list-item .icon.offline.app img {
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
@@ -2864,7 +2864,7 @@ ul {
 .tab-content  li.user-list-item.history .icon {
     background-color: #ccc !important;
 }
-.tab-content  li.user-list-item .icon.offline, .tab-content  li.user-list-item .icon.laptop.offline, .tab-content  li.user-list-item .icon.mobile.offline {
+.tab-content  li.user-list-item .icon.offline, .tab-content  li.user-list-item .icon.laptop.offline, .tab-content  li.user-list-item .icon.mobile.offline, .tab-content  li.user-list-item .icon.app.offline {
     background-color: #ccc;
 }
 
