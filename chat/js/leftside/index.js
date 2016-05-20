@@ -71,11 +71,10 @@ function LeftSide(node,core,window) {
                     'uid' : global.id
                 }
             }).success(function(ret) {
-                console.log($statusImage);
+
                 for(var i = 0;i < STATUSIMAGELIST.length;i++) {
                     $statusImage.removeClass(STATUSIMAGELIST[i]);
                 }
-                console.log(status);
                 $statusImage.addClass(STATUSIMAGELIST[status]);
             });
         } else {

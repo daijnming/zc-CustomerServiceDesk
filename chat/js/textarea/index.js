@@ -96,6 +96,9 @@ function TextArea(node,core,window) {
         //\n\r回车符,,,e.shiftKey是否按住shift键
         var str = $sendMessage.val();
         if(evt.keyCode == 13) {
+            if(str.length == 0 || /^\s+$/g.test(str)) {//判断输入框是否为空
+                    return false;
+                } 
             //有回车符，清空结束
             if(/^\n+$/g.test(str) || /^\r+$/g.test(str)) {
                 $sendMessage.val("")
@@ -151,7 +154,7 @@ function TextArea(node,core,window) {
         //控制输入框的位置
         $node.find(".js-btnSend").on("click",onbtnSendHandler);
         //发送按钮
-        $sendMessage.on("keydown",onEnterSendHandler);
+        $sendMessage.on("keypress",onEnterSendHandler);
         /*
          *
          qq表情
@@ -190,10 +193,10 @@ function TextArea(node,core,window) {
     };
     var onEmotionClickHandler = function() {
         //打开集合,默认qq表情为显示状态
-        $node.find("#faceGroup").show();
-        $node.find("#emojiGroup").hide();
-        $node.find(".icoLi").removeClass("active");
-        $node.find(".firsticoLi").addClass("active");
+        //$node.find("#faceGroup").show();
+        //$node.find("#emojiGroup").hide();
+       // $node.find(".icoLi").removeClass("active");
+        //$node.find(".firsticoLi").addClass("active");
         ZC_Face.show();
         ZC_Face.emojiShow();
 
