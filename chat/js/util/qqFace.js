@@ -158,7 +158,7 @@ var ZC_Face = {
                 var ico = _this.emojiReg.exec(str);
                 var path = _this.emojiImagePath[ico[0]];
 
-                str = str.replace(ico[0],'<img src="' + _this.emojiPath + path + '" border="0" />',1);====
+                str = str.replace(ico[0],'<img src="' + _this.emojiPath + path + '" border="0" />',1);
             }
         }
         return str;

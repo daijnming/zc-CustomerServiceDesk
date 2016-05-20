@@ -97,7 +97,6 @@ function TextArea(node,core,window) {
         var str = $sendMessage.val();
         if(evt.keyCode == 13) {
             if(str.length == 0 || /^\s+$/g.test(str)) {//判断输入框是否为空
-                  
                     return false;
                 } 
             //有回车符，清空结束
