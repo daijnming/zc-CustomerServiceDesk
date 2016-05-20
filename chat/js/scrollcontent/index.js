@@ -11,24 +11,24 @@
     var API = {
         http : {
             chatList : {
-                'chat' : 'admin/get_chatdetail.action',
-                'hchat' : 'admin/get_chatdetail.action'
+                'chat' : '/chat/get_chatdetail.action',
+                'hchat' : '/chat/get_chatdetail.action'
             },
 
             status : {
                 black : {
-                    add : 'admin/add_blacklist.action',
-                    del : 'admin/delete_blacklist.action'
+                    add : '/chat/add_blacklist.action',
+                    del : '/chat/delete_blacklist.action'
                 },
                    star : {
-                    add : 'admin/add_marklist.action',
-                    del : 'admin/delete_marklist.action'
+                    add : '/chat/add_marklist.action',
+                    del : '/chat/delete_marklist.action'
                 }
             },
 
-            getOtherAdmin : 'admin/getOhterAdminList.action',
-            userTransfer : 'admin/transfer.action',
-            searchChat : 'admin/internalChat1.action'
+            getOtherAdmin : '/chat/getOhterAdminList.action',
+            userTransfer : '/chat/transfer.action',
+            searchChat : '/chat/internalChat1.action'
         },
 
         tpl : {
