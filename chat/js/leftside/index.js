@@ -87,7 +87,7 @@ function LeftSide(node,core,window) {
                         }
                     }).success(function(ret) {
                         if(ret.status == 1) {
-                            $(window).unbind("onbeforeunload");
+                            $(window).unbind("beforeunload");
                             window.location.href = "/console/login";
                         }
                     });

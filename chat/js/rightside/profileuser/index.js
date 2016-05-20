@@ -43,7 +43,9 @@ var ProfileUser = function(node,core,userData) {
 					//组装对话页
 					// console.log(data);
 					data.userData["visit"] = onVisitHandle(data.userData['visitUrl'],data.userData['visitTitle']);
-					// data.userData['visit']=onVisitHandle();
+					if(typeof data.userData['params']==='string'){
+						data.userData['params'] = $.parseJSON($('<div>'+data.userData['params']+'</div>').html()) ;
+					}
 					var _html = doT.template(value)({
 							'item':data
 					});

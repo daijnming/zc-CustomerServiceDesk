@@ -76,7 +76,7 @@
 .tab-content  li.user-list-item .icon img {
     width: 100%;
     height: 100%;
-    border-radius:50%;
+    border-radius: 50%;
     display: none;
 }
 .tab-content  li.user-list-item .icon .badge {
@@ -94,6 +94,7 @@
 
 .tab-content  li.user-list-item .icon.app {
     background-position: -157px -235px;
+    background-color: #5adbf8;
 }
 .tab-content  li.user-list-item .icon.face {
     background-color: #60adf6;
@@ -145,6 +146,13 @@
 }
 .tab-content  li.user-list-item .item-detail .chat-detail {
     color: #ccc;
+    display: block;
+    width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 17px;
+    line-height: 17px;
 }
 .tab-content  li.user-list-item .item-detail .chat-detail.orange {
     color: #ffad01;
@@ -161,6 +169,10 @@
 }
 .badge.badge-red {
     background: #ff7878;
+}
+.bootbox {
+    width: 800px;
+    margin: auto;
 }
 .bootbox .modal-dialog .modal-body .bootbox-body .reqTableBox .reqMenuBox .fl .ls-light-green-btn.active {
     border: 1px solid #09aeb0;

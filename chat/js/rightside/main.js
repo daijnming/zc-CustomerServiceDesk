@@ -163,7 +163,7 @@ function RightSide(node,core,window) {
   var initData = function(data,userData){
       //初始化用户数据 -- 客户资料
       profileuser($('.js-tab-pane#profileuser'),core,userData);
-      console.log(userData);
+      // console.log(userData);
       //初始化用户自定义配置
       client(node,core,userData);
       //获取用户偏好设置

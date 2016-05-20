@@ -64,16 +64,16 @@ ul {
     width: 100%;
 }
 .shadowLayer.content .quickContent  ul li:hover {
-    background-color: #ccc;
+    background-color: #eee;
 }
 .shadowLayer.content .quickContent  ul li.activeLine {
-    background-color: #ccc;
+    background-color: #eee;
 }
 .shadowLayer.content .quickContent  .detalBar input:hover {
-    background-color: #ccc;
+    background-color: #eee;
 }
 .shadowLayer.content .quickContent  .detalBar input.activeLine {
-    background-color: #ccc;
+    background-color: #eee;
 }
 .shadowLayer.content .quickContent  .leftContent .detalBar input {
     width: 65%;
@@ -156,10 +156,11 @@ ul {
     display: block;
     float: left;
     /*background-color:red;*/
-    color: #0d81c0;
+    /*color: #0d81c0;*/
     text-decoration: none;
     width: 73%;
     overflow: hidden;
+    margin-top: -3px;
 }
 .aChat {
     font-size: 14px;
@@ -184,6 +185,7 @@ ul {
 }
 .chatWarpi.show {
     display: block;
+    margin-top: -3px;
 }
 .sessionWarp {
     padding-bottom: 20px;
@@ -192,4 +194,15 @@ ul {
 /*****messagesuser*****/
 .rightBox .js-tab-pane .js-rightQuickLeft, .rightBox .js-tab-pane .js-rightQuickLRight {
     overflow: scroll;
+}
+
+/******profileuser 自定义字段值***********/
+.rightBox .custom-msg{
+  width:100%;
+  overflow-y: scroll;
+  word-break: break-all;
+  margin-bottom: 10px;
+}
+.rightBox .customCnf{
+  /*margin-top: 20px;*/
 }
