@@ -25,12 +25,12 @@ var ProfileUser = function(node,core,userData) {
 			if(!url.match(regexUrl))url='http://'+url;
 		}
 		if(url&&!title) {
-				return	'<a target="_black" class="aChat" style="font-size:14px;" href="'+url+'" title="'+url+'">'+url+'</a>';
+				return	'<a target="_black" class="js-aChat aChat" style="font-size:14px;" href="'+url+'" title="'+url+'">'+url+'</a>';
 		}
 		if(!url&&title) {
 				return  title;
 		}
-		return '<a target="_black" class="aChat" style="font-size:14px;" href="'+url+'" title="'+title+'">'+title+'</a>';
+		return '<a target="_black" class="js-aChat aChat" style="font-size:14px;" href="'+url+'" title="'+title+'">'+title+'</a>';
 	};
 	//初始化页面
 	var initUserInfo = function(){
@@ -114,8 +114,8 @@ var ProfileUser = function(node,core,userData) {
 								$this.addClass('warm');
 								//重新赋值
 								$this.val(oFieldRegex.This.inputText);
-								var $span = $this.siblings('span.tip');
-								$span.find('.alerticon').text(item.alert);
+								var $span = $this.siblings('.js-tip');
+								$span.find('.js-alerticon').text(item.alert);
 								var top = $this.offset().top-68;
 								var left= 63;
 								$span.css({
@@ -129,7 +129,7 @@ var ProfileUser = function(node,core,userData) {
 							}
 						}
 						if(_boo){
-							$this.siblings('span.tip').removeClass('show').find('.alerticon').text('');
+							$this.siblings('.js-tip').removeClass('show').find('.js-alerticon').text('');
 							$this.removeClass('warm');
 							isSubmit = true;
 						}
@@ -153,12 +153,12 @@ var ProfileUser = function(node,core,userData) {
 	var onSessionUrl = function(){
 		var ruler = $('.aChat');
 		if(ruler.length>0){
-			var chatWarpW = $('.chatWarp').width();
-			var aChatW = $('.aChat').text($('.aChat').text())[0].offsetWidth
+			var chatWarpW = $('.js-chatWarp').width();
+			var aChatW = $('.js-aChat').text($('.js-aChat').text())[0].offsetWidth
 			if(aChatW >= chatWarpW){
-				$('.chatWarpi').addClass('show');
+				$('.js-chatWarpi').addClass('show');
 			}else{
-				$('.chatWarpi').removeClass('show');
+				$('.js-chatWarpi').removeClass('show');
 			}
 		}
 	};

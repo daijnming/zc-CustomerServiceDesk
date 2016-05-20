@@ -5,10 +5,10 @@
                     <ul>
                       {{  for(var i=0;i<it.list.length;i++){ }}
                       {{ var item = it.list[i]; }}
-                      <li class="detalBar" gid="{{=item.groupId}}">
+                      <li class="js-detalBar detalBar" gid="{{=item.groupId}}">
                         <input type="text" value={{=item.groupName}} utype="left"/>
-                        <span class="delLeftGroup">删除</span>
-                        <span class="upLeftGroup">置顶</span>
+                        <span class="js-delLeftGroup delLeftGroup">删除</span>
+                        <span class="js-upLeftGroup upLeftGroup">置顶</span>
                       </li>
                       {{ } }}
                     </ul>
@@ -21,10 +21,10 @@
                           {{var itemRep = it.list[i]["quickreply"]; }}
                           {{ if(itemRep && itemRep.length>0) { }}
                             {{ for(var j=0;j<itemRep.length;j++) { }}
-                                <li class="detalBar hide" gid={{=itemRep[j]["groupId"]}} qid={{=itemRep[j]["id"]}}>
+                                <li class="js-detalBar detalBar hide" gid={{=itemRep[j]["groupId"]}} qid={{=itemRep[j]["id"]}}>
                                   <input type="text" utype="right" value={{=itemRep[j]["value"]}} />
-                                  <span class=delRightRep>删除</span>
-                                  <span class="upRightRep">置顶</span>
+                                  <span class="js-delRightRep delRightRep">删除</span>
+                                  <span class="js-upRightRep upRightRep">置顶</span>
                                 </li>
                             {{ } }}
                           {{ } }}

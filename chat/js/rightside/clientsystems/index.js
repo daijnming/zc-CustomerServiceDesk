@@ -43,8 +43,8 @@ var Client = function(node,core,data){
           $(clientNav).removeClass('hide');
           for(var i=0;i<data.length;i++){
               for(var tmp in data[i]){
-                  $(clientSysIframe).height($(".rightBox .tab-content").height());
-                  $(clientSysIframe).width($(".rightBox .tab-content").width());
+                  $(clientSysIframe).height($(node).find('.js-tab-content').height());
+                  $(clientSysIframe).width($(node).find('.js-tab-content').width());
                   $(dropdownMenu).attr('addrurl',data[i][tmp]).attr('data-toggle','tab');
                   $(dropdownMenu).on('click',function(){
                       $(clientSysIframe).attr("src", $(dropdownMenu).attr('addrurl')).ready();
@@ -92,8 +92,8 @@ var Client = function(node,core,data){
     $(dropdownListMenu).removeClass('show').animate({'margin-top':'-200'},500);
     var $this = $(this);
   	mainJson.showClientSys = $this.index() + 1;
-  	$(clientSysIframe).height($(".rightBox .tab-content").height());
-  	$(clientSysIframe).width($(".rightBox .tab-content").width());
+    $(clientSysIframe).height($(node).find('.js-tab-content').height());
+    $(clientSysIframe).width($(node).find('.js-tab-content').width());
   	$(clientSysIframe).attr("src", $this.find('a').attr('addrurl')).ready();
   }
   //二级iframe菜单点击事件

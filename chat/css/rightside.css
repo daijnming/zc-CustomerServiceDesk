@@ -1,189 +1,195 @@
-ul{
-  list-style: none;
-  margin: 0;
-  padding: 0;
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
-#btn{
-  z-index: 100;
+#btn {
+    z-index: 100;
 }
-.shadowLayer.content{
-    width:100%;
+.shadowLayer.content {
+    width: 100%;
     height: 100%;
     margin: 0 auto;
     background-color: #ddd;
     text-align: left;
-  }
-  .shadowLayer.content .quickContent{
-    width:100%;
+}
+.shadowLayer.content .quickContent {
+    width: 100%;
     height: 400px;
     background-color: #fff;
     position: relative;
-  }
-  .shadowLayer.content .quickContent .quickLeft{
+}
+.shadowLayer.content .quickContent ul {
+    position: relative;
+    overflow: hidden;
+}
+.shadowLayer.content .quickContent .quickLeft {
     float: left;
     width: 35%;
     height: 100%;
     border-right: 1px solid #ccc;
-  }
-  .shadowLayer.content .quickContent .quickRight{
+}
+.shadowLayer.content .quickContent .quickRight {
     float: left;
-    width:64.8%;
+    width: 64.8%;
     height: 100%;
-  }
-  .shadowLayer.content .quickContent .leftContent{
+}
+.shadowLayer.content .quickContent .leftContent {
 
-    width:100%;
+    width: 100%;
     height: 370px;
     overflow: scroll;
-  }
-  .shadowLayer.content .quickContent .rightContent{
+}
+.shadowLayer.content .quickContent .rightContent {
 
-    width:100%;
+    width: 100%;
     height: 370px;
     overflow: scroll;
-  }
-  .shadowLayer.content .quickContent a{
+}
+.shadowLayer.content .quickContent a {
     bottom: 0;
     display: inline-block;
     height: 30px;
     text-align: center;
-    color:#428bca;
-    text-decoration:none;
+    color: #428bca;
+    text-decoration: none;
     font-family: 'Armata', sans-serif;
     line-height: 30px;
     border-top: 1px solid #ccc;
-  }
-  .shadowLayer.content .quickContent  a{
-      width:100%;
-  }
-  .shadowLayer.content .quickContent  ul li:hover{
-      background-color: #ccc;
-  }
-  .shadowLayer.content .quickContent  ul li.activeLine{
-      background-color: #ccc;
-  }
-  .shadowLayer.content .quickContent  .detalBar input:hover{
+}
+.shadowLayer.content .quickContent  a {
+    width: 100%;
+}
+.shadowLayer.content .quickContent  ul li {
+    width: 100%;
+}
+.shadowLayer.content .quickContent  ul li:hover {
     background-color: #ccc;
-  }
-  .shadowLayer.content .quickContent  .detalBar input.activeLine{
+}
+.shadowLayer.content .quickContent  ul li.activeLine {
     background-color: #ccc;
-  }
-    .shadowLayer.content .quickContent  .leftContent .detalBar input{
-      width: 65%;
-      background-color: transparent;
-    }
-    .shadowLayer.content .quickContent  .rightContent .detalBar input{
-      width:80%;
-      background-color: transparent;
-    }
-    .shadowLayer.content .quickContent  .detalBar input{
-      display: inline-block;
-      padding-left: 10px;
-      height: 30px;
-      font-size: 14px;
-      border: 0;
-      outline: none;
-    }
-    .shadowLayer.content .quickContent  .detalBar span{
-      display: none;
-      float: right;
-      margin-right: 10px;
-      font-size: 12px;
-      color:#38bfbe;
-      cursor: pointer;
-      line-height: 30px;
-    }
-    .shadowLayer.content .quickContent  .detalBar:hover span{
-        display: block;
-    }
-    .shadowLayer.content .quickContent  .rightContent li.detalBar.hide{
-      display: none;
-    }
+}
+.shadowLayer.content .quickContent  .detalBar input:hover {
+    background-color: #ccc;
+}
+.shadowLayer.content .quickContent  .detalBar input.activeLine {
+    background-color: #ccc;
+}
+.shadowLayer.content .quickContent  .leftContent .detalBar input {
+    width: 65%;
+    background-color: transparent;
+}
+.shadowLayer.content .quickContent  .rightContent .detalBar input {
+    width: 80%;
+    background-color: transparent;
+}
+.shadowLayer.content .quickContent  .detalBar input {
+    display: inline-block;
+    padding-left: 10px;
+    height: 30px;
+    font-size: 14px;
+    border: 0;
+    outline: none;
+}
+.shadowLayer.content .quickContent  .detalBar span {
+    display: none;
+    float: right;
+    margin-right: 10px;
+    font-size: 12px;
+    color: #38bfbe;
+    cursor: pointer;
+    line-height: 30px;
+}
+.shadowLayer.content .quickContent  .detalBar:hover span {
+    display: block;
+}
+.shadowLayer.content .quickContent  .rightContent li.detalBar.hide {
+    display: none;
+}
 
-    .shadowLayer.content .quickContent  .detalBar span.hide{
-      display: none;
-    }
+.shadowLayer.content .quickContent  .detalBar span.hide {
+    display: none;
+}
 
 /****homeuser css***/
-.js-tab-pane#profileuser.showBg{
-  background:url(../assets/images/noOnlinePerson.png) center  no-repeat
+.js-tab-pane#profileuser.showBg {
+    background: url(../assets/images/noOnlinePerson.png) center no-repeat
 }
-.rightBox .js-panel-body .js-tab-pane#homeuser p.searchBot{
-  margin: 0 0 10px;
+.rightBox .js-panel-body .js-tab-pane#homeuser p.searchBot {
+    margin: 0 0 10px;
 }
-
 
 /****clientSystem*****/
-.js-panel-body  .dropdown  ul.js-dropdown-menu{
-  text-align: center;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  width:100%;
-  margin: 0 auto;
-  margin-top: -200px;
-  opacity:1;
+.js-panel-body  .dropdown  ul.js-dropdown-menu {
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: -200px;
+    opacity: 1;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li{
-  border-bottom: 1px dashed #ddd;
-  background-color: #f7fafa;
+.js-panel-body .dropdown ul.js-dropdown-menu li {
+    border-bottom: 1px dashed #ddd;
+    background-color: #f7fafa;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li a{
-  text-align: center;
-  height: 30px;
-  line-height: 30px;
-  font-size: 14px;
-  color:#999;
-  cursor: pointer;
+.js-panel-body .dropdown ul.js-dropdown-menu li a {
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li:hover,.js-panel-body .dropdown ul.js-dropdown-menu li:hover a{
-  background-color: #09aeb0;
-  color:#fff;
+.js-panel-body .dropdown ul.js-dropdown-menu li:hover, .js-panel-body .dropdown ul.js-dropdown-menu li:hover a {
+    background-color: #09aeb0;
+    color: #fff;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li:last-child{
-  border-bottom: 0;
+.js-panel-body .dropdown ul.js-dropdown-menu li:last-child {
+    border-bottom: 0;
 }
-.js-panel-body .dropdown ul.js-dropdown-menu li a,.js-panel-body .dropdown ul.js-dropdown-menu li a:link,.js-panel-body .dropdown ul.js-dropdown-menu li a:visited,.js-panel-body .dropdown ul.js-dropdown-menu li a:active{
-  text-decoration: none;
+.js-panel-body .dropdown ul.js-dropdown-menu li a, .js-panel-body .dropdown ul.js-dropdown-menu li a:link, .js-panel-body .dropdown ul.js-dropdown-menu li a:visited, .js-panel-body .dropdown ul.js-dropdown-menu li a:active {
+    text-decoration: none;
 }
 
-.chatWarp{
-  display:block;
-  float:left;
-  /*background-color:red;*/
-  color: #0d81c0;
-  text-decoration:none;
-  width:73%;
-  overflow: hidden;
+.chatWarp {
+    display: block;
+    float: left;
+    /*background-color:red;*/
+    color: #0d81c0;
+    text-decoration: none;
+    width: 73%;
+    overflow: hidden;
 }
-.aChat{
-  font-size:14px;
-  /*visibility: hidden;*/
-  white-space: nowrap;
-  text-decoration: none;
-  color:#333;
+.aChat {
+    font-size: 14px;
+    /*visibility: hidden;*/
+    white-space: nowrap;
+    text-decoration: none;
+    color: #333;
 }
-.aChat:hover,.aChat:visited,.aChat:link,.aChat:active{
-  text-decoration: none;
-  color:#333;
+.aChat:hover, .aChat:visited, .aChat:link, .aChat:active {
+    text-decoration: none;
+    color: #333;
 }
-.aSession{
-  float: left;
+.aSession {
+    float: left;
 }
-.chatWarp i.hide{
-  display: none;
+.chatWarp i.hide {
+    display: none;
 }
 .chatWarpi {
-  float: left;
-  display: none;
+    float: left;
+    display: none;
 }
-.chatWarpi.show{
-  display: block;
+.chatWarpi.show {
+    display: block;
 }
-.sessionWarp{
-  padding-bottom: 20px;
+.sessionWarp {
+    padding-bottom: 20px;
 }
 
 /*****messagesuser*****/
-.rightBox .js-tab-pane .js-rightQuickLeft,.rightBox .js-tab-pane .js-rightQuickLRight{
-  overflow: scroll;
+.rightBox .js-tab-pane .js-rightQuickLeft, .rightBox .js-tab-pane .js-rightQuickLRight {
+    overflow: scroll;
 }
