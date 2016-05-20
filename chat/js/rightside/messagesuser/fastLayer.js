@@ -93,7 +93,7 @@ var Fastlayer = function(node,core,config) {
         if($this.siblings('input').attr('utype') == 'left') {
             title = alertList.l001;
             cId = $this.parent('.js-detalBar').attr('gid');
-            url = 'reply/delreplyGroup.action';
+            url = '/chat/reply/delreplyGroup.action';
             sendId = 'groupId';
             data = {
                 'groupId' : cId,

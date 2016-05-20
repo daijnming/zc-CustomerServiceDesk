@@ -143,17 +143,19 @@ var ZC_Face = {
                 //console.log(ico[0]);
 
                 str = str.replace(_this.reg2,'<img src="' + _this.path + path + '.gif" border="0" />',1);
-            }
-        }
 
-        var arr = str.match(_this.emojiReg);
-        for(var i = 0,
-            len = arr.length;i < len;i++) {
-            var ico = _this.emojiReg.exec(str);
-            var path = _this.emojiImagePath[ico[0]];
-            str = str.replace(ico[0],'<img src="' + _this.emojiPath + path + '" border="0" />',1);
-        }
-        console.log(str);
+            }
+
+
+            var arr = str.match(_this.emojiReg);
+            if(arr) {
+                for(var i = 0,
+                    len = arr.length;i < len;i++) {
+                    var ico = _this.emojiReg.exec(str);
+                    var path = _this.emojiImagePath[ico[0]];
+                    str = str.replace(ico[0],'<img src="' + _this.emojiPath + path + '" border="0" />',1);
+                }
+            }
         return str;
     },
     hasEmotion : function(str) {//将文本框内的表情字符转化为表情
