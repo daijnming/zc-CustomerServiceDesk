@@ -1,0 +1,36 @@
+    <div class="js-shadowLayer shadowLayer content">
+        <div class="js-quickContent quickContent">
+            <div class="js-quickLeft quickLeft">
+                <div class="js-content js-leftContent leftContent">
+                    <ul>
+                      {{  for(var i=0;i<it.list.length;i++){ }}
+                      {{ var item = it.list[i]; }}
+                      <li class="js-detalBar detalBar" gid="{{=item.groupId}}">
+                        <input type="text" value={{=item.groupName}} utype="left"/>
+                        <span class="js-delLeftGroup delLeftGroup">删除</span>
+                        <span class="js-upLeftGroup upLeftGroup">置顶</span>
+                      </li>
+                      {{ } }}
+                    </ul>
+                </div><a href="#0" class="js-addNewGroup" id="addNewGroup">+添加新分组</a>
+            </div>
+            <div class="js-quickRight quickRight">
+                <div class="js-content js-rightContent rightContent">
+                    <ul>
+                    {{for(var i=0;i<it.list.length;i++){ }}
+                          {{var itemRep = it.list[i]["quickreply"]; }}
+                          {{ if(itemRep && itemRep.length>0) { }}
+                            {{ for(var j=0;j<itemRep.length;j++) { }}
+                                <li class="js-detalBar detalBar hide" gid={{=itemRep[j]["groupId"]}} qid={{=itemRep[j]["id"]}}>
+                                  <input type="text" utype="right" value={{=itemRep[j]["value"]}} />
+                                  <span class="js-delRightRep delRightRep">删除</span>
+                                  <span class="js-upRightRep upRightRep">置顶</span>
+                                </li>
+                            {{ } }}
+                          {{ } }}
+                    {{ } }}
+                    </ul>
+                </div><a href="#0" class="js-addNewRep" id="addNewRep">+添加新回复</a>
+            </div>
+        </div>
+    </div>
