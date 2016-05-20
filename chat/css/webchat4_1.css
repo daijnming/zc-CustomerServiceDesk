@@ -1,3 +1,16 @@
+#user_menu i.connection_icon {
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+#user_menu i.connection_icon.online {
+    background-image: url("../img/online.png");
+}
+#user_menu i.connection_icon.buzy {
+    background-image: url("../img/busy.png");
+}
 #main-container #left-navigation .header-box-yy #user_menu .status-user.active {
     height: 92px !important;
     display: block;
