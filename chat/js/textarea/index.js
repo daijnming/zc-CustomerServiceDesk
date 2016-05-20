@@ -60,37 +60,32 @@ function TextArea(node,core,window) {
             'answer' : '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />',
             'uid' : currentUid,
             'cid' : currentCid,
-            'date': +new Date()//时间戳
+            'date' : +new Date()//时间戳
         }]);
     };
 
     var onbtnSendHandler = function(evt) {
-        var str = $sendMessage.val();
-
-           /*if(/^\n+$/g.test(str)||/^\r+$/g.test(str)){
-            alert();
-                $sendMessage.val("")
-            }*/
+        var str = ZC_Face.convertToEmoji($sendMessage.val());
         if(str.length == 0 || /^\s+$/g.test(str)) {//判断输入框是否为空
-                $sendMessage.val("")
-                return false;
+            $sendMessage.val("")
+            return false;
         } else {
-               $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
-                    'answer' : str,
-                    'uid' : currentUid,
-                    'cid' : currentCid,
-                    'date': +new Date()
-                }]);
+            $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
+                'answer' : str,
+                'uid' : currentUid,
+                'cid' : currentCid,
+                'date' : +new Date()
+            }]);
         }
         $sendMessage.val("");
         //清空待发送框
     };
     //智能回复
     var onIntelligencereplyHandler = function(evt,data) {
-        if(data.data.status=="2"){
+        if(data.data.status == "2") {
             $sendMessage.val(data.data.msg).focus();
         }
-        
+
     }
     //快捷回复
     var onQuickreplyHandler = function(evn,data) {
@@ -102,15 +97,15 @@ function TextArea(node,core,window) {
         var str = $sendMessage.val();
         if(evt.keyCode == 13) {
             //有回车符，清空结束
-            if(/^\n+$/g.test(str)||/^\r+$/g.test(str)){
+            if(/^\n+$/g.test(str) || /^\r+$/g.test(str)) {
                 $sendMessage.val("")
                 return false;
-            }else{
+            } else {
                 onbtnSendHandler()
                 $sendMessage.val("")
             }
         }
-       
+
     };
     var onloadHandler = function(evt,data) {
         $node.find("img.js-my-logo").attr("src",data.face);
