@@ -60,7 +60,7 @@ var ProfileUser = function(node,core,userData) {
 
 	//保存客户资料字段值
 	var onTextSaveData = function(val,obj){
-		var oUrl = 'admin/modify_userinfo.action',
+		var oUrl = '/chat/admin/modify_userinfo.action',
 				sendData = {},
 				type = $(obj).attr('otype'),
 				reviceData={};//通知左侧用户列表
