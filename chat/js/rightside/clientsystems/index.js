@@ -25,7 +25,7 @@ var Client = function(node,core,data){
     $.ajax({
   		type:"post",
   		cache:false,
-  		url:'admin/getIframe.action',
+  		url:'/chat/admin/getIframe.action',
   		data:{
   		 uid:global.id,
   		 userId:data.uid

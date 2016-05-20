@@ -21,7 +21,7 @@ var HomeUser = function(node,core,config) {
 	$(relevantSearchHideBtn).hide();
 	$(robotAnswer).find('a')[0].innerHTML='';
 	$(sugguestions).find('ul')[0].innerHTML='';
-	var searchUrl = global.baseUrl + "admin/internalChat1.action";
+	var searchUrl = '/chat/admin/internalChat1.action";
 	$.ajax({
 		type:"post",
 		url:searchUrl,
