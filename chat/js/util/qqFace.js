@@ -3,7 +3,7 @@
  * @author daijm
  */
 var weixinJson = require('./face/weixin.json');
-var weixinSymbol = require('./face/weixinSymbol.json');
+var weixinSymbol = require('./face/weixinsymbol.json');
 var unicode = require('./unicode.js');
 var ZC_Face = {
     initConfig : function(options,callback) {//将表情集合预加载
