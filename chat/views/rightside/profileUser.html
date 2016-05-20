@@ -111,21 +111,22 @@
         </div>
     </li>
 </ul>
-
-<!----用户自定义字段 显示---->
-<!-- $.parseJSON($('<div>'+userData.userData.params+'</div>').html()) -->
+<!--用户自定义字段 显示-->
 {{if(it.item.userData['params']){}}
-
-{{}}}
+<h4 style="margin-top: 40px;">自定义字段</h4>
 <div class="customCnf">
-  <ul>
-    <li class="clearfix">
-        <div class="userTypeName">
-            自定义字段1：
-        </div>
-        <div class="custom-msg">
-            asdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfas
-        </div>
-    </li>
-  </ul>
+ <ul>
+{{for(var key in it.item.userData['params']){}}
+{{var item = it.item.userData['params'][key];}}
+   <li class="clearfix">
+       <div class="userTypeName">
+           {{=key}}
+       </div>
+       <div class="custom-msg">
+           {{=item}}
+       </div>
+   </li>
+ {{}}}
+ </ul>
 </div>
+{{}}}
