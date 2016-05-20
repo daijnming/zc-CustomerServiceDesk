@@ -32,7 +32,7 @@ var Client = function(node,core,data){
   	   },
   		dataType:"json",
   		success:function(data){
-        // data = [{'机器人':'http://sobot.com'}];
+        // data = [{'机器人':'baidu.com'}];
         // data = [{'机器人机器人机器人机器人':'http://baidu.com'},{'qq':'http://www.qq.com'}];
         //TODO 三种情况  返回值为空  返回值为1  返回值大于1
   			if(data.length<1)

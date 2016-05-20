@@ -156,10 +156,11 @@ ul {
     display: block;
     float: left;
     /*background-color:red;*/
-    color: #0d81c0;
+    /*color: #0d81c0;*/
     text-decoration: none;
     width: 73%;
     overflow: hidden;
+    margin-top: -3px;
 }
 .aChat {
     font-size: 14px;
@@ -184,6 +185,7 @@ ul {
 }
 .chatWarpi.show {
     display: block;
+    margin-top: -3px;
 }
 .sessionWarp {
     padding-bottom: 20px;
@@ -202,5 +204,5 @@ ul {
   margin-bottom: 10px;
 }
 .rightBox .customCnf{
-  margin-top: 20px;
+  /*margin-top: 20px;*/
 }
