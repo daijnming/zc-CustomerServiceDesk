@@ -227,7 +227,9 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onProfileUserInfo = function(evt,ret) {
+        console.log(ret.data.uid,data.uid,ret.data);
         if(ret.data.uid == data.uid && ret.data.name) {
+            alert();
             var name = ret.data.name;
             $userName.html(name);
         }
