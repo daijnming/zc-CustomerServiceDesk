@@ -111,3 +111,21 @@
         </div>
     </li>
 </ul>
+
+<!----用户自定义字段 显示---->
+<!-- $.parseJSON($('<div>'+userData.userData.params+'</div>').html()) -->
+{{if(it.item.userData['params']){}}
+
+{{}}}
+<div class="customCnf">
+  <ul>
+    <li class="clearfix">
+        <div class="userTypeName">
+            自定义字段1：
+        </div>
+        <div class="custom-msg">
+            asdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfasasdfasdfasdfasdfas
+        </div>
+    </li>
+  </ul>
+</div>

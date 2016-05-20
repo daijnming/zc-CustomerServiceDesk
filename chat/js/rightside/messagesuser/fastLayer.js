@@ -109,7 +109,7 @@ var Fastlayer = function(node,core,config) {
                 'userId' : id
             };
         }
-        $this.text('确认删除');
+        $this.text('确认删除').css('color','red');
         //确认删除
         if($this.hasClass('sureDel')) {
             // if(confirm(title)){
@@ -385,8 +385,8 @@ var Fastlayer = function(node,core,config) {
     var onCancalDel = function() {
         $(node).find('.js-delLeftGroup').removeClass('sureDel');
         $(node).find('.js-delRightRep').removeClass('sureDel');
-        $(oFastLeft).find('.js-delLeftGroup').text('删除');
-        $(oFastRight).find('.js-delLeftRep').text('删除');
+        $(oFastLeft).find('.js-delLeftGroup').text('删除').css('color','#38bfbe');
+        $(oFastRight).find('.js-delLeftRep').text('删除').css('color','#38bfbe');
     };
     var bindLitener = function() {
         onloadHandler();
