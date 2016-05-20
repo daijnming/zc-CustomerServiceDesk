@@ -162,6 +162,10 @@
 .badge.badge-red {
     background: #ff7878;
 }
+.bootbox {
+    width:800px;
+    margin:auto;
+}
 .bootbox .modal-dialog .modal-body .bootbox-body .reqTableBox .reqMenuBox .fl .ls-light-green-btn.active {
     border: 1px solid #09aeb0;
     background: #09aeb0;
