@@ -190,10 +190,10 @@ function TextArea(node,core,window) {
     };
     var onEmotionClickHandler = function() {
         //打开集合,默认qq表情为显示状态
-        $node.find("#faceGroup").show();
-        $node.find("#emojiGroup").hide();
-        $node.find(".icoLi").removeClass("active");
-        $node.find(".firsticoLi").addClass("active");
+        //$node.find("#faceGroup").show();
+        //$node.find("#emojiGroup").hide();
+       // $node.find(".icoLi").removeClass("active");
+        //$node.find(".firsticoLi").addClass("active");
         ZC_Face.show();
         ZC_Face.emojiShow();
 
