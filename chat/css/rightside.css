@@ -195,3 +195,12 @@ ul {
 }
 
 /******profileuser 自定义字段值***********/
+.rightBox .custom-msg{
+  width:100%;
+  overflow-y: scroll;
+  word-break: break-all;
+  margin-bottom: 10px;
+}
+.rightBox .customCnf{
+  margin-top: 20px;
+}
