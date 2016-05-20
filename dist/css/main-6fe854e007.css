@@ -2840,7 +2840,8 @@ ul {
 .tab-content  li.user-list-item .icon.weixin img {
     display: inline-block;
 }
-.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img,, .tab-content  li.user-list-item .icon.offline.app img {
+
+.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img,.tab-content  li.user-list-item .icon.offline.app img {
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
