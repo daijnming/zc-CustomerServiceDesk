@@ -84,6 +84,7 @@ var ProfileUser = function(node,core,userData) {
 					}else{
 						reviceData.name='';
 					}
+					console.log(sendData);
 					$(document.body).trigger('rightside.onProfileUserInfo',[{
 							'data':reviceData
 					}]);
@@ -95,21 +96,21 @@ var ProfileUser = function(node,core,userData) {
 	 	This:this,
 		onTextBlurRegex:function(){
 			var $this =$($(this)[0]);
-			var isSubmit = false;//是否通过验证提交用户资料字段
 			if($this){
 				var val = $this.val().trim().replace(/[ ]/g,'');
 				var _cur = regExUserInfo[$this.attr('otype')];
 				(function(_cur,val,$this){
-					var _boo=true;
+					var _isRegexPass=true,//是否通过规则验证
+					 		_isSubmit = false;//是否通过验证提交用户资料字段
 					//判断值是否有改变 没改变就不提接口
 					if(oFieldRegex.This.inputText == val){
-						isSubmit=false;
+						_isSubmit=false;
 					}else{
 						//正则匹配
 						for(var i=0;i<_cur.length;i++){
 							var item = _cur[i];
 							if(!item.regex.test(val)){
-								_boo=false;
+								_isRegexPass=false;
 								//加警告框
 								$this.addClass('warm');
 								//重新赋值
@@ -128,26 +129,27 @@ var ProfileUser = function(node,core,userData) {
 								break;
 							}
 						}
-						if(_boo){
-							$this.siblings('.js-tip').removeClass('show').find('.js-alerticon').text('');
-							$this.removeClass('warm');
-							isSubmit = true;
-						}
+					}
+					if(_isRegexPass){
+						$this.siblings('.js-tip').removeClass('show').find('.js-alerticon').text('');
+						$this.removeClass('warm');
+						_isSubmit = true;
 					}
 					//保存 提接口
-					if(isSubmit)
+					if(_isSubmit){
 						onTextSaveData(val,$this);
+					}
 				})(_cur,val,$this);
 			}
 		},
 		onTextFocusRegex:function(){
 			oFieldRegex.This.inputText = $(this).val();
-			$(this).select();
+			// $(this).select();
 		}
 	};
 	var onSelected = function(){
 		var val=$(this).find('option:selected').val();
-			onTextSaveData(val,$(this)[0]);
+		onTextSaveData(val,$(this)[0]);
 	};
 	//对话页 url显示
 	var onSessionUrl = function(){
@@ -170,13 +172,15 @@ var ProfileUser = function(node,core,userData) {
 			_y = _date.getFullYear();
 			_m = _date.getMonth()+1 < 10?'0'+ (Number( _date.getMonth())+1):_date.getMonth()+1;
 			_d = _date.getDate()<10? '0'+_date.getDate():_date.getDate();
-			var _bir = _y+'-'+_m+'-'+_d
+			var _bir = _y+'-'+_m+'-'+_d;
 			onTextSaveData(_bir,$(this)[0]);
 		});
 	};
 	var bindLitener = function() {
-		$(node).delegate('.js-userTnp','blur',oFieldRegex.onTextBlurRegex);
-		$(node).delegate('.js-userTnp','focus',oFieldRegex.onTextFocusRegex);
+		$(node).on('blur','.js-userTnp',oFieldRegex.onTextBlurRegex);
+		$(node).on('focus','.js-userTnp',oFieldRegex.onTextFocusRegex);
+		// $(node).delegate('.js-userTnp','blur',oFieldRegex.onTextBlurRegex);
+		// $(node).delegate('.js-userTnp','focus',oFieldRegex.onTextFocusRegex);
 		$(node).delegate('#sex','change',onSelected);
 	};
 	var initPlugsin = function(){
