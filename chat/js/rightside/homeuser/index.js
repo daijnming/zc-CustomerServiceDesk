@@ -120,65 +120,65 @@ var onSuggestions= function(){
 	},100);
 };
 	//查询智能回复
-	var onSerchContent = function(evn){
-		var $this = $(this);
-		// console.log(this.value)
-		if($this.val().length === 0)return;
-		if(evn.keyCode == 13)
-		{
-			quickSearch($this.val());
-			$(homeuser).find('.js-robotBackHideBtn').hide();
+var onSerchContent = function(evn){
+	var $this = $(this);
+	// console.log(this.value)
+	if($this.val().length === 0)return;
+	if(evn.keyCode == 13)
+	{
+		quickSearch($this.val());
+		$(homeuser).find('.js-robotBackHideBtn').hide();
+	}
+};
+//用户tab保存切换保存智能搜索信息
+var onTabSwitch = function(evn,data){
+	quickSearch(data.data);
+};
+//聊天页面点击内容获取智能搜索答案
+var onGetReplyByChat = function(evn,data){
+	// data.str data.uid
+	//显示智能回复页面
+	var homeNav = $(node).find('.js-panel-body .js-nav-tabs #homeuser');
+	var homeBody = $(node).find('.js-panel-body .js-tab-content');
+	var oId = $(homeNav).attr('id');
+	$(homeNav).addClass('active').siblings('li').removeClass('active');
+	$(homeBody).find('.js-tab-pane').each(function(i,v){
+		if($(v).attr('id') == oId.toString()){
+			$(v).addClass('active in').siblings('div').removeClass('active in');
+			$(v).find('input').val(data.str);
+			quickSearch(data.str);
+			return;
 		}
-	};
-	//用户tab保存切换保存智能搜索信息
-	var onTabSwitch = function(evn,data){
-		quickSearch(data.data);
-	};
-	//聊天页面点击内容获取智能搜索答案
-	var onGetReplyByChat = function(evn,data){
-		// data.str data.uid
-		//显示智能回复页面
-		var homeNav = $(node).find('.js-panel-body .js-nav-tabs #homeuser');
-		var homeBody = $(node).find('.js-panel-body .js-tab-content');
-		var oId = $(homeNav).attr('id');
-		$(homeNav).addClass('active').siblings('li').removeClass('active');
-		$(homeBody).find('.js-tab-pane').each(function(i,v){
-			if($(v).attr('id') == oId.toString()){
-				$(v).addClass('active in').siblings('div').removeClass('active in');
-				$(v).find('input').val(data.str);
-				quickSearch(data.str);
-				return;
-			}
-		});
-	};
-	var parseDOM = function() {
-    homeuser = $(node).find('.js-tab-pane#homeuser');
-		robotDirectHideBtn = $(node).find('.js-homeUserBox .js-robotDirectHideBtn');
-		relevantSearchHideBtn = $(node).find('.js-homeUserBox .js-relevantSearchHideBtn');
-		robotAnswer = $(node).find('.js-robotAnswer');
-		sugguestions = $(node).find('.js-robotSugguestions');
-		robotBack = $(node).find('.js-robotBackHideBtn');
-	};
-  var onReceive = function(value,data) {
+	});
+};
+var parseDOM = function() {
+  homeuser = $(node).find('.js-tab-pane#homeuser');
+	robotDirectHideBtn = $(node).find('.js-homeUserBox .js-robotDirectHideBtn');
+	relevantSearchHideBtn = $(node).find('.js-homeUserBox .js-relevantSearchHideBtn');
+	robotAnswer = $(node).find('.js-robotAnswer');
+	sugguestions = $(node).find('.js-robotSugguestions');
+	robotBack = $(node).find('.js-robotBackHideBtn');
+};
+var onReceive = function(value,data) {
 
-  };
-	var onloadHandler = function(evt,data) {
+};
+var onloadHandler = function(evt,data) {
 
-	};
-	var bindLitener = function() {
-		$(document.body).on('leftside.onselected',onLoadUserInfo);//加载用户信息 点击左侧用户列表才会触发
-		$(document.body).on('scrollcontent.onSearchUserChat',onGetReplyByChat);//点击聊天内容获取智能回复
-		$(document.body).on('rightside.onTabSwitch',onTabSwitch);
-		$(robotBack).on('click',onBackAnswer);
-		$(homeuser).delegate('#quickSerch','keyup',onSerchContent);
-		$(robotDirectHideBtn).delegate('.js-quickSendBtn','click',onChatSmartReply);
-		$(robotAnswer).delegate('a','click',onChatSmartReply);
-		$(sugguestions).delegate('li','click',onSuggestions);
-	};
-	var init = function() {
-		parseDOM();
-		bindLitener();
-	};
-	init();
+};
+var bindLitener = function() {
+	$(document.body).on('leftside.onselected',onLoadUserInfo);//加载用户信息 点击左侧用户列表才会触发
+	$(document.body).on('scrollcontent.onSearchUserChat',onGetReplyByChat);//点击聊天内容获取智能回复
+	$(document.body).on('rightside.onTabSwitch',onTabSwitch);
+	$(robotBack).on('click',onBackAnswer);
+	$(homeuser).delegate('#quickSerch','keyup',onSerchContent);
+	$(robotDirectHideBtn).delegate('.js-quickSendBtn','click',onChatSmartReply);
+	$(robotAnswer).delegate('a','click',onChatSmartReply);
+	$(sugguestions).delegate('li','click',onSuggestions);
+};
+var init = function() {
+	parseDOM();
+	bindLitener();
+};
+init();
 };
 module.exports = HomeUser;

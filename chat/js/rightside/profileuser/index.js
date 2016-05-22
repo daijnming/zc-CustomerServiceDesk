@@ -187,10 +187,7 @@ var ProfileUser = function(node,core,userData) {
 	};
 	var initConfig = function(){
 		config.uid = data.data.uid;//用户id
-		// console.log(config.uid)
-
 		config.url_id = global.id;//url地址栏id
-		// console.log(config);
 		regExUserInfo = {
 			uname:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
@@ -210,8 +207,7 @@ var ProfileUser = function(node,core,userData) {
 			email:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'只允许字母、数字或下划线'},
-				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,60}$/,'alert':'最大输入限制60字符，请重新输入'}
-			],
+				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,60}$/,'alert':'最大输入限制60字符，请重新输入'}],
 			qq:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
