@@ -1,5 +1,6 @@
 function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片按钮，oChat获取用户信息
     var that = {};
+    var global = core.getGlobal();
     var AjaxUpload = require('../util/upload.js');
     var Alert = require('../util/modal/alert.js');
     //上传附件 插件
@@ -62,7 +63,10 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 var file = input.files[i];
                 oData.append(file.name,file);
             }
-
+            oData.append("type","msg");
+            oData.append("pid",global.pid);
+            oData.append("countTag",1);
+            oData.append("source",0);
             $.ajax({
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",
