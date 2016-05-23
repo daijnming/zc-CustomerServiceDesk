@@ -151,6 +151,7 @@ function Core(window) {
                 createNotification(value,103);
             } else if(value.type == 109 && value.status == 2) {
                 alert('另外一个窗口已经登录，您被强迫下线！');
+                $(window).unbind("beforeunload");
                 window.close();
                 window.location.href = "/console/login/";
             } else {

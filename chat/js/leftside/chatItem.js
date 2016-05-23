@@ -83,23 +83,27 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onRemove = function() {
-        $.ajax({
-            'url' : '/chat/admin/leave.action',
-            'data' : {
-                'cid' : data.cid,
-                'uid' : global.id,
-                'userId' : data.uid
-            },
-            'type' : 'post',
-            'dataType' : "json"
-        }).success(function(ret) {
-            if(manager.getCurrentUid() == data.uid) {
-                manager.setCurrentUid(null);
-            }
-            if(ret.status === 1) {
-                hide();
-            }
-        });
+        if(status == 'online') {
+            $.ajax({
+                'url' : '/chat/admin/leave.action',
+                'data' : {
+                    'cid' : data.cid,
+                    'uid' : global.id,
+                    'userId' : data.uid
+                },
+                'type' : 'post',
+                'dataType' : "json"
+            }).success(function(ret) {
+                if(manager.getCurrentUid() == data.uid) {
+                    manager.setCurrentUid(null);
+                }
+                if(ret.status === 1) {
+                    hide();
+                }
+            });
+        } else {
+            hide();
+        }
     };
 
     var insert = function(node) {
@@ -256,7 +260,6 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onTransfer = function(evt,ret) {
-        console.log(ret);
         if(ret.uid != data.uid) {
             return;
         }
