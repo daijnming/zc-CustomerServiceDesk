@@ -21,7 +21,7 @@ gulp.task('move-html',function(){
 gulp.task('rev',['move-html'],function(){
 	return gulp.src(['./dest/**/*.js','./dest/**/*.css','./dest/**/*.png','./dest/**/*.jpeg','./dest/**/*.jpg','./dest/**/*.gif','./dest/**/*.mp3']).
 	pipe(rev()).
-	pipe(gulpIf("*.js",removeLog())).
+	//ipipe(gulpIf("*.js",removeLog())).
 	pipe(gulp.dest('./dist')).
 	pipe(rev.manifest()).
 	pipe(gulp.dest('./'));
