@@ -7,6 +7,7 @@ rm rev-manifest.json
 cp -r chat/views dist
 cp -r chat/assets/fonts dist/
 cp -r chat/assets/css/font-awesome/fonts  dist/fonts/font-awesome
+cp -r chat/img/weixinType.png dist/img
 git status -s | egrep "^[ ]*D" | sed 's`^[ ]*D``' | xargs git rm
 git status -s | egrep "^[ ]*M" | sed 's`^[ ]*M``' | xargs git add
 git status -s  | egrep "^[ ]*\?" | sed 's`^[ ]*\?*``g' | xargs git add 
