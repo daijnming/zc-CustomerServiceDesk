@@ -5,7 +5,7 @@
     {{ if (it.list[i].senderType === 0) { }}
       <div class="msg userCus">
         <div class="msg_user fl">
-          <img src="http://img.sobot.com/chatres/common/face/pcType.png" class="msg_user_img">
+          <img src="{{=it.userSourceImage}}" class="msg_user_img">
         </div>
         <div class="msgContBox fl">
           <span class="msg_name">{{=it.list[i].senderName}}</span>
@@ -22,7 +22,7 @@
 
       <div class="msg workOrderCus">
         <div class="msg_user fr">
-          <img src="http://img.sobot.com/console/common/face/admin.png" class="msg_user_img">
+          <img src="{{=it.adminImage}}" class="msg_user_img">
         </div>
         <div class="msgContBox fr">
           <span class="msg_name">{{=it.list[i].senderName}}</span>

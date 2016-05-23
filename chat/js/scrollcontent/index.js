@@ -7,7 +7,7 @@
     var global;
     // 保存用户对话消息缓存
     var userChatCache = {};
-    var imageUrl = 'http://img.sobot.com/chat/adminres/common/face/';
+    var imageUrl = 'http://img.sobot.com/chatres/common/face/';
     var API = {
         http : {
             chatList : {
@@ -70,10 +70,10 @@
         }]);
     }
     // 推送转接事件
-    var onTransfer = function(uid,uname) {
+    var onTransfer = function(uid,uname, userId) {
         clearScrollContent();
         $body.trigger('scrollcontent.onTransfer',[{
-            uid : uid,
+            uid: userId ,
             userName : uname
         }]);
     }
@@ -211,6 +211,10 @@
                 'footer' : false
             });
 
+            ret.map(function(item) {
+              item.statusClass = item.status === 1 ? 'glyphicon-ok-sign' : 'glyphicon-minus-sign';
+            });
+
             dialog.show();
 
             loadFile.load(global.baseUrl + API.tpl.adminTable).then(function(tpl) {
@@ -248,7 +252,7 @@
 
                 if(ret.status === 1)
                     dialog.hide();
-                    onTransfer(uid,uname);
+                    onTransfer(uid,uname, userInfo.userId);
             });
         });
     }
@@ -257,7 +261,7 @@
             var chatText = $(this).html();
 
             if (chatText.indexOf('webchat_img_upload') !== -1) {
-              window.open();
+              window.open($(this).find('.webchat_img_upload').attr('src'));
             } else {
               onSearchUserChat(chatText);
             }
@@ -300,6 +304,7 @@
 
             _html = doT.template(tpl)({
               userSourceImage: userInfo.userSourceImage ,
+              adminImage: global.face ,
               list : list
             });
 
@@ -308,7 +313,11 @@
             setTimeout(function() {
 
               if (isScrollBottom) {
-                $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
+
+                lastImg.onload = function() {
+                  $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                }
 
                 // 获取当前窗口最低scrollTop
                 userChatCache[uid].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -333,9 +342,9 @@
 
               _html = doT.template(tpl)({
                   userSourceImage: userInfo.userSourceImage ,
+                  adminImage: global.face ,
                   list : appendList
               });
-
               if (isToTop) {
                 $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
                 $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
@@ -352,8 +361,11 @@
 
                     if (typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                   } else {
-                    $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-                    userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                    var img = $rootNode.find('#' + type).find('.js-panel-body').find('img').last()[0];
+                    img.onload = function() {
+                      $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                      userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                    }
                   }
                 }
               }
@@ -412,6 +424,8 @@
         }
 
         $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
+
+        if (!userInfo.from) $rootNode.find('.js-addButton').children('.js-transfer').addClass('hide');
     }
     var parseChat = {
         102 : function(data) {
@@ -442,7 +456,7 @@
     // 加入到某一个user的chche内
     var userPushMessage = function(data) {
         parseChat[data.type] && parseChat[data.type](data);
-        
+
         if (data[0].type === 111) {
           loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
               var _html;
@@ -622,7 +636,8 @@
             pid: params.data.pid,
             sender : global.id,
             userId: params.data.uid,
-            userSourceImage: userSourceMap[params.data.usource | params.data.source]
+            userSourceImage: userSourceMap[params.data.usource | params.data.source],
+            from: params.data.from === 'online'
           }
 
           $chatContent.show();
