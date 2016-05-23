@@ -36,7 +36,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
 
     var onFormDataUpHandler = function(uid,cid) {
         //支持formData则使用formData上传
-        if(!FormData) {
+        if(FormData) {
             var oData = new FormData();
             var input = $uploadBtn[0];
             //判断上传文件的扩展名是否符合上传标准
