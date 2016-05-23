@@ -76,11 +76,11 @@ ul {
     background-color: #eee;
 }
 .shadowLayer.content .quickContent  .leftContent .detalBar input {
-    width: 65%;
+    width: 60%;
     background-color: transparent;
 }
 .shadowLayer.content .quickContent  .rightContent .detalBar input {
-    width: 80%;
+    width: 75%;
     background-color: transparent;
 }
 .shadowLayer.content .quickContent  .detalBar input {
