@@ -65,7 +65,8 @@ function TextArea(node,core,window) {
     };
 
     var onbtnSendHandler = function(evt) {
-        var str = ZC_Face.convertToEmoji($sendMessage.val());
+        var str =$sendMessage.val(); //ZC_Face.convertToEmoji($sendMessage.val());
+        
         if(str.length == 0 || /^\s+$/g.test(str)) {//判断输入框是否为空
             $sendMessage.val("")
             return false;
@@ -96,17 +97,8 @@ function TextArea(node,core,window) {
         //\n\r回车符,,,e.shiftKey是否按住shift键
         var str = $sendMessage.val();
         if(evt.keyCode == 13) {
-            if(str.length == 0 || /^\s+$/g.test(str)) {//判断输入框是否为空
-                    return false;
-                } 
-            //有回车符，清空结束
-            if(/^\n+$/g.test(str) || /^\r+$/g.test(str)) {
-                $sendMessage.val("")
-                return false;
-            } else {
-                onbtnSendHandler()
-                $sendMessage.val("")
-            }
+            onbtnSendHandler()
+            return false;
         }
 
     };
@@ -154,7 +146,7 @@ function TextArea(node,core,window) {
         //控制输入框的位置
         $node.find(".js-btnSend").on("click",onbtnSendHandler);
         //发送按钮
-        $sendMessage.on("keypress",onEnterSendHandler);
+        $sendMessage.on("keydown",onEnterSendHandler);
         /*
          *
          qq表情
