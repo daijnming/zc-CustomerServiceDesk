@@ -137,7 +137,7 @@ var ZC_Face = {
         }else{
             return false;
         }
-        
+        console.log(str);
         //将匹配到的结果放到icoAry这个数组里面，来获取长度
         if(icoAry) {
             for(var i = 0;i < icoAry.length;i++) {
