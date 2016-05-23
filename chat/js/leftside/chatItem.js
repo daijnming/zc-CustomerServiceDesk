@@ -189,7 +189,6 @@ function Item(data,core,outer,from,manager) {
             'visibility' : 'hidden'
         });
     };
-
     var getUserData = function() {
         var promise = new Promise();
         var uid = data.uid;
@@ -256,14 +255,18 @@ function Item(data,core,outer,from,manager) {
         }
     };
 
-    var onTransfer = function(evt,data) {
-        var uid = data.uid;
+    var onTransfer = function(evt,ret) {
+        console.log(ret);
+        if(ret.uid != data.uid) {
+            return;
+        }
         manager.setCurrentUid(undefined);
         if(true) {
             hide();
         }
     };
     var bindListener = function() {
+        console.log(data);
         $body.on("scrollcontent.onUpdateUserState",onUserStatusChange);
         $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);
