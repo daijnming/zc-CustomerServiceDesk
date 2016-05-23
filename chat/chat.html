@@ -244,8 +244,10 @@
                                                 <a href="#0" id="gotoQuick" class="js-menua"  data-toggle="tab"><i class="js-fa-comments-o fa fa-comments-o1"></i> <span>智能回复</span></a>
                                             </li>
                                             <!--自定义菜单 dropdown clearfix hide -->
-                                            <li class="dropdown clearfix hide js-menu" id="clientSystem" >
+                                            <li class="js-dropdownNav dropdown clearfix hide js-menu" id="clientSystem" >
                                                 <a href="#0" class="js-dropdown-toggle js-menua dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> <i class="fa fa-navicon1"></i> <span>客户系统</span> <span style="display: none" class="caret"></span> </a>
+                                                <ul class="js-dropdown-menu dropdown-menus">
+                                                </ul>
                                                 <!--把此ul写到js中去了-->
                                                 <!-- <ul class="dropdown-menu dropdown-menu-right ifList" aria-labelledby="dropdownMenu2"> -->
                                                 <!-- </ul> -->
@@ -307,8 +309,8 @@
                                                 </div>
                                             </div>
                                             <!--自定义菜单-->
-                                            <div class="js-tab-pane tab-pane fade js-clientSystem " id="clientSystem"  style="padding: 0px">
-                                                <iframe id="clientSysIframe" style="border:0;height:100%;width:100%" scrolling="show"></iframe>
+                                            <div class="js-tab-pane tab-pane fade js-clientSystem js-clientSystemWrap" id="clientSystem"  style="padding: 0px">
+                                                <iframe class="js-clientSysIframe" id="clientSysIframe" style="border:0;height:100%;width:100%" scrolling="show"></iframe>
                                             </div>
                                         </div>
 
