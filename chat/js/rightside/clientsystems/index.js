@@ -1,9 +1,7 @@
 
 var Client = function(node,core,data){
-
   var global = core.getGlobal();
   //TODO 预加载对象
-  // var someOne;
   var clientNav,//自定义导航
       clientBody,//自定义窗体
       dropdownMenu,//自定义iframe菜单
@@ -88,9 +86,9 @@ var Client = function(node,core,data){
   };
   //二级菜单点击事件
   function showClientSys(){
+    var $this = $(this);
     //移除菜单
     $(dropdownListMenu).removeClass('show').animate({'margin-top':'-200'},500);
-    var $this = $(this);
   	mainJson.showClientSys = $this.index() + 1;
     $(clientSysIframe).height($(node).find('.js-tab-content').height());
     $(clientSysIframe).width($(node).find('.js-tab-content').width());

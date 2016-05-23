@@ -7,28 +7,28 @@
     var global;
     // 保存用户对话消息缓存
     var userChatCache = {};
-    var imageUrl = 'http://img.sobot.com/chatres/common/face/';
+    var imageUrl = 'http://img.sobot.com/chat/adminres/common/face/';
     var API = {
         http : {
             chatList : {
-                'chat' : '/chat/get_chatdetail.action',
-                'hchat' : '/chat/get_chatdetail.action'
+                'chat' : '/chat/admin/get_chatdetail.action',
+                'hchat' : '/chat/admin/get_chatdetail.action'
             },
 
             status : {
                 black : {
-                    add : '/chat/add_blacklist.action',
-                    del : '/chat/delete_blacklist.action'
+                    add : '/chat/admin/add_blacklist.action',
+                    del : '/chat/admin/delete_blacklist.action'
                 },
                    star : {
-                    add : '/chat/add_marklist.action',
-                    del : '/chat/delete_marklist.action'
+                    add : '/chat/admin/add_marklist.action',
+                    del : '/chat/admin/delete_marklist.action'
                 }
             },
 
-            getOtherAdmin : '/chat/getOhterAdminList.action',
-            userTransfer : '/chat/transfer.action',
-            searchChat : '/chat/internalChat1.action'
+            getOtherAdmin : '/chat/admin/getOhterAdminList.action',
+            userTransfer : '/chat/admin/transfer.action',
+            searchChat : '/chat/admin/internalChat1.action'
         },
 
         tpl : {

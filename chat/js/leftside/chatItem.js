@@ -230,6 +230,7 @@ function Item(data,core,outer,from,manager) {
         if(ret.data.uid == data.uid && ret.data.name) {
             var name = ret.data.name;
             $userName.html(name);
+            delete userDataCache[data.uid];
         }
     };
 

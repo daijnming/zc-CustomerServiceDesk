@@ -2,20 +2,18 @@
  * @author denzel.gou
  */
 
+var initail =false;
+
 var ProfileUser = function(node,core,userData) {
 	//TODO
 	var global=core.getGlobal();//全局对象
 	var data = userData,
 			config ={},
-	 		regExUserInfo=[];//保存用户验证信息
+	 		regExUserInfo=[],//保存用户验证信息
+			focusValue='';//移入鼠标前保存
 	//加载模版
 	var loadFile = require('../../util/load.js')();
 	var Promise = require('../../util/promise.js');
-	String.prototype.visualLength = function(){
-		var ruler = $('.aChat');
-		ruler.text(this);
-		return ruler[0].offsetWidth;
-	};
 
 	//TODO 处理对话页显示  此处只是页面显示 不影响页面重构 不需要使用模版
 	var onVisitHandle = function(url,title){
@@ -49,7 +47,7 @@ var ProfileUser = function(node,core,userData) {
 					var _html = doT.template(value)({
 							'item':data
 					});
-					$(node).append(_html);
+					$(node).html(_html);
 					//显示性别
 					$(node).find('#sex').val(data.userData['sex']);
 					promise.resolve();
@@ -57,53 +55,51 @@ var ProfileUser = function(node,core,userData) {
 			}
 			return promise;
 	};
-
 	//保存客户资料字段值
-	var onTextSaveData = function(val,obj){
+	var onTextSaveData = function(val,elm){
+		var uid = $(elm).attr("data-uid");
 		var oUrl = '/chat/admin/modify_userinfo.action',
 				sendData = {},
-				type = $(obj).attr('otype'),
+				type = $(elm).attr('otype'),
 				reviceData={};//通知左侧用户列表
-				sendData.uid=config.uid;
+				sendData.uid=uid;
 				sendData.sender = config.url_id;
 				if(type)sendData[type] = val;
 				$.ajax({
-				type:'post',
-				url:oUrl,
-				data:sendData,
-				dataType:'json',
-				success:function(data){
+						type:'post',
+						url:oUrl,
+						data:sendData,
+						dataType:'json',
+						success:function(data){
 					//去掉两端空格显示
-					$(obj).val(val);
-					reviceData.status=true;
-					reviceData.uid = config.uid;
-					//如果编辑的是姓名字段 则要传值给左侧栏显示
-					if($(obj).hasClass('userNameDyy'))
-					{
-						reviceData.name=val;
-					}else{
-						reviceData.name='';
-					}
-					console.log(sendData);
-					$(document.body).trigger('rightside.onProfileUserInfo',[{
-							'data':reviceData
-					}]);
+								$(elm).val(val);
+
+								reviceData.status=true;
+								reviceData.uid = uid;
+								//如果编辑的是姓名字段 则要传值给左侧栏显示
+								if($(elm).hasClass('userNameDyy'))
+								{
+									reviceData.name=val;
+								}else{
+									reviceData.name='';
+								}
+								// console.log(sendData);
+								$(document.body).trigger('rightside.onProfileUserInfo',[{
+										'data':reviceData
+								}]);
 				}
 			});
 	};
-
-	var oFieldRegex={
-	 	This:this,
-		onTextBlurRegex:function(){
-			var $this =$($(this)[0]);
+	var	onTextBlurRegex=function(){
+			var $this =$(this);
 			if($this){
 				var val = $this.val().trim().replace(/[ ]/g,'');
 				var _cur = regExUserInfo[$this.attr('otype')];
-				(function(_cur,val,$this){
+				// (function(_cur,val,$this){
 					var _isRegexPass=true,//是否通过规则验证
 					 		_isSubmit = false;//是否通过验证提交用户资料字段
 					//判断值是否有改变 没改变就不提接口
-					if(oFieldRegex.This.inputText == val){
+					if(focusValue == val){
 						_isSubmit=false;
 					}else{
 						//正则匹配
@@ -114,7 +110,7 @@ var ProfileUser = function(node,core,userData) {
 								//加警告框
 								$this.addClass('warm');
 								//重新赋值
-								$this.val(oFieldRegex.This.inputText);
+								$this.val(focusValue);
 								var $span = $this.siblings('.js-tip');
 								$span.find('.js-alerticon').text(item.alert);
 								var top = $this.offset().top-68;
@@ -139,13 +135,12 @@ var ProfileUser = function(node,core,userData) {
 					if(_isSubmit){
 						onTextSaveData(val,$this);
 					}
-				})(_cur,val,$this);
+				// })(_cur,val,$this);
 			}
-		},
-		onTextFocusRegex:function(){
-			oFieldRegex.This.inputText = $(this).val();
+		};
+	var onTextFocusRegex=function(){
+			focusValue = $(this).val();
 			// $(this).select();
-		}
 	};
 	var onSelected = function(){
 		var val=$(this).find('option:selected').val();
@@ -156,7 +151,7 @@ var ProfileUser = function(node,core,userData) {
 		var ruler = $('.aChat');
 		if(ruler.length>0){
 			var chatWarpW = $('.js-chatWarp').width();
-			var aChatW = $('.js-aChat').text($('.js-aChat').text())[0].offsetWidth
+			var aChatW = $('.js-aChat').text($('.js-aChat').text())[0].offsetWidth;
 			if(aChatW >= chatWarpW){
 				$('.js-chatWarpi').addClass('show');
 			}else{
@@ -177,21 +172,22 @@ var ProfileUser = function(node,core,userData) {
 		});
 	};
 	var bindLitener = function() {
-		$(node).on('blur','.js-userTnp',oFieldRegex.onTextBlurRegex);
-		$(node).on('focus','.js-userTnp',oFieldRegex.onTextFocusRegex);
-		// $(node).delegate('.js-userTnp','blur',oFieldRegex.onTextBlurRegex);
-		// $(node).delegate('.js-userTnp','focus',oFieldRegex.onTextFocusRegex);
+	//	 $(node).on('blur','.js-userTnp',onTextBlurRegex);
+	//	 $(node).on('focus','.js-userTnp',onTextFocusRegex);
+	  if(initail)
+		     return;
+		$(node).delegate('.js-userTnp','blur',onTextBlurRegex);
+		$(node).delegate('.js-userTnp','focus',onTextFocusRegex);
 		$(node).delegate('#sex','change',onSelected);
+		initail = true;
 	};
 	var initPlugsin = function(){
 		onSessionUrl();
 		onDatePicker();
 	};
 	var initConfig = function(){
-
 		config.uid = data.data.uid;//用户id
 		config.url_id = global.id;//url地址栏id
-
 		regExUserInfo = {
 			uname:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
@@ -211,8 +207,7 @@ var ProfileUser = function(node,core,userData) {
 			email:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'只允许字母、数字或下划线'},
-				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,60}$/,'alert':'最大输入限制60字符，请重新输入'}
-			],
+				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,60}$/,'alert':'最大输入限制60字符，请重新输入'}],
 			qq:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},

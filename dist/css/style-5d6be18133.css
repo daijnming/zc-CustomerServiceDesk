@@ -80,8 +80,7 @@ Input, textarea:	14px 'PT Sans', sans-serif;
 @font-face {
   font-family: 'FontAwesome';
   src: url('../fonts/fontawesome/fontawesome-webfont.eot?v=4.3.0');
-  src: url('../fonts/fontawesome/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), 
-  url('../fonts/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
+  src: url('../fonts/fontawesome/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -262,8 +261,6 @@ nav{
     padding: 10px 15px;
     display:inline-block;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     font-size: 18px;
 
@@ -271,15 +268,11 @@ nav{
 .top-navigation ul li a:hover{
     background: #675C7C;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 
 .top-navigation ul li a.right-sidebar, .top-navigation ul li a.right-sidebar-setting{
     -webkit-transition: none 0.3s ease-in-out;
-    -moz-transition: none 0.3s ease-in-out;
-    -o-transition: none 0.3s ease-in-out;
     transition: none 0.3s ease-in-out;
 }
 .top-navigation ul li.only-phone{
@@ -287,16 +280,12 @@ nav{
 }
 .top-navigation ul li.only-phone a{
     -webkit-transition: none 0.3s ease-in-out;
-    -moz-transition: none 0.3s ease-in-out;
-    -o-transition: none 0.3s ease-in-out;
     transition: none 0.3s ease-in-out;
 }
 .top-navigation ul li.only-phone a:hover{
     background: none;
     color: #FF7878;
     -webkit-transition: none 0.3s ease-in-out;
-    -moz-transition: none 0.3s ease-in-out;
-    -o-transition: none 0.3s ease-in-out;
     transition: none 0.3s ease-in-out;
 }
 .search-box{
@@ -524,15 +513,11 @@ nav{
     color: #FF7878;
     font-size: 15px;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 #left-navigation .social-icon li a:hover{
     color: #FFFFFF;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 .black-color #left-navigation{
@@ -644,8 +629,6 @@ ul.mainNav li a {
     outline: 0;
     position: relative;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 ul.mainNav li a.active {
@@ -694,8 +677,6 @@ ul.mainNav li a:hover {
     background-color:#675C7C;
     color:#ffffff;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 ul.mainNav ul {
@@ -990,7 +971,8 @@ ul.mainNav.active ul ul, ul.mainNav.active ul ul ul{
     right: -18px;
     width: 36px;
     height: 36px;
-    transform: scale(0.707) rotate(45deg);
+    -webkit-transform: scale(0.707) rotate(45deg);
+            transform: scale(0.707) rotate(45deg);
     z-index: 1;
     background: #E3DFD8;
     box-shadow:
@@ -1073,7 +1055,8 @@ ul.mainNav.active ul ul, ul.mainNav.active ul ul ul{
     right: 0;
     width: 10px;
     height: 10px;
-    transform: scale(0.707) rotate(45deg);
+    -webkit-transform: scale(0.707) rotate(45deg);
+            transform: scale(0.707) rotate(45deg);
     z-index: 1;
     box-shadow:
     1px -1px 0 1px rgba(0, 0, 0, 0.1),
@@ -1160,16 +1143,12 @@ ul.mainNav.active ul ul, ul.mainNav.active ul ul ul{
     outline: none;
     text-decoration: none;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 #right-wrapper .close-right-wrapper a:hover{
     color: #ff7878;
     text-decoration: none;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 #right-wrapper .tab-content{
@@ -1199,8 +1178,6 @@ ul.mainNav.active ul ul, ul.mainNav.active ul ul ul{
     color: #ffffff;
     outline: none;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 #right-wrapper .nav-tabs li.active a, #right-wrapper .nav-tabs li:hover a{
@@ -1210,8 +1187,6 @@ ul.mainNav.active ul ul, ul.mainNav.active ul ul ul{
     color: #ffffff;
     border: none;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 .chat-group{
@@ -1406,9 +1381,6 @@ ul.mainNav.active ul ul, ul.mainNav.active ul ul ul{
     font-size: 25px;
     line-height: 50px;
     -webkit-transition: all 300ms linear;
-    -moz-transition: all 300ms linear;
-    -o-transition: all 300ms linear;
-    -ms-transition: all 300ms linear;
     transition: all 300ms linear;
 }
 
@@ -1693,9 +1665,6 @@ div.status-box-content h5 i{
     display: block;
     color: #FF7878;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .mail-navigation li a span {
@@ -1707,9 +1676,6 @@ div.status-box-content h5 i{
     font-size: 20px;
     line-height: 30px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
     color: #1fb5ad;
 }
@@ -1788,25 +1754,16 @@ div.status-box-content h5 i{
     -moz-transition-delay: 400ms;
     -webkit-transition-delay: 400ms;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .mail-list div.mail-user-mail .mail-action {
     opacity: 0;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .mail-list li:hover .mail-user-mail span {
     line-height: 15px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .mail-list li:hover .mail-action {
@@ -1814,9 +1771,6 @@ div.status-box-content h5 i{
     -moz-transition-delay: 400ms;
     -webkit-transition-delay: 400ms;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
     opacity: 1;
 }
@@ -2055,6 +2009,7 @@ ul.attachments-preview-list li{
     display: block;
     overflow: hidden;
     position: absolute;
+    -webkit-transition: all 0.5s ease 0s;
     transition: all 0.5s ease 0s;
     z-index: 20;
     overflow: hidden;
@@ -2081,17 +2036,11 @@ ul.attachments-preview-list li{
     outline: 0 none;
     text-decoration: none;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-mail-overlay-link a:hover{
     color: #ff7878;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-mail-overlay-link{
@@ -2119,20 +2068,12 @@ ul.attachments-preview-list li{
     height: auto;
 }
 .ls-chat img {
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
     border-radius: 3px;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
     background-clip: padding-box;
 }
 
 .ls-chat img.rounded {
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
     border-radius: 100px;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
     background-clip: padding-box;
 }
 
@@ -2161,8 +2102,6 @@ ul.attachments-preview-list li{
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     border-top-left-radius: 2px;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
     background-clip: padding-box;
     font-size: 12px;
     border-right: 1px solid #ebebeb;
@@ -2174,10 +2113,9 @@ ul.attachments-preview-list li{
     background-color: #f9f9f9;
     background: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#fef9f9));
     background: -webkit-linear-gradient(top, #f9f9f9, #fef9f9);
-    background: -moz-linear-gradient(top, #f9f9f9, #fef9f9);
-    background: -ms-linear-gradient(top, #f9f9f9, #fef9f9);
     background: -o-linear-gradient(top, #f9f9f9, #fef9f9);
-    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#feffff', endColorstr='#f9f9f9', GradientType=0);
+    -webkit-filter: progid:dximagetransform.microsoft.gradient(startColorstr='#feffff', endColorstr='#f9f9f9', GradientType=0);
+            filter: progid:dximagetransform.microsoft.gradient(startColorstr='#feffff', endColorstr='#f9f9f9', GradientType=0);
     /* IE6-9 */
 }
 
@@ -2185,10 +2123,9 @@ ul.attachments-preview-list li{
     background-color: #f9f9f9;
     background: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#ffeeee));
     background: -webkit-linear-gradient(top, #f9f9f9, #ffeeee);
-    background: -moz-linear-gradient(top, #f9f9f9, #ffeeee);
-    background: -ms-linear-gradient(top, #f9f9f9, #ffeeee);
     background: -o-linear-gradient(top, #f9f9f9, #ffeeee);
-    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#feffff', endColorstr='#f9f9f9', GradientType=0);
+    -webkit-filter: progid:dximagetransform.microsoft.gradient(startColorstr='#feffff', endColorstr='#f9f9f9', GradientType=0);
+            filter: progid:dximagetransform.microsoft.gradient(startColorstr='#feffff', endColorstr='#f9f9f9', GradientType=0);
     /* IE6-9 */
 }
 
@@ -2216,11 +2153,7 @@ ul.attachments-preview-list li{
 
 .text .msg,
 .text .msg-alter {
-    -webkit-border-radius: 1px;
-    -moz-border-radius: 1px;
     border-radius: 1px;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
     background-clip: padding-box;
     overflow: hidden;
 }
@@ -2339,6 +2272,7 @@ canvas#polarAreaChartCanvas, canvas#radarChartCanvas, canvas#doughnutChartCanvas
     display: inline-block;
     height: 8px;
     margin-right: 5px;
+    -webkit-transition: all 300ms ease-in-out 0s;
     transition: all 300ms ease-in-out 0s;
     width: 8px;
 }
@@ -2363,6 +2297,7 @@ canvas#polarAreaChartCanvas, canvas#radarChartCanvas, canvas#doughnutChartCanvas
     display: inline-block;
     height: 8px;
     margin-right: 5px;
+    -webkit-transition: all 300ms ease-in-out 0s;
     transition: all 300ms ease-in-out 0s;
     width: 8px;
 }
@@ -2513,8 +2448,6 @@ span.blueActive{
 }
 /*Spark Line tooltip start*/
 .jqstooltip {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
     box-sizing: content-box;
 }
 /*Spark Line tooltip start*/
@@ -3127,10 +3060,14 @@ td.ls-table-progress .progress{
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 3px;
-    transition-delay: 0s, 0s;
-    transition-duration: 0.15s, 0.15s;
+    -webkit-transition-delay: 0s, 0s;
+            transition-delay: 0s, 0s;
+    -webkit-transition-duration: 0.15s, 0.15s;
+            transition-duration: 0.15s, 0.15s;
+    -webkit-transition-property: border-color, box-shadow;
     transition-property: border-color, box-shadow;
-    transition-timing-function: ease-in-out, ease-in-out;
+    -webkit-transition-timing-function: ease-in-out, ease-in-out;
+            transition-timing-function: ease-in-out, ease-in-out;
     background: url("../images/datatable/sort_both.png") no-repeat;
     background-position: center right;
     appearance: none;
@@ -3165,10 +3102,14 @@ td.ls-table-progress .progress{
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 6px;
-    transition-delay: 0s, 0s;
-    transition-duration: 0.15s, 0.15s;
+    -webkit-transition-delay: 0s, 0s;
+            transition-delay: 0s, 0s;
+    -webkit-transition-duration: 0.15s, 0.15s;
+            transition-duration: 0.15s, 0.15s;
+    -webkit-transition-property: border-color, box-shadow;
     transition-property: border-color, box-shadow;
-    transition-timing-function: ease-in-out, ease-in-out;
+    -webkit-transition-timing-function: ease-in-out, ease-in-out;
+            transition-timing-function: ease-in-out, ease-in-out;
 }
 
 .dataTables_filter label input:focus {
@@ -3287,9 +3228,6 @@ td.ls-table-progress .progress{
     *cursor: hand;
     color: #333 !important;
     -webkit-transition: all 600ms linear;
-    -moz-transition: all 600ms linear;
-    -o-transition: all 600ms linear;
-    -ms-transition: all 600ms linear;
     transition: all 600ms linear;
 }
 
@@ -3300,9 +3238,6 @@ td.ls-table-progress .progress{
     cursor: pointer;
     text-decoration: none !important;
     -webkit-transition: all 600ms linear;
-    -moz-transition: all 600ms linear;
-    -o-transition: all 600ms linear;
-    -ms-transition: all 600ms linear;
     transition: all 600ms linear;
 }
 
@@ -3364,10 +3299,14 @@ table#ls-editable-table tbody tr td input {
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 6px;
-    transition-delay: 0s, 0s;
-    transition-duration: 0.15s, 0.15s;
+    -webkit-transition-delay: 0s, 0s;
+            transition-delay: 0s, 0s;
+    -webkit-transition-duration: 0.15s, 0.15s;
+            transition-duration: 0.15s, 0.15s;
+    -webkit-transition-property: border-color, box-shadow;
     transition-property: border-color, box-shadow;
-    transition-timing-function: ease-in-out, ease-in-out;
+    -webkit-transition-timing-function: ease-in-out, ease-in-out;
+            transition-timing-function: ease-in-out, ease-in-out;
 }
 
 
@@ -3557,13 +3496,13 @@ table#ls-editable-table tbody tr td input {
     padding: 10px 0;
     margin-bottom: 10px;
     background: white;
-    user-select: none;
+    -ms-user-select: none;
+        user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
 
     -webkit-transition: all 0.3 fade-in-out;
-    -moz-transition: all 0.3s fade-in-out;
-    -o-transition: all 0.3s fade-in-out;
+    -webkit-transition: all 0.3s fade-in-out;
     transition: all 0.3s fade-in-out;
 }
 
@@ -3606,9 +3545,6 @@ table#ls-editable-table tbody tr td input {
     right: 0;
     top: 50%;
     -webkit-transition: all 900ms linear;
-    -moz-transition: all 900ms linear;
-    -o-transition: all 900ms linear;
-    -ms-transition: all 900ms linear;
     transition: all 900ms linear;
 }
 .slip-reordering {
@@ -3854,8 +3790,6 @@ button.addEvent{
     text-align: center;
     font-size: 20px;
     -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
     transition: all 1s ease;
 }
 
@@ -3931,8 +3865,6 @@ button.addEvent{
     text-decoration: none;
     background-position: 0 -15px;
     -webkit-transition: background-position 0.1s linear;
-    -moz-transition: background-position 0.1s linear;
-    -o-transition: background-position 0.1s linear;
     transition: background-position 0.1s linear;
 }
 
@@ -4020,9 +3952,6 @@ button.addEvent{
     color: #FFFFFF;
     outline: none;
     -webkit-transition: all 100ms linear;
-    -moz-transition: all 100ms linear;
-    -o-transition: all 100ms linear;
-    -ms-transition: all 100ms linear;
     transition: all 100ms linear;
 }
 .ls-map-locator ul li a:hover, .ls-map-locator ul li a.active{
@@ -4030,9 +3959,6 @@ button.addEvent{
     text-decoration: none;
     color: #ff7878;
     -webkit-transition: all 100ms linear;
-    -moz-transition: all 100ms linear;
-    -o-transition: all 100ms linear;
-    -ms-transition: all 100ms linear;
     transition: all 100ms linear;
 }
 .ls-map-locator ul li a i {
@@ -4617,8 +4543,6 @@ button.addEvent{
     left: 0;
     bottom: 0;
     right: 0;
-    -moz-box-shadow: 0px -2px 2px #ffffff;
-    -webkit-box-shadow: 0px -2px 2px #ffffff;
     box-shadow: 0px -2px 2px #ffffff;
 }
 .basic ul li:first-child div.ls-hex-bage span.ls-pricing {
@@ -4838,8 +4762,6 @@ button.addEvent{
     right: 0;
     bottom: 0;
     top: -220px;
-    -moz-box-shadow: inset -1px -1px 10px #141412;
-    -webkit-box-shadow: inset -1px -1px 10px #141412;
     box-shadow: inset -1px -1px 10px #141412;
 }
 .android ul li:first-child .ls-bubble span.ls-pricing {
@@ -4982,8 +4904,6 @@ button.addEvent{
     left: 0;
     bottom: 0;
     right: 0;
-    -moz-box-shadow: 0px -2px 3px #000000;
-    -webkit-box-shadow: 0px -2px 3px #000000;
     box-shadow: 0px -2px 3px #000000;
 }
 .basic-simple ul li:first-child div.ls-hex-bage-simple span.ls-pricing {
@@ -5027,8 +4947,6 @@ button.addEvent{
 .basic-simple ul li:first-child div.bage-hide {
     visibility: hidden;
     -webkit-transition: opacity 1s ease-out;
-    -moz-transition: opacity 1s ease-out;
-    -o-transition: opacity 1s ease-out;
     transition: opacity 1s ease-out;
     opacity: 0;
 }
@@ -5103,8 +5021,6 @@ button.addEvent{
     opacity: 1;
     visibility: visible;
     -webkit-transition: opacity 1s ease-in;
-    -moz-transition: opacity 1s ease-in;
-    -o-transition: opacity 1s ease-in;
     transition: opacity 1s ease-in;
 }
 .basic-simple:hover ul li:first-child div.basic-simple-package,
@@ -5113,8 +5029,6 @@ button.addEvent{
     opacity: 0;
     visibility: hidden;
     -webkit-transition: opacity 1s ease-out;
-    -moz-transition: opacity 1s ease-out;
-    -o-transition: opacity 1s ease-out;
     transition: opacity 1s ease-out;
 }
 .basic-simple:hover ul li:last-child a.btn:hover {
@@ -5157,8 +5071,6 @@ button.addEvent{
     opacity: 1;
     visibility: visible;
     -webkit-transition: opacity 1s ease-in;
-    -moz-transition: opacity 1s ease-in;
-    -o-transition: opacity 1s ease-in;
     transition: opacity 1s ease-in;
 }
 .basic-active ul li:first-child div.basic-simple-package,
@@ -5167,8 +5079,6 @@ button.addEvent{
     opacity: 0;
     visibility: hidden;
     -webkit-transition: opacity 1s ease-out;
-    -moz-transition: opacity 1s ease-out;
-    -o-transition: opacity 1s ease-out;
     transition: opacity 1s ease-out;
 }
 
@@ -5441,11 +5351,13 @@ button.addEvent{
     width: 70px;
     max-width: 100%;
     border: 2px solid #fff;
+    -webkit-transition: all 300ms ease-in-out 0s;
     transition: all 300ms ease-in-out 0s;
 }
 
 .user-friend-list ul li:hover img{
     border: 2px solid #ff7878;
+    -webkit-transition: all 300ms ease-in-out 0s;
     transition: all 300ms ease-in-out 0s;
 }
 
@@ -5557,13 +5469,8 @@ span.user-company-name{
     opacity: 0;
     overflow:visible;
     border:0px solid rgba(0,0,0,0.7);
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
     box-sizing:border-box;
     -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    -ms-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
 }
 .ls-hover-effect a.info {
@@ -5571,16 +5478,13 @@ span.user-company-name{
     left: -60px;
     top: -67px;
     opacity:0;
-    -moz-transform:scale(0,0);
     -webkit-transform:scale(0,0);
-    -o-transform:scale(0,0);
-    -ms-transform:scale(0,0);
     transform:scale(0,0);
     -webkit-transition: -webkit-transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
-    -moz-transition: -moz-transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
-    -o-transition: -o-transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
-    -ms-transition: -ms-transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
+    -webkit-transition: opacity 0.1s ease-in-out, -webkit-transform 0.2s 0.1s ease-in;
+    transition: opacity 0.1s ease-in-out, -webkit-transform 0.2s 0.1s ease-in;
     transition: transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
+    transition: transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out, -webkit-transform 0.2s 0.1s ease-in;
 }
 
 .ls-hover-effect a.ls-timeline-project-info {
@@ -5588,16 +5492,13 @@ span.user-company-name{
     left: -65px;
     top: -70px;
     opacity:0;
-    -moz-transform:scale(0,0);
     -webkit-transform:scale(0,0);
-    -o-transform:scale(0,0);
-    -ms-transform:scale(0,0);
     transform:scale(0,0);
     -webkit-transition: -webkit-transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
-    -moz-transition: -moz-transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
-    -o-transition: -o-transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
-    -ms-transition: -ms-transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
+    -webkit-transition: opacity 0.1s ease-in-out, -webkit-transform 0.2s 0.1s ease-in;
+    transition: opacity 0.1s ease-in-out, -webkit-transform 0.2s 0.1s ease-in;
     transition: transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out;
+    transition: transform 0.2s 0.1s ease-in, opacity 0.1s ease-in-out, -webkit-transform 0.2s 0.1s ease-in;
 }
 
 .ls-hover-effect:hover .ls-mask {
@@ -5606,29 +5507,17 @@ span.user-company-name{
 }
 .ls-hover-effect:hover a.info {
     opacity:1;
-    -moz-transform:scale(1,1);
     -webkit-transform:scale(1,1);
-    -o-transform:scale(1,1);
-    -ms-transform:scale(1,1);
     transform:scale(1,1);
-    -moz-transition-delay:0.3s;
     -webkit-transition-delay:0.3s;
-    -o-transition-delay:0.3s;
-    -ms-transition-delay:0.3s;
     transition-delay:0.3s;
 }
 
 .ls-hover-effect:hover a.ls-timeline-project-info {
     opacity:1;
-    -moz-transform:scale(1,1);
     -webkit-transform:scale(1,1);
-    -o-transform:scale(1,1);
-    -ms-transform:scale(1,1);
     transform:scale(1,1);
-    -moz-transition-delay:0.3s;
     -webkit-transition-delay:0.3s;
-    -o-transition-delay:0.3s;
-    -ms-transition-delay:0.3s;
     transition-delay:0.3s;
 }
 .feed-box-profile{  /**** Issue Fixed @new ***/
@@ -5794,17 +5683,11 @@ body.login-screen{
     color: #999999;
     font-size: 14px;
     -webkit-transition: all 600ms linear;
-    -moz-transition: all 600ms linear;
-    -o-transition: all 600ms linear;
-    -ms-transition: all 600ms linear;
     transition: all 600ms linear;
 }
 .social-btn-login ul li a:hover {
     color: dimgrey;
     -webkit-transition: all 600ms linear;
-    -moz-transition: all 600ms linear;
-    -o-transition: all 600ms linear;
-    -ms-transition: all 600ms linear;
     transition: all 600ms linear;
 }
 
@@ -5841,6 +5724,7 @@ body.login-screen{
 #outer-wrapper {
     height: 100%;
     position: relative;
+    -webkit-transition: all 0.3s ease-in-out 0s;
     transition: all 0.3s ease-in-out 0s;
     width: 100%;
 }
@@ -5920,9 +5804,6 @@ body.login-screen{
     margin: 0;
     padding: 25px 0 0 10px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-wizard span {
@@ -5930,9 +5811,6 @@ body.login-screen{
     opacity: 0;
     font-size: 13px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-wizard .icon {
@@ -5941,18 +5819,12 @@ body.login-screen{
     right: 10px;
     top: 18px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-wizard .icon i.fa {
     text-align: right;
     font-size: 40px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 
@@ -5964,34 +5836,22 @@ body.login-screen{
     font-size: 15px;
     padding: 5px 0 0 10px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-wizard:hover span, .ls-wizard.active span {
     font-size: 25px;
     opacity: 1;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-wizard:hover .icon, .ls-wizard.active .icon {
     top: 8px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-wizard:hover .icon i.fa, .ls-wizard.active .icon i.fa {
     font-size: 60px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-chart-box .chart-box-content {
@@ -6004,18 +5864,12 @@ body.login-screen{
     font-size: 20px;
     color: white;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-chart-box .chart-box-content p {
     padding: 0px 18px;
     font-size: 18px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-chart-box .sparklineBadge-box {
@@ -6027,17 +5881,11 @@ body.login-screen{
 .ls-chart-box:hover h1, .ls-chart-box.active h1 {
     font-size: 14px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-chart-box:hover p, .ls-chart-box.active p {
     font-size: 22px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 
@@ -6056,9 +5904,6 @@ body.login-screen{
     line-height: 120px;
     opacity: 0.5;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-widget-box .chart-box-content {
@@ -6071,18 +5916,12 @@ body.login-screen{
     padding: 30px 0 0 0;
     font-size: 20px;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-widget-box .chart-box-content p {
     padding: 0px 0;
     font-size: 12px;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-widget-box .box-element {
@@ -6095,25 +5934,16 @@ body.login-screen{
     opacity: 1;
     font-size: 40px;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 .ls-widget-box:hover h1, .ls-widget-box.active h1 {
     font-size: 12px;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-widget-box:hover p, .ls-widget-box.active p {
     font-size: 25px;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-circle-widget {
@@ -6127,9 +5957,6 @@ body.login-screen{
     margin: auto;
     text-align: center;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-circle-widget i {
@@ -6137,9 +5964,6 @@ body.login-screen{
     margin: auto;
     line-height: 180px;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-circle-widget h1 {
@@ -6148,17 +5972,11 @@ body.login-screen{
     padding: 0;
     opacity: 0;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
 .ls-circle-widget:hover, .ls-circle-widget.active {
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-circle-widget.square-hover:hover, .ls-circle-widget.square-hover.active{
@@ -6166,9 +5984,6 @@ body.login-screen{
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-circle-widget:hover i, .ls-circle-widget.active i {
@@ -6176,17 +5991,11 @@ body.login-screen{
     line-height: 65px;
     padding-top: 50px;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-circle-widget:hover h1, .ls-circle-widget.active h1 {
     opacity: 1;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .setting-widget{
@@ -6234,15 +6043,11 @@ body.login-screen{
     -webkit-border-radius: 50%;
     border: 1px solid #e0e0e0;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 .change-color-switch ul li.active{
     border: 1px solid #FFFFFF;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 
@@ -6491,9 +6296,6 @@ body.login-screen{
 }
 .progress.vertical .progress-bar.six-sec-ease-in-out {
     -webkit-transition: height 6s ease-in-out;
-    -moz-transition: height 6s ease-in-out;
-    -ms-transition: height 6s ease-in-out;
-    -o-transition: height 6s ease-in-out;
     transition: height 6s ease-in-out;
 }
 .progress-bar-danger{
@@ -6645,8 +6447,6 @@ body.login-screen{
     background: rgba(0, 0, 0, 0.8);
     overflow: hidden;
     -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -o-transition: all 0.5s;
     transition: all 0.5s;
 }
 
@@ -6743,9 +6543,6 @@ a.expand:hover{
     outline: 0;
     opacity: 1;
     -webkit-transition: all 300ms linear;
-    -moz-transition: all 300ms linear;
-    -o-transition: all 300ms linear;
-    -ms-transition: all 300ms linear;
     transition: all 300ms linear;
 }
 .panel-default .panel-control li a, .panel-default .panel-note-control li a, .panel-default .note-control li a{
@@ -6754,9 +6551,6 @@ a.expand:hover{
 .panel-control li a:hover, .panel-note-control li a:hover, .note-control li a:hover{
     color: #565656;
     -webkit-transition: all 300ms linear;
-    -moz-transition: all 300ms linear;
-    -o-transition: all 300ms linear;
-    -ms-transition: all 300ms linear;
     transition: all 300ms linear;
 }
 .panel-default .panel-control li a:hover, .panel-default .panel-note-control li a:hover, .panel-default , .note-control li a:hover{
@@ -6923,9 +6717,6 @@ div.fontawesome-icon-list div i.fa {
     margin-bottom: 10px;
     margin-top: 5px;
     -webkit-transition: all 600ms linear;
-    -moz-transition: all 600ms linear;
-    -o-transition: all 600ms linear;
-    -ms-transition: all 600ms linear;
     transition: all 600ms linear;
 }
 div.fontawesome-icon-list div a {
@@ -6965,9 +6756,6 @@ ul.icon-list li {
 .animation-icon {
     text-align: center;
     -webkit-transition: all 600ms linear;
-    -moz-transition: all 600ms linear;
-    -o-transition: all 600ms linear;
-    -ms-transition: all 600ms linear;
     transition: all 600ms linear;
 }
 
@@ -6975,8 +6763,6 @@ ul.icon-list li {
     color: #1fb5ad;
     opacity: 1;
     -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
     transform: rotate(360deg);
 }
 
@@ -7005,9 +6791,6 @@ ul.icon-list li {
     margin-bottom: 10px;
     margin-top: 5px;
     -webkit-transition: all 600ms linear;
-    -moz-transition: all 600ms linear;
-    -o-transition: all 600ms linear;
-    -ms-transition: all 600ms linear;
     transition: all 600ms linear;
 }
 
@@ -7099,10 +6882,12 @@ p.bg-label {
 }
 @keyframes spinIn {
     0% {
-        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
     }
     100% {
-        transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
     }
 }
 .spinOut {
@@ -7121,10 +6906,12 @@ p.bg-label {
 }
 @keyframes spinOut {
     0% {
-        transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
     }
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 
@@ -7414,9 +7201,6 @@ span.description {
     color: white;
     text-align: center;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 
@@ -7424,9 +7208,6 @@ span.description {
     background-color: #269abc;
     color: white;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7435,9 +7216,6 @@ span.description {
     color: white;
     text-align: center;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7445,9 +7223,6 @@ span.description {
     background-color: #6b97f4;
     color: white;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7456,9 +7231,6 @@ span.description {
     color: white;
     text-align: center;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7466,9 +7238,6 @@ span.description {
     background-color: #47A447;
     color: white;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7477,9 +7246,6 @@ span.description {
     color: white;
     text-align: center;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7487,9 +7253,6 @@ span.description {
     background-color: #1FD9D0;
     color: white;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7498,9 +7261,6 @@ span.description {
     color: white;
     text-align: center;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7508,9 +7268,6 @@ span.description {
     background-color: #D2322D;
     color: white;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7519,9 +7276,6 @@ span.description {
     color: white;
     text-align: center;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-dark-btn3 {
@@ -7529,9 +7283,6 @@ span.description {
     color: #999999;
     text-align: center;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7539,9 +7290,6 @@ span.description {
     background-color: #626262;
     color: white;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7553,18 +7301,12 @@ span.description {
     color: white;
     text-align: center;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 .ls-dark-btn2:hover, .ls-dark-btn2:active, .ls-dark-btn2:focus {
     background-color: #285e8e;
     color: white;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7573,9 +7315,6 @@ span.description {
     background-color: #4cae4c;
     color: white;
     -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    -ms-transition: all 400ms linear;
     transition: all 400ms linear;
 }
 
@@ -7584,9 +7323,6 @@ span.description {
     color: white;
     text-align: center;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 
@@ -7594,9 +7330,6 @@ span.description {
     background-color: #C6C524;
     color: white;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 
@@ -7605,9 +7338,6 @@ span.description {
     color: white;
     text-align: center;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 
@@ -7615,9 +7345,6 @@ span.description {
     background-color: #AE6A6A;
     color: white;
     -webkit-transition: all 200ms linear;
-    -moz-transition: all 200ms linear;
-    -o-transition: all 200ms linear;
-    -ms-transition: all 200ms linear;
     transition: all 200ms linear;
 }
 
@@ -7643,9 +7370,6 @@ span.description {
     color: white;
     border-radius: 1px;
     -webkit-transition: all 100ms linear;
-    -moz-transition: all 100ms linear;
-    -o-transition: all 100ms linear;
-    -ms-transition: all 100ms linear;
     transition: all 100ms linear;
 }
 
@@ -7660,9 +7384,6 @@ button.fileinput-remove-button {
     color: white;
     border-radius: 1px;
     -webkit-transition: all 100ms linear;
-    -moz-transition: all 100ms linear;
-    -o-transition: all 100ms linear;
-    -ms-transition: all 100ms linear;
     transition: all 100ms linear;
 }
 
@@ -7757,9 +7478,6 @@ button.fileinput-remove-button {
     -webkit-backface-visibility: hidden;
     /* Smooth out them edges ;) */
     -webkit-transform: rotate(-30deg) skewX(30deg) scaleY(0.866);
-    -moz-transform: rotate(-30deg) skewX(30deg) scaleY(0.866);
-    -ms-transform: rotate(-30deg) skewX(30deg) scaleY(0.866);
-    -o-transform: rotate(-30deg) skewX(30deg) scaleY(0.866);
     transform: rotate(-30deg) skewX(30deg) scaleY(0.866);
 }
 
@@ -7773,9 +7491,6 @@ button.fileinput-remove-button {
     right: 6.7%;
     left: 6.7%;
     -webkit-transform: scaleY(1.155) skewX(-30deg) rotate(30deg);
-    -moz-transform: scaleY(1.155) skewX(-30deg) rotate(30deg);
-    -ms-transform: scaleY(1.155) skewX(-30deg) rotate(30deg);
-    -o-transform: scaleY(1.155) skewX(-30deg) rotate(30deg);
     transform: scaleY(1.155) skewX(-30deg) rotate(30deg);
     outline: 0;
 }
@@ -7802,8 +7517,6 @@ button.fileinput-remove-button {
     left: 0;
     z-index: -1;
     -webkit-transition: top 0.3s ease-in-out;
-    -moz-transition: top 0.3s ease-in-out;
-    -o-transition: top 0.3s ease-in-out;
     transition: top 0.3s ease-in-out;
 }
 
@@ -7941,6 +7654,7 @@ button.fileinput-remove-button {
     display: inline-block;
     height: 8px;
     margin-right: 5px;
+    -webkit-transition: all 300ms ease-in-out 0s;
     transition: all 300ms ease-in-out 0s;
     width: 8px;
 }
@@ -8018,9 +7732,6 @@ p.preview-advance a:hover {
 }
 .v-progressbar .progress.vertical .progress-bar.six-sec-ease-in-out {
     -webkit-transition: height 6s ease-in-out;
-    -moz-transition: height 6s ease-in-out;
-    -ms-transition: height 6s ease-in-out;
-    -o-transition: height 6s ease-in-out;
     transition: height 6s ease-in-out;
 }
 
@@ -8033,9 +7744,6 @@ p.preview-advance a:hover {
 
 .progress .progress-bar.six-sec-ease-in-out {
     -webkit-transition: width 6s ease-in-out;
-    -moz-transition: width 6s ease-in-out;
-    -ms-transition: width 6s ease-in-out;
-    -o-transition: width 6s ease-in-out;
     transition: width 6s ease-in-out;
 }
 
@@ -8354,15 +8062,11 @@ p.preview-advance a:hover {
     -webkit-border-radius: 50%;
     border: 1px solid #555557;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 #change-color .change-color-box ul li.active{
     border: 1px solid #FFFFFF;
     -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 #change-color .change-color-box ul li.default{
@@ -8951,18 +8655,17 @@ hr.footer-border {
 .ls-image-fluid-box a[data-fluidbox] {
     background-color: #eee;
     border: none;
-    cursor: -webkit-zoom-in;
     cursor: -moz-zoom-in;
     margin-bottom: 1.5rem;
 }
 .ls-image-fluid-box a.fluidbox-opened {
-    cursor: -webkit-zoom-out;
     cursor: -moz-zoom-out;
 }
 .ls-image-fluid-box a img {
     display: block;
     margin: 0 auto;
     max-width: 100%;
+    -webkit-transition: all .25s ease-in-out;
     transition: all .25s ease-in-out;
 }
 .ls-image-fluid-box a[class^='float'] {
@@ -8985,10 +8688,14 @@ hr.footer-border {
     padding: .25em;
 }
 .ls-image-fluid-box .ls-fluid-box-gallery {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    -webkit-flex-flow: row wrap;
-    flex-flow: row wrap;
-    justify-content: space-between;
+    -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 .ls-image-fluid-box .ls-fluid-box-gallery a {
     margin-bottom: 1rem;
@@ -9017,6 +8724,7 @@ hr.footer-border {
 }
 .overlay-2 .fluidbox-overlay {
     background-color: transparent;
+    background-image: -webkit-linear-gradient(bottom right, rgba(130,168,158,0.85), rgba(134,150,173,.85));
     background-image: linear-gradient(to top left, rgba(130,168,158,0.85), rgba(134,150,173,.85));
 }
 .overlay-3 .fluidbox-overlay {

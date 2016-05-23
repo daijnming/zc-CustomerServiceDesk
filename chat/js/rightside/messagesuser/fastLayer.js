@@ -11,8 +11,8 @@ var Fastlayer = function(node,core,config) {
      */
     var global = core.getGlobal();
     //参数
-    var fastData = config.fastData;
-    var id = config.id;
+    var fastData = config.fastData,
+        id = config.id;
     config.repBtnType = true;
     //隐藏添加新回复按钮
     var That = this;
