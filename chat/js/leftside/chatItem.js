@@ -118,11 +118,16 @@ function Item(data,core,outer,from,manager) {
     var onOnline = function() {
         status = 'online';
 
-        var $statusText = $node.find(".js-status");
+        var $statusText = $node.find(".js-user-status");
         $node.find(".js-icon").removeClass("offline");
         $statusText.css({
             'display' : 'none'
-        }).html('[离线]');
+        });
+        if(data.isTransfer == 1) {
+            $statusText.html('[转接]');
+        } else {
+            $statusText.html('');
+        }
         if($node.index() !== 0) {
             insert($node);
         }

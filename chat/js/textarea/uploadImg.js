@@ -85,7 +85,6 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 var pre = iframe.contentWindow.document.body.getElementsByTagName("pre")[0];
 
                 var obj = JSON.parse(pre.innerHTML);
-                 console.log(obj);
                 $(document.body).trigger('textarea.uploadImgUrl',[{//通过textarea.uploadImgUrl事件将图片地址传到聊天窗体
                     'uid' : uid,
                     'cid' : cid,
