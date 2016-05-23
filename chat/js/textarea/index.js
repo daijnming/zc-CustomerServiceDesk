@@ -65,8 +65,9 @@ function TextArea(node,core,window) {
     };
 
     var onbtnSendHandler = function(evt) {
-        var str =$sendMessage.val(); //ZC_Face.convertToEmoji($sendMessage.val());
-        
+        var str = $sendMessage.val();
+        //ZC_Face.convertToEmoji($sendMessage.val());
+
         if(str.length == 0 || /^\s+$/g.test(str)) {//判断输入框是否为空
             $sendMessage.val("")
             return false;
@@ -108,9 +109,19 @@ function TextArea(node,core,window) {
     };
     var uploadFile = function() {
         uploadFun.onChangeHandler(currentUid,currentCid);
-
     };
 
+    var onFilePaste = function(e) {
+        var evt = e.originalEvent;
+        for(var i = 0,
+            len = evt.clipboardData.items.length;i < len;i++) {
+            var item = evt.clipboardData.items[i];
+            if(item.kind === 'file') {
+                e.preventDefault();
+                uploadFun.onFormDataPasteHandler(item,currentUid,currentCid);
+            }
+        }
+    };
     var botTextBoxPosition = function() {
         var botTextBoxHeight = $botTextBox.height();
         var status = 1;
@@ -154,6 +165,7 @@ function TextArea(node,core,window) {
         $node.find(".js-emotion").on("click",onEmotionClickHandler);
         $node.find(".icoLi").on("click",onEmotionIcoClickHandler);
         $node.find('.js-upload').on("change",uploadFile);
+        $sendMessage.on("paste",onFilePaste);
         //使用formData上传附件
     };
     var initFace = function() {
@@ -187,7 +199,7 @@ function TextArea(node,core,window) {
         //打开集合,默认qq表情为显示状态
         //$node.find("#faceGroup").show();
         //$node.find("#emojiGroup").hide();
-       // $node.find(".icoLi").removeClass("active");
+        // $node.find(".icoLi").removeClass("active");
         //$node.find(".firsticoLi").addClass("active");
         ZC_Face.show();
         ZC_Face.emojiShow();
