@@ -36,11 +36,11 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
 
     var onFormDataUpHandler = function(uid,cid) {
         //支持formData则使用formData上传
-        if(!FormData) {
+        if(FormData) {
             var oData = new FormData();
             var input = $uploadBtn[0];
             //判断上传文件的扩展名是否符合上传标准
-            if(onjudgeFileExtensionHandler()){
+            //if(onjudgeFileExtensionHandler()){
                 for(var i = 0;i < input.files.length;i++) {
                     var file = input.files[i];
                     oData.append(file.name,file);
@@ -63,7 +63,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 }).fail(function(ret) {
                     console.log("fail")
                 });
-            } 
+            //} 
             $uploadBtn.val("");//清空文本域
 
         } else {
@@ -83,9 +83,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             $iframe.on("load", function() {
                 var iframe = $iframe[0];
                 var pre = iframe.contentWindow.document.body.getElementsByTagName("pre")[0];
-
                 var obj = JSON.parse(pre.innerHTML);
-                 console.log(obj);
                 $(document.body).trigger('textarea.uploadImgUrl',[{//通过textarea.uploadImgUrl事件将图片地址传到聊天窗体
                     'uid' : uid,
                     'cid' : cid,
@@ -100,12 +98,12 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
      var onjudgeFileExtensionHandler=function(){//判断上传文件的扩展名
          //获取文件扩展名
         var val= $uploadBtn.val();
-        
         var extension = val.substr(val.indexOf("."));
         var reg=/^(.jpg|.JPG|.png|.PNG|.gif|.GIF|.txt|.TXT|.DOC|.doc|.docx|.DOCX|.pdf|.PDF|.ppt|.PPT|.pptx|.PPTX|.xls|.XLS|.xlsx|.XLSX|.RAR|.rar|.zip|.ZIP|.mp3|.MP3|.mp4|.MP4|.wma|.WMA|.wmv|.WMV|.rmvb|.RMVB)$/
         if (reg.test(extension)) {
             return true;
         }else{
+            alert("失败");
              var dialog = new Alert({
                 'title' : '提示',
                 'text' : '上传格式不正确',
@@ -117,7 +115,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             });
             dialog.show();
             return false;
-        }
+        };
     };
     var bindLitener = function() {
 
