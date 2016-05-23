@@ -123,20 +123,20 @@ ul {
 }
 
 /****clientSystem*****/
-.panel-body  .dropdown  ul.dropdown-menu {
+.panel-body  .dropdown  ul.dropdown-menus {
     text-align: center;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 2px;
     width: 100%;
     margin: 0 auto;
     margin-top: -200px;
     opacity: 1;
 }
-.panel-body .dropdown ul.dropdown-menu li {
+.panel-body .dropdown ul.dropdown-menus li {
     border-bottom: 1px dashed #ddd;
     background-color: #f7fafa;
 }
-.panel-body .dropdown ul.dropdown-menu li a {
+.panel-body .dropdown ul.dropdown-menus li a {
     text-align: center;
     height: 30px;
     line-height: 30px;
@@ -144,14 +144,14 @@ ul {
     color: #999;
     cursor: pointer;
 }
-.panel-body .dropdown ul.dropdown-menu li:hover, .panel-body .dropdown ul.dropdown-menu li:hover a {
+.panel-body .dropdown ul.dropdown-menus li:hover, .panel-body .dropdown ul.dropdown-menus li:hover a {
     background-color: #09aeb0;
     color: #fff;
 }
-.panel-body .dropdown ul.dropdown-menu li:last-child {
+.panel-body .dropdown ul.dropdown-menus li:last-child {
     border-bottom: 0;
 }
-.panel-body .dropdown ul.dropdown-menu li a, .panel-body .dropdown ul.dropdown-menu li a:link, .panel-body .dropdown ul.dropdown-menu li a:visited, .panel-body .dropdown ul.dropdown-menu li a:active {
+.panel-body .dropdown ul.dropdown-menus li a, .panel-body .dropdown ul.dropdown-menus li a:link, .panel-body .dropdown ul.dropdown-menus li a:visited, .panel-body .dropdown ul.dropdown-menus li a:active {
     text-decoration: none;
 }
 

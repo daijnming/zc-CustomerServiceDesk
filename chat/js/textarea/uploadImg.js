@@ -36,7 +36,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
 
     var onFormDataUpHandler = function(uid,cid) {
         //支持formData则使用formData上传
-        if(!FormData) {
+        if(FormData) {
             var oData = new FormData();
             var input = $uploadBtn[0];
             //判断上传文件的扩展名是否符合上传标准
@@ -83,13 +83,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             $iframe.on("load", function() {
                 var iframe = $iframe[0];
                 var pre = iframe.contentWindow.document.body.getElementsByTagName("pre")[0];
-                
-                if(JSON.parse){//低版本ie不支持JSON.parse
-                    //alert(iframe.contentWindow.document.body.getElementsByTagName("pre")[0]);
-                    var obj = JSON.parse(pre.innerHTML);
-                }else{
-                    var obj = eval('(' + pre.innerHTML + ')')[0];
-                }
+                var obj = JSON.parse(pre.innerHTML);
                 $(document.body).trigger('textarea.uploadImgUrl',[{//通过textarea.uploadImgUrl事件将图片地址传到聊天窗体
                     'uid' : uid,
                     'cid' : cid,
