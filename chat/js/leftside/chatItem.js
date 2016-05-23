@@ -266,7 +266,6 @@ function Item(data,core,outer,from,manager) {
         }
     };
     var bindListener = function() {
-        console.log(data);
         $body.on("scrollcontent.onUpdateUserState",onUserStatusChange);
         $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);
