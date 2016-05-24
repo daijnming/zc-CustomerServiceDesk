@@ -2,8 +2,11 @@
 
   {{ if(it.list[prop].action === 'dateline') { }}
     <div class="day_divider">
-      <hr>
-      <div class="day_divider_label">{{=it.list[prop].date}}</div>
+      <p class="systeamText" style="background-color: transparent">
+        <span class="zc-c-chat-date-line-left"></span>
+        <span class="zc-c-chat-date-line-text">{{=it.list[prop].date}}</span>
+        <span class="zc-c-chat-date-line-right"></span>
+      </p>
     </div>
   {{ } }}
 

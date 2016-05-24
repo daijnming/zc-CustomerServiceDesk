@@ -8,7 +8,8 @@
     // 保存用户对话消息缓存
     var userChatCache = {};
     var imageUrl = 'http://img.sobot.com/chatres/common/face/';
-    var systemImage = '/chat/chatres/common/face/robot.png';
+    var imageUrl2 = 'http://img.sobot.com/console/common/face/';
+    var systemImage = imageUrl2 + 'robot.png';
     var API = {
         http : {
             chatList : {
