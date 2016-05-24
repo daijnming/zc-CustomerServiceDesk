@@ -61,7 +61,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             //if(onjudgeFileExtensionHandler()){
             for(var i = 0;i < input.files.length;i++) {
                 var file = input.files[i];
-                oData.append(file.name,file);
+                oData.append("file",file);
             }
             oData.append("type","msg");
             oData.append("pid",global.pid);
