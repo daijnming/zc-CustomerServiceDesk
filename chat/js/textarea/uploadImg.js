@@ -71,6 +71,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",
                 data : oData,
+                'dataType' : 'json',
                 processData : false,// 告诉jQuery不要去处理发送的数据
                 contentType : false
             }).success(function(response) {
