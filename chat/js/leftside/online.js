@@ -134,6 +134,8 @@ function Online(node,core,window) {
             }
         }
     };
+    var onRemoveItem = function(cid) {
+    };
 
     var show = function() {
         $node.show();
@@ -181,6 +183,7 @@ function Online(node,core,window) {
     that.getCurrentUid = getCurrentUid;
     that.setCurrentUid = setCurrentUid;
     that.show = show;
+    that.onRemoveItem = onRemoveItem;
     return that;
 };
 

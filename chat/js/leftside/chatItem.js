@@ -158,6 +158,7 @@ function Item(data,core,outer,from,manager) {
         if(elm.length > 0) {
             node = elm[0];
             $node = $(node);
+            $userName = $node.find(".js-user-name");
             if(!$imageFace) {
                 $imageFace = $node.find(".js-image-face");
             }
@@ -181,6 +182,7 @@ function Item(data,core,outer,from,manager) {
                 }
                 initFace();
                 insert($node);
+                $userName = $node.find(".js-user-name");
                 promise.resolve();
             });
         }
@@ -290,7 +292,6 @@ function Item(data,core,outer,from,manager) {
         $unRead = $node.find(".js-unread-count");
         $ulOuter = $(outer).find("ul.js-users-list");
         $lastMessage = $node.find(".js-last-message");
-        $userName = $node.find(".js-user-name");
     };
 
     var initPlugins = function() {
