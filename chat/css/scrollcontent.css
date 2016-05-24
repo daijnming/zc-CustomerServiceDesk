@@ -13,3 +13,28 @@
   overflow: hidden;
   white-space: nowrap
 }
+
+.zc-c-chat-noread-line-left {
+  background: url('../img/noReadLine.png');
+  width: 177px;
+  height: 4px;
+  float: left;
+  margin-top: 13px;
+  background-position: 0px -31px;
+}
+
+.zc-c-chat-noread-line-text {
+  line-height: 30px;
+  color: #f1a466;
+  float: left;
+  margin-left: 10px;
+}
+
+.zc-c-chat-noread-line-right {
+  background: url('../img/noReadLine.png');
+  width: 177px;
+  height: 4px;
+  float: left;
+  margin-top: 13px;
+  background-position: 0px -42px;
+}

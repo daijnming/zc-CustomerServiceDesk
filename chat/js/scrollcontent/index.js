@@ -8,6 +8,7 @@
     // 保存用户对话消息缓存
     var userChatCache = {};
     var imageUrl = 'http://img.sobot.com/chatres/common/face/';
+    var systemImage = '/chat/chatres/common/face/robot.png';
     var API = {
         http : {
             chatList : {
@@ -281,8 +282,10 @@
     var parseTpl = function(type,ret, uid, isScrollBottom) {
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
-            var list = [],
-                _html;
+            var list = [] ,
+                _html ;
+
+
 
             ret.data.map(function(item) {
                 list.push({
@@ -296,6 +299,31 @@
                 });
             });
 
+            if (userInfo.unreadcount) {
+              var count = 0;
+
+              for (var i = list.length - 1;i > -1;i--) {
+
+                  if (list[i].action === 5) {
+
+                    if (count === userInfo.unreadcount) {
+                      list.splice(i + 1, 0 , {
+                        action: 'noReadLine'
+                      })
+                      break;
+                    } else {
+                      count++;
+                    }
+                  }
+              }
+            } else {
+
+              for (var i = 0;i < list.length;i++) {
+
+                if (list[i].action === 'noReadLine') list.splice(i, 1);
+              }
+            }
+
             userChatCache[uid] = {
               list: list ,
               scrollTop: 0,
@@ -305,6 +333,7 @@
             _html = doT.template(tpl)({
               userSourceImage: userInfo.userSourceImage ,
               adminImage: global.face ,
+              systemImage: systemImage ,
               list : list
             });
 
@@ -327,12 +356,6 @@
                   // 获取当前窗口最低scrollTop
                   userChatCache[uid].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
                 }
-
-              }
-
-              // 根据未读数量寻找到第一条未读的信息的dom
-              if (userInfo.noReadCount) {
-
               }
             }, 400);
         });
@@ -352,15 +375,10 @@
               var height = $rootNode.find('#' + type).find('.js-panel-body').parent()[0].scrollHeight;
               var scrollTop = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
 
-              console.log({
-                userSourceImage: userInfo.userSourceImage ,
-                adminImage: global.face ,
-                list : appendList
-              });
-
               _html = doT.template(tpl)({
                   userSourceImage: userInfo.userSourceImage ,
                   adminImage: global.face ,
+                  systemImage: systemImage ,
                   list : appendList
               });
               if (isToTop) {
@@ -393,8 +411,34 @@
 
               var _html;
 
+              for (var i = 0;i < data.list.length;i++) {
+
+                if (data.list[i].action === 'noReadLine') data.list.splice(i, 1);
+              }
+
+              if (userInfo.unreadcount) {
+                var count = 0;
+
+                for (var i = data.list.length - 1;i > -1;i--) {
+
+                    if (data.list[i].action === 5) {
+
+                      if (count === userInfo.unreadcount) {
+                        data.list.splice(i + 1, 0 , {
+                          action: 'noReadLine'
+                        })
+                        break;
+                      } else {
+                        count++;
+                      }
+                    }
+                }
+              }
+
               _html = doT.template(tpl)({
                 userSourceImage: userInfo.userSourceImage ,
+                adminImage: global.face ,
+                systemImage: systemImage ,
                 list : data.list
               });
 
@@ -656,14 +700,10 @@
             userId: params.data.uid,
             userSourceImage: userSourceMap[params.data.usource | params.data.source],
             from: params.data.from === 'online' ,
-            noReadCount: params.data.noReadCount
+            unreadcount: params.unreadcount
           }
 
           $chatContent.show();
-          if (userInfo.noReadCount > 10) {
-            $chatContent.find('.zc-noRead-tag').show();
-          }
-
           $chatContent.find('.zc-newchat-tag , .js-user-ready-input').hide();
           $(window).resize();
 
@@ -729,18 +769,6 @@
           $rootNode.find('#chat').find('.js-panel-body')[0].scrollIntoView(false);
           userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#chat').find('.js-panel-body').parent().scrollTop();
           $rootNode.find('#chat').find('.zc-newchat-tag').hide();
-        });
-
-        $rootNode.find('#chat').on('click', '.zc-noRead-tag', function() {
-          console.log('zc-noRead-tag');
-
-          var scrollHeight = $rootNode.find('#chat').find('.scrollBoxParent')[0].scrollHeight;
-          // var offsetTop = $rootNode.find('#chat').find('.day_divider').last()[0].offsetTop;
-
-          var scrollTop = scrollHeight - userInfo.offsetTop;
-
-          $rootNode.find('#chat').find('.scrollBoxParent').scrollTop(scrollTop);
-          $rootNode.find('#chat').find('.zc-noRead-tag').hide();
         });
 
         sendSearchUserChat();
