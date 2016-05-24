@@ -178,7 +178,7 @@ var ProfileUser = function(node,core,userData) {
 		     return;
 		$(node).delegate('.js-userTnp','blur',onTextBlurRegex);
 		$(node).delegate('.js-userTnp','focus',onTextFocusRegex);
-		$(node).delegate('#sex','change',onSelected);
+		$(node).delegate('.js-sex','change',onSelected);
 		initail = true;
 	};
 	var initPlugsin = function(){
