@@ -61,7 +61,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             //if(onjudgeFileExtensionHandler()){
             for(var i = 0;i < input.files.length;i++) {
                 var file = input.files[i];
-                oData.append(file.name,file);
+                oData.append("file",file);
             }
             oData.append("type","msg");
             oData.append("pid",global.pid);
@@ -71,6 +71,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",
                 data : oData,
+                'dataType' : 'json',
                 processData : false,// 告诉jQuery不要去处理发送的数据
                 contentType : false
             }).success(function(response) {
@@ -82,7 +83,6 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 }]);
 
             }).fail(function(ret) {
-                console.log("fail")
             });
             //}
             $uploadBtn.val("");

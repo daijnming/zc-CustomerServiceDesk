@@ -14,11 +14,13 @@ function LeftSide(node,core,window) {
         $statusMenu,
         $statusImage,
         $inviteBtn,
+        $serverGroup,
         $waitOuter;
     var Alert = require('../util/modal/alert.js');
     var global;
     var parseDOM = function() {
         $node = $(node);
+        $serverGroup = $node.find(".js-server-group");
         $statusBtn = $node.find(".js-menuDropdown");
         $statusMenu = $node.find(".js-status-menu");
         $statusImage = $node.find(".js-status-image");
@@ -128,6 +130,7 @@ function LeftSide(node,core,window) {
         $statusImage.addClass(STATUSIMAGELIST[global.status]);
         $(node).find("img.js-my-logo").attr("src",data.face);
         $(node).find(".js-customer-service").html(data.name);
+        $serverGroup.html(global.cusRoleName);
     };
 
     var bindLitener = function() {

@@ -71,7 +71,7 @@ function Item(data,core,outer,from,manager) {
     };
 
     var hide = function() {
-        $body.trigger("leftside.onremove",[{
+        $body.trigger("leftside.onhide",[{
             'cid' : data.cid,
             'uid' : data.uid
         }]);
@@ -97,6 +97,10 @@ function Item(data,core,outer,from,manager) {
                 if(manager.getCurrentUid() == data.uid) {
                     manager.setCurrentUid(null);
                 }
+                $body.trigger("leftside.onremove",[{
+                    'cid' : data.cid,
+                    'uid' : data.uid
+                }]);
                 if(ret.status === 1) {
                     hide();
                 }
@@ -219,6 +223,8 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onNodeClickHandler = function() {
+        //记录未读数，聊天列表需要显示
+        var unreadTemp = unReadCount;
         clearUnread();
         $node.addClass("active").siblings().removeClass("active");
         data.from = from;
@@ -228,7 +234,9 @@ function Item(data,core,outer,from,manager) {
                 return;
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,
-                'userData' : userData
+                'userData' : userData,
+                'unreadcount' : unreadTemp
+
             }]);
         });
 

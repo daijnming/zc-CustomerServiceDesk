@@ -9,6 +9,7 @@ function Online(node,core,window) {
     var global;
     var USOURCE = require('./source.json');
     var Item = require('./chatItem.js');
+    var normalMessageAdapter = require('../util/normatMessageAdapter.js');
     var Alert = require('../util/modal/alert.js');
     var loadFile = require('../util/load.js')();
     var currentUid;
@@ -70,6 +71,8 @@ function Online(node,core,window) {
                     for(var i = 0,
                         len = ret.userList.length;i < len;i++) {
                         var item = ret.userList[i];
+                        item.content = item.lastMsg;
+                        normalMessageAdapter(item);
                         if(item.isTransfer === undefined) {
                             item.isTransfer = item.chatType;
                         }

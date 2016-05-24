@@ -51,14 +51,14 @@
         <div class="userTypeName">
           生日：
         </div>
-          <input class="span3 js-userTnp userInp otherBorder" oType="birthday" readonly="readonly" id="dp" text="text" data-uid="{{=it.item.userData.uid}}"  placeholder="-" value="{{=it.item.userData["birthday"]?it.item.userData["birthday"]:''}}" data-date-format="yyyy-mm-dd">
+          <input class="span3 js-userTnp1 userInp otherBorder" oType="birthday" readonly="readonly" id="dp" text="text" data-uid="{{=it.item.userData.uid}}"  placeholder="-" value="{{=it.item.userData["birthday"]?it.item.userData["birthday"]:''}}" data-date-format="yyyy-mm-dd">
             <span class="js-tip tip"><span class="js-alerticon alerticon"></span><!--不能超过28个字符--><i class="js-closeicon closeicon"></i></span>
     </li>
     <li class="clear">
         <div class="userTypeName">
             性别：
         </div>
-        <select class="userInp otherBorder" oType="sex" id="sex" style="width:150px;">
+        <select class="js-sex userInp otherBorder" oType="sex" id="sex" data-uid="{{=it.item.userData.uid}}" style="width:150px;">
             <option value="">未知</option>
             <option value="0">男</option>
             <option value="1">女</option>
@@ -106,7 +106,7 @@
             备注：
         </div>
         <div class="remarkTxt ">
-            <textarea   class="js-userTnp userInp othe remark form-control" maxlength="200" oType="remark" placeholder="上限200字">{{=it.item.userData["remark"]}}</textarea>
+            <textarea   class="js-userTnp userInp othe remark form-control" data-uid="{{=it.item.userData.uid}}" maxlength="200" oType="remark" placeholder="上限200字">{{=it.item.userData["remark"]}}</textarea>
               <span class="js-tip tip"><span class="js-alerticon alerticon"></span><!--不能超过28个字符--><i class="js-closeicon closeicon"></i></span>
         </div>
     </li>
