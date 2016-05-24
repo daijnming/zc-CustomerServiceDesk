@@ -178,7 +178,7 @@ var ProfileUser = function(node,core,userData) {
 		     return;
 		$(node).delegate('.js-userTnp','blur',onTextBlurRegex);
 		$(node).delegate('.js-userTnp','focus',onTextFocusRegex);
-		$(node).delegate('#sex','change',onSelected);
+		$(node).delegate('.js-sex','change',onSelected);
 		initail = true;
 	};
 	var initPlugsin = function(){
@@ -211,18 +211,18 @@ var ProfileUser = function(node,core,userData) {
 			qq:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
-				{'regex':/[1-9][0-9]{4,29}/,'alert':'输入5-30位数字，请重新输入'}],
+				{'regex':/^([1-9][0-9]{4,29})$/,'alert':'输入5-30位数字，请重新输入'}],
 			weixin:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'}],
 			weibo:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
-				{'regex':/\w{4,24}/,'alert':'输入4-24位字符，请重新输入'}],
+				{'regex':/^\w{4,24}$/,'alert':'输入4-24位字符，请重新输入'}],
 			remark:[
 				{'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
-				{'regex':/\w{0,200}/,'alert':'最大输入限制200字符，请重新输入'}]
+				{'regex':/^(\w{0,200})$/,'alert':'最大输入200字符，请重新输入'}]
 		};
 	};
 	initUserInfo().then(function(){

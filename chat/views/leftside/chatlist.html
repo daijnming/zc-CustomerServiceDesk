@@ -15,7 +15,7 @@
                     {{  }else{ }}
                         <span class="status js-user-status show">[转接]</span></span>
                     {{  } }}
-                </div><span class="chat-detail js-last-message"></span><i class="user-del js-remove"  data-uid="{{=item.uid}}"><span class="newIcon"></span></i>
+                </div><span class="chat-detail js-last-message {{= item.lastMsgSenderType == 0?'orange':''}}">{{=item.lastMsg || ''}}</span><i class="user-del js-remove"  data-uid="{{=item.uid}}"><span class="newIcon"></span></i>
             </div>
         </li>
         

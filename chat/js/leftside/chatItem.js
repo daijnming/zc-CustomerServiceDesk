@@ -71,7 +71,7 @@ function Item(data,core,outer,from,manager) {
     };
 
     var hide = function() {
-        $body.trigger("leftside.onremove",[{
+        $body.trigger("leftside.onhide",[{
             'cid' : data.cid,
             'uid' : data.uid
         }]);
@@ -83,23 +83,31 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onRemove = function() {
-        $.ajax({
-            'url' : '/chat/admin/leave.action',
-            'data' : {
-                'cid' : data.cid,
-                'uid' : global.id,
-                'userId' : data.uid
-            },
-            'type' : 'post',
-            'dataType' : "json"
-        }).success(function(ret) {
-            if(manager.getCurrentUid() == data.uid) {
-                manager.setCurrentUid(null);
-            }
-            if(ret.status === 1) {
-                hide();
-            }
-        });
+        if(status == 'online') {
+            $.ajax({
+                'url' : '/chat/admin/leave.action',
+                'data' : {
+                    'cid' : data.cid,
+                    'uid' : global.id,
+                    'userId' : data.uid
+                },
+                'type' : 'post',
+                'dataType' : "json"
+            }).success(function(ret) {
+                if(manager.getCurrentUid() == data.uid) {
+                    manager.setCurrentUid(null);
+                }
+                $body.trigger("leftside.onremove",[{
+                    'cid' : data.cid,
+                    'uid' : data.uid
+                }]);
+                if(ret.status === 1) {
+                    hide();
+                }
+            });
+        } else {
+            hide();
+        }
     };
 
     var insert = function(node) {
@@ -215,6 +223,8 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onNodeClickHandler = function() {
+        //记录未读数，聊天列表需要显示
+        var unreadTemp = unReadCount;
         clearUnread();
         $node.addClass("active").siblings().removeClass("active");
         data.from = from;
@@ -224,7 +234,9 @@ function Item(data,core,outer,from,manager) {
                 return;
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,
-                'userData' : userData
+                'userData' : userData,
+                'unreadcount' : unreadTemp
+
             }]);
         });
 
@@ -256,7 +268,6 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onTransfer = function(evt,ret) {
-        console.log(ret);
         if(ret.uid != data.uid) {
             return;
         }
@@ -266,7 +277,6 @@ function Item(data,core,outer,from,manager) {
         }
     };
     var bindListener = function() {
-        console.log(data);
         $body.on("scrollcontent.onUpdateUserState",onUserStatusChange);
         $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);

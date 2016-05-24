@@ -53,6 +53,8 @@ function Online(node,core,window) {
 
     var hide = function() {
         $node.hide();
+        $node.find("li.user-list-item").removeClass("active");
+        currentUid = null;
     };
     var getDefaultChatList = function() {
         $.ajax({

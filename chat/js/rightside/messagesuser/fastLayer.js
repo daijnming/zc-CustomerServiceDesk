@@ -54,13 +54,14 @@ var Fastlayer = function(node,core,config) {
     var onReLoadHandler = function(boo) {
         $(node).find('.js-quickContent ul .detalBar span').removeClass('hide');
         $($(node).find('.js-quickLeft ul li')[0]).find('.js-upLeftGroup').addClass('hide');
-        $($(node).find('.js-quickRight ul li')[0]).find('.js-upRightRep').addClass('hide');
+        $($(node).find('.js-quickRight ul li.show')[0]).find('.js-upRightRep').addClass('hide');
         if(boo) {
             $(document.body).trigger('rightside.oReLoadRightGroup');
         }
     };
     //点击左侧快捷回复分组条
     var onFastTap = function() {
+        var _arr = [];
         $(node).find('.js-rightContent li').addClass('hide');
         var $this = $(this);
         $this.addClass('activeLine').siblings('li').removeClass('activeLine');
@@ -70,6 +71,7 @@ var Fastlayer = function(node,core,config) {
         $(oLi).removeClass('show');
         for(var i = 0;i < oLi.length;i++) {
             if($(oLi[i]).attr('gid') == $this.attr('gid')) {
+                _arr.push(oLi[i]);
                 $(oLi[i]).addClass('show');
                 $(oLi[i]).find('input').removeClass('hide');
             }
@@ -79,6 +81,8 @@ var Fastlayer = function(node,core,config) {
             $(oAddNewRep).show();
         else
             $(oAddNewRep).hide();
+        //快捷回复中第一条不显示置顶
+        $(_arr[0]).find('.js-upRightRep').addClass('hide');
     };
 
     //快捷删除
@@ -239,11 +243,11 @@ var Fastlayer = function(node,core,config) {
         //判断分组还是回复
         if(obj == oFastLeft) {
             clsDelName = 'js-delLeftGroup delLeftGroup';
-            clsUpName = 'js-upLeftGroup upLeftGroup';
+            clsUpName = 'js-upLeftGroup upLeftGroup hide';
             utype = 'left';
         } else {
             clsDelName = 'js-delRightRep delRightRep';
-            clsUpName = 'js-upRightRep upRightRep';
+            clsUpName = 'js-upRightRep upRightRep hide';
             utype = 'right';
         }
         var template = require('./template.js');
@@ -264,6 +268,7 @@ var Fastlayer = function(node,core,config) {
         } else {
             $(obj).append(_html);
         }
+        // onReLoadHandler(true);
     };
     var onDialogArea = function() {
         var oListInput = $(oFastLeft).find('li')[$(oFastLeft).find('li').length - 1];
@@ -386,7 +391,7 @@ var Fastlayer = function(node,core,config) {
         $(node).find('.js-delLeftGroup').removeClass('sureDel');
         $(node).find('.js-delRightRep').removeClass('sureDel');
         $(oFastLeft).find('.js-delLeftGroup').text('删除').css('color','#38bfbe');
-        $(oFastRight).find('.js-delLeftRep').text('删除').css('color','#38bfbe');
+        $(oFastRight).find('.js-delRightRep').text('删除').css('color','#38bfbe');
     };
     var bindLitener = function() {
         onloadHandler();
@@ -406,8 +411,7 @@ var Fastlayer = function(node,core,config) {
         $(oAddNewGroup).on('click',onAddNewFast);
         $(oAddNewRep).on('click',onAddNewFast);
         //取消删除
-        $(oFastLeft).delegate('li','mouseleave',onCancalDel);
-
+        $(node).delegate('.js-content li','mouseleave',onCancalDel);
     };
     var initConfig = function() {
         if($(node).find('.js-content .js-leftContent .activeLine').length <= 0)
