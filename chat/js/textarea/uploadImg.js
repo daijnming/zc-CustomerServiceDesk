@@ -82,7 +82,6 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 }]);
 
             }).fail(function(ret) {
-                console.log("fail")
             });
             //}
             $uploadBtn.val("");
