@@ -125,7 +125,7 @@
     {{ if (it.list[prop].senderType === 2) { }}
       <div class="msg workOrderCus">
         <div class="msg_user fr">
-          <img src="http://img.sobot.com/console/common/face/admin.png" class="msg_user_img">
+          <img src="{{=it.adminImage}}" class="msg_user_img">
         </div>
         <div class="msgContBox fr">
           <span class="msg_name">{{=it.list[prop].senderName}}</span>

@@ -51,7 +51,7 @@
         <div class="userTypeName">
           生日：
         </div>
-          <input class="span3 js-userTnp userInp otherBorder" oType="birthday" readonly="readonly" id="dp" text="text" data-uid="{{=it.item.userData.uid}}"  placeholder="0000-00-00" value="{{=it.item.userData["birthday"]?it.item.userData["birthday"]:''}}" data-date-format="yyyy-mm-dd">
+          <input class="span3 js-userTnp userInp otherBorder" oType="birthday" readonly="readonly" id="dp" text="text" data-uid="{{=it.item.userData.uid}}"  placeholder="-" value="{{=it.item.userData["birthday"]?it.item.userData["birthday"]:''}}" data-date-format="yyyy-mm-dd">
             <span class="js-tip tip"><span class="js-alerticon alerticon"></span><!--不能超过28个字符--><i class="js-closeicon closeicon"></i></span>
     </li>
     <li class="clear">
@@ -106,7 +106,7 @@
             备注：
         </div>
         <div class="remarkTxt ">
-            <textarea   class="js-userTnp userInp othe remark form-control" maxlength="200" oType="remark" placeholder="上限200字">{{=it.item.userData["remark"]?it.item.userData["remark"]:''}}</textarea>
+            <textarea   class="js-userTnp userInp othe remark form-control" maxlength="200" oType="remark" placeholder="上限200字">{{=it.item.userData["remark"]}}</textarea>
               <span class="js-tip tip"><span class="js-alerticon alerticon"></span><!--不能超过28个字符--><i class="js-closeicon closeicon"></i></span>
         </div>
     </li>
