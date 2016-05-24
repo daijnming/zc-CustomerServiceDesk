@@ -22,6 +22,7 @@ function Queue(core,window) {
         $tableOuter,
         $input;
     var urlList = ['/chat/admin/queryUser.action','/chat/admin/queryVisitUser.action'];
+
     var TEMPLATELIST = ['views/leftside/queueitem.html','views/leftside/visitqueue.html'];
     var totalPage,
         currentPage = 1;

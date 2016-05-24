@@ -11,6 +11,12 @@
 #user_menu i.connection_icon.buzy {
     background-image: url("../img/busy.png");
 }
+#chatonline .uname{
+    width:150px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
 #main-container #left-navigation .header-box-yy #user_menu .status-user.active {
     height: 92px !important;
     display: block;
