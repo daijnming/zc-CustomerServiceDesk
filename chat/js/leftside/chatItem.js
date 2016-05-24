@@ -71,7 +71,7 @@ function Item(data,core,outer,from,manager) {
     };
 
     var hide = function() {
-        $body.trigger("leftside.onremove",[{
+        $body.trigger("leftside.onhide",[{
             'cid' : data.cid,
             'uid' : data.uid
         }]);
@@ -97,6 +97,10 @@ function Item(data,core,outer,from,manager) {
                 if(manager.getCurrentUid() == data.uid) {
                     manager.setCurrentUid(null);
                 }
+                $body.trigger("leftside.onremove",[{
+                    'cid' : data.cid,
+                    'uid' : data.uid
+                }]);
                 if(ret.status === 1) {
                     hide();
                 }
