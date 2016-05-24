@@ -259,7 +259,7 @@
         });
     }
     var sendSearchUserChat = function() {
-        $rootNode.on('click', '.formUser', function() {
+        $rootNode.on('click', '.msg_content', function() {
             var chatText = $(this).html();
 
             if (chatText.indexOf('webchat_img_upload') !== -1) {
@@ -344,7 +344,7 @@
 
               if (isScrollBottom) {
                 var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
-
+                lastImg.src = lastImg.src + '?r=' + (new Date());
                 if (lastImg) {
                   lastImg.onload = function() {
                     $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
@@ -389,8 +389,12 @@
                 $rootNode.find('#' + type).find('.js-panel-body').append(_html);
 
                 if (isScrollBottom) {
-                  $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-                  userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                  var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
+                  img.src = img.src + '?r=' + (new Date());
+                  img.onload = function() {
+                    $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                    userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                  }
                 }
                 else {
 
@@ -398,7 +402,8 @@
 
                     if (typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                   } else {
-                    var img = $rootNode.find('#' + type).find('.js-panel-body').find('img').last()[0];
+                    var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
+                    img.src = img.src + '?r=' + (new Date());
                     img.onload = function() {
                       $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                       userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
