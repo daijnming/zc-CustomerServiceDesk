@@ -219,6 +219,8 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onNodeClickHandler = function() {
+        //记录未读数，聊天列表需要显示
+        var unreadTemp = unReadCount;
         clearUnread();
         $node.addClass("active").siblings().removeClass("active");
         data.from = from;
@@ -228,7 +230,9 @@ function Item(data,core,outer,from,manager) {
                 return;
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,
-                'userData' : userData
+                'userData' : userData,
+                'unreadcount' : unreadTemp
+
             }]);
         });
 
