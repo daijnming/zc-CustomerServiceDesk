@@ -46,6 +46,7 @@ function TextArea(node,core,window) {
 
         if(data.data.from == 'online') {
             $botTextBox.show();
+            $sendMessage.focus();
             botTextBoxPosition();
             //重新定义聊天体的高度
         } else if(data.data.from == 'history') {
