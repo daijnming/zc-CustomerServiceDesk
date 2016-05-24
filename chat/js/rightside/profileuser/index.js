@@ -23,12 +23,12 @@ var ProfileUser = function(node,core,userData) {
 			if(!url.match(regexUrl))url='http://'+url;
 		}
 		if(url&&!title) {
-				return	'<a target="_black" class="js-aChat aChat" style="font-size:14px;" href="'+url+'" title="'+url+'">'+url+'</a>';
+				return	'<a target="_black"  class="js-aChat aChat" style="font-size:14px; color:#0d81c0;" href="'+url+'" title="'+url+'">'+url+'</a>';
 		}
 		if(!url&&title) {
 				return  title;
 		}
-		return '<a target="_black" class="js-aChat aChat" style="font-size:14px;" href="'+url+'" title="'+title+'">'+title+'</a>';
+		return '<a target="_black" class="js-aChat aChat" style="font-size:14px;color:#0d81c0;" href="'+url+'" title="'+title+'">'+title+'</a>';
 	};
 	//初始化页面
 	var initUserInfo = function(){
@@ -194,33 +194,33 @@ var ProfileUser = function(node,core,userData) {
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
 				{'regex':/\w{0,100}/,'alert':'最大输入100字符，请重新输入'}],
 			realname:[
-				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				// {'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
 				{'regex':/\w{0,32}/,'alert':'最大输入32字符，请重新输入'}],
 			tel:[
-				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				// {'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[0-9\-#*]*$/,'alert':'只允许数字、“#”、“*”、“-”'},
-				{'regex':/^[0-9\-#*]{8,30}$/,'alert':'最大输入30字符，请重新输入'}],
+				{'regex':/(^[0-9\-#*]{8,30}$)|(^[0-9\-#*]{0}$)/,'alert':'最大输入30字符，请重新输入'}],
 			birthday:[
-				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				// {'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[1-2][0-9]{3}\-(([0-2]{1}[0-9]{1})|(3[0-1]{1}))(\-([0-2]{1}[0-9]{1})|(3[0-1]{1}))$/,'alert':'只允许数字、“-”'}],
 			email:[
-				{'regex':/\S/,alert:'格式错误，不允许为空'},
-				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,}$/,'alert':'只允许字母、数字或下划线'},
-				{'regex':/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,60}$/,'alert':'最大输入限制60字符，请重新输入'}],
+				// {'regex':/\S/,alert:'格式错误，不允许为空'},
+				{'regex':/^([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,})*$/,'alert':'只允许字母、数字或下划线'},
+				{'regex':/(^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*(?:@(?!-))(?:(?:[a-zA-Z0-9]*)(?:[a-zA-Z0-9](?!-))(?:\.(?!-)))+[a-zA-Z]{2,60}$)|(^[0-9]{0}$)/,'alert':'最大输入限制60字符，请重新输入'}],
 			qq:[
-				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				// {'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
-				{'regex':/^([1-9][0-9]{4,29})$/,'alert':'输入5-30位数字，请重新输入'}],
+				{'regex':/(^[1-9][0-9]{4,29}$)|(^[0-9]{0}$)/,'alert':'输入5-30位数字，请重新输入'}],
 			weixin:[
-				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				// {'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'}],
 			weibo:[
-				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				// {'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
-				{'regex':/^\w{4,24}$/,'alert':'输入4-24位字符，请重新输入'}],
+				{'regex':/(^\w{4,24}$)|(^[0-9]{0}$)/,'alert':'输入4-24位字符，请重新输入'}],
 			remark:[
-				{'regex':/\S/,alert:'格式错误，不允许为空'},
+				// {'regex':/\S/,alert:'格式错误，不允许为空'},
 				{'regex':/^[^<>//]*$/,'alert':'格式错误，请重新输入'},
 				{'regex':/^(\w{0,200})$/,'alert':'最大输入200字符，请重新输入'}]
 		};

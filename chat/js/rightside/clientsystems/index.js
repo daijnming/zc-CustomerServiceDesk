@@ -31,8 +31,9 @@ var Client = function(node,core,data){
   	  },
   		dataType:"json",
   		success:function(data){
-        data = [{'机器人':'http://baidu.com'}];
-        // data = [{'机器人机器人机器人机器人':'http://baidu.com'},{'qq':'http://www.qq.com'}];
+        // data = [{'机器人':'http://baidu.com'}];
+        // data = [{'页面一':'http://172.16.5.174:8000/index.html?partnerId=123'},
+        // {'页面二':'http://172.16.5.174:8000/index2.html?partnerId=456'}];
         listData = data;
         promise.resolve();
   		}
