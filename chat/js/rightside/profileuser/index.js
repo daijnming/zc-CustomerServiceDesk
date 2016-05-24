@@ -140,7 +140,7 @@ var ProfileUser = function(node,core,userData) {
 		};
 	var onTextFocusRegex=function(){
 			focusValue = $(this).val();
-			// $(this).select();
+			$(this).select();
 	};
 	var onSelected = function(){
 		var val=$(this).find('option:selected').val();

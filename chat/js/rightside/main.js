@@ -3,22 +3,22 @@
 */
 
 function RightSide(node,core,window) {
-  var config ={
-     version:'5.0' //chat项目重构 5.0版本
-  };
-
   var global = core.getGlobal();
+  var config ={
+     version:'5.0', //chat项目重构 5.0版本
+     isShowBg:true //是否有用户在线 用于判断用户资料字段是否显示
+  };
+  config.id = global.id;//url_id
+
   var tapLastUserData;//最后一次点击用户列表事件
 
   //左侧用户点击保存右侧相应tab选项卡
   var switchPreferenceLibrary=[],//存储用户偏好设置
       switchDefaultLibrary = {};//存储模块默认设置
 
-  config.id = global.id;//url_id
-  //TODO 配置 api 说明
+  var height = $(window).height(),
+      newHeight = $(window).height() -50;
 
-  var height = $(window).height();
-  var newHeight = $(window).height() -50;
   //TODO 预加载对象
   var tabSwitchNav,//右侧上方UL元素
       tabSwitchBody,//右侧对应内容展示区
@@ -44,25 +44,24 @@ function RightSide(node,core,window) {
   };
 
 	var onloadHandler = function(evt,data) {
+    //用户资料
+    $(node).find('.js-tab-pane-profileuser').css('height',newHeight-52+'px');
+    //快捷回复
+    $(node).find('.js-rightQuickLeft').css('height',newHeight-80-52+'px');
+    $(node).find('.js-rightQuickRight').css('height',newHeight-80-52+'px');
     //智能回复得高度
-    // $('.js-tab-pane#profileuser').css('height',newHeight-52+'px');
-    // $("#homeuser").css('height',newHeight-52 +'px');
-    $("#homeuser .homeUserBox").css('height',newHeight-52-40-52 +'px');
-    //快捷回复，左，右侧列表
-    $('.rightQuickLeft,.rightQuickRight').css('height',newHeight-80-52+'px');
+    $(node).find('.js-tab-pane-homeuser .js-homeUserBox').css('height',newHeight-52-40-52+'px');
     //iframe
-    $("#clientSysIframe").css('height',newHeight-52 +'px');
-    $('.js-tab-pane#profileuser').css('height',newHeight-52+'px');
-
+    $(node).find('.js-clientSysIframe').css('height',newHeight-52+'px');
 	};
   //tab切换
   var onSetSwitchTab = function(obj,val){
     var $this = $(obj);
     if($this.attr('id')=='profileuser'){
-      if(tapLastUserData){
-        $(node).find('.js-panel-body').removeClass('showBg');
-      }else{
+      if(config.isShowBg){
         $(node).find('.js-panel-body').addClass('showBg');
+      }else{
+        $(node).find('.js-panel-body').removeClass('showBg');
       }
     }else{
       $(node).find('.js-panel-body').removeClass('showBg');
@@ -169,6 +168,7 @@ function RightSide(node,core,window) {
     setUid();
   };
   var initData = function(data,userData){
+      config.isShowBg = false;
       //初始化用户数据 -- 客户资料
       // console.log(userData);
       profileuser($('.js-tab-pane#profileuser'),core,userData);
@@ -182,7 +182,12 @@ function RightSide(node,core,window) {
       //隐藏用户资料背景
       $(node).find('.js-panel-body').removeClass('showBg');
   };
-
+  //隐藏用户资料
+  var onHideProfileInfo = function (){
+    config.isShowBg = true;
+    //是否显示用户资料模块背景图片
+    $(node).find('.js-panel-body').addClass('showBg').find('.js-tab-pane#profileuser').html('');
+  };
 	var parseDOM = function() {
     tabSwitchNav = $(node).find('.js-panel-body .js-nav-tabs');
     tabSwitchBody = $(node).find('.js-panel-body .js-tab-content');
@@ -193,6 +198,7 @@ function RightSide(node,core,window) {
 	var bindListener = function() {
     $(window).on('core.onload',onloadHandler);
     $(document.body).on('leftside.onselected',initData);
+    $(document.body).on('leftside.onhide',onHideProfileInfo);
     $(tabSwitchNav).on('click','.js-menu',setPreferenceInfo);
     $(tabInput).delegate('input','keyup',onGetSearch);
     $(tabInput).delegate('input','blur',onGetSearch1);
