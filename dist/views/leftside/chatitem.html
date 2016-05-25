@@ -1,10 +1,10 @@
 {{ var item = it;}}
-<li titemle="{{=item.uname}}" class="user-list-item" data-uid="{{=item.uid}}">
+<li titemle="{{=item.uname}}" class="user-list-item " data-uid="{{=item.uid}}">
     <i class="icon {{=item.source_type || ''}} js-icon">
             <img src="{{=item.imgUrl || 'assets/images/newChat1.png'}}" class="js-image-face"/>
             <span class="badge badge-red js-unread-count">1</span></i>
     <div class="item-detail">
-        <div class="uname" style="width: 230px;">
+        <div class="uname js-user-name" >
             {{=item.uname}}
              {{ if(item.isTransfer == 0) { }}
                         <span class="status js-user-status">[离线]</span></span>

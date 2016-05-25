@@ -16,7 +16,8 @@ function TextArea(node,core,window) {
         $uploadBtn;
     var currentCid,
         currentUid,
-        answer;//传给聊天的url
+        answer;
+    //传给聊天的url
 
     var parseDOM = function() {
         $node = $(node);
@@ -64,51 +65,52 @@ function TextArea(node,core,window) {
             'date' : +new Date()
         }]);
     };
-    var onFileTypeHandler=function(data){
-        var filetypeIco="";
+    var onFileTypeHandler = function(data) {
+        var filetypeIco = "";
         //先判断是否为图片
         if(!isImage(data)){
             //正在上传
             switch (data.filetype)
                 {
                 case ".txt":
-                  filetypeIco='http://img.sobot.com/yun/attachment/fileTypeImages/icon_txt.gif';
-                  break;
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_txt.gif';
+                    break;
                 case ".doc":
-                  filetypeIco='http://img.sobot.com/yun/attachment/fileTypeImages/icon_doc.gif';
-                  break;
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_doc.gif';
+                    break;
                 case ".pdf":
-                  filetypeIco='http://img.sobot.com/yun/attachment/fileTypeImages/icon_pdf.gif';
-                  break;
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_pdf.gif';
+                    break;
                 case ".ppt":
-                  filetypeIco='http://img.sobot.com/yun/attachment/fileTypeImages/icon_ppt.gif';
-                  break;
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_ppt.gif';
+                    break;
                 case ".xls":
-                  filetypeIco='http://img.sobot.com/yun/attachment/fileTypeImages/icon_xls.gif';
-                  break;
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_xls.gif';
+                    break;
                 case ".rar":
-                  filetypeIco='http://img.sobot.com/yun/attachment/fileTypeImages/icon_rar.gif';
-                  break;
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_rar.gif';
+                    break;
                 case ".player":
                   filetypeIco='http://img.sobot.com/yun/attachment/fileTypeImages/icon_mp3.gif';
                   break;
                 }
-                $node.find(".systeamTextBox").remove();
-                answer='<img style="vertical-align: middle; margin-right: 2px;" src="'+filetypeIco+'"><a style="font-size:10px;" target="_blank" href="'+data.url+'">'+data.filename+data.extension+'</a>';
-            }
-        
+            $node.find(".systeamTextBox").remove();
+            answer='<img style="vertical-align: middle; margin-right: 2px;" src="'+filetypeIco+'"><a style="font-size:10px;" target="_blank" href="'+data.url+'">'+data.filename+data.extension+'</a>';
+                
+        }
+
     };
-    var isImage=function(data){
+    var isImage = function(data) {
         switch (data.filetype)//正在上传
-          {
-            case "image": 
-              $node.find(".systeamTextBox").remove();
-              answer='<img class="webchat_img_upload upNowImg" src="' + data.url + '" />'
-              return true;
-              break;
+        {
+            case "image":
+                $node.find(".systeamTextBox").remove();
+                answer = '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />'
+                return true;
+                break;
             default:
-              return false;
-          }
+                return false;
+        }
     };
     var onbtnSendHandler = function(evt) {
         var str = $sendMessage.val();

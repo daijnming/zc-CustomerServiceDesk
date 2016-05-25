@@ -22,6 +22,11 @@ function Offline(node,core,window) {
 
     var currentUid;
 
+    var setCurrentUid = function(uid) {
+        currentUid = uid;
+        alert();
+    };
+
     var getCurrentUid = function() {
         return currentUid;
     };
@@ -70,6 +75,12 @@ function Offline(node,core,window) {
                 for(var i = 0,
                     len = list.length;i < len;i++) {
                     var item = new Item(list[i],core,node,'history',that);
+                    chatItemList[list[i].uid] = item;
+                }
+                if(currentUid) {
+                    setTimeout(function() {
+                        chatItemList[currentUid].onclick();
+                    },10);
                 }
             });
         });
@@ -86,19 +97,31 @@ function Offline(node,core,window) {
     };
 
     var show = function() {
+        $ulOuter.html('');
         $node.show();
         $node.find(".js-switch-label").eq(prevCursor).trigger("click");
-        //fetchData(prevCursor);
     };
 
-    var hide = function() {
-        $node.hide();
+    var clearSeleted = function() {
         $node.find("li.user-list-item").removeClass("active");
         currentUid = null;
     };
 
+    var onLeftSideItemClickHandler = function(evt,data) {
+        if(data.data.from == 'online') {
+            clearSeleted();
+        } else {
+            currentUid = data.data.uid;
+        }
+    };
+
+    var hide = function() {
+        $node.hide();
+    };
+
     var bindListener = function() {
         $(document.body).on("core.onload",onloadHandler);
+        $(document.body).on("leftside.onselected",onLeftSideItemClickHandler);
         $node.delegate(".js-switch-label",'click',labelItemClickHandler);
     };
 

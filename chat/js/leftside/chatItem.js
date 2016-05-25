@@ -158,6 +158,7 @@ function Item(data,core,outer,from,manager) {
         if(elm.length > 0) {
             node = elm[0];
             $node = $(node);
+            $userName = $node.find(".js-user-name");
             if(!$imageFace) {
                 $imageFace = $node.find(".js-image-face");
             }
@@ -181,6 +182,7 @@ function Item(data,core,outer,from,manager) {
                 }
                 initFace();
                 insert($node);
+                $userName = $node.find(".js-user-name");
                 promise.resolve();
             });
         }
@@ -242,6 +244,9 @@ function Item(data,core,outer,from,manager) {
 
     };
 
+    var onclick = function() {
+        $node.trigger('click');
+    };
     var onProfileUserInfo = function(evt,ret) {
         if(ret.data.uid == data.uid && ret.data.name) {
             var name = ret.data.name;
@@ -290,7 +295,6 @@ function Item(data,core,outer,from,manager) {
         $unRead = $node.find(".js-unread-count");
         $ulOuter = $(outer).find("ul.js-users-list");
         $lastMessage = $node.find(".js-last-message");
-        $userName = $node.find(".js-user-name");
     };
 
     var initPlugins = function() {
@@ -308,6 +312,7 @@ function Item(data,core,outer,from,manager) {
 
     this.onOnline = onOnline;
     this.getStatus = getStatus;
+    this.onclick = onclick;
     this.onRemove = onRemove;
     this.onOffLine = onOffLine;
 }
