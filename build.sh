@@ -1,5 +1,12 @@
+CONFIG="WEB-INF/replace.conf"
+JAR="WEB-INF/lib/replace.jar"
 rm -rf dist
 rm -rf dest
+
+
+replaceScript(){
+   java -jar $JAR -s dist/chat.html -c $CONFIG > test.txt
+}
 gulp production
 find chat/img -name "*.mp3" -type f -exec cp {} dist/img  \;
 cp -r chat/assets ./dist
@@ -8,6 +15,7 @@ cp -r chat/views dist
 cp -r chat/assets/fonts dist/
 cp -r chat/assets/css/font-awesome/fonts  dist/fonts/font-awesome
 cp -r chat/img/weixinType.png dist/img
+replaceScript dist/chat/chat.html
 git status -s | egrep "^[ ]*D" | sed 's`^[ ]*D``' | xargs git rm
 git status -s | egrep "^[ ]*M" | sed 's`^[ ]*M``' | xargs git add
 git status -s  | egrep "^[ ]*\?" | sed 's`^[ ]*\?*``g' | xargs git add 
@@ -21,3 +29,6 @@ date=$(date);
 git commit -m "$date"
 git push
 fi
+
+
+
