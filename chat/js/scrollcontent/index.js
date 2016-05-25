@@ -44,6 +44,7 @@
             userReadySend : 'views/scrollcontent/userReadySend.html',
             call: 'views/scrollcontent/call.html',
             callTag: 'views/scrollcontent/callTag.html',
+            callDialog: 'views/scrollcontent/callDialog.html'
         }
     };
 
@@ -175,10 +176,19 @@
     var callToUser = function() {
 
       if (hasCallState) {
-        new Dialog({
-            'title' : '请结束上一个语音会话',
-            'footer' : false
-        }).show();
+        loadFile.load(global.baseUrl + API.tpl.callDialog).then(function(tpl) {
+
+            var _html ,
+                dialog = new Dialog({
+                'title' : '请结束上一个语音会话',
+                'footer' : false
+            });
+
+            _html = doT.template(tpl)({});
+
+            dialog.setInner(_html);
+            dialog.show();
+        });
       } else {
         $.ajax({
             'url' : API.http.call,
@@ -802,6 +812,11 @@
         $body.on('textarea.send', function(ev) {
             adminPushMessage(arguments[1]);
         });
+
+        $body.on("leftside.onhide", function() {
+          console.log('leftside.onhide');
+          clearScrollContent(arguments[1].uid);
+        })
 
         $body.on("leftside.onselected", function() {
           var params = arguments[1] ,
