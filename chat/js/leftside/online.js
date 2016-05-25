@@ -24,7 +24,10 @@ function Online(node,core,window) {
             $node.removeClass("noOnline");
         }
     };
-
+    var clearSeleted = function() {
+        $node.find("li.user-list-item").removeClass("active");
+        currentUid = null;
+    };
     var setCurrentUid = function(uid) {
         currentUid = uid;
     };
@@ -54,8 +57,6 @@ function Online(node,core,window) {
 
     var hide = function() {
         $node.hide();
-        $node.find("li.user-list-item").removeClass("active");
-        currentUid = null;
     };
     var getDefaultChatList = function() {
         $.ajax({
@@ -103,7 +104,11 @@ function Online(node,core,window) {
     };
 
     var onLeftSideSelected = function(evt,data) {
-        currentUid = data.data.uid;
+        if(data.data.from == 'online') {
+            currentUid = data.data.uid;
+        } else {
+            clearSeleted();
+        }
     };
     var removeBtnClickHandler = function(e) {
         var elm = e.currentTarget;

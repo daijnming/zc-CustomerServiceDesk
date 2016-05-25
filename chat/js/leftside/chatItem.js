@@ -244,6 +244,9 @@ function Item(data,core,outer,from,manager) {
 
     };
 
+    var onclick = function() {
+        $node.trigger("click");
+    };
     var onProfileUserInfo = function(evt,ret) {
         if(ret.data.uid == data.uid && ret.data.name) {
             var name = ret.data.name;
@@ -309,6 +312,7 @@ function Item(data,core,outer,from,manager) {
 
     this.onOnline = onOnline;
     this.getStatus = getStatus;
+    this.onclick = onclick;
     this.onRemove = onRemove;
     this.onOffLine = onOffLine;
 }
