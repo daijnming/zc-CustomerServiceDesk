@@ -112,13 +112,14 @@
 }
 
 .zc-c-call-tag {
+    z-index: 99999;
     position: absolute;
     width: 300px;
     height: 88px;
     background-color: #f2f7f7;
     border: 1px solid #dfe9ea;
     bottom: 0px;
-    right: 16px;
+    right: 0px;
     display: none;
 }
 
@@ -132,6 +133,12 @@
     font-weight: 900;
     font-size: 14px;
     color: #09aeb0;
+    max-width:130px;
+    overflow:hidden;
+    display:inline-block;
+    vertical-align:bottom;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 .zc-c-call-tag-user-info-userPhone {

@@ -809,6 +809,10 @@
         // --------------------------- 接收推送函数 ---------------------------
         $body.on('core.onload',onloadHandler);
         $body.on('core.receive',onReceive);
+        $(window || document.body).on("resize", function() {
+            $(document.body).find('.zc-c-call-tag').width($('.rightBox').width());
+        });
+
         $body.on('textarea.send', function(ev) {
             adminPushMessage(arguments[1]);
         });
