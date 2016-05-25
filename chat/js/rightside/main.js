@@ -30,8 +30,6 @@ function RightSide(node,core,window) {
   var homeuser = require('./homeuser/index.js');
   var client = require('./clientsystems/index.js');
 
-
-
   var newUserMessage = function(data) {
     var _html = doT.template(template.listItem)(data);
     var li = $(_html);
@@ -218,5 +216,4 @@ function RightSide(node,core,window) {
       init();
   });
 }
-
 module.exports = RightSide;

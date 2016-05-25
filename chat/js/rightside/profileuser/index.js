@@ -140,6 +140,7 @@ var ProfileUser = function(node,core,userData) {
 		};
 	var onTextFocusRegex=function(){
 			focusValue = $(this).val();
+			//全选
 			$(this).select();
 	};
 	var onSelected = function(){
