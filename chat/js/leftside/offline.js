@@ -77,7 +77,11 @@ function Offline(node,core,window) {
                     var item = new Item(list[i],core,node,'history',that);
                     chatItemList[list[i].uid] = item;
                 }
-                console.log(chatItemList[currentUid].onclick());
+                if(currentUid) {
+                    setTimeout(function() {
+                        chatItemList[currentUid].onclick();
+                    },10);
+                }
             });
         });
     };
@@ -93,6 +97,7 @@ function Offline(node,core,window) {
     };
 
     var show = function() {
+        $ulOuter.html('');
         $node.show();
         $node.find(".js-switch-label").eq(prevCursor).trigger("click");
     };

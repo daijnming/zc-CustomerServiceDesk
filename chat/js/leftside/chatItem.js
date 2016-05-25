@@ -245,7 +245,7 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onclick = function() {
-        $node.trigger("click");
+        $node.trigger('click');
     };
     var onProfileUserInfo = function(evt,ret) {
         if(ret.data.uid == data.uid && ret.data.name) {
