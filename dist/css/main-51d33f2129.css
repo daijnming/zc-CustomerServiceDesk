@@ -2834,8 +2834,10 @@ ul {
     background-image: url("../img/busy-993c8f0f60.png");
 }
 #chatonline .uname{
-    width:150px;
+    max-width:130px;
     overflow:hidden;
+    display:inline-block;
+    vertical-align:bottom;
     text-overflow:ellipsis;
     white-space:nowrap;
 }
