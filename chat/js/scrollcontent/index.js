@@ -810,6 +810,7 @@
         $body.on('core.onload',onloadHandler);
         $body.on('core.receive',onReceive);
         $(window || document.body).on("resize", function() {
+          
             $(document.body).find('.zc-c-call-tag').width($('.rightBox').width());
         });
 
