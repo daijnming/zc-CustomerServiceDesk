@@ -12,8 +12,10 @@
     background-image: url("../img/busy.png");
 }
 #chatonline .uname{
-    width:150px;
+    max-width:130px;
     overflow:hidden;
+    display:inline-block;
+    vertical-align:bottom;
     text-overflow:ellipsis;
     white-space:nowrap;
 }
