@@ -185,7 +185,11 @@ function Queue(core,window) {
             $.ajax({
                 'url' : urlList[1],
                 'dataType' : 'json',
-                'data' : {},
+                'data' : {
+                    'uid' : global.id,
+                    'status' : 3,
+                    'pageNow' : 1
+                },
                 'type' : "post"
             }).success(function(ret) {
                 userSize[1] = ret.visitSize;
