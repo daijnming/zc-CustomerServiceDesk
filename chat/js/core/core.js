@@ -133,6 +133,7 @@ function Core(window) {
         });
         noti.onclick = (function(id) {
             return function() {
+                window.focus();
                 $body.trigger('notification.click',[id]);
             };
         })(data.uid);
