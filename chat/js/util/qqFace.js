@@ -40,12 +40,12 @@ var ZC_Face = {
         }
         //callback&&callback();
     },
-    show : function() {
+    show : function(global) {
         var _this = this;
         var faceGroup = _this.faceGroup;
         //集合如果不存在，则创建
         if($('#faceBox').length <= 0) {
-            loadFile.load('/chat/views/textarea/qqFace.html').then(function(value){
+            loadFile.load(global.baseUrl+'views/textarea/qqFace.html').then(function(value){
               var qqface_html = doT.template(value)({
                 "tip" : _this.tip,
                 "path" :_this.path
@@ -56,11 +56,11 @@ var ZC_Face = {
         _this.sendTotextArea(_this.saytext);
 
     },
-    emojiShow : function() {
+    emojiShow : function(global) {
         var _this = this;
         if($('#emojiBox').length <= 0) {//集合如果不存在，则创建
 
-            loadFile.load('/chat/views/textarea/emoji.html').then(function(value){
+            loadFile.load(global.baseUrl+'views/textarea/emoji.html').then(function(value){
               var emoji_html = doT.template(value)({
                 "emojiTip" : _this.emojiTip,
                 "emojiSymbolTip" :_this.emojiSymbolTip,

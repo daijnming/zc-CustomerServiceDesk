@@ -3,6 +3,7 @@
  * @author daijm
  */
 function TextArea(node,core,window) {
+    var global = core.getGlobal();
     //var that = {};
     var loadFile = require('../util/load.js')();
     //表情
@@ -245,8 +246,8 @@ function TextArea(node,core,window) {
         //$node.find("#emojiGroup").hide();
         // $node.find(".icoLi").removeClass("active");
         //$node.find(".firsticoLi").addClass("active");
-        ZC_Face.show();
-        ZC_Face.emojiShow();
+        ZC_Face.show(global);
+        ZC_Face.emojiShow(global);
 
     };
     var onEmotionIcoClickHandler = function() {
