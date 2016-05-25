@@ -1,3 +1,7 @@
+/**
+ *
+ * @author daijm
+ */
 function TextArea(node,core,window) {
     //var that = {};
     var loadFile = require('../util/load.js')();
@@ -11,15 +15,9 @@ function TextArea(node,core,window) {
     var $node,
         $uploadBtn;
     var currentCid,
-        currentUid;
-    //定义所有模块都能访问到的变量值,传参
-    // var getCurrentUserInfo = function(){
-
-    //return {
-    //    'uid':'currentUid',
-    //    'cid':currentCid
-    //};
-    //};
+        currentUid,
+        answer;
+    //传给聊天的url
 
     var parseDOM = function() {
         $node = $(node);
@@ -57,14 +55,63 @@ function TextArea(node,core,window) {
     };
 
     var onImageUpload = function(evt,data) {
-        $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
-            'answer' : '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />',
+        onFileTypeHandler(data);
+        //通过textarea.send事件将用户的数据传到显示台
+        $(document.body).trigger('textarea.send',[{
+            'answer' : answer,
             'uid' : currentUid,
             'cid' : currentCid,
-            'date' : +new Date()//时间戳
+            //时间戳
+            'date' : +new Date()
         }]);
     };
+    var onFileTypeHandler = function(data) {
+        var filetypeIco = "";
+        //先判断是否为图片
+        if(!isImage(data)){
+            //正在上传
+            switch (data.filetype)
+                {
+                case ".txt":
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_txt.gif';
+                    break;
+                case ".doc":
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_doc.gif';
+                    break;
+                case ".pdf":
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_pdf.gif';
+                    break;
+                case ".ppt":
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_ppt.gif';
+                    break;
+                case ".xls":
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_xls.gif';
+                    break;
+                case ".rar":
+                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_rar.gif';
+                    break;
+                case ".player":
+                  filetypeIco='http://img.sobot.com/yun/attachment/fileTypeImages/icon_mp3.gif';
+                  break;
+                }
+            $node.find(".systeamTextBox").remove();
+            answer='<img style="vertical-align: middle; margin-right: 2px;" src="'+filetypeIco+'"><a style="font-size:10px;" target="_blank" href="'+data.url+'">'+data.filename+data.extension+'</a>';
+                
+        }
 
+    };
+    var isImage = function(data) {
+        switch (data.filetype)//正在上传
+        {
+            case "image":
+                $node.find(".systeamTextBox").remove();
+                answer = '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />'
+                return true;
+                break;
+            default:
+                return false;
+        }
+    };
     var onbtnSendHandler = function(evt) {
         var str = $sendMessage.val();
         //ZC_Face.convertToEmoji($sendMessage.val());
@@ -114,14 +161,37 @@ function TextArea(node,core,window) {
 
     var onFilePaste = function(e) {
         var evt = e.originalEvent;
+        console.log(evt.clipboardData.items.length);
+        alert();
         for(var i = 0,
             len = evt.clipboardData.items.length;i < len;i++) {
             var item = evt.clipboardData.items[i];
-            if(item.kind === 'file') {
+            console.log(item);
+            if(item.kind === 'file') {alert(item.kind);
                 e.preventDefault();
                 uploadFun.onFormDataPasteHandler(item,currentUid,currentCid);
             }
         }
+       
+           /* if ( !(e.clipboardData && e.clipboardData.items) ) {
+                return ;
+            }
+
+            for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
+                var item = e.clipboardData.items[i];
+                console.log(item);
+                if (item.kind === "string") {
+                    item.getAsString(function (str) {
+                        // str 是获取到的字符串
+                        console.log(str);
+                    })
+                } else if (item.kind === "file") {
+                    var pasteFile = item.getAsFile();
+                    alert(pasteFile);
+                    // pasteFile就是获取到的文件
+                }
+            }*/
+       
     };
     var botTextBoxPosition = function() {
         var botTextBoxHeight = $botTextBox.height();
@@ -167,6 +237,7 @@ function TextArea(node,core,window) {
         $node.find(".icoLi").on("click",onEmotionIcoClickHandler);
         $node.find('.js-upload').on("change",uploadFile);
         $sendMessage.on("paste",onFilePaste);
+        // document.getElementById("js-sendMessage").addEventListener("paste",onFilePaste);
         //使用formData上传附件
     };
     var initFace = function() {

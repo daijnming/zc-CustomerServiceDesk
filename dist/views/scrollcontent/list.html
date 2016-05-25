@@ -2,14 +2,17 @@
 
   {{ if(it.list[prop].action === 'dateline') { }}
     <div class="day_divider">
-      <hr>
-      <div class="day_divider_label">{{=it.list[prop].date}}</div>
+      <p class="systeamText" style="background-color: transparent">
+        <span class="zc-c-chat-date-line-left"></span>
+        <span class="zc-c-chat-date-line-text">{{=it.list[prop].date}}</span>
+        <span class="zc-c-chat-date-line-right"></span>
+      </p>
     </div>
   {{ } }}
 
   {{ if(it.list[prop].action === 4) { }}
     <div class="systeamTextBox">
-      <p class="systeamText">用户和机器人建立会话<</p>
+      <p class="systeamText">用户和机器人建立会话</p>
     </div>
   {{ } }}
 
@@ -101,6 +104,17 @@
     </div>
   {{ } }}
 
+
+    {{ if(it.list[prop].action === 'noReadLine') { }}
+      <div class="systeamTextBox">
+        <p class="systeamText" style="background-color: transparent">
+          <span class="zc-c-chat-noread-line-left"></span>
+          <span class="zc-c-chat-noread-line-text">以下为未读消息</span>
+          <span class="zc-c-chat-noread-line-right"></span>
+        </p>
+      </div>
+    {{ } }}
+
   {{ if(it.list[prop].action === 5) { }}
 
 
@@ -117,6 +131,24 @@
           <div class="msgBg fl" style="display: inline-flex;margin: 0px;">
             <i class="angleLeft"></i>
             <div class="msg_content formUser">{{=it.list[prop].msg}} </div>
+          </div>
+        </div>
+      </div>
+    {{ } }}
+
+    {{ if (it.list[prop].senderType === 1) { }}
+      <div class="msg workOrderCus">
+        <div class="msg_user fr">
+          <img src="{{=it.systemImage}}" class="msg_user_img">
+        </div>
+        <div class="msgContBox fr">
+          <span class="msg_name">{{=it.list[prop].senderName}}</span>
+          <span class="msg_time">{{=it.list[prop].senderName}}</span>
+          <span class="msg_time">{{=it.list[prop].ts.split(' ')[1] }}</span>
+          <div style="clear:both;"></div>
+          <div class="msgBg" style="display: inline-flex;float: right;margin: 0px;">
+            <i class="angleRight"></i>
+            <div class="msg_content">{{=it.list[prop].msg}} </div>
           </div>
         </div>
       </div>
