@@ -187,7 +187,7 @@ function Queue(core,window) {
                 'dataType' : 'json',
                 'data' : {
                     'uid' : global.id,
-                    'status' : 3,
+                    'status' : 1,
                     'pageNow' : 1
                 },
                 'type' : "post"
