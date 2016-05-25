@@ -1,14 +1,18 @@
+/**
+ *
+ * @author daijm
+ */
 function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片按钮，oChat获取用户信息
     var that = {};
     var global = core.getGlobal();
     var AjaxUpload = require('../util/upload.js');
     var Alert = require('../util/modal/alert.js');
-    //文件扩展名
+    //文件类型
     //文件名
+    //文件扩展名
     var filetype,
-        filename;
-    
-    var extension;
+        filename,
+        extension;
     //上传附件 插件
     //var showMsg=require('./showMsg.js');//会话气泡
     //console.log("43d1dd:"+textarea)
@@ -82,19 +86,22 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     contentType : false
                 }).success(function(response) {
                     var url = response.url;
-                    $(document.body).trigger('textarea.uploadImgUrl',[{//通过textarea.uploadImgUrl事件将图片地址传到聊天窗体
+                    //通过textarea.uploadImgUrl事件将图片地址传到聊天窗体
+                    $(document.body).trigger('textarea.uploadImgUrl',[{
                         'uid' : uid,
                         'cid' : cid,
                         'url' : url,
                         'filetype':filetype,//文件类型
-                        'filename':filename//文件名
+                        'filename':filename,//文件名
+                        "extension":extension//文件扩展名
                     }]);
 
                 }).fail(function(ret) {
                 });
             }
+             //清空文本域
             $uploadBtn.val("");
-            //清空文本域
+           
 
         } else {
             onAjaxUploadUpHandler(uid,cid);
@@ -119,14 +126,15 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     'cid' : cid,
                     'url' : obj.url,
                     'filetype':filetype,//文件类型
-                    'filename':filename//文件名
+                    'filename':filename,//文件名
+                    "extension":extension//文件扩展名
                 }]);
             });
             $(document.body).append($iframe);
             $form.submit();
         }
-        $uploadBtn.val("");
         //上传完成,清空文本域
+        $uploadBtn.val("");
     };
     var onjudgeFileExtensionHandler = function() {//判断上传文件的扩展名
         //获取文件扩展名
@@ -187,7 +195,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                   filetype="image";
 
                 }
-            $node.find(".scrollBox").append('<div class="systeamTextBox systeamNowText"><p class="systeamText">正在上传 '+filename+filetype+'</p></div>');
+            $node.find(".scrollBox").append('<div class="systeamTextBox systeamNowText"><p class="systeamText">正在上传 '+filename+extension+'</p></div>');
             return true;
         } else {
           
