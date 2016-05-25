@@ -2,6 +2,7 @@
  *
  * @author daijm
  */
+var loadFile = require('./load.js')();
 var weixinJson = require('./face/weixin.json');
 var weixinSymbol = require('./face/weixinsymbol.json');
 var unicode = require('./unicode.js');
@@ -41,35 +42,32 @@ var ZC_Face = {
     },
     show : function() {
         var _this = this;
-        var strFace = '';
-        //var i=0;
-        if($('#faceBox').length <= 0) {//集合如果不存在，则创建
-            strFace = '<div id="faceBox" class="face">' + '<ul>';
-            for(var a in _this.tip) {
-                //i++
-                strFace += '<li><img class="faceIco" src="' + _this.path + _this.tip[a] + '.gif" data-src="' + a + '" /></li>';
-                //if( i % 14 == 0 ) strFace += '</tr><tr>';
-            }
-            strFace += '</ul></div>';
-            $(_this.faceGroup).append(strFace);
+        var faceGroup = _this.faceGroup;
+        //集合如果不存在，则创建
+        if($('#faceBox').length <= 0) {
+            loadFile.load('/chat/views/textarea/qqFace.html').then(function(value){
+              var qqface_html = doT.template(value)({
+                "tip" : _this.tip,
+                "path" :_this.path
+              });
+            $(faceGroup).append(qqface_html);
+            });
         }
         _this.sendTotextArea(_this.saytext);
 
     },
     emojiShow : function() {
         var _this = this;
-        var strFace = '';
         if($('#emojiBox').length <= 0) {//集合如果不存在，则创建
-            strFace = '<div id="emojiBox" class="face">' + '<ul>';
 
-            for(var i = 0;i <= _this.emojiTip.length - 1;i++) {
-
-                strFace += '<li><img class="faceIco" src="' + _this.emojiPath + _this.emojiTip[i] + '.png" data-src="' + _this.emojiSymbolTip[i] + '" /></li>';
-                //if( i % 15 == 14 ) strFace += '';
-            }
-            strFace += '</ul></div>';
-            $(emojiGroup).append(strFace);
-
+            loadFile.load('/chat/views/textarea/emoji.html').then(function(value){
+              var emoji_html = doT.template(value)({
+                "emojiTip" : _this.emojiTip,
+                "emojiSymbolTip" :_this.emojiSymbolTip,
+                "emojiPath" :_this.emojiPath
+              });
+            $(emojiGroup).append(emoji_html);
+            });
         }
         _this.Hidden();
         //判断两个表情集合是否是显示状态
@@ -77,16 +75,13 @@ var ZC_Face = {
     },
     Hidden : function() {
         var _this = this;
-        //console.log($(_this.Group).css("display"));
-        //console.log($(_this.Group).css("display")=="block");
-
         if($(_this.Group).css("display") == "block") {
             $(_this.Group).css("display","none")
         } else {
             $(_this.Group).css("display","block")
         }
-
-        $(_this.saytext).focus(function() {//当文本框获取焦点的时候隐藏表情集合
+        //当文本框获取焦点的时候隐藏表情集合
+        $(_this.saytext).focus(function() {
             $(_this.Group).hide();
         });
 
@@ -146,8 +141,6 @@ var ZC_Face = {
                 var ico = _this.qqfaceReg2.exec(str);
                 var path= _this.tip2[ico[0]];
                 //重新匹配到第一个符合条件的表情字符
-                //console.log(ico[0]);
-
                 str = str.replace(_this.qqfaceReg2,'<img style="width:24px;height:24px;" src="' + _this.path + path + '.gif" border="0" />',1);
             }
         }

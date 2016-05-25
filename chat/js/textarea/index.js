@@ -196,7 +196,6 @@ function TextArea(node,core,window) {
         $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);
         //监听智能回复
         $(document.body).on('rightside.onChatSmartReply',onIntelligencereplyHandler);
-
         //控制输入框的位置
         $(window || document.body).on("resize",botTextBoxPosition);
         //发送按钮
