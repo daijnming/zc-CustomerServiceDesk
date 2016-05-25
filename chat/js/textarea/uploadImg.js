@@ -15,6 +15,8 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         filename,
         extension;
     //上传附件 插件
+    //模板引擎
+    var template = require('./template.js');
     //var apihost = "http://test.sobot.com/chat/";
     var parseDOM = function() {
         $node = $(node);
@@ -33,16 +35,23 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
     var onFormDataPasteHandler = function(item,uid,cid) {
         var blob = item.getAsFile();
         if(blob) {
+            //判断上传文件的扩展名是否符合上传标准
             console.log(blob);
-            var oData = new FormData();
-            var reader = new FileReader();
-            reader.onload = function(evt) {
-                var file = evt.target.result;
-                oData.append("file",file);
-                //上传
-                onAjaxUploadUpHandler(uid,cid,oData);
-            };
-            reader.readAsDataURL(blob);
+            if(blob.type=="image/png"){
+                var oData = new FormData();
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                    var file = evt.target.result;
+                    oData.append("file",file);
+                    filetype="image"//文件类型
+                    filename="智齿科技"//文件名
+                    extension=".png"//文件扩展名
+                    //上传
+                    onAjaxUploadUpHandler(uid,cid,oData);
+                };
+                
+                reader.readAsDataURL(blob);
+            }
         }
     };
     var onFormDataUpHandler = function(uid,cid) {
@@ -63,8 +72,6 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             }
              //清空文本域
             $uploadBtn.val("");
-           
-
         } else {
             onIframeUploadUpHandler(uid,cid);
         }
@@ -108,9 +115,14 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         filename=val.substring(val.lastIndexOf("\\")+1,val.lastIndexOf("."));
         var reg = /^(.jpg|.JPG|.png|.PNG|.gif|.GIF|.txt|.TXT|.DOC|.doc|.docx|.DOCX|.pdf|.PDF|.ppt|.PPT|.pptx|.PPTX|.xls|.XLS|.xlsx|.XLSX|.RAR|.rar|.zip|.ZIP|.mp3|.MP3|.mp4|.MP4|.wma|.WMA|.wmv|.WMV|.rmvb|.RMVB)$/;
         if(reg.test(extension)) {
-            //判断文件类型
+            //判断文件类型，To index.js
             filetype=fileType[extension];
-            $node.find(".scrollBox").append('<div class="systeamTextBox systeamNowText"><p class="systeamText">正在上传 '+filename+extension+'</p></div>');
+            var conf = $.extend({
+                "filename" : filename,
+                "extension" : extension
+            });
+            var _html = doT.template(template.uploading)(conf); 
+            $node.find(".scrollBox").append(_html);
             return true;
         } else {
           
