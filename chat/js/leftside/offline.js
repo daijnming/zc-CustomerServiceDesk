@@ -11,6 +11,9 @@ function Offline(node,core,window) {
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
     var prevCursor = 0;
+    var HEADER_HEIGHT = 79,
+        TABCONTAINER_HEIGHT = 41,
+        RADIOBOX_HEIGHT = 47;
     var dataCache = {},
         chatItemList = {};
     var global = core.getGlobal();
@@ -123,9 +126,17 @@ function Offline(node,core,window) {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("leftside.onselected",onLeftSideItemClickHandler);
         $node.delegate(".js-switch-label",'click',labelItemClickHandler);
+        $(window).on("resize", function() {
+            $node.css({
+                'height' : $(window).outerHeight() - (HEADER_HEIGHT + TABCONTAINER_HEIGHT + RADIOBOX_HEIGHT)
+            });
+        });
     };
 
     var initPlugins = function() {
+        $node.css({
+            'height' : $(window).outerHeight() - (HEADER_HEIGHT + TABCONTAINER_HEIGHT + RADIOBOX_HEIGHT)
+        });
     };
 
     var init = function() {
