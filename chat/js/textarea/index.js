@@ -238,14 +238,9 @@ function TextArea(node,core,window) {
         }, function() {
             //cbk
         });
-        //$node.find('#faceGroup').perfectScrollbar();//加载滚动条
     };
     var onEmotionClickHandler = function() {
         //打开集合,默认qq表情为显示状态
-        //$node.find("#faceGroup").show();
-        //$node.find("#emojiGroup").hide();
-        // $node.find(".icoLi").removeClass("active");
-        //$node.find(".firsticoLi").addClass("active");
         ZC_Face.show(global);
         ZC_Face.emojiShow(global);
 
