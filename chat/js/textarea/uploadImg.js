@@ -43,7 +43,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     var file = evt.target.result;
                     //console.log(evt.target.result);
                     oData.append("file",file);
-                    oData.append("type","msg");
+                    oData.append("type","pate");
                     oData.append("pid",global.pid);
                     oData.append("countTag",1);
                     oData.append("source",0);
