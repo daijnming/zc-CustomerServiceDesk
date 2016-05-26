@@ -36,7 +36,6 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         var blob = item.getAsFile();
         if(blob) {
             //判断上传文件的扩展名是否符合上传标准
-            console.log(blob);
             if(blob.type=="image/png"){
                 var oData = new FormData();
                 var reader = new FileReader();

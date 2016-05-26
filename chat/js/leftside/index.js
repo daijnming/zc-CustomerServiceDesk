@@ -81,7 +81,7 @@ function LeftSide(node,core,window) {
             });
         } else {
             var dialog = new Alert({
-                'title' : '提示',
+                'title' : '确认离线',
                 'text' : '请确定是否要下线？',
                 'OK' : function() {
                     $.ajax({

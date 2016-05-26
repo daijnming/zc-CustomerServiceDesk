@@ -176,7 +176,7 @@ function Queue(core,window) {
 
     var initPlugins = function() {
         dialog = new Dialog({
-            'title' : '选择排队用户',
+            'title' : '邀请会话',
             'footer' : false
         });
         loadFile.load(global.baseUrl + "views/leftside/queuelist.html").then(function(value,promise) {

@@ -15,7 +15,7 @@ ul.history-list {
     background-image: url("../img/busy.png");
 }
 #chatonline .uname {
-    max-width: 130px;
+    max-width: 110px;
     overflow: hidden;
     display: inline-block;
     vertical-align: bottom;
@@ -172,12 +172,13 @@ ul.history-list {
 .tab-content  li.user-list-item .item-detail .chat-detail {
     color: #ccc;
     display: block;
-    width: 160px;
+    width: 110px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     height: 17px;
     line-height: 17px;
+    margin-top:5px;
 }
 .tab-content  li.user-list-item .item-detail .chat-detail.orange {
     color: #ffad01;

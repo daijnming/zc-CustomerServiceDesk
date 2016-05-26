@@ -44,8 +44,9 @@ function Item(data,core,outer,from,manager) {
                 }
                 unReadCount++;
             }
+            var unReadText = (unReadCount > 99) ? "99+" : unReadCount;
             if(unReadCount > 0) {
-                $unRead.html(unReadCount).css({
+                $unRead.html(unReadText).css({
                     'visibility' : 'visible'
                 });
             } else {
