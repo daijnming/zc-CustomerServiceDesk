@@ -2168,7 +2168,7 @@ body,html{
   width: 20%;
 }
 .bootbox .modal-dialog .modal-body .bootbox-body .reqTableBox .table .reqTableTh tr .th21 {
-  width: 30%;
+  width: 20%;
 }
 .bootbox .modal-dialog .modal-body .bootbox-body .reqTableBox .table .reqTableTh tr .th3 {
   width: 30%;
@@ -2929,7 +2929,7 @@ ul.history-list {
     background-image: url("../img/busy-993c8f0f60.png");
 }
 #chatonline .uname {
-    max-width: 130px;
+    max-width: 110px;
     overflow: hidden;
     display: inline-block;
     vertical-align: bottom;
@@ -3089,12 +3089,13 @@ ul.history-list {
 .tab-content  li.user-list-item .item-detail .chat-detail {
     color: #ccc;
     display: block;
-    width: 160px;
+    width: 110px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     height: 17px;
     line-height: 17px;
+    margin-top:5px;
 }
 .tab-content  li.user-list-item .item-detail .chat-detail.orange {
     color: #ffad01;
