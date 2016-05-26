@@ -141,7 +141,7 @@ var ZC_Face = {
                 var ico = _this.qqfaceReg2.exec(str);
                 var path= _this.tip2[ico[0]];
                 //重新匹配到第一个符合条件的表情字符
-                str = str.replace(_this.qqfaceReg2,'<img style="width:24px;height:24px;" src="' + _this.path + path + '.gif" border="0" />',1);
+                str = str.replace(_this.qqfaceReg2,'<img style="width:24px;height:24px;" src="' + _this.path + path + '.gif" border="0" />');
             }
         }
 
@@ -152,9 +152,13 @@ var ZC_Face = {
                 len = arr.length;i < len;i++) {
                 var ico = _this.emojiReg2.exec(str);
                 var path = _this.emojiImagePath[ico[0]];
-                //console.log(str);
-                str = str.replace(ico[0],'<img  style="width:24px;height:24px;" src="' + _this.emojiPath + path + '" border="0" />',1);
-                 //console.log(str);
+                //alert(ico[0]);
+               // alert(_this.emojiPath);
+               // alert(path);
+               // alert(str);
+              
+                str = str.replace(ico[0],'<img style="width:24px;height:24px;" src="' + _this.emojiPath + path + '" border="0" />');
+               // alert(str);
             }
         }
         return str;

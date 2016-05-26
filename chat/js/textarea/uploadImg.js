@@ -42,12 +42,23 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 var reader = new FileReader();
                 reader.onload = function(evt) {
                     var file = evt.target.result;
+                    //console.log(evt.target.result);
                     oData.append("file",file);
                     filetype="image"//文件类型
                     filename="智齿科技"//文件名
                     extension=".png"//文件扩展名
-                    //上传
-                    onAjaxUploadUpHandler(uid,cid,oData);
+                    var dialog = new Alert({
+                        'title' : '您确定要上传这张图吗',
+                        'text' : '<img src="'+evt.target.result+'">',
+                        'OK' : function() {
+                                //上传
+                                onAjaxUploadUpHandler(uid,cid,oData);
+                        },
+                        //'footer' : false
+
+                    });
+                    dialog.show();
+                    
                 };
                 
                 reader.readAsDataURL(blob);
