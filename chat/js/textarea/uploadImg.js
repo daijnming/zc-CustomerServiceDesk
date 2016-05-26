@@ -44,6 +44,10 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     var file = evt.target.result;
                     //console.log(evt.target.result);
                     oData.append("file",file);
+                    oData.append("type","msg");
+                    oData.append("pid",global.pid);
+                    oData.append("countTag",1);
+                    oData.append("source",0);
                     filetype="image"//文件类型
                     filename="智齿科技"//文件名
                     extension=".png"//文件扩展名
@@ -78,6 +82,10 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     files+=file;
                     oData.append("file",file);
                 }
+                oData.append("type","msg");
+                oData.append("pid",global.pid);
+                oData.append("countTag",1);
+                oData.append("source",0);
                 //上传
                 onAjaxUploadUpHandler(uid,cid,oData);
             }
@@ -91,10 +99,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         //var oData = new FormData();
             //oData.append("image",str);
             //oData.append("file",file);
-            oData.append("type","msg");
-            oData.append("pid",global.pid);
-            oData.append("countTag",1);
-            oData.append("source",0);
+           
             $.ajax({
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",
