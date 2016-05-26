@@ -32,6 +32,23 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         onFormDataUpHandler(uid,cid);
     };
 
+    var convertBase64ToBlob = function(data) {
+        var contentType = data.substring(data.indexOf(":") + 1,data.indexOf(";"));
+        var b64Data = data.substring(data.indexOf(",") + 1);
+        console.log(contentType,b64Data,'a');
+        alert();
+        var byteCharacters = atob(b64Data);
+        var byteNumbers = new Array(byteCharacters.length);
+        for(var i = 0;i < byteCharacters.length;i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        var blob = new Blob([byteArray], {
+            type : contentType
+        });
+        return blob;
+    };
+
     var onFormDataPasteHandler = function(item,uid,cid) {
         var blob = item.getAsFile();
         if(blob) {
@@ -41,12 +58,9 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 var reader = new FileReader();
                 reader.onload = function(evt) {
                     var file = evt.target.result;
-                    //console.log(evt.target.result);
-                    var image = new Image();
-                    image.src = file;
-                    $(document.body).append(image);
-                    oData.append("file",image);
-                    oData.append("type","pate");
+                    var blob = convertBase64ToBlob(file);
+                    oData.append("file",blob);
+                    oData.append("type","paste");
                     oData.append("pid",global.pid);
                     oData.append("countTag",1);
                     oData.append("source",0);
