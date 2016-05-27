@@ -121,15 +121,15 @@ function Offline(node,core,window) {
         $node.hide();
     };
 
+    var onResize = function(height) {
+        $node.css({
+            'height' : height
+        });
+    };
     var bindListener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("leftside.onselected",onLeftSideItemClickHandler);
         $node.delegate(".js-switch-label",'click',labelItemClickHandler);
-        $(window).on("resize", function() {
-            $node.css({
-                'height' : $(window).outerHeight() - (HEADER_HEIGHT + TABCONTAINER_HEIGHT + RADIOBOX_HEIGHT)
-            });
-        });
     };
 
     var initPlugins = function() {
@@ -147,6 +147,7 @@ function Offline(node,core,window) {
     init();
     that.show = show;
     that.hide = hide;
+    that.onResize = onResize;
     that.getCurrentUid = getCurrentUid;
     return that;
 };
