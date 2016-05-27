@@ -8,12 +8,8 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
     var AjaxUpload = require('../util/upload.js');
     var Alert = require('../util/modal/alert.js');
     var fileType = require('./fileType.json');
-    /*//文件类型
-    //文件名
-    //文件扩展名
-    var filetype,
-        filename,
-        extension;*/
+    //判断文件图标类型用于聊天窗体的显示
+    var fileTypeIcon = require('./fileTypeIcon.json');
     //上传附件 插件
     //模板引擎
     var template = require('./template.js');
@@ -31,7 +27,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
     var onChangeHandler = function(evt,uid,cid) {
         onFormDataUpHandler(uid,cid);
     };
-
+    //粘贴上传 将文件base64数据流通过Uint8Array上传
     var convertBase64ToBlob = function(data) {
         var contentType = data.substring(data.indexOf(":") + 1,data.indexOf(";"));
         var b64Data = data.substring(data.indexOf(",") + 1);
@@ -46,7 +42,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         });
         return blob;
     };
-
+    //粘贴上传
     var onFormDataPasteHandler = function(item,uid,cid) {
         var blob = item.getAsFile();
         if(blob) {
@@ -62,9 +58,12 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     oData.append("pid",global.pid);
                     oData.append("countTag",1);
                     oData.append("source",0);
-                    var filetype = "image"//文件类型
-                    var filename = "智齿科技"//文件名
-                    var extension = ".png"//文件扩展名
+                    //文件类型
+                    var filetype = "image"
+                    //文件名
+                    var filename = "智齿科技"
+                    //文件扩展名
+                    var extension = ".png"
                     var dialog = new Alert({
                         'title' : '您确定要上传这张图吗',
                         'text' : '<img src="' + evt.target.result + '">',
@@ -97,6 +96,8 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             var filename=val.substring(val.lastIndexOf("\\")+1,val.lastIndexOf("."));
             //判断文件类型，To index.js
             var filetype=fileType[extension];
+            //上传完成之后，文件类型显示的图标
+            var fileIcon = fileTypeIcon[filetype];
             //判断上传文件的扩展名是否符合上传标准
             if(onjudgeFileExtensionHandler(extension,filename)){
                 for(var i = 0;i < input.files.length;i++) {
@@ -109,7 +110,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 oData.append("countTag",1);
                 oData.append("source",0);
                 //上传
-                onAjaxUploadUpHandler(uid,cid,oData,extension,filename,filetype);
+                onAjaxUploadUpHandler(uid,cid,oData,extension,filename,filetype,fileIcon);
             }
             //清空文本域
             $uploadBtn.val("");
@@ -117,13 +118,14 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             onIframeUploadUpHandler(uid,cid);
         }
     };
-    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename,filetype){
+    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename,filetype,fileIcon){
             $.ajax({
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",
                 data : oData,
                 'dataType' : 'json',
-                processData : false,// 告诉jQuery不要去处理发送的数据
+                //告诉jQuery不要去处理发送的数据
+                processData : false,
                 contentType : false
             }).success(function(response) {
                 var url = response.url;
@@ -132,9 +134,14 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     'uid' : uid,
                     'cid' : cid,
                     'url' : url,
-                    'filetype':filetype,//文件类型
-                    'filename':filename,//文件名
-                    "extension":extension//文件扩展名
+                    //文件类型
+                    'filetype':filetype,
+                    //文件名
+                    'filename':filename,
+                    //文件扩展名
+                    "extension":extension,
+                    //上传完成之后，文件类型显示的图标
+                    "fileIcon":fileIcon
                 }]);
 
             }).fail(function(ret) {
@@ -169,7 +176,18 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
     };
     var onIframeUploadUpHandler = function(uid,cid) {
         var $form = $node.find(".js-fileinfo");
-        if(onjudgeFileExtensionHandler()) {
+        //需要上传的文件路径
+        var val = $uploadBtn.val();
+        //拓展名
+        var extension = val.substr(val.lastIndexOf("."));
+        //文件名
+        var filename=val.substring(val.lastIndexOf("\\")+1,val.lastIndexOf("."));
+        //判断文件类型，To index.js
+        var filetype=fileType[extension];
+        //上传完成之后，文件类型显示的图标
+        var fileIcon = fileTypeIcon[filetype];
+        //判断上传文件的扩展名是否符合上传标准
+        if(onjudgeFileExtensionHandler(extension,filename)){
             var id = 'iframe' + +new Date();
             $form.attr("target",id);
             $form.attr("action","/chat/webchat/fileupload.action");
@@ -183,9 +201,14 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     'uid' : uid,
                     'cid' : cid,
                     'url' : obj.url,
-                    'filetype' : filetype,//文件类型
-                    'filename' : filename,//文件名
-                    "extension" : extension//文件扩展名
+                    //文件类型
+                    'filetype':filetype,
+                    //文件名
+                    'filename':filename,
+                    //文件扩展名
+                    "extension":extension,
+                    //上传完成之后，文件类型显示的图标
+                    "fileIcon":fileIcon
                 }]);
             });
             $(document.body).append($iframe);
