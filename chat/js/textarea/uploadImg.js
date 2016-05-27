@@ -35,8 +35,6 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
     var convertBase64ToBlob = function(data) {
         var contentType = data.substring(data.indexOf(":") + 1,data.indexOf(";"));
         var b64Data = data.substring(data.indexOf(",") + 1);
-        console.log(contentType,b64Data,'a');
-        alert();
         var byteCharacters = atob(b64Data);
         var byteNumbers = new Array(byteCharacters.length);
         for(var i = 0;i < byteCharacters.length;i++) {

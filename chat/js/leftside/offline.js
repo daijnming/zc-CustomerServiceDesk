@@ -27,7 +27,6 @@ function Offline(node,core,window) {
 
     var setCurrentUid = function(uid) {
         currentUid = uid;
-        alert();
     };
 
     var getCurrentUid = function() {
