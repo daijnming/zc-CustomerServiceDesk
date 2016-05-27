@@ -10,6 +10,7 @@ function Offline(node,core,window) {
     var CLASSNAME = ['','noStar','noBlack'];
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
+    var normalMessageAdapter = require('../util/normatMessageAdapter.js');
     var prevCursor = 0;
     var HEADER_HEIGHT = 79,
         TABCONTAINER_HEIGHT = 41,
@@ -36,8 +37,9 @@ function Offline(node,core,window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var item = list[i];
-
             item.source_type = USOURCE[item.source];
+            item.content = item.lastMsg;
+            normalMessageAdapter(item);
             if(item.source == 1) {
                 item.imgUrl = "img/weixinType.png";
             }

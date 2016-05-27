@@ -176,7 +176,6 @@ function Online(node,core,window) {
     };
 
     var onResize = function(height) {
-        console.log($node,height);
         $node.css({
             'height' : height
         });
