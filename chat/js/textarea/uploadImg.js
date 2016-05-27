@@ -8,12 +8,12 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
     var AjaxUpload = require('../util/upload.js');
     var Alert = require('../util/modal/alert.js');
     var fileType = require('./fileType.json');
-    //文件类型
+    /*//文件类型
     //文件名
     //文件扩展名
     var filetype,
         filename,
-        extension;
+        extension;*/
     //上传附件 插件
     //模板引擎
     var template = require('./template.js');
@@ -47,15 +47,15 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     oData.append("pid",global.pid);
                     oData.append("countTag",1);
                     oData.append("source",0);
-                    filetype="image"//文件类型
-                    filename="智齿科技"//文件名
                     extension=".png"//文件扩展名
+                    filename="智齿科技"//文件名
+                    filetype="image"//文件类型
                     var dialog = new Alert({
                         'title' : '您确定要上传这张图吗',
                         'text' : '<img src="'+evt.target.result+'">',
                         'OK' : function() {
                                 //上传
-                                onAjaxUploadUpHandler(uid,cid,oData);
+                                onAjaxUploadUpHandler(uid,cid,oData,extension,filename,filetype);
                         },
                         //'footer' : false
 
@@ -73,9 +73,17 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         if(FormData) {
             var oData = new FormData();
             var input = $uploadBtn[0];
-            var files=""
+            var files="";
+            //获取文件扩展名
+            var val = $uploadBtn.val();
+            //拓展名
+            var extension = val.substr(val.lastIndexOf("."));
+            //文件名
+            var filename=val.substring(val.lastIndexOf("\\")+1,val.lastIndexOf("."));
+            //判断文件类型，To index.js
+            var filetype=fileType[extension];
             //判断上传文件的扩展名是否符合上传标准
-            if(onjudgeFileExtensionHandler()){
+            if(onjudgeFileExtensionHandler(extension,filename)){
                 for(var i = 0;i < input.files.length;i++) {
                     var file = input.files[i];
                     files+=file;
@@ -86,7 +94,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 oData.append("countTag",1);
                 oData.append("source",0);
                 //上传
-                onAjaxUploadUpHandler(uid,cid,oData);
+                onAjaxUploadUpHandler(uid,cid,oData,extension,filename,filetype);
             }
              //清空文本域
             $uploadBtn.val("");
@@ -94,11 +102,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             onIframeUploadUpHandler(uid,cid);
         }
     };
-    var onAjaxUploadUpHandler=function(uid,cid,oData){
-        //var oData = new FormData();
-            //oData.append("image",str);
-            //oData.append("file",file);
-           
+    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename){
             $.ajax({
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",
@@ -119,19 +123,14 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 }]);
 
             }).fail(function(ret) {
+                alert("上传失败");
             });
     };
-    var onjudgeFileExtensionHandler = function() {//判断上传文件的扩展名
-        //获取文件扩展名
-        var val = $uploadBtn.val();
-        //拓展名
-        extension = val.substr(val.lastIndexOf("."));
-        //文件名
-        filename=val.substring(val.lastIndexOf("\\")+1,val.lastIndexOf("."));
+    var onjudgeFileExtensionHandler = function(extension,filename) {//判断上传文件的扩展名
+        
         var reg = /^(.jpg|.JPG|.png|.PNG|.gif|.GIF|.txt|.TXT|.DOC|.doc|.docx|.DOCX|.pdf|.PDF|.ppt|.PPT|.pptx|.PPTX|.xls|.XLS|.xlsx|.XLSX|.RAR|.rar|.zip|.ZIP|.mp3|.MP3|.mp4|.MP4|.wma|.WMA|.wmv|.WMV|.rmvb|.RMVB)$/;
         if(reg.test(extension)) {
-            //判断文件类型，To index.js
-            filetype=fileType[extension];
+            
             var conf = $.extend({
                 "filename" : filename,
                 "extension" : extension
