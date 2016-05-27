@@ -51,7 +51,7 @@
     <div class="day_divider">
       <p class="systeamText" style="background-color: transparent">
         <span class="zc-c-chat-date-line-left"></span>
-        <span class="zc-c-chat-date-line-text">{{=it.list[prop].date}}</span>
+        <span class="zc-c-chat-date-line-text">{{=it.list[i].date}}</span>
         <span class="zc-c-chat-date-line-right"></span>
       </p>
     </div>
@@ -59,7 +59,7 @@
 
   {{ if(it.list[i].action === 4) { }}
     <div class="systeamTextBox">
-      <p class="systeamText">用户和机器人建立会话<</p>
+      <p class="systeamText">用户和机器人建立会话</p>
     </div>
   {{ } }}
 

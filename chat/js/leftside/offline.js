@@ -10,7 +10,11 @@ function Offline(node,core,window) {
     var CLASSNAME = ['','noStar','noBlack'];
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
+    var normalMessageAdapter = require('../util/normatMessageAdapter.js');
     var prevCursor = 0;
+    var HEADER_HEIGHT = 79,
+        TABCONTAINER_HEIGHT = 41,
+        RADIOBOX_HEIGHT = 47;
     var dataCache = {},
         chatItemList = {};
     var global = core.getGlobal();
@@ -24,7 +28,6 @@ function Offline(node,core,window) {
 
     var setCurrentUid = function(uid) {
         currentUid = uid;
-        alert();
     };
 
     var getCurrentUid = function() {
@@ -34,8 +37,9 @@ function Offline(node,core,window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var item = list[i];
-
             item.source_type = USOURCE[item.source];
+            item.content = item.lastMsg;
+            normalMessageAdapter(item);
             if(item.source == 1) {
                 item.imgUrl = "img/weixinType.png";
             }
@@ -119,6 +123,11 @@ function Offline(node,core,window) {
         $node.hide();
     };
 
+    var onResize = function(height) {
+        $node.css({
+            'height' : height
+        });
+    };
     var bindListener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("leftside.onselected",onLeftSideItemClickHandler);
@@ -126,6 +135,9 @@ function Offline(node,core,window) {
     };
 
     var initPlugins = function() {
+        $node.css({
+            'height' : $(window).outerHeight() - (HEADER_HEIGHT + TABCONTAINER_HEIGHT + RADIOBOX_HEIGHT)
+        });
     };
 
     var init = function() {
@@ -137,6 +149,7 @@ function Offline(node,core,window) {
     init();
     that.show = show;
     that.hide = hide;
+    that.onResize = onResize;
     that.getCurrentUid = getCurrentUid;
     return that;
 };

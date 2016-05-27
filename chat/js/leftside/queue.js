@@ -176,7 +176,7 @@ function Queue(core,window) {
 
     var initPlugins = function() {
         dialog = new Dialog({
-            'title' : '选择排队用户',
+            'title' : '邀请会话',
             'footer' : false
         });
         loadFile.load(global.baseUrl + "views/leftside/queuelist.html").then(function(value,promise) {
@@ -185,7 +185,11 @@ function Queue(core,window) {
             $.ajax({
                 'url' : urlList[1],
                 'dataType' : 'json',
-                'data' : {},
+                'data' : {
+                    'uid' : global.id,
+                    'status' : 1,
+                    'pageNow' : 1
+                },
                 'type' : "post"
             }).success(function(ret) {
                 userSize[1] = ret.visitSize;

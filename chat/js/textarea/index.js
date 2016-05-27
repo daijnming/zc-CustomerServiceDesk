@@ -3,12 +3,17 @@
  * @author daijm
  */
 function TextArea(node,core,window) {
+    var global = core.getGlobal();
     //var that = {};
     var loadFile = require('../util/load.js')();
-    var ZC_Face = require('../util/qqFace.js');
     //表情
-    var uploadImg = require('./uploadImg.js');
+    var ZC_Face = require('../util/qqFace.js');
     //上传附件
+    var uploadImg = require('./uploadImg.js');
+    //判断文件图标类型用于聊天窗体的显示
+    var fileTypeIcon = require('./fileTypeIcon.json');
+    //模板引擎
+    var template = require('./template.js');
     var apihost = "/chat/";
     var global,
         uploadFun;
@@ -66,61 +71,50 @@ function TextArea(node,core,window) {
         }]);
     };
     var onFileTypeHandler = function(data) {
-        var filetypeIco = "";
+        //var filetypeIco = "";
+        var filetype = data.filetype;
+        var fileIcon = fileTypeIcon[filetype];
         //先判断是否为图片
-        if(!isImage(data)){
+        if(isImage(data)){
             //正在上传
-            switch (data.filetype)
-                {
-                case ".txt":
-                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_txt.gif';
-                    break;
-                case ".doc":
-                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_doc.gif';
-                    break;
-                case ".pdf":
-                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_pdf.gif';
-                    break;
-                case ".ppt":
-                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_ppt.gif';
-                    break;
-                case ".xls":
-                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_xls.gif';
-                    break;
-                case ".rar":
-                    filetypeIco = 'http://img.sobot.com/yun/attachment/fileTypeImages/icon_rar.gif';
-                    break;
-                case ".player":
-                  filetypeIco='http://img.sobot.com/yun/attachment/fileTypeImages/icon_mp3.gif';
-                  break;
-                }
             $node.find(".systeamTextBox").remove();
-            answer='<img style="vertical-align: middle; margin-right: 2px;" src="'+filetypeIco+'"><a style="font-size:10px;" target="_blank" href="'+data.url+'">'+data.filename+data.extension+'</a>';
-                
+            var conf = $.extend({
+                "fileIcon" : fileIcon,
+                "url" : data.url,
+                'filename' : data.filename,
+                'extension' : data.extension
+
+            });
+            answer = doT.template(template.tranfiletype)(conf); 
         }
 
     };
     var isImage = function(data) {
-        switch (data.filetype)//正在上传
+        //正在上传
+        switch (data.filetype)
         {
             case "image":
                 $node.find(".systeamTextBox").remove();
-                answer = '<img class="webchat_img_upload upNowImg" src="' + data.url + '" />'
-                return true;
+                var conf = $.extend({
+                    "url" : data.url
+                });
+                answer = doT.template(template.fileImage)(conf); 
+                return false;
                 break;
             default:
-                return false;
+                return true;
         }
     };
     var onbtnSendHandler = function(evt) {
         var str = $sendMessage.val();
         //ZC_Face.convertToEmoji($sendMessage.val());
-
-        if(str.length == 0 || /^\s+$/g.test(str)) {//判断输入框是否为空
+        //判断输入框是否为空
+        if(str.length == 0 || /^\s+$/g.test(str)) {
             $sendMessage.val("")
             return false;
         } else {
-            $(document.body).trigger('textarea.send',[{//通过textarea.send事件将用户的数据传到显示台
+            //通过textarea.send事件将用户的数据传到显示台
+            $(document.body).trigger('textarea.send',[{
                 'answer' : str,
                 'uid' : currentUid,
                 'cid' : currentCid,
@@ -162,36 +156,15 @@ function TextArea(node,core,window) {
     var onFilePaste = function(e) {
         var evt = e.originalEvent;
         console.log(evt.clipboardData.items.length);
-        alert();
+        
         for(var i = 0,
             len = evt.clipboardData.items.length;i < len;i++) {
             var item = evt.clipboardData.items[i];
-            console.log(item);
-            if(item.kind === 'file') {alert(item.kind);
+            if(item.kind === 'file') { 
                 e.preventDefault();
                 uploadFun.onFormDataPasteHandler(item,currentUid,currentCid);
             }
         }
-       
-           /* if ( !(e.clipboardData && e.clipboardData.items) ) {
-                return ;
-            }
-
-            for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
-                var item = e.clipboardData.items[i];
-                console.log(item);
-                if (item.kind === "string") {
-                    item.getAsString(function (str) {
-                        // str 是获取到的字符串
-                        console.log(str);
-                    })
-                } else if (item.kind === "file") {
-                    var pasteFile = item.getAsFile();
-                    alert(pasteFile);
-                    // pasteFile就是获取到的文件
-                }
-            }*/
-       
     };
     var botTextBoxPosition = function() {
         var botTextBoxHeight = $botTextBox.height();
@@ -218,17 +191,19 @@ function TextArea(node,core,window) {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
         $(document.body).on('leftside.onselected',onSelected);
-        $(document.body).on("textarea.uploadImgUrl",onImageUpload);
         //监听历史用户、在线用户，控制输入框
-        $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);
+        $(document.body).on("textarea.uploadImgUrl",onImageUpload);
         //监听快捷回复
-        $(document.body).on('rightside.onChatSmartReply',onIntelligencereplyHandler);
+        $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);
         //监听智能回复
-        $(window || document.body).on("resize",botTextBoxPosition);
+        $(document.body).on('rightside.onChatSmartReply',onIntelligencereplyHandler);
         //控制输入框的位置
-        $node.find(".js-btnSend").on("click",onbtnSendHandler);
+        $(window || document.body).on("resize",botTextBoxPosition);
         //发送按钮
+        $node.find(".js-btnSend").on("click",onbtnSendHandler);
         $sendMessage.on("keydown",onEnterSendHandler);
+        //粘贴上传(只能传截屏)
+        $sendMessage.on("paste",onFilePaste);
         /*
          *
          qq表情
@@ -236,9 +211,7 @@ function TextArea(node,core,window) {
         $node.find(".js-emotion").on("click",onEmotionClickHandler);
         $node.find(".icoLi").on("click",onEmotionIcoClickHandler);
         $node.find('.js-upload').on("change",uploadFile);
-        $sendMessage.on("paste",onFilePaste);
-        // document.getElementById("js-sendMessage").addEventListener("paste",onFilePaste);
-        //使用formData上传附件
+       
     };
     var initFace = function() {
         /*
@@ -265,16 +238,11 @@ function TextArea(node,core,window) {
         }, function() {
             //cbk
         });
-        //$node.find('#faceGroup').perfectScrollbar();//加载滚动条
     };
     var onEmotionClickHandler = function() {
         //打开集合,默认qq表情为显示状态
-        //$node.find("#faceGroup").show();
-        //$node.find("#emojiGroup").hide();
-        // $node.find(".icoLi").removeClass("active");
-        //$node.find(".firsticoLi").addClass("active");
-        ZC_Face.show();
-        ZC_Face.emojiShow();
+        ZC_Face.show(global);
+        ZC_Face.emojiShow(global);
 
     };
     var onEmotionIcoClickHandler = function() {
@@ -289,10 +257,11 @@ function TextArea(node,core,window) {
         uploadFun = uploadImg($uploadBtn,node,core,window);
         //上传图片
         initFace();
+         //qq表情滚动插件
         $node.find(".item").perfectScrollbar();
         isHiddenBotTextBox();
         botTextBoxPosition();
-        //qq表情滚动插件
+       
     };
     var init = function() {
         parseDOM();

@@ -5,17 +5,22 @@
     top: 30px;
     left: 30px;
 }
+ul.history-list {
+    overflow-y: auto;
+}
 #user_menu i.connection_icon.online {
     background-image: url("../img/online.png");
 }
 #user_menu i.connection_icon.buzy {
     background-image: url("../img/busy.png");
 }
-#chatonline .uname{
-    width:150px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
+#chatonline .uname {
+    max-width: 110px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 #main-container #left-navigation .header-box-yy #user_menu .status-user.active {
     height: 92px !important;
@@ -36,6 +41,9 @@
 
 }
 #main-container #left-navigation .tab-content {
+}
+#main-container #left-navigation .tab-content .tab-pane {
+    overflow-y: auto;
 }
 .tab-content  li.fullscreen.noBlack {
     background-image: url("../assets/images/noBlockList.png");
@@ -85,7 +93,7 @@
     display: inline-block;
 }
 
-.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img,.tab-content  li.user-list-item .icon.offline.app img {
+.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img, .tab-content  li.user-list-item .icon.offline.app img {
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
@@ -167,12 +175,13 @@
 .tab-content  li.user-list-item .item-detail .chat-detail {
     color: #ccc;
     display: block;
-    width: 160px;
+    width: 110px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     height: 17px;
     line-height: 17px;
+    margin-top: 5px;
 }
 .tab-content  li.user-list-item .item-detail .chat-detail.orange {
     color: #ffad01;

@@ -5,6 +5,9 @@ function LeftSide(node,core,window) {
     var Queue = require('./queue.js');
     var online,
         offline;
+    var HEADER_HEIGHT = 79,
+        TABCONTAINER_HEIGHT = 41,
+        RADIOBOX_HEIGHT = 47;
     var URLLIST = ['','/chat/admin/online.action','/chat/admin/busy.action'];
     var STATUSIMAGELIST = ['','online','buzy'];
     var Online = require('./online.js');
@@ -81,7 +84,7 @@ function LeftSide(node,core,window) {
             });
         } else {
             var dialog = new Alert({
-                'title' : '提示',
+                'title' : '确认离线',
                 'text' : '请确定是否要下线？',
                 'OK' : function() {
                     $.ajax({
@@ -121,6 +124,11 @@ function LeftSide(node,core,window) {
         }
     };
 
+    var onResize = function() {
+        var height = $(window).outerHeight() - (HEADER_HEIGHT + TABCONTAINER_HEIGHT + RADIOBOX_HEIGHT);
+        online.onResize(height);
+        offline.onResize(height);
+    };
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
         initQueueInfo();
@@ -146,6 +154,7 @@ function LeftSide(node,core,window) {
         });
         $node.delegate(".js-status",'click',onStatusItemClickHandler);
         $inviteBtn.on("click",inviteBtnClickHandler);
+        $(window).on("resize",onResize);
     };
 
     var initPlugsin = function() {
