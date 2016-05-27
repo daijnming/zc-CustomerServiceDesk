@@ -7,7 +7,7 @@ var TYPE_EMOTION = 0,
     AUDIO = 3,
     RICH_TEXT = 4;
 var normalMessageAdapter = function(value) {
-    var content = value.content || value.answer;
+    var content = value.content || value.answer || 'aaaaaa';
     var reg = /src=['"](.*?)['"]/;
     if(content.indexOf("<img") >= 0) {
         if(content.indexOf("webchat_img_face") >= 0) {

@@ -175,6 +175,13 @@ function Online(node,core,window) {
         $body = $(document.body);
     };
 
+    var onResize = function(height) {
+        console.log($node,height);
+        $node.css({
+            'height' : height
+        });
+    };
+
     var initPlugins = function() {
     };
     var init = function() {
@@ -185,6 +192,7 @@ function Online(node,core,window) {
 
     init();
     that.hide = hide;
+    that.onResize = onResize;
     that.getCurrentUid = getCurrentUid;
     that.setCurrentUid = setCurrentUid;
     that.show = show;
