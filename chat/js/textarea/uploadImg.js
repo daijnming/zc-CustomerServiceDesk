@@ -62,9 +62,9 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     oData.append("pid",global.pid);
                     oData.append("countTag",1);
                     oData.append("source",0);
-                    filetype = "image"//文件类型
-                    filename = "智齿科技"//文件名
-                    extension = ".png"//文件扩展名
+                    var filetype = "image"//文件类型
+                    var filename = "智齿科技"//文件名
+                    var extension = ".png"//文件扩展名
                     var dialog = new Alert({
                         'title' : '您确定要上传这张图吗',
                         'text' : '<img src="' + evt.target.result + '">',
@@ -117,7 +117,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             onIframeUploadUpHandler(uid,cid);
         }
     };
-    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename){
+    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename,filetype){
             $.ajax({
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",
