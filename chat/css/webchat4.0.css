@@ -1372,6 +1372,12 @@ body,html{
   line-height: 14px;
   display: inline-block;
 }
+#main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .userInpHover:hover {
+	border:1px solid #ddd;
+	margin: 0;
+	padding: 0;
+	outline:none;
+}
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .userInp {
   color: #333;
   border: 0;
