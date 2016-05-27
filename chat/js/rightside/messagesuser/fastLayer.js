@@ -239,22 +239,26 @@ var Fastlayer = function(node,core,config) {
         var obj = evn.target.className === 'js-addNewGroup' ? oFastLeft : oFastRight;
         var clsDelName,
             clsUpName,
+            maxlength,
             utype;
         //判断分组还是回复
         if(obj == oFastLeft) {
             clsDelName = 'js-delLeftGroup delLeftGroup';
             clsUpName = 'js-upLeftGroup upLeftGroup hide';
             utype = 'left';
+            maxlength=50;
         } else {
             clsDelName = 'js-delRightRep delRightRep';
             clsUpName = 'js-upRightRep upRightRep hide';
             utype = 'right';
+            maxlength=2048;
         }
         var template = require('./template.js');
         var conf = $.extend({
             "utype" : utype,
             "clsDelName" : clsDelName,
-            'clsUpName' : clsUpName
+            'clsUpName' : clsUpName,
+            'maxlength':maxlength
         });
         var _html = doT.template(template.zcReplyOuter)(conf);
         var oListInput = $(obj).find('li')[$(obj).find('li').length - 1];
