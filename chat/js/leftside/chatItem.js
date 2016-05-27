@@ -21,6 +21,7 @@ function Item(data,core,outer,from,manager) {
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
+    var Alert = require('../util/modal/alert.js');
     var USOURCE = require('./source.json');
     this.token = +new Date();
 
@@ -85,27 +86,35 @@ function Item(data,core,outer,from,manager) {
 
     var onRemove = function() {
         if(status == 'online') {
-            $.ajax({
-                'url' : '/chat/admin/leave.action',
-                'data' : {
-                    'cid' : data.cid,
-                    'uid' : global.id,
-                    'userId' : data.uid
-                },
-                'type' : 'post',
-                'dataType' : "json"
-            }).success(function(ret) {
-                if(manager.getCurrentUid() == data.uid) {
-                    manager.setCurrentUid(null);
-                }
-                $body.trigger("leftside.onremove",[{
-                    'cid' : data.cid,
-                    'uid' : data.uid
-                }]);
-                if(ret.status === 1) {
-                    hide();
+            var dialog = new Alert({
+                'title' : '提示',
+                'text' : '请确认顾客的问题已经解答，是否结束对话？',
+                'OK' : function() {
+                    $.ajax({
+                        'url' : '/chat/admin/leave.action',
+                        'data' : {
+                            'cid' : data.cid,
+                            'uid' : global.id,
+                            'userId' : data.uid
+                        },
+                        'type' : 'post',
+                        'dataType' : "json"
+                    }).success(function(ret) {
+                        if(manager.getCurrentUid() == data.uid) {
+                            manager.setCurrentUid(null);
+                        }
+                        $body.trigger("leftside.onremove",[{
+                            'cid' : data.cid,
+                            'uid' : data.uid
+                        }]);
+                        if(ret.status === 1) {
+                            hide();
+                        }
+                    });
                 }
             });
+            dialog.show();
+
         } else {
             hide();
         }
