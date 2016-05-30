@@ -32,6 +32,10 @@ function Online(node,core,window) {
         currentUid = uid;
     };
 
+    var onItemHide = function(evt,data) {
+        delete chatItemList[data.uid];
+    };
+
     var getCurrentUid = function() {
         return currentUid;
     };
@@ -47,7 +51,7 @@ function Online(node,core,window) {
             data.isTransfer = data.chatType;
         }
         if(chatItemList[uid] && chatItemList[uid].getStatus() == 'offline') {
-            chatItemList[uid].onOnline();
+            chatItemList[uid].onOnline(data.cid);
         } else {
             var item = new Item(data,core,node,null,that);
             chatItemList[data.uid] = item;
@@ -115,14 +119,8 @@ function Online(node,core,window) {
         var uid = $(elm).attr("data-uid");
         if(!chatItemList[uid])
             return;
-        var dialog = new Alert({
-            'title' : '提示',
-            'text' : '请确认顾客的问题已经解答，是否结束对话？',
-            'OK' : function() {
-                chatItemList[uid].onRemove();
-            }
-        });
-        dialog.show();
+        chatItemList[uid].onRemove();
+
     };
 
     var onReceive = function(value,list) {
@@ -166,6 +164,7 @@ function Online(node,core,window) {
         $body.on("core.receive",onReceive);
         $body.on("notification.click",onNotificationClickHandler);
         $body.on("leftside.onselected",onLeftSideSelected);
+        $body.on("leftside.onhide",onItemHide);
         $body.on("leftside.onremove",onChatItemListLengthChange);
         $node.delegate(".js-remove",'click',removeBtnClickHandler);
 
@@ -176,7 +175,6 @@ function Online(node,core,window) {
     };
 
     var onResize = function(height) {
-        console.log($node,height);
         $node.css({
             'height' : height
         });

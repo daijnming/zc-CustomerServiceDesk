@@ -7,17 +7,16 @@ var TYPE_EMOTION = 0,
     AUDIO = 3,
     RICH_TEXT = 4;
 var normalMessageAdapter = function(value) {
-    var content = value.content || value.answer || 'aaaaaa';
+    var content = value.content || value.answer || '';
     var reg = /src=['"](.*?)['"]/;
     if(content.indexOf("<img") >= 0) {
         if(content.indexOf("webchat_img_face") >= 0) {
             value.message_type = TYPE_EMOTION;
-            value.desc = '[表情]';
+            value.desc = content;
         } else if(content.indexOf("webchat_img_upload") >= 0) {
             value.message_type = TYPE_IMAGE;
             value.desc = '[图片]';
         } else if(content.indexOf("<a")) {
-            console.log("富文本");
             value.message_type = RICH_TEXT;
             value.desc = '[富文本]';
         }
@@ -28,7 +27,6 @@ var normalMessageAdapter = function(value) {
         value.message_type = AUDIO;
         value.desc = '[语音]';
     } else if(content.indexOf("<a") >= 0) {
-        console.log("富文本");
         value.message_type = RICH_TEXT;
         value.desc = '[富文本]';
     } else {

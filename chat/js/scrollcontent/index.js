@@ -245,9 +245,31 @@
       if (type === 'star' && handleType === 'add') {
         func();
       } else {
+
+        var textModelMap = {
+          star: {
+            del: {
+              title: '去除星标' ,
+              content: '确定要取消标记这个用户吗？'
+            }
+          } ,
+
+          black: {
+            add: {
+              title: '添加拉黑' ,
+              content: '确定要拉黑这个用户吗？'
+            },
+            del: {
+              title: '去除拉黑' ,
+              content: '确定要取消拉黑这个用户吗？'
+            }
+          }
+        }
+
+        var model = textModelMap[type][handleType];
         var dialog = new Alert({
-            'title' : '提示',
-            'text' : '请确定是否要改变状态？',
+            'title' : model.title,
+            'text' : model.content,
             'OK' : function() {
               func();
               dialog.hide();
@@ -650,13 +672,55 @@
         }
         else if(data[0].type === 108) {
           // clearScrollContent();
+          var list = [];
+          if (userChatCache[data[0].uid]) {
+            userChatCache[data[0].uid].list.push({
+              action: 10 ,
+              offlineType: 5 ,
+              ts: 'date ' + new Date(data[0].t).toTimeString().split(' ')[0]
+            })
+
+            list.push({
+              action: 10 ,
+              offlineType: 5 ,
+              ts: 'date ' + new Date(data[0].t).toTimeString().split(' ')[0]
+            });
+
+            // 是否渲染 isRender
+            var isRender = userInfo.userId === data[0].uid;
+            getChatListByOnline('chat', parseList , null, null, data, isRender, false, data[0].type, list);
+          }
+
         }
         else if(data[0].type === 112) {
+
+
+
+
           var userId = userInfo.userId = data[0].uid;
+          var list = [];
+
           userChatCache[userId] = userChatCache[userId] || {};
           userChatCache[userId].isCall = true;
           userChatCache[userId].called = data[0].called;
           userChatCache[userId].uname = data[0].uname;
+
+          if (userChatCache[data[0].uid]) {
+            userChatCache[data[0].uid].list.push({
+              action: 18 ,
+              ts: data[0].ts
+            })
+
+            list.push({
+              action: 18 ,
+              ts: data[0].ts
+            });
+
+            // 是否渲染 isRender
+            var isRender = userInfo.userId === data[0].uid;
+            getChatListByOnline('chat', parseList , null, null, data, isRender, false, data[0].type, list);
+          }
+
 
           callUser();
         }
@@ -764,23 +828,6 @@
         ts: 'date ' + new Date().toTimeString().split(' ')[0]
       });
 
-
-        // for (var i = 0;i < data.length;i++) {
-        //   // userChatCache[data[0].uid].list.push(data[i]);
-        //
-        //   // 聊天
-        //   if (data[i].type === 103) {
-        //     userChatCache[data[0].uid].list.push({
-        //       action: 5 ,
-        //       senderType: 0 ,
-        //       senderName: data[i].uname ,
-        //       msg: data[i].content ,
-        //       ts: data[i].ts
-        //     })
-        //   }
-        //
-        //
-        // }
       var isRender = userInfo.userId === data.uid;
       getChatListByOnline('chat', parseList , null, null, data, isRender, true, null, list);
       // }
@@ -810,7 +857,7 @@
         $body.on('core.onload',onloadHandler);
         $body.on('core.receive',onReceive);
         $(window || document.body).on("resize", function() {
-          
+
             $(document.body).find('.zc-c-call-tag').width($('.rightBox').width());
         });
 
