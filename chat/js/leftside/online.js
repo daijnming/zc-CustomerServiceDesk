@@ -115,14 +115,8 @@ function Online(node,core,window) {
         var uid = $(elm).attr("data-uid");
         if(!chatItemList[uid])
             return;
-        var dialog = new Alert({
-            'title' : '提示',
-            'text' : '请确认顾客的问题已经解答，是否结束对话？',
-            'OK' : function() {
-                chatItemList[uid].onRemove();
-            }
-        });
-        dialog.show();
+        chatItemList[uid].onRemove();
+      
     };
 
     var onReceive = function(value,list) {
