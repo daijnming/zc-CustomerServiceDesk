@@ -102,7 +102,7 @@ function Core(window) {
                     $(".js-loading-layer").hide();
                     promise.resolve(ret);
                 } else {
-                    alert('登录失败');
+                    alert('当前窗口登录失效，请重新登录');
                     $(window).unbind("beforeunload");
                     window.close();
                     window.location.href = "/console/login";
