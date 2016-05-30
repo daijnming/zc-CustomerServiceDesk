@@ -133,9 +133,9 @@ function Item(data,core,outer,from,manager) {
         }
     };
 
-    var onOnline = function() {
+    var onOnline = function(cid) {
         status = 'online';
-
+        data.cid = cid;
         var $statusText = $node.find(".js-user-status");
         $node.find(".js-icon").removeClass("offline");
         $statusText.css({
