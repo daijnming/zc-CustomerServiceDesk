@@ -76,11 +76,10 @@ function TextArea(node,core,window) {
             //正在上传
             $node.find(".systeamTextBox").remove();
             var conf = $.extend({
-                "fileIcon" : data.fileIcon,
                 "url" : data.url,
-                'filename' : data.filename,
-                'extension' : data.extension
-
+                "filename" : data.filename,
+                "extension" : data.extension,
+                "fileIcon" : data.fileIcon
             });
             answer = doT.template(template.tranfiletype)(conf); 
         }

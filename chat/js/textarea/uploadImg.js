@@ -109,6 +109,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 oData.append("pid",global.pid);
                 oData.append("countTag",1);
                 oData.append("source",0);
+
                 //上传
                 onAjaxUploadUpHandler(uid,cid,oData,extension,filename,filetype,fileIcon);
             }
@@ -118,7 +119,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             onIframeUploadUpHandler(uid,cid);
         }
     };
-    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename,filetype,fileIcon){
+    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename,filetype,fileIcon){console.log(fileIcon);
             $.ajax({
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",
@@ -143,7 +144,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     //上传完成之后，文件类型显示的图标
                     "fileIcon":fileIcon
                 }]);
-
+                
             }).fail(function(ret) {
                 alert("上传失败");
             });

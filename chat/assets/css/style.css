@@ -8813,8 +8813,13 @@ hr.footer-border {
     position: fixed;
     background-color: rgba(99,99,99,0.7);
 }
+.bootbox .modal-dialog{
+    max-height:500px;
+}
 .bootbox .modal-dialog .modal-content .modal-body {
     min-height: 120px;
+  /*   max-height:400px;  */
+   /*  overflow-y:scroll; */
 }
 .bootbox.modal.fade.in {
     opacity: 0;
@@ -8825,7 +8830,12 @@ hr.footer-border {
 .modal-alert-content p {
     font-size: 17px;
     font-weight: bold;
+    
 }
 .modal-alert-content p.large {
     font-size: 20px;
+}
+.modal-alert-content p.large img{
+    max-width:744px;
+    max-height:400px;
 }
