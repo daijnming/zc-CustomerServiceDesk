@@ -32,6 +32,10 @@ function Online(node,core,window) {
         currentUid = uid;
     };
 
+    var onItemHide = function(evt,data) {
+        delete chatItemList[data.uid];
+    };
+
     var getCurrentUid = function() {
         return currentUid;
     };
@@ -47,7 +51,7 @@ function Online(node,core,window) {
             data.isTransfer = data.chatType;
         }
         if(chatItemList[uid] && chatItemList[uid].getStatus() == 'offline') {
-            chatItemList[uid].onOnline();
+            chatItemList[uid].onOnline(data.cid);
         } else {
             var item = new Item(data,core,node,null,that);
             chatItemList[data.uid] = item;
@@ -116,7 +120,7 @@ function Online(node,core,window) {
         if(!chatItemList[uid])
             return;
         chatItemList[uid].onRemove();
-      
+
     };
 
     var onReceive = function(value,list) {
@@ -160,6 +164,7 @@ function Online(node,core,window) {
         $body.on("core.receive",onReceive);
         $body.on("notification.click",onNotificationClickHandler);
         $body.on("leftside.onselected",onLeftSideSelected);
+        $body.on("leftside.onhide",onItemHide);
         $body.on("leftside.onremove",onChatItemListLengthChange);
         $node.delegate(".js-remove",'click',removeBtnClickHandler);
 
