@@ -35,6 +35,7 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onReceive = function(evt,list) {
+        console.log(list);
         var lastMessage = list.length > 0 ? list[list.length - 1] : null;
         if(data.uid !== manager.getCurrentUid()) {
             for(var i = 0,

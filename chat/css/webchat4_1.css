@@ -179,7 +179,7 @@ ul.history-list {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    height: 17px;
+    height: 30px;
     line-height: 17px;
     margin-top: 5px;
 }
