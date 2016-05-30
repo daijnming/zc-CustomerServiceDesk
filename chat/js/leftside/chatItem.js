@@ -35,7 +35,6 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onReceive = function(evt,list) {
-        console.log(list);
         var lastMessage = list.length > 0 ? list[list.length - 1] : null;
         if(data.uid !== manager.getCurrentUid()) {
             for(var i = 0,
@@ -88,7 +87,7 @@ function Item(data,core,outer,from,manager) {
     var onRemove = function() {
         if(status == 'online') {
             var dialog = new Alert({
-                'title' : '提示',
+                'title' : '结束对话',
                 'text' : '请确认顾客的问题已经解答，是否结束对话？',
                 'OK' : function() {
                     $.ajax({
