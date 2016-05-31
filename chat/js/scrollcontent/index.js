@@ -89,6 +89,7 @@
 
     // 加载
     var getChatListByOnline = function(type,callback, pageNo, pageSize, userData, isRender, isScrollBottom, typeNo, appendList) {
+        console.log(userChatCache)
         var userId;
 
         if( typeof arguments[0] === 'function') {
@@ -271,6 +272,7 @@
             'title' : model.title,
             'text' : model.content,
             'OK' : function() {
+              delete userChatCache[userInfo.userId];
               func();
               dialog.hide();
             }
@@ -354,11 +356,17 @@
     // --------------------------- dom操作 ---------------------------
 
     // 清理聊天主体页面
-    var clearScrollContent = function(uid) {
-      $rootNode.find('#chat').hide();
+    var clearScrollContent = function(uid,isHide) {
+
       userChatCache[userInfo.userId | uid] = undefined;
+      delete userChatCache[userInfo.userId | uid];
       $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
-      $rootNode.find('#chat').find('.js-panel-body').empty();
+      console.log(isHide);
+
+      // if (!isHide) {
+        $rootNode.find('#chat').hide();
+        $rootNode.find('#chat').find('.js-panel-body').empty();
+      // }
     }
 
     var parseTpl = function(type,ret, uid, isScrollBottom) {
@@ -551,6 +559,11 @@
                 }
               }
 
+              data.list.map(function(item) {
+                 item.msg = item.msg ? Face.analysis(item.msg) : null;
+                 item.msg = item.msg ? App.getUrlRegex(item.msg) : null;
+              })
+
               _html = doT.template(tpl)({
                 userSourceImage: userInfo.userSourceImage ,
                 adminImage: global.face ,
@@ -580,16 +593,19 @@
     var updateHeaderTag = function(type,handleType) {
         $rootNode.find('.js-addButton').children('[data-type="' + type + '"]').removeClass('hide');
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
-
+        onUpdateUserState(type,handleType);
         // 如果是添加拉黑
-        if (type === 'black' && handleType === 'add') clearScrollContent();
+        if (type === 'black' && handleType === 'add') {
+          clearScrollContent(null, true);
+          return;
+        }
 
         adminPushMessageState({
           type: type ,
           handleType: handleType
         });
         // 加入聊天记录
-        onUpdateUserState(type,handleType);
+
     }
     var initUserState = function(data) {
         $rootNode.find('.js-addButton').children('a').addClass('hide');
@@ -673,6 +689,7 @@
         else if(data[0].type === 108) {
           // clearScrollContent();
           var list = [];
+          $rootNode.find('.js-transfer').hide();
           if (userChatCache[data[0].uid]) {
             userChatCache[data[0].uid].list.push({
               action: 10 ,
@@ -706,14 +723,16 @@
           userChatCache[userId].uname = data[0].uname;
 
           if (userChatCache[data[0].uid]) {
+
+            var ts = new Date().toLocaleString();
             userChatCache[data[0].uid].list.push({
               action: 18 ,
-              ts: data[0].ts
+              ts: ts
             })
 
             list.push({
               action: 18 ,
-              ts: data[0].ts
+              ts: ts
             });
 
             // 是否渲染 isRender
@@ -723,6 +742,35 @@
 
 
           callUser();
+        }
+        else if(data[0].type === 102) {
+          var list = [];
+
+          if (userChatCache[data[0].uid]) {
+            var ts = new Date(data[0].t).toLocaleString();
+            console.log(ts)
+            userChatCache[data[0].uid].list.push({
+              action: 6 ,
+              ts: ts
+            },{
+              action: 8 ,
+              receiverName: global.name,
+              ts: ts
+            })
+
+            list.push({
+              action: 6 ,
+              ts: ts
+            },{
+              action: 8 ,
+              receiverName: global.name,
+              ts: ts
+            });
+
+            // 是否渲染 isRender
+            var isRender = userInfo.userId === data[0].uid;
+            getChatListByOnline('chat', parseList , null, null, data, isRender, false, data[0].type, list);
+          }
         }
         else {
           var list = [];
@@ -737,7 +785,7 @@
                   action: 5 ,
                   senderType: 0 ,
                   senderName: data[i].uname ,
-                  msg: data[i].content ,
+                  msg: App.getUrlRegex(data[i].content) ,
                   ts: data[i].ts
                 })
 
@@ -745,7 +793,7 @@
                   action: 5 ,
                   senderType: 0 ,
                   senderName: data[i].uname ,
-                  msg: data[i].content ,
+                  msg: App.getUrlRegex(data[i].content) ,
                   ts: data[i].ts
                 });
               }
@@ -845,6 +893,8 @@
     };
 
     var onReceive = function(value,data) {
+        console.log(value);
+        console.log(data);
         userPushMessage(data);
     };
 
@@ -873,7 +923,14 @@
         $body.on("leftside.onselected", function() {
           var params = arguments[1] ,
               $chatContent = $rootNode.find('#chat');
+          console.log(params);
+          var userSourceImage;
 
+          if (params.data.face) {
+            userSourceImage = params.data.face;
+          } else {
+            userSourceImage = userSourceMap[params.data.usource | params.data.source];
+          }
           userInfo = {
             isStar: !!params.userData.ismark ,
             isBlack: !!params.userData.isblack ,
@@ -883,7 +940,7 @@
             pid: params.data.pid,
             sender : global.id,
             userId: params.data.uid,
-            userSourceImage: userSourceMap[params.data.usource | params.data.source],
+            userSourceImage: userSourceImage,
             from: params.data.from === 'online' ,
             unreadcount: params.unreadcount
           }
