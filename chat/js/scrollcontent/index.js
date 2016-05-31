@@ -107,6 +107,8 @@
         if (userChatCache[userId] && userChatCache[userId].list) {
 
           if (pageNo) {
+            console.log(userId);
+            console.log('userChatCache[userId].date => ' + userChatCache[userId].date);
             $.ajax({
                 'url' : API.http.chatList[type],
                 'dataType' : 'json',
@@ -168,6 +170,8 @@
 
             if (ret.data[0] && ret.data[0].content[0]) {
               userChatCache[userId].date = ret.data[0].content[0].t;
+              console.log(userId);
+              console.log('userChatCache[userId].date => ' + userChatCache[userId].date);
             }
             callback && callback(type,ret, userId, isScrollBottom);
           })
@@ -202,6 +206,25 @@
                 called: userChatCache[userInfo.userId].called
             }
         }).success(function(ret) {
+            var list = [];
+            var ts = new Date().toLocaleString();
+            userChatCache[userInfo.userId].list.push({
+              action: 19,
+              ts: ts
+            })
+
+            list.push({
+              action: 19,
+              ts: ts
+            });
+
+            // 是否渲染 isRender
+            var isRender = true;
+            getChatListByOnline('chat', parseList , null, null, {
+              uid: userInfo.userId
+            }, isRender, false, null, list);
+
+
             hasCallState = true;
             userChatCache[userInfo.userId].isCall = false;
             $rootNode.find('#chat').find('.uesrDivNow').hide();
@@ -418,9 +441,11 @@
             var isCall = userChatCache[userInfo.userId].isCall;
             var called = userChatCache[userInfo.userId].called;
             var uname = userChatCache[userInfo.userId].uname;
+            var date = userChatCache[userInfo.userId].date;
             // var isCall = userChatCache[userInfo.userId].isCall;
 
             userChatCache[uid] = {
+              date: date ,
               list: list ,
               scrollTop: 0,
               pageNo: 1 ,
@@ -723,7 +748,6 @@
           userChatCache[userId].uname = data[0].uname;
 
           if (userChatCache[data[0].uid]) {
-
             var ts = new Date().toLocaleString();
             userChatCache[data[0].uid].list.push({
               action: 18 ,
@@ -744,11 +768,11 @@
           callUser();
         }
         else if(data[0].type === 102) {
+
           var list = [];
 
           if (userChatCache[data[0].uid]) {
             var ts = new Date(data[0].t).toLocaleString();
-            console.log(ts)
             userChatCache[data[0].uid].list.push({
               action: 6 ,
               ts: ts
@@ -893,6 +917,7 @@
     };
 
     var onReceive = function(value,data) {
+        console.log('------onReceive------');
         console.log(value);
         console.log(data);
         userPushMessage(data);
@@ -917,7 +942,7 @@
 
         $body.on("leftside.onhide", function() {
           console.log('leftside.onhide');
-          clearScrollContent(arguments[1].uid);
+          clearScrollContent(arguments[1].uid, true);
         })
 
         $body.on("leftside.onselected", function() {
