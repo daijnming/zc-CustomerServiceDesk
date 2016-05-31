@@ -406,6 +406,7 @@ var Fastlayer = function(node,core,config) {
         $(oFastLeft).on('blur','input',onFastBlur);
         $(oFastLeft).on('focus','input',onFastFocus);
         ///
+        $(oFastRight).on('click','li',onFastTap);
         $(oFastRight).on('click','.js-delRightRep',onDelFast);
         $(oFastRight).on('click','.js-upRightRep',onUpFast);
         $(oFastRight).on('keypress','input',onFastkeyParess);

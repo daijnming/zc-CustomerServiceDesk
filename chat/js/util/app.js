@@ -6,6 +6,8 @@ var App = {
 
     //传入文本把url筛选出来
     getUrlRegex:function(strMsg){
+        strMsg = strMsg.replace(/&amp;/g,'&');
+        strMsg = strMsg.replace(/&amp/g,'&');
         var res='';
         var wordArrs = strMsg.split(/\s+/);
         for(var i=0;i<wordArrs.length;i++){

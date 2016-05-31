@@ -1472,7 +1472,7 @@ body,html{
   position: absolute;
   left: 0;
   bottom: 0;
-  background-color: #fff;
+  /*background-color: #fff;*/
   border-left: 1px solid #e5eeec;
   z-index: 0;
 }
