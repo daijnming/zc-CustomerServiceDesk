@@ -79,7 +79,7 @@
     }
     // 推送转接事件
     var onTransfer = function(uid,uname, userId) {
-        clearScrollContent();
+        clearScrollContent(userId);
         $body.trigger('scrollcontent.onTransfer',[{
             uid: userId ,
             userName : uname
@@ -708,7 +708,7 @@
         else if(data[0].type === 108) {
           // clearScrollContent();
           var list = [];
-          $rootNode.find('.js-transfer').hide();
+          $rootNode.find('.js-transfer').removeClass('hide');
           if (userChatCache[data[0].uid]) {
             userChatCache[data[0].uid].list.push({
               action: 10 ,
@@ -763,31 +763,35 @@
         }
         else if(data[0].type === 102) {
 
-          var list = [];
+          if (data[0].isTransfer) {
+            delete userChatCache[data[0].uid];
+          } else {
+            var list = [];
 
-          if (userChatCache[data[0].uid]) {
-            var ts = new Date(data[0].t).toLocaleString();
-            userChatCache[data[0].uid].list.push({
-              action: 6 ,
-              ts: ts
-            },{
-              action: 8 ,
-              receiverName: global.name,
-              ts: ts
-            })
+            if (userChatCache[data[0].uid]) {
+              var ts = new Date(data[0].t).toLocaleString();
+              userChatCache[data[0].uid].list.push({
+                action: 6 ,
+                ts: ts
+              },{
+                action: 8 ,
+                receiverName: global.name,
+                ts: ts
+              })
 
-            list.push({
-              action: 6 ,
-              ts: ts
-            },{
-              action: 8 ,
-              receiverName: global.name,
-              ts: ts
-            });
+              list.push({
+                action: 6 ,
+                ts: ts
+              },{
+                action: 8 ,
+                receiverName: global.name,
+                ts: ts
+              });
 
-            // 是否渲染 isRender
-            var isRender = userInfo.userId === data[0].uid;
-            getChatListByOnline('chat', parseList , null, null, data, isRender, false, data[0].type, list);
+              // 是否渲染 isRender
+              var isRender = userInfo.userId === data[0].uid;
+              getChatListByOnline('chat', parseList , null, null, data, isRender, false, data[0].type, list);
+            }
           }
         }
         else {
