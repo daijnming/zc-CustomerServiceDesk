@@ -275,14 +275,27 @@ ul.history-list {
 .zc-transfer-innner .sub-nav li {
     height: 100%;
     float: left;
+    text-align: left;
     margin-left: 10px;
+    box-sizing: border-box;
+    padding-left:10px;
     font-size: 14px;
+    border-bottom: 1px solid #ededed;
 }
 .zc-transfer-innner .sub-nav li.item-1 {
     width: 158px;
 }
 .zc-transfer-innner .sub-nav li.item-2 {
     width: 140px;
+}
+.zc-transfer-innner .sub-nav li.item-3 {
+    width: 90px;
+}
+.zc-transfer-innner .sub-nav li.item-4 {
+    width: 206px;
+}
+.zc-transfer-innner .sub-nav li.item-5 {
+    width: 70px;
 }
 .zc-transfer-innner .sub-nav {
     height: 50px;
@@ -293,9 +306,14 @@ ul.history-list {
     margin: 0px;
     padding: 0px;
 }
+.zc-transfer-innner .sub-nav li i.sort.up {
+    background-position: -281px -7px;
+}
+.zc-transfer-innner .sub-nav li i.sort.down {
+    background-position: -273px -7px;
+}
 .zc-transfer-innner .sub-nav li i.sort {
     background-image: url(../img/icon_spirite.png);
-    background-position: -200px -4px;
     height: 9px;
     width: 7px;
     display: inline-block;

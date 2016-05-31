@@ -146,7 +146,8 @@ function Content(node,core,window) {
             }
         } else {
 
-          if (pageNo) {
+            if(!!!userChatCache[userId])
+                userChatCache[userId] = {}
             $.ajax({
                 'url' : API.http.chatList[type],
                 'dataType' : 'json',
@@ -163,38 +164,8 @@ function Content(node,core,window) {
                 if(ret.data[0] && ret.data[0].content[0]) {
                     userChatCache[userId].date = ret.data[0].content[0].t;
                 }
-
-                if (isRender) parseList(type , userChatCache[userId], isScrollBottom, true, typeNo, appendList);
-              } else {
-
-              }
-            });
-          } else {
-            if (isRender) parseList(type , userChatCache[userId], isScrollBottom, false , typeNo, appendList);
-          }
-        } else {
-
-          if (!!!userChatCache[userId]) userChatCache[userId] = {}
-          $.ajax({
-              'url' : API.http.chatList[type],
-              'dataType' : 'json',
-              'type' : 'get',
-              'data' : {
-                  t : userChatCache[userId].date || Date.parse(new Date()),
-                  uid : userId,
-                  pid : userData.pid,
-                  pageNow : pageNo || 1,
-                  pageSize : pageSize || 20
-              }
-          }).success(function(ret) {
-
-            if (ret.data[0] && ret.data[0].content[0]) {
-              userChatCache[userId].date = ret.data[0].content[0].t;
-              console.log(userId);
-              console.log('userChatCache[userId].date => ' + userChatCache[userId].date);
-            }
-            callback && callback(type,ret, userId, isScrollBottom);
-          })
+                callback && callback(type,ret,userId,isScrollBottom);
+            })
         }
     };
 
@@ -211,43 +182,42 @@ function Content(node,core,window) {
 
                 _html = doT.template(tpl)({});
 
-            dialog.setInner(_html);
-            dialog.show();
-        });
-      } else {
-        $.ajax({
-            'url' : API.http.call,
-            'dataType' : 'json',
-            'type' : 'get',
-            'data' : {
-                sender: userInfo.sender ,
-                cid: userInfo.cid ,
-                receiver: userInfo.userId ,
-                called: userChatCache[userInfo.userId].called
-            }
-        }).success(function(ret) {
-            var list = [];
-            var ts = new Date().toLocaleString();
-            userChatCache[userInfo.userId].list.push({
-              action: 19,
-              ts: ts
-            })
-
-            list.push({
-              action: 19,
-              ts: ts
+                dialog.setInner(_html);
+                dialog.show();
             });
+        } else {
+            $.ajax({
+                'url' : API.http.call,
+                'dataType' : 'json',
+                'type' : 'get',
+                'data' : {
+                    sender : userInfo.sender,
+                    cid : userInfo.cid,
+                    receiver : userInfo.userId,
+                    called : userChatCache[userInfo.userId].called
+                }
+            }).success(function(ret) {
+                var list = [];
+                var ts = new Date().toLocaleString();
+                userChatCache[userInfo.userId].list.push({
+                    action : 19,
+                    ts : ts
+                })
 
-            // 是否渲染 isRender
-            var isRender = true;
-            getChatListByOnline('chat', parseList , null, null, {
-              uid: userInfo.userId
-            }, isRender, false, null, list);
+                list.push({
+                    action : 19,
+                    ts : ts
+                });
 
+                // 是否渲染 isRender
+                var isRender = true;
+                getChatListByOnline('chat',parseList,null,null, {
+                    uid : userInfo.userId
+                },isRender,false,null,list);
 
-            hasCallState = true;
-            userChatCache[userInfo.userId].isCall = false;
-            $rootNode.find('#chat').find('.uesrDivNow').hide();
+                hasCallState = true;
+                userChatCache[userInfo.userId].isCall = false;
+                $rootNode.find('#chat').find('.uesrDivNow').hide();
 
                 loadFile.load(global.baseUrl + API.tpl.callTag).then(function(tpl) {
                     var _html;
@@ -297,11 +267,11 @@ function Content(node,core,window) {
 
                 black : {
                     add : {
-                        title : '拉黑',
+                        title : '添加拉黑',
                         content : '确定要拉黑这个用户吗？'
                     },
                     del : {
-                        title : '解除拉黑',
+                        title : '去除拉黑',
                         content : '确定要取消拉黑这个用户吗？'
                     }
                 }
@@ -322,8 +292,7 @@ function Content(node,core,window) {
     }
     var getAdminList = function(sender,callback) {
         var dialog = new Transfer(core);
-       // dialog.show();
-        return ;
+        return;
         $.ajax({
             'url' : API.http.getOtherAdmin,
             'dataType' : 'json',
@@ -358,9 +327,11 @@ function Content(node,core,window) {
     }
     // 转接
     var transfer = function(dialog) {
+
         $(dialog.getOuter()).find('.js-transfer-href').on('click', function() {
             var uid = $(this).attr('uid'),
                 uname = $(this).attr('uname');
+
             $.ajax({
                 'url' : API.http.userTransfer,
                 'dataType' : 'json',
@@ -379,7 +350,7 @@ function Content(node,core,window) {
                 onTransfer(uid,uname,userInfo.userId);
             });
         });
-    };
+    }
     var sendSearchUserChat = function() {
         $rootNode.on('click','.msg_content', function() {
             var chatText = $(this).html();
@@ -457,13 +428,13 @@ function Content(node,core,window) {
             // var isCall = userChatCache[userInfo.userId].isCall;
 
             userChatCache[uid] = {
-              date: date ,
-              list: list ,
-              scrollTop: 0,
-              pageNo: 1 ,
-              isCall: isCall,
-              called: called,
-              uname: uname
+                date : date,
+                list : list,
+                scrollTop : 0,
+                pageNo : 1,
+                isCall : isCall,
+                called : called,
+                uname : uname
             }
 
             _html = doT.template(tpl)({
@@ -737,12 +708,12 @@ function Content(node,core,window) {
                     ts : 'date ' + new Date(data[0].t).toTimeString().split(' ')[0]
                 });
 
-          if (userChatCache[data[0].uid]) {
-            var ts = new Date().toLocaleString();
-            userChatCache[data[0].uid].list.push({
-              action: 18 ,
-              ts: ts
-            })
+                // 是否渲染 isRender
+                var isRender = userInfo.userId === data[0].uid;
+                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data[0].type,list);
+            }
+
+        } else if(data[0].type === 112) {
 
             var userId = userInfo.userId = data[0].uid;
             var list = [];
@@ -753,23 +724,11 @@ function Content(node,core,window) {
             userChatCache[userId].uname = data[0].uname;
 
             if(userChatCache[data[0].uid]) {
-
-          callUser();
-        }
-        else if(data[0].type === 102) {
-
-          var list = [];
-
-          if (userChatCache[data[0].uid]) {
-            var ts = new Date(data[0].t).toLocaleString();
-            userChatCache[data[0].uid].list.push({
-              action: 6 ,
-              ts: ts
-            },{
-              action: 8 ,
-              receiverName: global.name,
-              ts: ts
-            })
+                var ts = new Date().toLocaleString();
+                userChatCache[data[0].uid].list.push({
+                    action : 18,
+                    ts : ts
+                })
 
                 list.push({
                     action : 18,
@@ -783,6 +742,7 @@ function Content(node,core,window) {
 
             callUser();
         } else if(data[0].type === 102) {
+
             var list = [];
 
             if(userChatCache[data[0].uid]) {
@@ -949,7 +909,7 @@ function Content(node,core,window) {
         });
 
         $body.on("leftside.onhide", function() {
-          clearScrollContent(arguments[1].uid, true);
+            clearScrollContent(arguments[1].uid,true);
         })
 
         $body.on("leftside.onselected", function() {
@@ -1014,6 +974,7 @@ function Content(node,core,window) {
             var $self = $(this),
                 type = $self.attr('data-type'),
                 handleType = $self.attr('data-handle');
+
             if(!!!type && !!!handleType) {
                 getAdminList(userInfo.sender,transfer);
             } else {
