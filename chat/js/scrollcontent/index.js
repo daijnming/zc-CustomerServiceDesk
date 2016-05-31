@@ -146,8 +146,7 @@ function Content(node,core,window) {
             }
         } else {
 
-            if(!!!userChatCache[userId])
-                userChatCache[userId] = {}
+          if (pageNo) {
             $.ajax({
                 'url' : API.http.chatList[type],
                 'dataType' : 'json',
@@ -164,8 +163,38 @@ function Content(node,core,window) {
                 if(ret.data[0] && ret.data[0].content[0]) {
                     userChatCache[userId].date = ret.data[0].content[0].t;
                 }
-                callback && callback(type,ret,userId,isScrollBottom);
-            })
+
+                if (isRender) parseList(type , userChatCache[userId], isScrollBottom, true, typeNo, appendList);
+              } else {
+
+              }
+            });
+          } else {
+            if (isRender) parseList(type , userChatCache[userId], isScrollBottom, false , typeNo, appendList);
+          }
+        } else {
+
+          if (!!!userChatCache[userId]) userChatCache[userId] = {}
+          $.ajax({
+              'url' : API.http.chatList[type],
+              'dataType' : 'json',
+              'type' : 'get',
+              'data' : {
+                  t : userChatCache[userId].date || Date.parse(new Date()),
+                  uid : userId,
+                  pid : userData.pid,
+                  pageNow : pageNo || 1,
+                  pageSize : pageSize || 20
+              }
+          }).success(function(ret) {
+
+            if (ret.data[0] && ret.data[0].content[0]) {
+              userChatCache[userId].date = ret.data[0].content[0].t;
+              console.log(userId);
+              console.log('userChatCache[userId].date => ' + userChatCache[userId].date);
+            }
+            callback && callback(type,ret, userId, isScrollBottom);
+          })
         }
     };
 
@@ -182,24 +211,43 @@ function Content(node,core,window) {
 
                 _html = doT.template(tpl)({});
 
-                dialog.setInner(_html);
-                dialog.show();
+            dialog.setInner(_html);
+            dialog.show();
+        });
+      } else {
+        $.ajax({
+            'url' : API.http.call,
+            'dataType' : 'json',
+            'type' : 'get',
+            'data' : {
+                sender: userInfo.sender ,
+                cid: userInfo.cid ,
+                receiver: userInfo.userId ,
+                called: userChatCache[userInfo.userId].called
+            }
+        }).success(function(ret) {
+            var list = [];
+            var ts = new Date().toLocaleString();
+            userChatCache[userInfo.userId].list.push({
+              action: 19,
+              ts: ts
+            })
+
+            list.push({
+              action: 19,
+              ts: ts
             });
-        } else {
-            $.ajax({
-                'url' : API.http.call,
-                'dataType' : 'json',
-                'type' : 'get',
-                'data' : {
-                    sender : userInfo.sender,
-                    cid : userInfo.cid,
-                    receiver : userInfo.userId,
-                    called : userChatCache[userInfo.userId].called
-                }
-            }).success(function(ret) {
-                hasCallState = true;
-                userChatCache[userInfo.userId].isCall = false;
-                $rootNode.find('#chat').find('.uesrDivNow').hide();
+
+            // 是否渲染 isRender
+            var isRender = true;
+            getChatListByOnline('chat', parseList , null, null, {
+              uid: userInfo.userId
+            }, isRender, false, null, list);
+
+
+            hasCallState = true;
+            userChatCache[userInfo.userId].isCall = false;
+            $rootNode.find('#chat').find('.uesrDivNow').hide();
 
                 loadFile.load(global.baseUrl + API.tpl.callTag).then(function(tpl) {
                     var _html;
@@ -405,15 +453,17 @@ function Content(node,core,window) {
             var isCall = userChatCache[userInfo.userId].isCall;
             var called = userChatCache[userInfo.userId].called;
             var uname = userChatCache[userInfo.userId].uname;
+            var date = userChatCache[userInfo.userId].date;
             // var isCall = userChatCache[userInfo.userId].isCall;
 
             userChatCache[uid] = {
-                list : list,
-                scrollTop : 0,
-                pageNo : 1,
-                isCall : isCall,
-                called : called,
-                uname : uname
+              date: date ,
+              list: list ,
+              scrollTop: 0,
+              pageNo: 1 ,
+              isCall: isCall,
+              called: called,
+              uname: uname
             }
 
             _html = doT.template(tpl)({
@@ -687,12 +737,12 @@ function Content(node,core,window) {
                     ts : 'date ' + new Date(data[0].t).toTimeString().split(' ')[0]
                 });
 
-                // 是否渲染 isRender
-                var isRender = userInfo.userId === data[0].uid;
-                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data[0].type,list);
-            }
-
-        } else if(data[0].type === 112) {
+          if (userChatCache[data[0].uid]) {
+            var ts = new Date().toLocaleString();
+            userChatCache[data[0].uid].list.push({
+              action: 18 ,
+              ts: ts
+            })
 
             var userId = userInfo.userId = data[0].uid;
             var list = [];
@@ -704,11 +754,22 @@ function Content(node,core,window) {
 
             if(userChatCache[data[0].uid]) {
 
-                var ts = new Date().toLocaleString();
-                userChatCache[data[0].uid].list.push({
-                    action : 18,
-                    ts : ts
-                })
+          callUser();
+        }
+        else if(data[0].type === 102) {
+
+          var list = [];
+
+          if (userChatCache[data[0].uid]) {
+            var ts = new Date(data[0].t).toLocaleString();
+            userChatCache[data[0].uid].list.push({
+              action: 6 ,
+              ts: ts
+            },{
+              action: 8 ,
+              receiverName: global.name,
+              ts: ts
+            })
 
                 list.push({
                     action : 18,
@@ -888,7 +949,7 @@ function Content(node,core,window) {
         });
 
         $body.on("leftside.onhide", function() {
-            clearScrollContent(arguments[1].uid);
+          clearScrollContent(arguments[1].uid, true);
         })
 
         $body.on("leftside.onselected", function() {
