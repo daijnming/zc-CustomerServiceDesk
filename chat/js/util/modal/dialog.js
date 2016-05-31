@@ -9,6 +9,7 @@ function Dialog(spec) {
     var conf = $.extend({
         "okText" : "确定",
         "title" : "提示",
+        'width' : 800,
         'inner' : false,
         "OK" : function() {
 
@@ -18,6 +19,9 @@ function Dialog(spec) {
         $layer = $(template.zcShadowLayer);
         var _html = doT.template(template.zcModalOuter)(conf);
         $outer = $(_html);
+        $outer.css({
+            'width' : conf.width
+        });
     };
 
     var setInner = function(elm) {

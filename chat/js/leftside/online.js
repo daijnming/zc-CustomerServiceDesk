@@ -115,6 +115,8 @@ function Online(node,core,window) {
         }
     };
     var removeBtnClickHandler = function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         var elm = e.currentTarget;
         var uid = $(elm).attr("data-uid");
         if(!chatItemList[uid])
