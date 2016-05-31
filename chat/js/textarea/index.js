@@ -10,8 +10,7 @@ function TextArea(node,core,window) {
     var ZC_Face = require('../util/qqFace.js');
     //上传附件
     var uploadImg = require('./uploadImg.js');
-    //判断文件图标类型用于聊天窗体的显示
-    var fileTypeIcon = require('./fileTypeIcon.json');
+   
     //模板引擎
     var template = require('./template.js');
     var apihost = "/chat/";
@@ -71,19 +70,16 @@ function TextArea(node,core,window) {
         }]);
     };
     var onFileTypeHandler = function(data) {
-        //var filetypeIco = "";
-        var filetype = data.filetype;
-        var fileIcon = fileTypeIcon[filetype];
+       
         //先判断是否为图片
         if(isImage(data)){
             //正在上传
             $node.find(".systeamTextBox").remove();
             var conf = $.extend({
-                "fileIcon" : fileIcon,
                 "url" : data.url,
-                'filename' : data.filename,
-                'extension' : data.extension
-
+                "filename" : data.filename,
+                "extension" : data.extension,
+                "fileIcon" : data.fileIcon
             });
             answer = doT.template(template.tranfiletype)(conf); 
         }
