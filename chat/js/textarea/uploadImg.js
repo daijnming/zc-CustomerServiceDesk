@@ -119,7 +119,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             onIframeUploadUpHandler(uid,cid);
         }
     };
-    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename,filetype,fileIcon){console.log(fileIcon);
+    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename,filetype,fileIcon){
             $.ajax({
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",

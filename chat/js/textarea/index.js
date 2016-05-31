@@ -63,8 +63,8 @@ function TextArea(node,core,window) {
         //通过textarea.send事件将用户的数据传到显示台
         $(document.body).trigger('textarea.send',[{
             'answer' : answer,
-            'uid' : currentUid,
-            'cid' : currentCid,
+            'uid' : data.uid,
+            'cid' : data.cid,
             //时间戳
             'date' : +new Date()
         }]);
