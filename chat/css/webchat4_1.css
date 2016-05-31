@@ -328,6 +328,16 @@ ul.history-list {
 .zc-transfer-innner .list-detail li {
     height: 50px;
     line-height: 50px;
-    float:left;
+    float: left;
 }
+.zc-transfer-innner .list-detail li div.column {
+    float: left;
+    box-sizing: border-box;
+    padding-left: 10px;
+    text-align: left;
+    font-size: 14px;
+    margin-left: 10px;
+}
+.zc-transfer-innner .list-detail li div.column {
 
+}
