@@ -88,7 +88,7 @@
 
   {{ if(it.list[prop].action === 19) { }}
     <div class="systeamTextBox">
-      <p class="systeamText">客服给用户回拨语音通话</p>
+      <p class="systeamText">客服给用户回拨语音通话 {{=it.list[prop].ts.split(' ')[1]}}</p>
     </div>
   {{ } }}
 

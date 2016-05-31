@@ -25,7 +25,7 @@ var FastMsgModal = function(node,core,config) {
     var parseDOM = function() {
         oShortcut = $(node).find('.js-panel-body .js-tab-pane#messagesuser .js-shortcut');
         oRightQuickLeft = $(node).find('.js-rightQuickLeft ul');
-        oRightQuickRight = $(node).find('.js-rightQuickLRight ul');
+        oRightQuickRight = $(node).find('.js-rightQuickRight ul');
         oShadowLayer = $('.zc-shadow-layer .modal-dialog');
     };
     //点击快捷回复进行回复

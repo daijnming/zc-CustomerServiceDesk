@@ -272,17 +272,30 @@ ul.history-list {
     border-top: 1px solid #ededed;
     width: 740px;
 }
+
 .zc-transfer-innner .sub-nav li {
     height: 100%;
     float: left;
+    text-align: left;
     margin-left: 10px;
+    box-sizing: border-box;
+    padding-left: 10px;
     font-size: 14px;
 }
-.zc-transfer-innner .sub-nav li.item-1 {
+.zc-transfer-innner .item-1 {
     width: 158px;
 }
-.zc-transfer-innner .sub-nav li.item-2 {
+.zc-transfer-innner .item-2 {
     width: 140px;
+}
+.zc-transfer-innner .item-3 {
+    width: 90px;
+}
+.zc-transfer-innner .item-4 {
+    width: 206px;
+}
+.zc-transfer-innner .item-5 {
+    width: 70px;
 }
 .zc-transfer-innner .sub-nav {
     height: 50px;
@@ -292,14 +305,39 @@ ul.history-list {
     list-style-position: inside;
     margin: 0px;
     padding: 0px;
+    border-bottom: 1px solid #ededed;
+}
+.zc-transfer-innner .sub-nav li i.sort.up {
+    background-position: -281px -7px;
+}
+.zc-transfer-innner .sub-nav li i.sort.down {
+    background-position: -273px -7px;
 }
 .zc-transfer-innner .sub-nav li i.sort {
     background-image: url(../img/icon_spirite.png);
-    background-position: -200px -4px;
     height: 9px;
     width: 7px;
     display: inline-block;
     vertical-align: middle;
     background-position: -289px -7px;
 }
+.zc-transfer-innner .list-detail {
+    max-height: 515px;
+    overflow-y: auto;
+}
+.zc-transfer-innner .list-detail li {
+    height: 50px;
+    line-height: 50px;
+    float: left;
+}
+.zc-transfer-innner .list-detail li div.column {
+    float: left;
+    box-sizing: border-box;
+    padding-left: 10px;
+    text-align: left;
+    font-size: 14px;
+    margin-left: 10px;
+}
+.zc-transfer-innner .list-detail li div.column {
 
+}
