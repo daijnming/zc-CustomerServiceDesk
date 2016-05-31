@@ -89,7 +89,6 @@
 
     // 加载
     var getChatListByOnline = function(type,callback, pageNo, pageSize, userData, isRender, isScrollBottom, typeNo, appendList) {
-        console.log(userChatCache)
         var userId;
 
         if( typeof arguments[0] === 'function') {
@@ -107,8 +106,6 @@
         if (userChatCache[userId] && userChatCache[userId].list) {
 
           if (pageNo) {
-            console.log(userId);
-            console.log('userChatCache[userId].date => ' + userChatCache[userId].date);
             $.ajax({
                 'url' : API.http.chatList[type],
                 'dataType' : 'json',
@@ -170,8 +167,6 @@
 
             if (ret.data[0] && ret.data[0].content[0]) {
               userChatCache[userId].date = ret.data[0].content[0].t;
-              console.log(userId);
-              console.log('userChatCache[userId].date => ' + userChatCache[userId].date);
             }
             callback && callback(type,ret, userId, isScrollBottom);
           })
@@ -384,7 +379,6 @@
       userChatCache[userInfo.userId | uid] = undefined;
       delete userChatCache[userInfo.userId | uid];
       $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
-      console.log(isHide);
 
       // if (!isHide) {
         $rootNode.find('#chat').hide();
@@ -917,9 +911,6 @@
     };
 
     var onReceive = function(value,data) {
-        console.log('------onReceive------');
-        console.log(value);
-        console.log(data);
         userPushMessage(data);
     };
 
@@ -941,14 +932,12 @@
         });
 
         $body.on("leftside.onhide", function() {
-          console.log('leftside.onhide');
           clearScrollContent(arguments[1].uid, true);
         })
 
         $body.on("leftside.onselected", function() {
           var params = arguments[1] ,
               $chatContent = $rootNode.find('#chat');
-          console.log(params);
           var userSourceImage;
 
           if (params.data.face) {
