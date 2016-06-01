@@ -10,7 +10,7 @@ function Transfer(core,userInfo,callback) {
     var loadFile = require('../util/load.js')();
     var dateUtil = require("../util/date.js");
     var $outer;
-    var loadingTemplate = '<li class="blank"><img src="img/loading.gif" /></li>';
+    var loadingTemplate = '<li class="blank"><div class="loading"></div></li>';
     var $ulOuter,
         $refreshTime,
         $clearBtn;
@@ -86,7 +86,7 @@ function Transfer(core,userInfo,callback) {
                     'list' : ret,
                     'keyword' : keyword
                 });
-                $ulOuter.html(_html);
+                //$ulOuter.html(_html);
             });
         }).fail(function(ret,err) {
         });
