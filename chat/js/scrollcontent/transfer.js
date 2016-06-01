@@ -1,7 +1,8 @@
 /**
  * @author Treagzhao
  */
-function Transfer(core) {
+function Transfer(core,userInfo) {
+    console.log(userInfo);
     var Dialog = require('../util/modal/dialog.js');
     var _self = this;
     var global = core.getGlobal();
@@ -50,14 +51,12 @@ function Transfer(core) {
             'type' : 'get'
         }).success(function(ret) {
             loadFile.load(global.baseUrl + 'views/scrollcontent/transferlist.html').then(function(html) {
-                console.log(ret);
                 var _html = doT.template(html)({
                     'list' : ret
                 });
                 $ulOuter.html(_html);
             });
         }).fail(function(ret,err) {
-            console.log(ret,err);
         });
         return promise;
     };
@@ -72,7 +71,31 @@ function Transfer(core) {
         $ulOuter = $outer.find(".js-list-detail");
     };
 
+    var transferBtnClickHandler = function(e) {
+        var elm = e.currentTarget;
+        var joinId = $(elm).attr("data-uid");
+        if($(elm).hasClass("disabled")) {
+            return;
+        }
+        $(elm).addClass("disabled").html('转接中...');
+        $.ajax({
+            'url' : '/chat/admin/transfer.action',
+            'data' : {
+                'uid' : global.id,
+                'cid' : userInfo.cid,
+                "jounUid" : joinId,
+                'userId' : userInfo.userId
+            },
+            'dataType' : 'json',
+            'type' : "POST"
+        }).success(function(ret) {
+            alert(ret);
+        }).fail(function(ret) {
+            console.log(ret);
+        });
+    };
     var bindListener = function() {
+        $outer.delegate(".js-transfer-btn","click",transferBtnClickHandler);
     };
 
     var initPlugins = function() {
