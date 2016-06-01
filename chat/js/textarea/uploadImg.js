@@ -24,7 +24,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
      *uploadOption 上传参数
      */
 
-    var onChangeHandler = function(evt,uid,cid) {
+    var onChangeHandler = function(uid,cid) {
         onFormDataUpHandler(uid,cid);
     };
     //粘贴上传 将文件base64数据流通过Uint8Array上传
