@@ -48,10 +48,10 @@
         <p class="systeamText">用户被客服 {{=it.list[prop].receiverName}} 加入黑名单,本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
       </div>
     {{ } }}
-
+   
     {{ if (it.list[prop].offlineType === 5) { }}
       <div class="systeamTextBox">
-        <p class="systeamText">用户已和用户结束本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
       </div>
     {{ } }}
   {{ } }}
