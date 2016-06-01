@@ -195,6 +195,7 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             messageAdapter(list);
+            console.log(list.length + " core");
             $body.trigger('core.receive',[list]);
         });
     };
