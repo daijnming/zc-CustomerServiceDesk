@@ -81,7 +81,8 @@ function Transfer(core,userInfo,callback) {
             loadFile.load(global.baseUrl + 'views/scrollcontent/transferlist.html').then(function(html) {
                 $refreshTime.text(dateUtil.formatTime(new Date()));
                 var _html = doT.template(html)({
-                    'list' : ret
+                    'list' : ret,
+                    'keyword' : keyword
                 });
                 $ulOuter.html(_html);
             });

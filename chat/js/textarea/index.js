@@ -10,7 +10,7 @@ function TextArea(node,core,window) {
     var ZC_Face = require('../util/qqFace.js');
     //上传附件
     var uploadImg = require('./uploadImg.js');
-   
+
     //模板引擎
     var template = require('./template.js');
     var apihost = "/chat/";
@@ -72,9 +72,9 @@ function TextArea(node,core,window) {
         }]);
     };
     var onFileTypeHandler = function(data) {
-       
+
         //先判断是否为图片
-        if(isImage(data)){
+        if(isImage(data)) {
             //正在上传
             $node.find(".systeamTextBox").remove();
             var conf = $.extend({
@@ -83,21 +83,20 @@ function TextArea(node,core,window) {
                 "extension" : data.extension,
                 "fileIcon" : data.fileIcon
             });
-            answer = doT.template(template.tranfiletype)(conf); 
+            answer = doT.template(template.tranfiletype)(conf);
             console.log(answer);
         }
 
     };
     var isImage = function(data) {
         //正在上传
-        switch (data.filetype)
-        {
+        switch (data.filetype) {
             case "image":
                 $node.find(".systeamTextBox").remove();
                 var conf = $.extend({
                     "url" : data.url
                 });
-                answer = doT.template(template.fileImage)(conf); 
+                answer = doT.template(template.fileImage)(conf);
                 return false;
                 break;
             default:
@@ -155,11 +154,11 @@ function TextArea(node,core,window) {
     var onFilePaste = function(e) {
         var evt = e.originalEvent;
         console.log(evt.clipboardData.items.length);
-        
+
         for(var i = 0,
             len = evt.clipboardData.items.length;i < len;i++) {
             var item = evt.clipboardData.items[i];
-            if(item.kind === 'file') { 
+            if(item.kind === 'file') {
                 e.preventDefault();
                 uploadFun.onFormDataPasteHandler(item,currentUid,currentCid);
             }
@@ -210,7 +209,7 @@ function TextArea(node,core,window) {
         $node.find(".js-emotion").on("click",onEmotionClickHandler);
         $node.find(".icoLi").on("click",onEmotionIcoClickHandler);
         $node.find('.js-upload').on("change",uploadFile);
-       
+
     };
     var initFace = function() {
         /*
@@ -256,11 +255,11 @@ function TextArea(node,core,window) {
         uploadFun = uploadImg($uploadBtn,node,core,window);
         //上传图片
         initFace();
-         //qq表情滚动插件
+        //qq表情滚动插件
         $node.find(".item").perfectScrollbar();
         isHiddenBotTextBox();
         botTextBoxPosition();
-       
+
     };
     var init = function() {
         parseDOM();
