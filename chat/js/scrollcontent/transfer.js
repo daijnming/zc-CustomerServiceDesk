@@ -1,7 +1,7 @@
 /**
  * @author Treagzhao
  */
-function Transfer(core,userInfo) {
+function Transfer(core,userInfo,callback) {
     var Dialog = require('../util/modal/dialog.js');
     var Promise = require('../util/promise.js');
     var _self = this;
@@ -120,6 +120,7 @@ function Transfer(core,userInfo) {
 
     var transferBtnClickHandler = function(e) {
         var elm = e.currentTarget;
+        var uname = $(elm).attr("data-uname");
         var joinId = $(elm).attr("data-uid");
         if($(elm).hasClass("disabled")) {
             return;
@@ -130,13 +131,22 @@ function Transfer(core,userInfo) {
             'data' : {
                 'uid' : global.id,
                 'cid' : userInfo.cid,
-                "jounUid" : joinId,
+                "joinUid" : joinId,
                 'userId' : userInfo.userId
             },
             'dataType' : 'json',
             'type' : "POST"
         }).success(function(ret) {
-            alert(ret);
+            if(ret.status == 1) {
+                $(elm).text("已转接");
+                callback && callback(joinId,uname,userInfo.userId);
+
+            } else if(ret.status == 2) {
+                //用户已经离线
+            } else if(ret.status == 3) {
+                //客服已经离线
+                $(elm).text('客服已离线');
+            }
         }).fail(function(ret) {
             console.log(ret);
         });
