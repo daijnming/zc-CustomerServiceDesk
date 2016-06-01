@@ -10,7 +10,7 @@ function Transfer(core,userInfo,callback) {
     var loadFile = require('../util/load.js')();
     var dateUtil = require("../util/date.js");
     var $outer;
-    var loadingTemplate = '<li class="blank"><img src="img/loading.gif" /></li>';
+    var loadingTemplate = '<li class="blank"><img src="img/static/loading.gif" /></li>';
     var $ulOuter,
         $refreshTime,
         $clearBtn;
