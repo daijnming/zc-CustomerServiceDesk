@@ -33,7 +33,7 @@
                     {{for(var i=0;i<it.list.length;i++) { }}
                     {{var item = it.list[i];}}
                     <tr>
-                    <td class="reqTd2 td2"><span class="reqTdSpan">{{=item.name}}</span><span class="reqTitleSpan">{{=it.name}}</span></td><td class="reqTdGroup td3">{{=item.groupName || '无技能组'}}</td><td class="reqTd3 td4">{{=item.lastTime}}</td><td class="td5">{{=item.remainTime}}</td><td><a data-uid="{{=item.id}}" class="reqBtns js-invite-btn" href="javascript:;">邀请</a></td>
+                    <td class="reqTd2 td2"><span class="reqTdSpan">{{=item.name}}</span><span class="reqTitleSpan">{{=item.name}}</span></td><td class="reqTdGroup td3">{{=item.groupName || '无技能组'}}</td><td class="reqTd3 td4">{{=item.lastTime}}</td><td class="td5">{{=item.remainTime}}</td><td><a data-uid="{{=item.id}}" class="reqBtns js-invite-btn" href="javascript:;">邀请</a></td>
                     </tr>
                     {{ } }}
                 </tbody>
