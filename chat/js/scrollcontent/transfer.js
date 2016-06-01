@@ -2,14 +2,17 @@
  * @author Treagzhao
  */
 function Transfer(core,userInfo) {
-    console.log(userInfo);
     var Dialog = require('../util/modal/dialog.js');
+    var Promise = require('../util/promise.js');
     var _self = this;
     var global = core.getGlobal();
     var loadFile = require('../util/load.js')();
     var dateUtil = require("../util/date.js");
     var $outer;
-    var $ulOuter;
+    var loadingTemplate = '<li class="blank"><img src="img/loading.gif" /></li>';
+    var $ulOuter,
+        $refreshTime;
+    var timer;
     var sortType = 1,
         sortKey = 'uname',
         keyword = "";
@@ -37,8 +40,33 @@ function Transfer(core,userInfo) {
         'hiden' : true
     }];
 
+    var columnKeyClickHandler = function(e) {
+        var elm = e.currentTarget;
+        var key = $(elm).attr("data-type");
+        if(key !== sortKey) {
+            sortKey = key;
+            sortType = 1;
+        } else {
+            sortType = (sortType + 1) % 2;
+            if(sortType == 0)
+                sortType == 2;
+        }
+        $outer.find(".sort").removeClass("up").removeClass("down");
+        var $sort = $(elm).find(".sort");
+        $sort.addClass((sortType == 1 ) ? 'up' : 'down');
+        fetchData();
+    };
+
+    var searchIconClickHandler = function(e) {
+        var $elm = $(this);
+        var input = $outer.find("input");
+        keyword = input.val();
+        fetchData();
+    };
+
     var fetchData = function(value,promise) {
         var promise = promise || new Promise();
+        $ulOuter.html(loadingTemplate);
         $.ajax({
             'url' : '/chat/admin/getOhterAdminList.action',
             'data' : {
@@ -51,6 +79,7 @@ function Transfer(core,userInfo) {
             'type' : 'get'
         }).success(function(ret) {
             loadFile.load(global.baseUrl + 'views/scrollcontent/transferlist.html').then(function(html) {
+                $refreshTime.text(dateUtil.formatTime(new Date()));
                 var _html = doT.template(html)({
                     'list' : ret
                 });
@@ -60,6 +89,23 @@ function Transfer(core,userInfo) {
         });
         return promise;
     };
+
+    var inputKeyUpHandler = function(evt) {
+        if(evt.keyCode == 13) {
+            evt.preventDefault();
+            keyword = $outer.find("input").val();
+            fetchData();
+        }
+    };
+    var inputChangeHandler = function(e) {
+        var $elm = $(this);
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            keyword = $elm.val();
+            fetchData();
+        },500);
+    };
+
     var getDefaultParam = function() {
         if(window.localStorage) {
             sortType = (window.localStorage.sortType) || sortType;
@@ -68,6 +114,7 @@ function Transfer(core,userInfo) {
     };
     var parseDOM = function() {
         $outer = $(_self.getOuter());
+        $refreshTime = $outer.find(".js-refresh-time");
         $ulOuter = $outer.find(".js-list-detail");
     };
 
@@ -96,6 +143,11 @@ function Transfer(core,userInfo) {
     };
     var bindListener = function() {
         $outer.delegate(".js-transfer-btn","click",transferBtnClickHandler);
+        $outer.delegate(".js-column-key",'click',columnKeyClickHandler);
+        $outer.find(".js-refresh-btn").on("click",fetchData);
+        $outer.find("input").on("input propertychange",inputChangeHandler);
+        $outer.find("input").on("keyup",inputKeyUpHandler);
+        $outer.find(".js-search-icon").on("click",searchIconClickHandler);
     };
 
     var initPlugins = function() {
