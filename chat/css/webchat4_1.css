@@ -221,6 +221,7 @@ ul.history-list {
     margin-left: 50px;
     border: 1px solid #dbdbdb;
     height: 40px;
+    position:relative;
     border-radius: 1px;
     display: inline-block;
     vertical-align: middle;
@@ -361,6 +362,24 @@ ul.history-list {
 }
 .zc-transfer-innner .list-detail li div.column .transfer-btn {
     text-decoration: none;
+}
+.zc-transfer-outer .zc-clear-btn:hover{
+    background:#ed5c5c;
+}
+.zc-transfer-outer .zc-clear-btn{
+    height:17px;
+    width:17px;
+    line-height:17px;
+    display:inline-block;
+    text-align:center;
+    display:none;
+    background:#cfcfcf;
+    border-radius:50%;
+    color:white;
+    right:5px;
+    top:10px;
+    position:absolute;
+    cursor:pointer;
 }
 .zc-transfer-innner .list-detail li div.column .transfer-btn.disabled {
     color: #9c9c9c;

@@ -12,7 +12,8 @@ function Transfer(core,userInfo,callback) {
     var $outer;
     var loadingTemplate = '<li class="blank"><img src="img/loading.gif" /></li>';
     var $ulOuter,
-        $refreshTime;
+        $refreshTime,
+        $clearBtn;
     var timer;
     var sortType = 1,
         sortKey = 'uname',
@@ -101,6 +102,11 @@ function Transfer(core,userInfo,callback) {
     };
     var inputChangeHandler = function(e) {
         var $elm = $(this);
+        if($elm.val().length > 0) {
+            $clearBtn.show();
+        } else {
+            $clearBtn.hide();
+        }
         clearTimeout(timer);
         timer = setTimeout(function() {
             keyword = $elm.val();
@@ -114,10 +120,19 @@ function Transfer(core,userInfo,callback) {
             sortKey = window.localStorage.sortKey || sortKey;
         }
     };
+
+    var clearBtnClickhandler = function() {
+        $(this).hide();
+        $outer.find("input").val('');
+        keyword = '';
+        fetchData();
+    };
+
     var parseDOM = function() {
         $outer = $(_self.getOuter());
         $refreshTime = $outer.find(".js-refresh-time");
         $ulOuter = $outer.find(".js-list-detail");
+        $clearBtn = $outer.find(".js-clear-btn");
     };
 
     var transferBtnClickHandler = function(e) {
@@ -167,6 +182,7 @@ function Transfer(core,userInfo,callback) {
         $outer.find(".js-refresh-btn").on("click",fetchData);
         $outer.find("input").on("input propertychange",inputChangeHandler);
         $outer.find("input").on("keyup",inputKeyUpHandler);
+        $clearBtn.on("click",clearBtnClickhandler);
         $outer.find(".js-search-icon").on("click",searchIconClickHandler);
     };
 
