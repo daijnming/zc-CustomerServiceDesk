@@ -57,7 +57,7 @@ function Item(data,core,outer,from,manager) {
             }
         }
         if(lastMessage.cid == data.cid) {
-            $lastMessage.html(!!lastMessage ? lastMessage.desc : '').addClass('orange');
+            $lastMessage.text(!!lastMessage ? lastMessage.desc : '').addClass('orange');
         }
     };
     var onOffLine = function() {
@@ -278,10 +278,16 @@ function Item(data,core,outer,from,manager) {
     var onServerSend = function(evt,ret) {
         if(ret.uid == data.uid && ret.cid == data.cid) {
             messageAdapter(ret);
-            $lastMessage.html(ret.desc).removeClass("orange");
+            $lastMessage.text(ret.desc).removeClass("orange");
         }
     };
 
+    var onChatSmartReplay = function(evt,ret) {
+        if(ret.data.status == 1 && ret.data.cid == data.cid) {
+            var content = ret.data.msg.indexOf("<") >= 0 ? "[富文本]" : ret.data.msg;
+            $lastMessage.text(content);
+        }
+    };
     var onTransfer = function(evt,ret) {
         if(ret.uid != data.uid) {
             return;
@@ -295,6 +301,7 @@ function Item(data,core,outer,from,manager) {
         $body.on("scrollcontent.onUpdateUserState",onUserStatusChange);
         $body.on("scrollcontent.onTransfer",onTransfer);
         $body.on("core.receive",onReceive);
+        $body.on("rightside.onChatSmartReply",onChatSmartReplay);
         $body.on("textarea.send",onServerSend);
         $node.on("click",onNodeClickHandler);
         $body.on("rightside.onProfileUserInfo",onProfileUserInfo);

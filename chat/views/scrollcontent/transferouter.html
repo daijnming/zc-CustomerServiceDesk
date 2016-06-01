@@ -1,0 +1,38 @@
+<div class="zc-transfer-outer">
+    <div class="zc-transfer-title">
+        <div class="zc-input-outer">
+            <span class="zc-search-icon js-search-icon"></span>
+            <input type="text" placeholder="搜索姓名、昵称、分组"/>
+        </div>
+        <div class="zc-refresh-outer">
+            <span>刷新于<span class="js-refresh-time">{{=it.dateStr}}</span></span>&nbsp;&nbsp;&nbsp; <a href="#0" class="js-refresh-btn"><span class=" refresh-btn"></span><span >刷新</span></a>
+        </div>
+    </div>
+    <div class="zc-transfer-innner">
+        <div class="zc-transfer-inner-title">
+            <ul class="sub-nav">
+                {{for(var i=0;i< it.columns.length;i++)  { }}
+                <li class="item-{{=(i+1)}} js-column-key" data-type="{{=it.columns[i].key}}">
+                    {{=it.columns[i].name}}
+                    {{if(it.sortKey == it.columns[i].key) { }}
+                    {{ if(it.sortType == 1 && it.columns[i].hiden !== true){ }}
+                    <i class="sort up"></i>
+                    {{ }else{ }}
+                    <i class="sort down"></i>
+                    {{ } }}
+                    {{ }else if(it.columns[i].hiden !== true){ }}
+                    <i class="sort"></i>
+                    {{ } }}
+                </li>
+                {{ } }}
+            </ul>
+            <ul class="list-detail js-list-detail">
+
+                <li class="blank">
+                    <img src="img/loading.gif" />
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>

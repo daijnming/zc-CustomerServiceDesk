@@ -30,12 +30,12 @@
                 font-weight: normal;
                 font-style: normal;
             }
-            @font-face{
-                font-family:"Glyphicons Halflings";
-                src:url('fonts/glyphicons-halflings-regular.eot');
-                src:url('fonts/glyphicons-halflings-regular.svg');
-                src:url('fonts/glyphicons-halflings-regular.woff');
-                src:url('fonts/glyphicons-halflings-regular.ttf');
+            @font-face {
+                font-family: "Glyphicons Halflings";
+                src: url('fonts/glyphicons-halflings-regular.eot');
+                src: url('fonts/glyphicons-halflings-regular.svg');
+                src: url('fonts/glyphicons-halflings-regular.woff');
+                src: url('fonts/glyphicons-halflings-regular.ttf');
             }
         </style>
         <!--build:css css/bootstrap.css -->
@@ -196,10 +196,10 @@
                                         <div id="faceGroup" class="groupChildren item"></div>
                                         <div id="emojiGroup" class="groupChildren item" style="display:none"></div>
                                         <ul class="GroupTab">
-                                            <li class="firsticoLi icoLi active" data-src="#faceGroup">
+                                            <li class="firsticoLi icoLi active" data-tab="#faceGroup">
                                                 默认表情
                                             </li>
-                                            <li class="icoLi" data-src="#emojiGroup">
+                                            <li class="icoLi" data-tab="#emojiGroup">
                                                 符号表情
                                             </li>
                                         </ul>
@@ -643,5 +643,21 @@
         <!-- build:js js/main.js -->
         <script src="dest/js/entrance.js"></script>
         <!-- endbuild -->
+        <div class="zc-shadow-layer" style="display:none;">
+            <div class="bootbox  fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block; width:855px;outline: none; opacity: 1;width:600px;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button><h4 class="modal-title">转接给新的客服</h4>
+                        </div>
+                        <div class="modal-body">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
