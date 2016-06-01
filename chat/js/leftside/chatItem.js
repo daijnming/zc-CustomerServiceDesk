@@ -272,7 +272,7 @@ function Item(data,core,outer,from,manager) {
         if(ret.type == 'black' && ret.handleType == 'del') {
             hide();
         }
-        if(ret.type == "start" && from == 'hisotry' && ret.handleType == 'del') {
+        if(ret.type == "star" && from == 'hisotry' && ret.handleType == 'del') {
             hide();
         }
         if(ret.type == 'star') {
