@@ -277,7 +277,7 @@ ul.history-list {
     height: 100%;
     float: left;
     text-align: left;
-    cursor:pointer;
+    cursor: pointer;
     margin-left: 10px;
     box-sizing: border-box;
     padding-left: 10px;
@@ -372,4 +372,43 @@ ul.history-list {
     vertical-align: middle;
     background-image: url(../img/icon_spirite.png);
     background-position: -23px -4px;
+}
+.zc-toast {
+    width: 500px;
+    height: 60px;
+    border-radius: 3px;
+    position: fixed;
+    top: 40px;
+    z-index:1004;
+    border: 1px solid #ccc;
+    left: 300px;
+    background: #ffffff;
+    line-height: 60px;
+    color: #ed5c5c;
+    font-size: 14px;
+}
+.zc-toast  img {
+    height: 16px;
+    width: 100%;
+    width: 16px;
+    margin-left: 40px;
+    vertical-align: middle;
+}
+
+.zc-toast button {
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    text-align: center;
+    outline: none;
+    border: 0px;
+    background: transparent;
+    position: absolute;
+    font-size: 14px;
+    right: 20px;
+    color: #dadada;
+    top: 15px;
+}
+.zc-toast button:hover {
+
 }

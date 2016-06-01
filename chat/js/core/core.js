@@ -99,6 +99,11 @@ function Core(window) {
                         global[el] = ret[el];
                     }
                     global.baseUrl = location.protocol + "//" + location.host + "/chat/" + ((!value.success) ? 'admins/' : '');
+                    if(!value.success) {
+                        global.scriptPath = "//static.sobot.com/chat/admins/";
+                    } else {
+                        global.scriptPath = global.baseUrl;
+                    }
                     $(".js-loading-layer").hide();
                     promise.resolve(ret);
                 } else {

@@ -3,6 +3,7 @@
  */
 function Transfer(core,userInfo,callback) {
     var Dialog = require('../util/modal/dialog.js');
+    var Toast = require('../util/modal/toast.js');
     var Promise = require('../util/promise.js');
     var _self = this;
     var global = core.getGlobal();
@@ -140,10 +141,18 @@ function Transfer(core,userInfo,callback) {
         }).success(function(ret) {
             if(ret.status == 1) {
                 $(elm).text("已转接");
+                setTimeout(function() {
+                    _self.hide();
+                },500);
                 callback && callback(joinId,uname,userInfo.userId);
 
             } else if(ret.status == 2) {
                 //用户已经离线
+                $(elm).text('用户已离线');
+                new Toast(core, {
+                    'icon' : 'alert',
+                    'text' : '用户已离线'
+                });
             } else if(ret.status == 3) {
                 //客服已经离线
                 $(elm).text('客服已离线');
