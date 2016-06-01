@@ -152,6 +152,7 @@ function Core(window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var value = list[i];
+            console.log(value.content);
             if(value.type === 103) {
                 audioNewMessage.play();
                 normalMessageAdapter(value);
