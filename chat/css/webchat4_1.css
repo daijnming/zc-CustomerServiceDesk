@@ -277,6 +277,7 @@ ul.history-list {
     height: 100%;
     float: left;
     text-align: left;
+    cursor:pointer;
     margin-left: 10px;
     box-sizing: border-box;
     padding-left: 10px;
@@ -349,14 +350,20 @@ ul.history-list {
     text-align: left;
     font-size: 14px;
     overflow: hidden;
-    height:50px;
-    line-height:50px;
+    height: 50px;
+    line-height: 50px;
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-left: 10px;
 }
 .zc-transfer-innner .list-detail li div.column i.status.busy {
     background-position: -40px -4px;
+}
+.zc-transfer-innner .list-detail li div.column .transfer-btn {
+    text-decoration: none;
+}
+.zc-transfer-innner .list-detail li div.column .transfer-btn.disabled {
+    color: #9c9c9c;
 }
 .zc-transfer-innner .list-detail li div.column i.status {
     height: 14px;

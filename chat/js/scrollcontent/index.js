@@ -291,7 +291,7 @@ function Content(node,core,window) {
         }
     }
     var getAdminList = function(sender,callback) {
-        var dialog = new Transfer(core);
+        var dialog = new Transfer(core,userInfo,onTransfer);
         return;
         $.ajax({
             'url' : API.http.getOtherAdmin,

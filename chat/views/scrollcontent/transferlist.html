@@ -19,14 +19,18 @@
     <div class="column item-4">
         {{=item.groupName.join("-")}}
     </div>
-    <div class="column item-5">
-        <a href="#0">转接</a>
+    <div class="column item-5"> 
+        <a href="#0" class="js-transfer-btn transfer-btn" data-uname="{{=item.uname}}" data-uid="{{=item.id}}">转接</a>
 
     </div>
 </li>
 {{ } }}
 {{ }else{  }}
 <li class="blank">
-    <span>无满足条件客服在线</span>
+    {{if(it.keyword && it.keyword.length){ }}
+        <span>无满足条件客服在线</span>
+    {{ }else{ }}
+        <span>暂无客服在线</span>
+    {{  } }}
 </li>
 {{ } }}
