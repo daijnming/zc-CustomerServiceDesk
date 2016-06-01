@@ -484,12 +484,13 @@ function Content(node,core,window) {
 
             loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
                 var _html;
-    
+
                 var height = $rootNode.find('#' + type).find('.js-panel-body').parent()[0].scrollHeight;
                 var scrollTop = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
                 console.log('===== appendList =====;');
                 console.log(appendList);
                 _html = doT.template(tpl)({
+                    adminName: global.name,
                     userSourceImage : userInfo.userSourceImage,
                     adminImage : global.face,
                     systemImage : systemImage,

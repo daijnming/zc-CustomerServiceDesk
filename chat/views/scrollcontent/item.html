@@ -98,7 +98,7 @@
 
     {{ if (it.list[i].offlineType === 5) { }}
       <div class="systeamTextBox">
-        <p class="systeamText">用户已和用户结束本次会话结束 {{=it.list[i].ts.split(' ')[1]}}</p>
+        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
       </div>
     {{ } }}
   {{ } }}
