@@ -15,6 +15,7 @@ function Queue(core,window) {
         $totalpage,
         $currentPage,
         $pageJump,
+        $countSize,
         $refreshTime,
         $waitSize,
         $visitSize,
@@ -63,6 +64,7 @@ function Queue(core,window) {
             if( typeof key === 'number') {
                 btns[currentTab].html(key);
                 userSize[currentTab] = key;
+                $countSize.text(key);
             }
             $totalpage.html(totalPage);
             $currentPage.html(currentPage);
@@ -122,6 +124,7 @@ function Queue(core,window) {
         $refreshTime = $node.find(".js-refresh-time");
         $waitSize = $node.find(".js-wait-size");
         $visitSize = $node.find(".js-visit-size");
+        $countSize = $node.find(".js-count-size");
     };
 
     var onInviteBtnClickHandler = function(e) {

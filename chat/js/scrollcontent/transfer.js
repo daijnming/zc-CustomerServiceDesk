@@ -3,6 +3,7 @@
  */
 function Transfer(core,userInfo,callback) {
     var Dialog = require('../util/modal/dialog.js');
+    var Toast = require('../util/modal/toast.js');
     var Promise = require('../util/promise.js');
     var _self = this;
     var global = core.getGlobal();
@@ -11,7 +12,8 @@ function Transfer(core,userInfo,callback) {
     var $outer;
     var loadingTemplate = '<li class="blank"><img src="img/loading.gif" /></li>';
     var $ulOuter,
-        $refreshTime;
+        $refreshTime,
+        $clearBtn;
     var timer;
     var sortType = 1,
         sortKey = 'uname',
@@ -100,6 +102,11 @@ function Transfer(core,userInfo,callback) {
     };
     var inputChangeHandler = function(e) {
         var $elm = $(this);
+        if($elm.val().length > 0) {
+            $clearBtn.show();
+        } else {
+            $clearBtn.hide();
+        }
         clearTimeout(timer);
         timer = setTimeout(function() {
             keyword = $elm.val();
@@ -113,10 +120,19 @@ function Transfer(core,userInfo,callback) {
             sortKey = window.localStorage.sortKey || sortKey;
         }
     };
+
+    var clearBtnClickhandler = function() {
+        $(this).hide();
+        $outer.find("input").val('');
+        keyword = '';
+        fetchData();
+    };
+
     var parseDOM = function() {
         $outer = $(_self.getOuter());
         $refreshTime = $outer.find(".js-refresh-time");
         $ulOuter = $outer.find(".js-list-detail");
+        $clearBtn = $outer.find(".js-clear-btn");
     };
 
     var transferBtnClickHandler = function(e) {
@@ -140,10 +156,18 @@ function Transfer(core,userInfo,callback) {
         }).success(function(ret) {
             if(ret.status == 1) {
                 $(elm).text("已转接");
+                setTimeout(function() {
+                    _self.hide();
+                },500);
                 callback && callback(joinId,uname,userInfo.userId);
 
             } else if(ret.status == 2) {
                 //用户已经离线
+                $(elm).text('用户已离线');
+                new Toast(core, {
+                    'icon' : 'alert',
+                    'text' : '用户已离线'
+                });
             } else if(ret.status == 3) {
                 //客服已经离线
                 $(elm).text('客服已离线');
@@ -158,6 +182,7 @@ function Transfer(core,userInfo,callback) {
         $outer.find(".js-refresh-btn").on("click",fetchData);
         $outer.find("input").on("input propertychange",inputChangeHandler);
         $outer.find("input").on("keyup",inputKeyUpHandler);
+        $clearBtn.on("click",clearBtnClickhandler);
         $outer.find(".js-search-icon").on("click",searchIconClickHandler);
     };
 

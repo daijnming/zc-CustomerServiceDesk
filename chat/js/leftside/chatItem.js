@@ -269,6 +269,9 @@ function Item(data,core,outer,from,manager) {
         if(ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             hide();
         }
+        if(ret.type == 'black' && ret.handleType == 'del') {
+            hide();
+        }
         if(ret.type == 'star') {
             delete userDataCache[data.uid];
             getUserData();

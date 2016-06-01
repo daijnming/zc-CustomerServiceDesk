@@ -582,12 +582,12 @@ function Content(node,core,window) {
 
                 setTimeout(function() {
 
-                    if(isScrollBottom) {
-                        $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-                        userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
-                    }
+                  if (isScrollBottom) {
+                    $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                    userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                  }
                 },400);
-            });
+          });
         }
 
         if(userChatCache[userInfo.userId].isCall) {
@@ -743,36 +743,20 @@ function Content(node,core,window) {
             callUser();
         } else if(data[0].type === 102) {
 
-            if(data[0].isTransfer) {
-                delete userChatCache[data[0].uid];
-            } else {
-                var list = [];
+          if (data[0].isTransfer) {
+            delete userChatCache[data[0].uid];
+          } else {
 
-                if(userChatCache[data[0].uid]) {
-                    var ts = new Date(data[0].t).toLocaleString();
-                    userChatCache[data[0].uid].list.push({
-                        action : 6,
-                        ts : ts
-                    }, {
-                        action : 8,
-                        receiverName : global.name,
-                        ts : ts
-                    })
+            if (userChatCache[data[0].uid]) {
+              delete userChatCache[data[0].uid];
 
-                    list.push({
-                        action : 6,
-                        ts : ts
-                    }, {
-                        action : 8,
-                        receiverName : global.name,
-                        ts : ts
-                    });
-
-                    // 是否渲染 isRender
-                    var isRender = userInfo.userId === data[0].uid;
-                    getChatListByOnline('chat',parseList,null,null,data,isRender,false,data[0].type,list);
-                }
+              // 初始化历史记录
+              getChatListByOnline('chat', parseTpl, null, null, {
+                uid: userInfo.userId ,
+                pid: userInfo.pid
+              }, true, true);
             }
+          }
         } else {
             var list = [];
 
@@ -892,6 +876,7 @@ function Content(node,core,window) {
     };
 
     var onReceive = function(value,data) {
+        console.log(data);
         userPushMessage(data);
     };
 
