@@ -74,7 +74,8 @@ function TextArea(node,core,window) {
         //先判断是否为图片
         if(isImage(data)) {
             //正在上传
-            $node.find(".js-systeamTextBox"+data.date).remove();//
+            $node.find(".js-systeamTextBox" + data.date).remove();
+            //
             var conf = $.extend({
                 "url" : data.url,
                 "filename" : data.filename,
@@ -89,7 +90,7 @@ function TextArea(node,core,window) {
         //正在上传
         switch (data.filetype) {
             case "image":
-                $node.find(".js-systeamTextBox"+data.date).remove();
+                $node.find(".js-systeamTextBox" + data.date).remove();
                 var conf = $.extend({
                     "url" : data.url
                 });
@@ -143,6 +144,7 @@ function TextArea(node,core,window) {
     var onloadHandler = function(evt,data) {
         $node.find("img.js-my-logo").attr("src",data.face);
         $node.find(".js-customer-service").html(data.name);
+        initFace();
     };
     var uploadFile = function() {
         uploadFun.onChangeHandler(currentUid,currentCid);
@@ -226,8 +228,8 @@ function TextArea(node,core,window) {
             //showId : ".panel-body",
             emotion : ".js-emotion",
             //sub_btn : ".js-btnSend",
-            path :global.scriptPath+ "assets/images/qqarclist/",
-            emojiPath :global.scriptPath+ "assets/images/emoji/"
+            path : global.scriptPath + "assets/images/qqarclist/",
+            emojiPath : global.scriptPath + "assets/images/emoji/"
         }, function() {
             //cbk
         });
@@ -249,7 +251,7 @@ function TextArea(node,core,window) {
 
         uploadFun = uploadImg($uploadBtn,node,core,window);
         //上传图片
-        initFace();
+
         //qq表情滚动插件
         $node.find(".item").perfectScrollbar();
         isHiddenBotTextBox();
