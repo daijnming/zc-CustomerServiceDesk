@@ -5,8 +5,12 @@
     top: 30px;
     left: 30px;
 }
+#left-navigation .tab-pane{
+    overflow-x:hidden;
+}
 ul.history-list {
     overflow-y: auto;
+    overflow-x:hidden;
 }
 #user_menu i.connection_icon.online {
     background-image: url("../img/online.png");
