@@ -61,6 +61,8 @@ function TextArea(node,core,window) {
     var onImageUpload = function(evt,data) {
         onFileTypeHandler(data);
         //通过textarea.send事件将用户的数据传到显示台
+        console.log(data.uid);
+        console.log(data.cid);
         $(document.body).trigger('textarea.send',[{
             'answer' : answer,
             'uid' : data.uid,
@@ -82,6 +84,7 @@ function TextArea(node,core,window) {
                 "fileIcon" : data.fileIcon
             });
             answer = doT.template(template.tranfiletype)(conf); 
+            console.log(answer);
         }
 
     };
@@ -245,7 +248,7 @@ function TextArea(node,core,window) {
         //qq表情tab
         $(this).addClass("active").siblings().removeClass("active");
         $node.find('.groupChildren').hide();
-        var dataId = $(this).attr("data-src");
+        var dataId = $(this).attr("data-tab");
         $(dataId).show();
     };
     var initPlugsin = function() {//插件
