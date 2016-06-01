@@ -2,7 +2,7 @@
       <div class="shadowLayer-wrap">
         <div class="js-quickContent quickContent">
             <div class="js-quickLeft quickLeft">
-                <div class="js-content js-leftContent leftContent">
+                <div class="js-content js-leftContent leftContent zc-scroll">
                     <ul>
                       {{  for(var i=0;i<it.list.length;i++){ }}
                       {{ var item = it.list[i]; }}
@@ -16,7 +16,7 @@
                 </div><a href="#0" class="js-addNewGroup" id="addNewGroup">+添加新分组</a>
             </div>
             <div class="js-quickRight quickRight">
-                <div class="js-content js-rightContent rightContent">
+                <div class="js-content js-rightContent rightContent zc-scroll">
                     <ul>
                     {{for(var i=0;i<it.list.length;i++){ }}
                           {{var itemRep = it.list[i]["quickreply"]; }}

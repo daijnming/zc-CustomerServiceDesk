@@ -39,8 +39,6 @@ var Fastlayer = function(node,core,config) {
     //添加新回复
     var oDialogArea;
     //弹出层
-    var oFastLeftDiv,
-        oFastRightDiv;
 
     //TODO 模板/js/资源引用
 
@@ -48,8 +46,6 @@ var Fastlayer = function(node,core,config) {
         fastNode = node;
         oFastLeft = $(fastNode).find('.js-leftContent ul');
         oFastRight = $(fastNode).find('.js-rightContent ul');
-        oFastLeftDiv = $(fastNode).find('.js-leftContent');
-        oFastRightDiv = $(fastNode).find('.js-rightContent');
         oAddNewGroup = $(fastNode).find('.js-addNewGroup');
         oAddNewRep = $(fastNode).find('.js-addNewRep');
         oDialogArea = $(fastNode).find('.js-content');
@@ -87,7 +83,6 @@ var Fastlayer = function(node,core,config) {
             $(oAddNewRep).hide();
         //快捷回复中第一条不显示置顶
         $(_arr[0]).find('.js-upRightRep').addClass('hide');
-        $(oFastRightDiv).niceScroll({cursorwidth:"10px",mousescrollstep:"100",scrollspeed:"200",zindex:"9999"});
     };
 
     //快捷删除
@@ -434,7 +429,6 @@ var Fastlayer = function(node,core,config) {
         bindLitener();
         onReLoadHandler();
         initConfig();
-        $(oFastLeftDiv).niceScroll({cursorwidth:"10px",mousescrollstep:"100",scrollspeed:"200",zindex:"9999"});
     };
     init();
 };

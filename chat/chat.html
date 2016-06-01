@@ -282,12 +282,12 @@
                                             <!--快捷回复-->
                                             <div class="js-tab-pane tab-pane fade tab-home-yy" id="messagesuser">
                                                 <div class="rightQuick row">
-                                                    <div class="col-md-4 col-xs-4 rightQuickLeft js-rightQuickLeft">
+                                                    <div class="col-md-4 col-xs-4 rightQuickLeft js-rightQuickLeft zc-scroll">
                                                         <ul>
 
                                                         </ul>
                                                     </div>
-                                                    <div class="col-md-8 col-xs-8 rightQuickRight js-rightQuickRight">
+                                                    <div class="col-md-8 col-xs-8 rightQuickRight js-rightQuickRight zc-scroll">
                                                         <ul>
 
                                                         </ul>
@@ -419,7 +419,7 @@
                                                 <div class="col-md-6">
                                                     <input type="text" class="form-control" id="nickName"  name="nickName" placeholder="输入客服昵称">
                                                 </div>
-                                            </div>
+                                          </div>
                                         </div>
                                         <div class="ls_divider">
                                             <div class="form-group">
@@ -635,7 +635,6 @@
         </style>
         <!-- build:js js/lib.js -->
         <script src="assets/jslib/jquery-1.8.3.min.js"></script>
-        <script src="assets/jslib/jquery.nicescroll.js" charset="utf-8"></script>
         <script src="js/lib/doT.min.js"></script>
         <script src="js/lib/divscroll.js"></script>
         <script src="assets/jslib/bootstrap-datepicker.js" charset="utf-8"></script>
@@ -643,5 +642,20 @@
         <!-- build:js js/main.js -->
         <script src="dest/js/entrance.js"></script>
         <!-- endbuild -->
+        <div class="zc-shadow-layer" style="display:none;">
+            <div class="bootbox  fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block; width:855px;outline: none; opacity: 1;width:600px;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button><h4 class="modal-title">转接给新的客服</h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
