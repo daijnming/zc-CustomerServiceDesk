@@ -17,8 +17,7 @@ cp -r chat/views dist
 cp -r chat/assets/fonts dist/
 cp -r chat/assets/css/font-awesome/fonts  dist/fonts/font-awesome
 cp -r chat/img/weixinType.png dist/img
-cp -r chat/img/loading.gif dist/img
-cp -r chat/img/replyResendActive.png dist/img
+cp -r chat/img/static dist/img
 replaceScript dist/chat.html
 #git status -s | egrep "^[ ]*D" | sed 's`^[ ]*D``' | xargs git rm
 #git status -s | egrep "^[ ]*M" | sed 's`^[ ]*M``' | xargs git add
