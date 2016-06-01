@@ -232,8 +232,8 @@ function TextArea(node,core,window) {
             //showId : ".panel-body",
             emotion : ".js-emotion",
             //sub_btn : ".js-btnSend",
-            path : "assets/images/qqarclist/",
-            emojiPath : "assets/images/emoji/"
+            path :global.baseUrl+ "assets/images/qqarclist/",
+            emojiPath :global.baseUrl+ "assets/images/emoji/"
         }, function() {
             //cbk
         });
