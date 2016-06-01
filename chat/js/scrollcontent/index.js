@@ -675,15 +675,16 @@ function Content(node,core,window) {
     }
     // --------------------------- socket ---------------------------
 
-    // 加入到某一个user的chche内
-    var userPushMessage = function(data) {
-        parseChat[data.type] && parseChat[data.type](data);
 
-        if(data[0].type === 111) {
+    var parseStack = function(data) {
+
+      if (data.type === 111) {
+
+          if (userInfo.userId === data.uid) {
             loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
                 var _html;
                 _html = doT.template(tpl)({
-                    data : data[0]
+                    data : data
                 });
 
                 $rootNode.find('#chat').find('.js-user-ready-input').show();
@@ -693,104 +694,115 @@ function Content(node,core,window) {
                     $rootNode.find('#chat').find('.js-user-ready-input').hide();
                 },5000);
             });
-        } else if(data[0].type === 108) {
-            // clearScrollContent();
-            var list = [];
-            $rootNode.find('.js-transfer').removeClass('hide');
-            if(userChatCache[data[0].uid]) {
-                userChatCache[data[0].uid].list.push({
-                    action : 10,
-                    offlineType : 5,
-                    ts : 'date ' + new Date(data[0].t).toTimeString().split(' ')[0]
-                })
-
-                list.push({
-                    action : 10,
-                    offlineType : 5,
-                    ts : 'date ' + new Date(data[0].t).toTimeString().split(' ')[0]
-                });
-
-                // 是否渲染 isRender
-                var isRender = userInfo.userId === data[0].uid;
-                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data[0].type,list);
-            }
-
-        } else if(data[0].type === 112) {
-
-            var userId = userInfo.userId = data[0].uid;
-            var list = [];
-
-            userChatCache[userId] = userChatCache[userId] || {};
-            userChatCache[userId].isCall = true;
-            userChatCache[userId].called = data[0].called;
-            userChatCache[userId].uname = data[0].uname;
-
-            if(userChatCache[data[0].uid]) {
-                var ts = new Date().toLocaleString();
-                userChatCache[data[0].uid].list.push({
-                    action : 18,
-                    ts : ts
-                })
-
-                list.push({
-                    action : 18,
-                    ts : ts
-                });
-
-                // 是否渲染 isRender
-                var isRender = userInfo.userId === data[0].uid;
-                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data[0].type,list);
-            }
-
-            callUser();
-        } else if(data[0].type === 102) {
-
-          if (data[0].isTransfer) {
-            delete userChatCache[data[0].uid];
-          } else {
-
-            if (userChatCache[data[0].uid]) {
-              delete userChatCache[data[0].uid];
-
-              // 初始化历史记录
-              getChatListByOnline('chat', parseTpl, null, null, {
-                uid: userInfo.userId ,
-                pid: userInfo.pid
-              }, true, true);
-            }
           }
+      }
+      else if(data.type === 108) {
+          // clearScrollContent();
+          var list = [];
+          $rootNode.find('.js-transfer').removeClass('hide');
+          if(userChatCache[data.uid]) {
+              userChatCache[data.uid].list.push({
+                  action : 10,
+                  offlineType : 5,
+                  ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
+              })
+
+              list.push({
+                  action : 10,
+                  offlineType : 5,
+                  ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
+              });
+
+              // 是否渲染 isRender
+              var isRender = userInfo.userId === data.uid;
+              getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
+          }
+
+      }
+      else if(data.type === 112) {
+
+          var userId = userInfo.userId = data.uid;
+          var list = [];
+
+          userChatCache[userId] = userChatCache[userId] || {};
+          userChatCache[userId].isCall = true;
+          userChatCache[userId].called = data.called;
+          userChatCache[userId].uname = data.uname;
+
+          if(userChatCache[data.uid]) {
+              var ts = new Date().toLocaleString();
+              userChatCache[data.uid].list.push({
+                  action : 18,
+                  ts : ts
+              })
+
+              list.push({
+                  action : 18,
+                  ts : ts
+              });
+
+              // 是否渲染 isRender
+              var isRender = userInfo.userId === data.uid;
+              getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
+          }
+
+          callUser();
+      } else if(data.type === 102) {
+
+        if (data.isTransfer) {
+          delete userChatCache[data[0].uid];
         } else {
-            var list = [];
 
-            if(userChatCache[data[0].uid]) {
+          if (userChatCache[data.uid]) {
+            delete userChatCache[data.uid];
 
-                for(var i = 0;i < data.length;i++) {
-                    // userChatCache[data[0].uid].list.push(data[i]);
-                    // 聊天
-                    if(data[i].type === 103) {
-                        userChatCache[data[0].uid].list.push({
-                            action : 5,
-                            senderType : 0,
-                            senderName : data[i].uname,
-                            msg : App.getUrlRegex(data[i].content),
-                            ts : data[i].ts
-                        })
-
-                        list.push({
-                            action : 5,
-                            senderType : 0,
-                            senderName : data[i].uname,
-                            msg : App.getUrlRegex(data[i].content),
-                            ts : data[i].ts
-                        });
-                    }
-                }
-
-                // 是否渲染 isRender
-                var isRender = userInfo.userId === data[0].uid;
-                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data[0].type,list);
-            }
+            // 初始化历史记录
+            getChatListByOnline('chat', parseTpl, null, null, {
+              uid: userInfo.userId ,
+              pid: userInfo.pid
+            }, true, true);
+          }
         }
+      } else {
+          var list = [];
+
+          if(userChatCache[data.uid]) {
+
+              // for(var i = 0;i < data.length;i++) {
+                  // userChatCache[data[0].uid].list.push(data[i]);
+                  // 聊天
+              if (data.type === 103) {
+                  userChatCache[data.uid].list.push({
+                      action : 5,
+                      senderType : 0,
+                      senderName : data.uname,
+                      msg : App.getUrlRegex(data.content),
+                      ts : data.ts
+                  })
+
+                  list.push({
+                      action : 5,
+                      senderType : 0,
+                      senderName : data.uname,
+                      msg : App.getUrlRegex(data.content),
+                      ts : data.ts
+                  });
+              }
+              // }
+
+              // 是否渲染 isRender
+              var isRender = userInfo.userId === data.uid;
+              getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
+          }
+      }
+    }
+
+    // 加入到某一个user的chche内
+    var userPushMessage = function(data) {
+        var len = data.length;
+        parseChat[data.type] && parseChat[data.type](data);
+
+        for (var i = 0;i < len;i++) parseStack(data[i]);
     };
 
     var adminPushMessageState = function(data) {
