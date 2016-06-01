@@ -61,8 +61,6 @@ function TextArea(node,core,window) {
     var onImageUpload = function(evt,data) {
         onFileTypeHandler(data);
         //通过textarea.send事件将用户的数据传到显示台
-        console.log(data.uid);
-        console.log(data.cid);
         $(document.body).trigger('textarea.send',[{
             'answer' : answer,
             'uid' : data.uid,
@@ -76,7 +74,7 @@ function TextArea(node,core,window) {
         //先判断是否为图片
         if(isImage(data)) {
             //正在上传
-            $node.find(".systeamTextBox").remove();
+            $node.find(".js-systeamTextBox"+data.date).remove();//
             var conf = $.extend({
                 "url" : data.url,
                 "filename" : data.filename,
@@ -84,7 +82,6 @@ function TextArea(node,core,window) {
                 "fileIcon" : data.fileIcon
             });
             answer = doT.template(template.tranfiletype)(conf);
-            console.log(answer);
         }
 
     };
@@ -92,7 +89,7 @@ function TextArea(node,core,window) {
         //正在上传
         switch (data.filetype) {
             case "image":
-                $node.find(".systeamTextBox").remove();
+                $node.find(".js-systeamTextBox"+data.date).remove();
                 var conf = $.extend({
                     "url" : data.url
                 });
@@ -153,8 +150,6 @@ function TextArea(node,core,window) {
 
     var onFilePaste = function(e) {
         var evt = e.originalEvent;
-        console.log(evt.clipboardData.items.length);
-
         for(var i = 0,
             len = evt.clipboardData.items.length;i < len;i++) {
             var item = evt.clipboardData.items[i];
@@ -231,8 +226,8 @@ function TextArea(node,core,window) {
             //showId : ".panel-body",
             emotion : ".js-emotion",
             //sub_btn : ".js-btnSend",
-            path : "assets/images/qqarclist/",
-            emojiPath : "assets/images/emoji/"
+            path :global.scriptPath+ "assets/images/qqarclist/",
+            emojiPath :global.scriptPath+ "assets/images/emoji/"
         }, function() {
             //cbk
         });

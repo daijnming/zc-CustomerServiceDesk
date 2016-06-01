@@ -100,6 +100,9 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             var fileIcon = fileTypeIcon[filetype];
             //判断上传文件的扩展名是否符合上传标准
             if(onjudgeFileExtensionHandler(extension,filename)){
+                //创建上传提示框,并返回一个时间戳
+                var date=onCreateWaitingBoxHandler(extension,filename);
+                //创建请求头
                 for(var i = 0;i < input.files.length;i++) {
                     var file = input.files[i];
                     files += file;
@@ -111,7 +114,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                 oData.append("source",0);
 
                 //上传
-                onAjaxUploadUpHandler(uid,cid,oData,extension,filename,filetype,fileIcon);
+                onAjaxUploadUpHandler(uid,cid,oData,extension,filename,filetype,fileIcon,date);
             }
             //清空文本域
             $uploadBtn.val("");
@@ -119,7 +122,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             onIframeUploadUpHandler(uid,cid);
         }
     };
-    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename,filetype,fileIcon){
+    var onAjaxUploadUpHandler=function(uid,cid,oData,extension,filename,filetype,fileIcon,date){
             $.ajax({
                 url : "/chat/webchat/fileupload.action",
                 type : "POST",
@@ -142,7 +145,9 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     //文件扩展名
                     "extension":extension,
                     //上传完成之后，文件类型显示的图标
-                    "fileIcon":fileIcon
+                    "fileIcon":fileIcon,
+                    //时间戳，区分同时上传的多个文件
+                    "date":date
                 }]);
                 
             }).fail(function(ret) {
@@ -153,12 +158,6 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         
         var reg = /^(.jpg|.JPG|.png|.PNG|.gif|.GIF|.txt|.TXT|.DOC|.doc|.docx|.DOCX|.pdf|.PDF|.ppt|.PPT|.pptx|.PPTX|.xls|.XLS|.xlsx|.XLSX|.RAR|.rar|.zip|.ZIP|.mp3|.MP3|.mp4|.MP4|.wma|.WMA|.wmv|.WMV|.rmvb|.RMVB)$/;
         if(reg.test(extension)) {
-            var conf = $.extend({
-                "filename" : filename,
-                "extension" : extension
-            });
-            var _html = doT.template(template.uploading)(conf);
-            $node.find(".scrollBox").append(_html);
             return true;
         } else {
 
@@ -189,7 +188,8 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         var fileIcon = fileTypeIcon[filetype];
         //判断上传文件的扩展名是否符合上传标准
         if(onjudgeFileExtensionHandler(extension,filename)){
-            var id = 'iframe' + +new Date();
+            var date=onCreateWaitingBoxHandler(extension,filename);
+            var id = 'iframe' + date;
             $form.attr("target",id);
             $form.attr("action","/chat/webchat/fileupload.action");
             var $iframe = $('<iframe id="' + id + '" style="display:none;" name="' + id + '"></iframe>');
@@ -209,7 +209,8 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
                     //文件扩展名
                     "extension":extension,
                     //上传完成之后，文件类型显示的图标
-                    "fileIcon":fileIcon
+                    "fileIcon":fileIcon,
+                    "date":date
                 }]);
             });
             $(document.body).append($iframe);
@@ -218,6 +219,19 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         //上传完成,清空文本域
         $uploadBtn.val("");
     };
+    var onCreateWaitingBoxHandler=function(extension,filename){
+        //时间戳的作用为区分同一个用户同时上传多个文件;
+        var date = +new Date();
+        console.log(date);
+        var conf = $.extend({
+            "filename" : filename,
+            "extension" : extension,
+            "date":date
+        });
+        var _html = doT.template(template.uploading)(conf);
+        $node.find(".scrollBox").append(_html);
+        return date;
+    }
     var bindLitener = function() {
 
     };

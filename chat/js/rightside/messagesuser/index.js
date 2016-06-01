@@ -22,10 +22,14 @@ var FastMsgModal = function(node,core,config) {
     //快捷回复右侧回复列表
     var oShadowLayer;
     //快捷回复弹层
+    var oRightQuickLeftDiv;
+    var oRightQuickRightDiv;
     var parseDOM = function() {
         oShortcut = $(node).find('.js-panel-body .js-tab-pane#messagesuser .js-shortcut');
         oRightQuickLeft = $(node).find('.js-rightQuickLeft ul');
         oRightQuickRight = $(node).find('.js-rightQuickRight ul');
+        oRightQuickLeftDiv = $(node).find('.js-rightQuickLeft');
+        oRightQuickRightDiv = $(node).find('.js-rightQuickRight');
         oShadowLayer = $('.zc-shadow-layer .modal-dialog');
     };
     //点击快捷回复进行回复
@@ -47,6 +51,7 @@ var FastMsgModal = function(node,core,config) {
                 $(oLi[i]).addClass('active');
             }
         }
+        $(oRightQuickRightDiv).niceScroll({cursorwidth:"10px",mousescrollstep:"100",scrollspeed:"200"});
     };
     //加载右侧快捷分组
     var onRightGroup = function(data) {
@@ -58,6 +63,7 @@ var FastMsgModal = function(node,core,config) {
                 'list' : data
             });
             $(oRightQuickLeft).append(_html);
+            $(oRightQuickLeftDiv).niceScroll({cursorwidth:"10px",mousescrollstep:"100",scrollspeed:"200"});
         });
         loadFile.load(global.baseUrl + 'views/rightside/fastreplyright.html').then(function(value) {
             var _html = doT.template(value)({
