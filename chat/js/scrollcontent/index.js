@@ -876,7 +876,7 @@ function Content(node,core,window) {
     };
 
     var onReceive = function(value,data) {
-        console.log(data);
+        console.log(data.length + " scroll");
         userPushMessage(data);
     };
 
