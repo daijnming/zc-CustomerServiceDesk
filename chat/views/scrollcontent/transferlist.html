@@ -1,0 +1,32 @@
+{{  if(it.list.length > 0){ }}
+{{ for(var i=0;i<it.list.length;i++){  }}
+{{  var item = it.list[i]; }}
+<li>
+    <div class="column item-1">
+        {{ if(item.status == 1) { }}
+            <i class="status"></i>
+        {{}else{  }}
+            <i class="status busy"></i>
+        {{ } }}
+        <span>{{=item.uname}}</span>
+    </div>
+    <div class="column item-2">
+        {{=item.nickname}}
+    </div>
+    <div class="column item-3">
+        {{=item.count}}/{{=item.maxcount}}
+    </div>
+    <div class="column item-4">
+        {{=item.groupName.join("-")}}
+    </div>
+    <div class="column item-5">
+        <a href="#0">转接</a>
+
+    </div>
+</li>
+{{ } }}
+{{ }else{  }}
+<li class="blank">
+    <span>无满足条件客服在线</span>
+</li>
+{{ } }}

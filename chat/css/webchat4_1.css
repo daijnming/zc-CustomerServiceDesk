@@ -348,6 +348,11 @@ ul.history-list {
     padding-left: 10px;
     text-align: left;
     font-size: 14px;
+    overflow: hidden;
+    height:50px;
+    line-height:50px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     margin-left: 10px;
 }
 .zc-transfer-innner .list-detail li div.column i.status.busy {
