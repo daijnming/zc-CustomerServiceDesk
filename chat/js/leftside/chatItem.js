@@ -266,10 +266,13 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onUserStatusChange = function(evt,ret) {
-        if(ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
+        if(from == 'online' && ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             hide();
         }
         if(ret.type == 'black' && ret.handleType == 'del') {
+            hide();
+        }
+        if(ret.type == "start" && from == 'hisotry' && ret.handleType == 'del') {
             hide();
         }
         if(ret.type == 'star') {

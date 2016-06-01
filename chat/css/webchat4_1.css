@@ -5,12 +5,12 @@
     top: 30px;
     left: 30px;
 }
-#left-navigation .tab-pane{
-    overflow-x:hidden;
+#left-navigation .tab-pane {
+    overflow-x: hidden;
 }
 ul.history-list {
     overflow-y: auto;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 #user_menu i.connection_icon.online {
     background-image: url("../img/online.png");
@@ -225,7 +225,7 @@ ul.history-list {
     margin-left: 50px;
     border: 1px solid #dbdbdb;
     height: 40px;
-    position:relative;
+    position: relative;
     border-radius: 1px;
     display: inline-block;
     vertical-align: middle;
@@ -367,23 +367,23 @@ ul.history-list {
 .zc-transfer-innner .list-detail li div.column .transfer-btn {
     text-decoration: none;
 }
-.zc-transfer-outer .zc-clear-btn:hover{
-    background:#ed5c5c;
+.zc-transfer-outer .zc-clear-btn:hover {
+    background: #ed5c5c;
 }
-.zc-transfer-outer .zc-clear-btn{
-    height:17px;
-    width:17px;
-    line-height:17px;
-    display:inline-block;
-    text-align:center;
-    display:none;
-    background:#cfcfcf;
-    border-radius:50%;
-    color:white;
-    right:5px;
-    top:10px;
-    position:absolute;
-    cursor:pointer;
+.zc-transfer-outer .zc-clear-btn {
+    height: 17px;
+    width: 17px;
+    line-height: 17px;
+    display: inline-block;
+    text-align: center;
+    display: none;
+    background: #cfcfcf;
+    border-radius: 50%;
+    color: white;
+    right: 5px;
+    top: 10px;
+    position: absolute;
+    cursor: pointer;
 }
 .zc-transfer-innner .list-detail li div.column .transfer-btn.disabled {
     color: #9c9c9c;
@@ -402,7 +402,7 @@ ul.history-list {
     border-radius: 3px;
     position: fixed;
     top: 40px;
-    z-index:1004;
+    z-index: 1004;
     border: 1px solid #ccc;
     left: 300px;
     background: #ffffff;
