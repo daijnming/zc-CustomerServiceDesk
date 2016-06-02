@@ -234,7 +234,11 @@ function Item(data,core,outer,from,manager) {
         return promise;
     };
 
-    var onNodeClickHandler = function() {
+    var onNodeClickHandler = function(e) {
+        var $target = $(e.target);
+        if($target.hasClass("js-remove")) {
+            return;
+        }
         //记录未读数，聊天列表需要显示
         var unreadTemp = unReadCount;
         clearUnread();
