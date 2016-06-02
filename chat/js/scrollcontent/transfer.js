@@ -10,7 +10,7 @@ function Transfer(core,userInfo,callback) {
     var loadFile = require('../util/load.js')();
     var dateUtil = require("../util/date.js");
     var $outer;
-    var loadingTemplate = '<li class="blank"><img src="img/loading.gif" /></li>';
+    var loadingTemplate = '<li class="blank"><img src="img/static/loading.gif" /></li>';
     var $ulOuter,
         $refreshTime,
         $clearBtn;
@@ -166,8 +166,11 @@ function Transfer(core,userInfo,callback) {
                 $(elm).text('用户已离线');
                 new Toast(core, {
                     'icon' : 'alert',
-                    'text' : '用户已离线'
+                    'text' : '用户已离线，无法转接'
                 });
+                setTimeout(function() {
+                    _self.hide();
+                },2000);
             } else if(ret.status == 3) {
                 //客服已经离线
                 $(elm).text('客服已离线');

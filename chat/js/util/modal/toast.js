@@ -12,7 +12,7 @@ function Toast(core,spec) {
         "" : ""
     },spec);
     var url = {
-        'alert' : global.scriptPath + 'img/replyResendActive.png'
+        'alert' : global.scriptPath + 'img/static/replyResendActive.png'
     };
 
     var show = function() {
@@ -36,7 +36,7 @@ function Toast(core,spec) {
     };
 
     show();
-    timer = setTimeout(hide,3000);
+    timer = setTimeout(hide,2000);
     this.show = show;
 };
 
