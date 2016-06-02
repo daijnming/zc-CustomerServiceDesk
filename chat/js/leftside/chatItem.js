@@ -76,6 +76,7 @@ function Item(data,core,outer,from,manager) {
             'display' : 'inline-block'
         }).html('[离线]');
         status = 'offline';
+        $node.parent().append($node);
         if(manager.getCurrentUid() === data.uid) {
             manager.setCurrentUid(null);
         }
