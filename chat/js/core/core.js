@@ -153,7 +153,6 @@ function Core(window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var value = list[i];
-            console.log(value.content);
             if(value.type === 103) {
                 audioNewMessage.play();
                 normalMessageAdapter(value);
@@ -197,7 +196,6 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             messageAdapter(list);
-            console.log(list.length + " core");
             $body.trigger('core.receive',[list]);
         });
     };
