@@ -33,7 +33,6 @@ var normalMessageAdapter = function(value) {
         value.message_type = TYPE_TEXT;
         value.desc = content;
     }
-    console.log(value.desc);
 };
 
 module.exports = normalMessageAdapter;
