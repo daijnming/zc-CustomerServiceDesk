@@ -32,10 +32,10 @@ function Transfer(core,userInfo,callback) {
         'key' : 'nickname'
     },{
         'name' : '接待状态',
-        'key' : 'status'
+        'key' : 'count'
     },{
         'name' : '所属分组',
-        'key' : 'group'
+        'key' : 'groupName'
     },{
         'name' : '操作',
         'key' : "operate",
@@ -127,7 +127,6 @@ function Transfer(core,userInfo,callback) {
             sortType = (window.localStorage.sortType) || sortType;
             sortKey = window.localStorage.sortKey || sortKey;
         }
-        console.log(sortType,sortKey)
     };
 
     var clearBtnClickhandler = function() {
@@ -199,7 +198,6 @@ function Transfer(core,userInfo,callback) {
 
     var initPlugins = function() {
         loadFile.load(global.baseUrl + 'views/scrollcontent/transferouter.html').then(function(html,promise) {
-            console.log(sortType,sortKey)
             var _html = doT.template(html)({
                 'columns' : columns,
                 'sortKey' : sortKey,

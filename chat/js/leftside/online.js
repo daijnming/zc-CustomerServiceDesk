@@ -175,6 +175,7 @@ function Online(node,core,window) {
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
         getDefaultChatList();
+        loadFile.load(global.baseUrl + "views/leftside/chatitem.html");
     };
     var userOfflineMessage = function(data) {
         var uid = data.uid;
