@@ -2,7 +2,7 @@
 {{ for(var i=0;i<it.list.length;i++){  }}
 {{  var item = it.list[i]; }}
 <li>
-    <div class="column item-1">
+    <div class="column item-1" title="{{=item.uname}}">
         {{ if(item.status == 1) { }}
             <i class="status"></i>
         {{}else{  }}
@@ -10,13 +10,13 @@
         {{ } }}
         <span>{{=item.uname}}</span>
     </div>
-    <div class="column item-2">
+    <div class="column item-2"  title="{{=item.nickname}}">
         {{=item.nickname}}
     </div>
-    <div class="column item-3">
+    <div class="column item-3"  title="{{=item.count}}/{{=item.maxcount}}">
         {{=item.count}}/{{=item.maxcount}}
     </div>
-    <div class="column item-4">
+    <div class="column item-4" title="{{=item.groupName.join("-")}}">
         {{=item.groupName.join("-")}}
     </div>
     <div class="column item-5"> 
