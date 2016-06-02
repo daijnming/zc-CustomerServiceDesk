@@ -14,6 +14,8 @@ function Item(data,core,outer,from,manager) {
         TYPE_TEXT = 2,
         AUDIO = 3,
         RICH_TEXT = 4;
+    var isReady = false;
+    var unReadList = require('./unreadlist.js');
     var from = from || 'online';
     var global = core.getGlobal();
     var $body,
@@ -40,7 +42,12 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onReceive = function(evt,list) {
-        var lastMessage = list.length > 0 ? list[list.length - 1] : null;
+        var arr = [];
+        for(var i = 0;i < list.length;i++) {
+            if(list[i].type == 103)
+                arr.push(list[i]);
+        }
+        var lastMessage = arr.length > 0 ? arr[arr.length - 1] : null;
         if(data.uid !== manager.getCurrentUid()) {
             for(var i = 0,
                 len = list.length;i < len;i++) {
@@ -61,7 +68,8 @@ function Item(data,core,outer,from,manager) {
                 });
             }
         }
-        if(lastMessage.cid == data.cid) {
+
+        if(lastMessage && lastMessage.cid == data.cid) {
             if(lastMessage.message_type == TYPE_EMOTION) {
                 $lastMessage.html(lastMessage.desc).addClass("orange");
             } else {
@@ -172,6 +180,26 @@ function Item(data,core,outer,from,manager) {
         img.src = url;
     };
 
+    var getCacheList = function(value,promise) {
+        var list = unReadList.getList(data.uid);
+        var arr = [];
+        console.log(list);
+        for(var i = 0;i < list.length;i++) {
+            if(list[i].type == 103) {
+                arr.push(list[i]);
+            }
+        }
+        console.log(arr);
+        var lastMessage = arr.length > 0 ? arr[arr.length - 1] : null;
+        if(lastMessage && lastMessage.cid == data.cid) {
+            if(lastMessage.message_type == TYPE_EMOTION) {
+                $lastMessage.html(lastMessage.desc).addClass("orange");
+            } else {
+                $lastMessage.text(lastMessage.desc).addClass("orange");
+            }
+        }
+    };
+
     var initNode = function() {
         var promise = new Promise();
         var elm = $(outer).find('li[data-uid="' + data.uid + '"]');
@@ -184,6 +212,7 @@ function Item(data,core,outer,from,manager) {
             }
             initFace();
             setTimeout(function() {
+                isReady = true;
                 promise.resolve();
             },0);
         } else {
@@ -203,12 +232,16 @@ function Item(data,core,outer,from,manager) {
                 initFace();
                 insert($node);
                 $userName = $node.find(".js-user-name");
+                isReady = true;
                 promise.resolve();
             });
         }
         return promise;
     };
 
+    var getReady = function() {
+        return isReady;
+    };
     var getStatus = function() {
         return status;
     };
@@ -324,7 +357,7 @@ function Item(data,core,outer,from,manager) {
     var bindListener = function() {
         $body.on("scrollcontent.onUpdateUserState",onUserStatusChange);
         $body.on("scrollcontent.onTransfer",onTransfer);
-        $body.on("core.receive",onReceive);
+
         $body.on("rightside.onChatSmartReply",onChatSmartReplay);
         $body.on("textarea.send",onServerSend);
         $node.on("click",onNodeClickHandler);
@@ -332,7 +365,6 @@ function Item(data,core,outer,from,manager) {
 
     };
     var parseDOM = function() {
-        $body = $(document.body);
         $unRead = $node.find(".js-unread-count");
         $ulOuter = $(outer).find("ul.js-users-list");
         $lastMessage = $node.find(".js-last-message");
@@ -342,19 +374,31 @@ function Item(data,core,outer,from,manager) {
 
     };
 
+    var bindStaticListener = function() {
+        $body = $(document.body);
+        $body.on("core.receive", function(evt,list) {
+            setTimeout(function() {
+                onReceive(evt,list);
+            },1);
+        });
+    };
+
     var init = function() {
         parseDOM();
         bindListener();
         initPlugins();
     };
-    initNode().then(function() {
+    initNode().then(function(value,promise) {
         init();
-    });
+        setTimeout(promise.resolve,0);
+    }).then(getCacheList);
+    bindStaticListener();
 
     this.onOnline = onOnline;
     this.getStatus = getStatus;
     this.onclick = onclick;
     this.onRemove = onRemove;
+    this.getReady = getReady;
     this.onOffLine = onOffLine;
 }
 
