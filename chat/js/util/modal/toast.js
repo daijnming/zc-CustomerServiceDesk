@@ -36,7 +36,7 @@ function Toast(core,spec) {
     };
 
     show();
-    timer = setTimeout(hide,3000);
+    timer = setTimeout(hide,2000);
     this.show = show;
 };
 

@@ -168,6 +168,9 @@ function Transfer(core,userInfo,callback) {
                     'icon' : 'alert',
                     'text' : '用户已离线'
                 });
+                setTimeout(function() {
+                    _self.hide();
+                },2000);
             } else if(ret.status == 3) {
                 //客服已经离线
                 $(elm).text('客服已离线');
