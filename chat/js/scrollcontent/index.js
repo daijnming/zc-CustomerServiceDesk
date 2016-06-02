@@ -137,7 +137,7 @@ function Content(node,core,window) {
                         if(isRender)
                             parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList);
                     } else {
-
+                        parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList);
                     }
                 });
             } else {
@@ -366,7 +366,6 @@ function Content(node,core,window) {
 
     // 清理聊天主体页面
     var clearScrollContent = function(uid,isHide) {
-
         userChatCache[userInfo.userId | uid] = undefined;
         delete userChatCache[userInfo.userId | uid];
         $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
@@ -421,6 +420,10 @@ function Content(node,core,window) {
                 }
             }
 
+            list.unshift({
+              action: 'loadmore',
+            });
+
             var isCall = userChatCache[userInfo.userId].isCall;
             var called = userChatCache[userInfo.userId].called;
             var uname = userChatCache[userInfo.userId].uname;
@@ -438,6 +441,7 @@ function Content(node,core,window) {
             }
 
             _html = doT.template(tpl)({
+                adminName: global.name,
                 userSourceImage : userInfo.userSourceImage,
                 adminImage : global.face,
                 systemImage : systemImage,
@@ -475,8 +479,9 @@ function Content(node,core,window) {
         });
     }
     var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList) {
+        $rootNode.find('.js-zc-loadmore').empty();
 
-        if(appendList) {
+        if(appendList && appendList.length > 0) {
 
             appendList.map(function(item) {
                 item.msg = item.msg ? Face.analysis(item.msg) : null;
@@ -485,10 +490,12 @@ function Content(node,core,window) {
             loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
                 var _html;
 
-                var height = $rootNode.find('#' + type).find('.js-panel-body').parent()[0].scrollHeight;
-                var scrollTop = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                appendList.unshift({
+                  action: 'loadmore',
+                });
+
                 _html = doT.template(tpl)({
-                    adminName : global.name,
+                    adminName: global.name,
                     userSourceImage : userInfo.userSourceImage,
                     adminImage : global.face,
                     systemImage : systemImage,
@@ -515,6 +522,8 @@ function Content(node,core,window) {
                         }
                     } else {
 
+                        var height = $('#' + type).find('.js-panel-body').height();
+                        var scrollTop = $('#' + type).find('.scrollBoxParent').scrollTop();
                         if((height - scrollTop) > 700) {
 
                             if(typeNo === 103)
@@ -536,6 +545,12 @@ function Content(node,core,window) {
                         }
                     }
                 }
+
+                if ($('.zc-c-chat-date-line-text').eq(1).length > 0) {
+                  var offsetTop = $('.zc-c-chat-date-line-text').eq(1).parent().parent()[0].offsetTop;
+                  $('#' + type).find('.scrollBoxParent').scrollTop(offsetTop - 180);
+                }
+
             });
         } else {
             loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
@@ -571,7 +586,13 @@ function Content(node,core,window) {
                     item.msg = item.msg ? Face.analysis(item.msg) : null;
                     item.msg = item.msg ? App.getUrlRegex(item.msg) : null;
                 })
+
+                data.list.unshift({
+                  action: 'nomore',
+                });
+
                 _html = doT.template(tpl)({
+                    adminName: global.name,
                     userSourceImage : userInfo.userSourceImage,
                     adminImage : global.face,
                     systemImage : systemImage,
@@ -582,12 +603,12 @@ function Content(node,core,window) {
 
                 setTimeout(function() {
 
-                    if(isScrollBottom) {
-                        $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-                        userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
-                    }
+                  if (isScrollBottom) {
+                    $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                    userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                  }
                 },400);
-            });
+          });
         }
 
         if(userChatCache[userInfo.userId].isCall) {
@@ -629,8 +650,15 @@ function Content(node,core,window) {
 
         $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
 
-        if(!userInfo.from)
-            $rootNode.find('.js-addButton').children('.js-transfer').addClass('hide');
+        // if()
+        //     $rootNode.find('.js-addButton').children('.js-transfer').addClass('hide');
+
+
+        if (userInfo.status || !userInfo.from) {
+          $rootNode.find('.js-addButton').children('.js-transfer').addClass('hide');
+        } else {
+          $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
+        }
     }
     var parseChat = {
         102 : function(data) {
@@ -673,131 +701,142 @@ function Content(node,core,window) {
     }
     // --------------------------- socket ---------------------------
 
+
     var parseStack = function(data) {
 
-        if(data.type === 111) {
+      if (data.type === 111) {
 
-            if(userInfo.userId === data.uid) {
-                loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
-                    var _html;
-                    _html = doT.template(tpl)({
-                        data : data
-                    });
-
-                    $rootNode.find('#chat').find('.js-user-ready-input').show();
-                    $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
-
-                    setTimeout(function() {
-                        $rootNode.find('#chat').find('.js-user-ready-input').hide();
-                    },5000);
-                });
-            }
-        } else if(data.type === 108) {
-            // clearScrollContent();
-            var list = [];
-            $rootNode.find('.js-transfer').removeClass('hide');
-            if(userChatCache[data.uid]) {
-                userChatCache[data.uid].list.push({
-                    action : 10,
-                    offlineType : 5,
-                    ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
-                })
-
-                list.push({
-                    action : 10,
-                    offlineType : 5,
-                    ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
+          if (userInfo.userId === data.uid) {
+            loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
+                var _html;
+                _html = doT.template(tpl)({
+                    data : data
                 });
 
-                // 是否渲染 isRender
-                var isRender = userInfo.userId === data.uid;
-                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
-            }
+                $rootNode.find('#chat').find('.js-user-ready-input').show();
+                $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
 
-        } else if(data.type === 112) {
+                setTimeout(function() {
+                    $rootNode.find('#chat').find('.js-user-ready-input').hide();
+                },5000);
+            });
+          }
+      }
+      else if(data.type === 108) {
+          // clearScrollContent();
+          var list = [];
 
-            var userId = userInfo.userId = data.uid;
-            var list = [];
+          if (userInfo.userId === data.uid) {
+            $rootNode.find('.js-transfer').addClass('hide');
+          }
 
-            userChatCache[userId] = userChatCache[userId] || {};
-            userChatCache[userId].isCall = true;
-            userChatCache[userId].called = data.called;
-            userChatCache[userId].uname = data.uname;
+          if(userChatCache[data.uid]) {
+              userChatCache[data.uid].list.push({
+                  action : 10,
+                  offlineType : 5,
+                  ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
+              })
 
-            if(userChatCache[data.uid]) {
-                var ts = new Date().toLocaleString();
-                userChatCache[data.uid].list.push({
-                    action : 18,
-                    ts : ts
-                })
+              list.push({
+                  action : 10,
+                  offlineType : 5,
+                  ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
+              });
 
-                list.push({
-                    action : 18,
-                    ts : ts
-                });
+              // 是否渲染 isRender
+              var isRender = userInfo.userId === data.uid;
+              getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
+          }
 
-                // 是否渲染 isRender
-                var isRender = userInfo.userId === data.uid;
-                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
-            }
+      }
+      else if(data.type === 112) {
 
-            callUser();
-        } else if(data.type === 102) {
+          var userId = userInfo.userId = data.uid;
+          var list = [];
 
-            if(data.isTransfer) {
-                delete userChatCache[data[0].uid];
-            } else {
+          userChatCache[userId] = userChatCache[userId] || {};
+          userChatCache[userId].isCall = true;
+          userChatCache[userId].called = data.called;
+          userChatCache[userId].uname = data.uname;
 
-                if(userChatCache[data.uid]) {
-                    delete userChatCache[data.uid];
+          if(userChatCache[data.uid]) {
+              var ts = new Date().toLocaleString();
+              userChatCache[data.uid].list.push({
+                  action : 18,
+                  ts : ts
+              })
 
-                    // 初始化历史记录
-                    getChatListByOnline('chat',parseTpl,null,null, {
-                        uid : userInfo.userId,
-                        pid : userInfo.pid
-                    },true,true);
-                }
-            }
-        } else {
-            var list = [];
+              list.push({
+                  action : 18,
+                  ts : ts
+              });
 
-            if(userChatCache[data.uid]) {
+              // 是否渲染 isRender
+              var isRender = userInfo.userId === data.uid;
+              getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
+          }
 
-                // for(var i = 0;i < data.length;i++) {
-                // userChatCache[data[0].uid].list.push(data[i]);
-                // 聊天
-                if(data.type === 103) {
-                    userChatCache[data.uid].list.push({
-                        action : 5,
-                        senderType : 0,
-                        senderName : data.uname,
-                        msg : App.getUrlRegex(data.content),
-                        ts : data.ts
-                    })
+          callUser();
+      } else if(data.type === 102) {
 
-                    list.push({
-                        action : 5,
-                        senderType : 0,
-                        senderName : data.uname,
-                        msg : App.getUrlRegex(data.content),
-                        ts : data.ts
-                    });
-                }
-                // }
-
-                // 是否渲染 isRender
-                var isRender = userInfo.userId === data.uid;
-                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
-            }
+        if (userInfo.userId === data.uid) {
+          $rootNode.find('.js-transfer').removeClass('hide');
         }
+
+        if (data.isTransfer) {
+          delete userChatCache[data.uid];
+        } else {
+
+          if (userChatCache[data.uid]) {
+            delete userChatCache[data.uid];
+
+            // 初始化历史记录
+            getChatListByOnline('chat', parseTpl, null, null, {
+              uid: userInfo.userId ,
+              pid: userInfo.pid
+            }, true, true);
+          }
+        }
+      } else {
+          var list = [];
+
+          if(userChatCache[data.uid]) {
+
+              // for(var i = 0;i < data.length;i++) {
+                  // userChatCache[data[0].uid].list.push(data[i]);
+                  // 聊天
+              if (data.type === 103) {
+                  userChatCache[data.uid].list.push({
+                      action : 5,
+                      senderType : 0,
+                      senderName : data.uname,
+                      msg : App.getUrlRegex(data.content),
+                      ts : data.ts
+                  })
+
+                  list.push({
+                      action : 5,
+                      senderType : 0,
+                      senderName : data.uname,
+                      msg : App.getUrlRegex(data.content),
+                      ts : data.ts
+                  });
+              }
+              // }
+
+              // 是否渲染 isRender
+              var isRender = userInfo.userId === data.uid;
+              getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
+          }
+      }
     }
+
     // 加入到某一个user的chche内
     var userPushMessage = function(data) {
         var len = data.length;
         parseChat[data.type] && parseChat[data.type](data);
 
-        for(var i = 0;i < len;i++)
-            parseStack(data[i]);
+        for (var i = 0;i < len;i++) parseStack(data[i]);
     };
 
     var adminPushMessageState = function(data) {
@@ -885,7 +924,6 @@ function Content(node,core,window) {
     };
 
     var onReceive = function(value,data) {
-        console.log(data.length + " scroll");
         userPushMessage(data);
     };
 
@@ -931,7 +969,8 @@ function Content(node,core,window) {
                 userId : params.data.uid,
                 userSourceImage : userSourceImage,
                 from : params.data.from === 'online',
-                unreadcount : params.unreadcount
+                unreadcount : params.unreadcount ,
+                status: params.status === 'offline'
             }
 
             $chatContent.show();
@@ -979,20 +1018,34 @@ function Content(node,core,window) {
                 updateUserState(type,handleType,updateHeaderTag);
             }
         })
-        // 滚动加载分页
-        $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e) {
-            var data = {
-                uid : userInfo.userId,
-                pid : userInfo.pid
-            };
+        // // 滚动加载分页
+        // $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(e) {
+        //     var data = {
+        //         uid : userInfo.userId,
+        //         pid : userInfo.pid
+        //     };
+        //
+        //     if($(this).scrollTop() >= userChatCache[userInfo.userId].scrollBottom) {
+        //         $rootNode.find('#chat').find('.zc-newchat-tag').hide();
+        //     } else if($(this).scrollTop() === 0) {
+        //         userChatCache[userInfo.userId].pageNo++;
+        //
+        //         getChatListByOnline('chat',parseTpl,userChatCache[userInfo.userId].pageNo,null,data,true,false);
+        //     }
+        // });
 
-            if($(this).scrollTop() >= userChatCache[userInfo.userId].scrollBottom) {
-                $rootNode.find('#chat').find('.zc-newchat-tag').hide();
-            } else if($(this).scrollTop() === 0) {
-                userChatCache[userInfo.userId].pageNo++;
+        $rootNode.find('#chat').on('click', '.js-zc-loadmore', function(){
+          var data = {
+              uid : userInfo.userId,
+              pid : userInfo.pid
+          };
 
-                getChatListByOnline('chat',parseTpl,userChatCache[userInfo.userId].pageNo,null,data,true,false);
-            }
+          //     if($(this).scrollTop() >= userChatCache[userInfo.userId].scrollBottom) {
+          //         $rootNode.find('#chat').find('.zc-newchat-tag').hide();
+          //     } else if($(this).scrollTop() === 0) {
+          userChatCache[userInfo.userId].pageNo++;
+          getChatListByOnline('chat',parseTpl,userChatCache[userInfo.userId].pageNo,null,data,true,false);
+          //     }
         });
 
         $rootNode.find('#chat').on('click','.zc-newchat-tag', function() {
