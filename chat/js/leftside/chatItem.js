@@ -182,14 +182,15 @@ function Item(data,core,outer,from,manager) {
 
     var getCacheList = function(value,promise) {
         var list = unReadList.getList(data.uid);
+        if(!list) {
+            return;
+        }
         var arr = [];
-        console.log(list);
         for(var i = 0;i < list.length;i++) {
             if(list[i].type == 103) {
                 arr.push(list[i]);
             }
         }
-        console.log(arr);
         var lastMessage = arr.length > 0 ? arr[arr.length - 1] : null;
         if(lastMessage && lastMessage.cid == data.cid) {
             if(lastMessage.message_type == TYPE_EMOTION) {
@@ -198,6 +199,7 @@ function Item(data,core,outer,from,manager) {
                 $lastMessage.text(lastMessage.desc).addClass("orange");
             }
         }
+        $unRead.html(arr.length).show();
     };
 
     var initNode = function() {
@@ -391,6 +393,7 @@ function Item(data,core,outer,from,manager) {
     initNode().then(function(value,promise) {
         init();
         setTimeout(promise.resolve,0);
+        return promise;
     }).then(getCacheList);
     bindStaticListener();
 
