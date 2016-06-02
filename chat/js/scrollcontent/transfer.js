@@ -47,7 +47,7 @@ function Transfer(core,userInfo,callback) {
         var key = $(elm).attr("data-type");
         var hiden = $(elm).attr("data-hiden");
         if(hiden === 'true') {
-                return ;
+            return;
         }
         if(key !== sortKey) {
             sortKey = key;
