@@ -27,11 +27,11 @@ var ZC_Face = {
         //analysis
         _this.tip2 = weixinSymbol;
         //emojishow
-        _this.emojiTip =reg.emojiTip;
+        _this.emojiTip = reg.emojiTip;
         _this.emojiSymbolTip = reg.emojiSymbolTip;
-        
+
         _this.qqfaceReg = reg.qqfaceReg;
-        _this.qqfaceReg2 =reg.qqfaceReg2;
+        _this.qqfaceReg2 = reg.qqfaceReg2;
         _this.emojiReg = reg.emojiReg;
         _this.emojiReg2 = reg.emojiReg2;
         for(var a in _this.tip) {
@@ -45,12 +45,12 @@ var ZC_Face = {
         var faceGroup = _this.faceGroup;
         //集合如果不存在，则创建
         if($('#faceBox').length <= 0) {
-            loadFile.load(global.baseUrl+'views/textarea/qqFace.html').then(function(value){
-              var qqface_html = doT.template(value)({
-                "tip" : _this.tip,
-                "path" :_this.path
-              });
-            $(faceGroup).append(qqface_html);
+            loadFile.load(global.baseUrl + 'views/textarea/qqFace.html').then(function(value) {
+                var qqface_html = doT.template(value)({
+                    "tip" : _this.tip,
+                    "path" : _this.path
+                });
+                $(faceGroup).append(qqface_html);
             });
         }
         _this.sendTotextArea(_this.saytext);
@@ -60,13 +60,13 @@ var ZC_Face = {
         var _this = this;
         if($('#emojiBox').length <= 0) {//集合如果不存在，则创建
 
-            loadFile.load(global.baseUrl+'views/textarea/emoji.html').then(function(value){
-              var emoji_html = doT.template(value)({
-                "emojiTip" : _this.emojiTip,
-                "emojiSymbolTip" :_this.emojiSymbolTip,
-                "emojiPath" :_this.emojiPath
-              });
-            $(emojiGroup).append(emoji_html);
+            loadFile.load(global.baseUrl + 'views/textarea/emoji.html').then(function(value) {
+                var emoji_html = doT.template(value)({
+                    "emojiTip" : _this.emojiTip,
+                    "emojiSymbolTip" : _this.emojiSymbolTip,
+                    "emojiPath" : _this.emojiPath
+                });
+                $(emojiGroup).append(emoji_html);
             });
         }
         _this.Hidden();
@@ -94,7 +94,6 @@ var ZC_Face = {
             var src = $(elm).attr("data-src");
             var currentSaytext = $(_this.saytext).val() + src;
             //将新表情追加到待发送框里
-            //console.log($(tareId).val());
             //$("#saytext").val("");
             $(_this.saytext).val('');
             $(_this.saytext).val(currentSaytext);
@@ -128,52 +127,50 @@ var ZC_Face = {
     analysis : function(str) {//将文本框内的表情字符转化为表情
         var _this = this;
         //容错处理，防传null
-        if(str){
+        if(str) {
             var icoAry = str.match(_this.qqfaceReg);
-        }else{
+        } else {
             return false;
         }
-    
+
         //将匹配到的结果放到icoAry这个数组里面，来获取长度
         if(icoAry) {
             for(var i = 0;i < icoAry.length;i++) {
 
                 var ico = _this.qqfaceReg2.exec(str);
-                var path= _this.tip2[ico[0]];
+                var path = _this.tip2[ico[0]];
                 //重新匹配到第一个符合条件的表情字符
                 str = str.replace(_this.qqfaceReg2,'<img style="width:24px;height:24px;" src="' + _this.path + path + '.gif" border="0" />');
             }
         }
 
         var arr = str.match(_this.emojiReg);
-         //console.log(arr);
-        if(arr) { 
+        if(arr) {
             for(var i = 0,
                 len = arr.length;i < len;i++) {
                 var ico = _this.emojiReg2.exec(str);
                 var path = _this.emojiImagePath[ico[0]];
                 //alert(ico[0]);
-               // alert(_this.emojiPath);
-               // alert(path);
-               // alert(str);
-              
+                // alert(_this.emojiPath);
+                // alert(path);
+                // alert(str);
+
                 str = str.replace(ico[0],'<img style="width:24px;height:24px;" src="' + _this.emojiPath + path + '" border="0" />');
-               // alert(str);
+                // alert(str);
             }
         }
         return str;
     },
     hasEmotion : function(str) {//将文本框内的表情字符转化为表情
-        //console.log(str);
         return this.qqfaceReg.test(str) || this.emojiReg.test(str);
     }/*,
-    convertToEmoji : function(src) {
-        var _this = this;
-        if(_this.emojiReg.test(src)) {
+     convertToEmoji : function(src) {
+     var _this = this;
+     if(_this.emojiReg.test(src)) {
 
-        }
-        return src;
-    }*/
+     }
+     return src;
+     }*/
 };
 
 module.exports = ZC_Face;

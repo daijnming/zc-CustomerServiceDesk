@@ -176,7 +176,6 @@ function Transfer(core,userInfo,callback) {
                 $(elm).text('客服已离线');
             }
         }).fail(function(ret) {
-            console.log(ret);
         });
     };
     var bindListener = function() {
