@@ -55,7 +55,8 @@ function Transfer(core,userInfo,callback) {
         } else {
             sortType = (sortType + 1) % 2;
             if(sortType == 0)
-                sortType == 2;
+                sortType = 2;
+            alert(sortType);
         }
         $outer.find(".sort").removeClass("up").removeClass("down");
         var $sort = $(elm).find(".sort");
