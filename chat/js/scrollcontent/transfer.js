@@ -73,6 +73,10 @@ function Transfer(core,userInfo,callback) {
     var fetchData = function(value,promise) {
         var promise = promise || new Promise();
         $ulOuter.html(loadingTemplate);
+        if(window.localStorage) {
+            window.localStorage.sortKey = sortKey;
+            window.localStorage.sortType = sortType;
+        }
         $.ajax({
             'url' : '/chat/admin/getOhterAdminList.action',
             'data' : {
@@ -123,6 +127,7 @@ function Transfer(core,userInfo,callback) {
             sortType = (window.localStorage.sortType) || sortType;
             sortKey = window.localStorage.sortKey || sortKey;
         }
+        console.log(sortType,sortKey)
     };
 
     var clearBtnClickhandler = function() {
@@ -194,6 +199,7 @@ function Transfer(core,userInfo,callback) {
 
     var initPlugins = function() {
         loadFile.load(global.baseUrl + 'views/scrollcontent/transferouter.html').then(function(html,promise) {
+            console.log(sortType,sortKey)
             var _html = doT.template(html)({
                 'columns' : columns,
                 'sortKey' : sortKey,
