@@ -251,8 +251,8 @@ function Item(data,core,outer,from,manager) {
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,
                 'userData' : userData,
-                'unreadcount' : unreadTemp
-
+                'unreadcount' : unreadTemp,
+                'status' : status
             }]);
         });
 
