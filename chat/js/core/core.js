@@ -98,7 +98,8 @@ function Core(window) {
                     for(var el in ret) {
                         global[el] = ret[el];
                     }
-                    global.baseUrl = location.protocol + "//" + location.host + "/chat/" + ((!value.success) ? 'admins/' : '');
+                    var path = location.href.indexOf("admins_new") < 0 ? "admins/" : "admins_new/";
+                    global.baseUrl = location.protocol + "//" + location.host + "/chat/" + ((!value.success) ? path : '');
                     if(!value.success) {
                         global.scriptPath = "//static.sobot.com/chat/admins/";
                     } else {
@@ -152,7 +153,6 @@ function Core(window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var value = list[i];
-            console.log(value.content);
             if(value.type === 103) {
                 audioNewMessage.play();
                 normalMessageAdapter(value);
@@ -196,7 +196,6 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             messageAdapter(list);
-            console.log(list.length + " core");
             $body.trigger('core.receive',[list]);
         });
     };

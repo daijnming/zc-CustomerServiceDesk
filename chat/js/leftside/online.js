@@ -123,6 +123,24 @@ function Online(node,core,window) {
 
     };
 
+    /**
+     * 发送丢用户的错误日志
+     */
+    var lostUserLog = function() {
+        $.ajax({
+            'url' : '/chat/admin/log.action',
+            'type' : "post",
+            'data' : {
+                'msg' : data.msgId,
+                'pid' : pid,
+                'uid' : myid,
+                'puid' : puid,
+                'code' : '02',
+                "detail" : "推送消息时，页面没有这个用户"
+            }
+        });
+    };
+
     var onReceive = function(value,list) {
         for(var i = 0,
             len = list.length;i < len;i++) {
@@ -133,6 +151,11 @@ function Online(node,core,window) {
                     break;
                 case 108:
                     userOfflineMessage(data);
+                    break;
+                case 103:
+                    if(!chatItemList[data.uid]) {
+                        lostUserLog();
+                    }
                     break;
             }
         }

@@ -13,7 +13,7 @@
         <div class="zc-transfer-inner-title">
             <ul class="sub-nav">
                 {{for(var i=0;i< it.columns.length;i++)  { }}
-                <li class="item-{{=(i+1)}} js-column-key" data-type="{{=it.columns[i].key}}">
+                <li class="item-{{=(i+1)}} js-column-key" data-type="{{=it.columns[i].key}}" data-hiden="{{=it.columns[i].hiden}}">
                     {{=it.columns[i].name}}
                     {{if(it.sortKey == it.columns[i].key) { }}
                     {{ if(it.sortType == 1 && it.columns[i].hiden !== true){ }}
