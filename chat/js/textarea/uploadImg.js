@@ -163,7 +163,7 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
             return true;
         } else {
             new Toast(core, {
-                'icon' : 'alert',
+                'icon' : 'alert', 
                 'text' : '上传文件格式不正确'
             });
             return false;

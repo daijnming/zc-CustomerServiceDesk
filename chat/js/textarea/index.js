@@ -22,7 +22,6 @@ function TextArea(node,core,window) {
         currentUid,
         answer;
     //传给聊天的url
-
     var parseDOM = function() {
         $node = $(node);
         $uploadBtn = $node.find(".js-upload");
@@ -179,6 +178,22 @@ function TextArea(node,core,window) {
         }
         $botTextBox.css("bottom","-232px")
     };
+    //用户正在输入
+    var changeingInput=function(evt){
+        if($sendMessage.val()==""&&evt.keyCode != 13)
+            $.ajax({
+                'url' : '/chat/admin/input.action',
+                'data' : {
+                    'cid' : currentCid,
+                    'uid' : currentUid
+                },
+                'type' : 'post',
+                'dataType' : "json"
+            }).success(function(res) {
+                //console.log("")
+            });
+     }
+
     var isHiddenBotTextBox = function() {
         $botTextBox.hide();
     };
@@ -196,9 +211,12 @@ function TextArea(node,core,window) {
         $(window || document.body).on("resize",botTextBoxPosition);
         //发送按钮
         $node.find(".js-btnSend").on("click",onbtnSendHandler);
+        //回车发送
         $sendMessage.on("keydown",onEnterSendHandler);
         //粘贴上传(只能传截屏)
         $sendMessage.on("paste",onFilePaste);
+        //正在输入
+        $sendMessage.on("keydown",changeingInput);
         /*
          *
          qq表情
