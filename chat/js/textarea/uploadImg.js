@@ -7,6 +7,8 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
     var global = core.getGlobal();
     var AjaxUpload = require('../util/upload.js');
     var Alert = require('../util/modal/alert.js');
+    //提示弹窗
+    var Toast = require('../util/modal/toast.js');
     var fileType = require('./fileType.json');
     //判断文件图标类型用于聊天窗体的显示
     var fileTypeIcon = require('./fileTypeIcon.json');
@@ -160,17 +162,10 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
         if(reg.test(extension)) {
             return true;
         } else {
-
-            var dialog = new Alert({
-                'title' : '提示',
-                'text' : '上传格式不正确',
-                'OK' : function() {
-
-                },
-                'footer' : false
-
+            new Toast(core, {
+                'icon' : 'alert',
+                'text' : '上传文件格式不正确'
             });
-            dialog.show();
             return false;
         };
     };
