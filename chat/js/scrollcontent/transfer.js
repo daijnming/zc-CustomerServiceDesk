@@ -45,6 +45,10 @@ function Transfer(core,userInfo,callback) {
     var columnKeyClickHandler = function(e) {
         var elm = e.currentTarget;
         var key = $(elm).attr("data-type");
+        var hiden = $(elm).attr("data-hiden");
+        if(hiden === 'true') {
+                return ;
+        }
         if(key !== sortKey) {
             sortKey = key;
             sortType = 1;
