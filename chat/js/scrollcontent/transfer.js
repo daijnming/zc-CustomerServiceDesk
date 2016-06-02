@@ -78,7 +78,7 @@ function Transfer(core,userInfo,callback) {
             'data' : {
                 'uid' : global.id,
                 'orderName' : sortKey,
-                'order' : sortKey,
+                'order' : sortType,
                 'keyword' : keyword
             },
             'dataType' : 'json',
