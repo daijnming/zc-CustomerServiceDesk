@@ -9,6 +9,11 @@ function Item(data,core,outer,from,manager) {
         $unRead,
         $lastMessage,
         $userName;
+    var TYPE_EMOTION = 0,
+        TYPE_IMAGE = 1,
+        TYPE_TEXT = 2,
+        AUDIO = 3,
+        RICH_TEXT = 4;
     var from = from || 'online';
     var global = core.getGlobal();
     var $body,
@@ -57,7 +62,11 @@ function Item(data,core,outer,from,manager) {
             }
         }
         if(lastMessage.cid == data.cid) {
-            $lastMessage.text(!!lastMessage ? lastMessage.desc : '').addClass('orange');
+            if(lastMessage.message_type == TYPE_EMOTION) {
+                $lastMessage.html(lastMessage.desc).addClass("orange");
+            } else {
+                $lastMessage.text(lastMessage.desc).addClass("orange");
+            }
         }
     };
     var onOffLine = function() {
@@ -288,7 +297,11 @@ function Item(data,core,outer,from,manager) {
     var onServerSend = function(evt,ret) {
         if(ret.uid == data.uid && ret.cid == data.cid) {
             messageAdapter(ret);
-            $lastMessage.text(ret.desc).removeClass("orange");
+            if(ret.message_type == TYPE_EMOTION) {
+                $lastMessage.html(ret.desc).removeClass("orange");
+            } else {
+                $lastMessage.text(ret.desc).removeClass("orange");
+            }
         }
     };
 
