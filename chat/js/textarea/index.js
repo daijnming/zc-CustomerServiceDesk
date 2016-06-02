@@ -182,7 +182,7 @@ function TextArea(node,core,window) {
     var changeingInput=function(evt){
         if($sendMessage.val()==""&&evt.keyCode != 13)
             $.ajax({
-                'url' : 'https://test.sobot.com/chat/admin/input.action',
+                'url' : '/chat/admin/input.action',
                 'data' : {
                     'cid' : currentCid,
                     'uid' : currentUid
