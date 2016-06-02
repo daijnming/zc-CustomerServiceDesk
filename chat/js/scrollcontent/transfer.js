@@ -166,7 +166,7 @@ function Transfer(core,userInfo,callback) {
                 $(elm).text('用户已离线');
                 new Toast(core, {
                     'icon' : 'alert',
-                    'text' : '用户已离线'
+                    'text' : '用户已离线，无法转接'
                 });
                 setTimeout(function() {
                     _self.hide();
