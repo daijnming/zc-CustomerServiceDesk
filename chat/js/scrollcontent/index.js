@@ -267,11 +267,11 @@ function Content(node,core,window) {
 
                 black : {
                     add : {
-                        title : '添加拉黑',
+                        title : '拉黑',
                         content : '确定要拉黑这个用户吗？'
                     },
                     del : {
-                        title : '去除拉黑',
+                        title : '解除拉黑',
                         content : '确定要取消拉黑这个用户吗？'
                     }
                 }
