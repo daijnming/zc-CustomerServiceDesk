@@ -116,6 +116,9 @@ function Item(data,core,outer,from,manager) {
         },300, function() {
             $node.remove();
         });
+        if(manager.getCurrentUid() == data.uid) {
+            manager.setCurentUid(null);
+        }
     };
 
     var onRemove = function() {
