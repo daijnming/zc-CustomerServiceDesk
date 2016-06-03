@@ -318,7 +318,7 @@ ul.mainNav  .tab-content{
 	overflow: hidden;
 }
 .msg_content img{
-	/*max-width: 100%;*/
+	max-width: 100%;
 }
 .formUser{
 	cursor: pointer;

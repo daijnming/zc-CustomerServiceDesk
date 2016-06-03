@@ -350,7 +350,7 @@ function Content(node,core,window) {
         });
     }
     var sendSearchUserChat = function() {
-        $rootNode.on('click','.msg_content', function() {
+        $rootNode.on('click','.fl .msg_content', function() {
             var chatText = $(this).html();
 
             if(chatText.indexOf('webchat_img_upload') !== -1) {
