@@ -4,7 +4,7 @@
         {{ var item = it.list[i]; }}
         {{ var from = it.type === 'history'?'history':''; }}
         <li titemle="{{=item.uname}}" class="user-list-item {{=from}}" data-uid="{{=item.uid}}">
-            <i class="icon {{=item.source_type || ''}} js-icon {{=(it.type =='history'?'offline':'')}}">
+            <i class="icon {{=item.source_type || ''}} js-icon {{=(it.type !='online'?'offline':'')}}">
                 <img src="{{=item.imgUrl || 'assets/images/newChat1.png'}}" class="js-image-face"/>
                 <span class="badge badge-red js-unread-count">1</span></i>
             <div class="item-detail">
