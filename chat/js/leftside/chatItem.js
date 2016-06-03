@@ -209,7 +209,9 @@ function Item(data,core,outer,from,manager) {
                 $lastMessage.text(lastMessage.desc).addClass("orange");
             }
         }
-        $unRead.html(arr.length).show();
+        $unRead.html(arr.length).css({
+            'visibility' : 'visible'
+        });
     };
 
     var initNode = function() {
