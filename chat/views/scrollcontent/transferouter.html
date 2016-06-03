@@ -12,18 +12,21 @@
     <div class="zc-transfer-innner">
         <div class="zc-transfer-inner-title">
             <ul class="sub-nav">
-                {{for(var i=0;i< it.columns.length;i++)  { }}
+                {{for(var i=0;i < it.columns.length;i++)  { }}
                 <li class="item-{{=(i+1)}} js-column-key" data-type="{{=it.columns[i].key}}" data-hiden="{{=it.columns[i].hiden}}">
                     {{=it.columns[i].name}}
-                    {{if(it.sortKey == it.columns[i].key) { }}
-                    {{ if(it.sortType == 1 && it.columns[i].hiden !== true){ }}
-                    <i class="sort up"></i>
+                    {{ var item = it.columns[i];}}
+                    {{ if(item.hiden === true){ }}
+                        &nbsp;
+                    {{ }else if(item.key == it.sortKey){ }}
+                        {{ if(it.sortType == 1){ }}
+                            <i class="sort up"></i>
+                        {{ }else if(it.sortType == 2){ }}
+                            <i class="sort down"></i>
+                        {{  } }}
                     {{ }else{ }}
-                    <i class="sort down"></i>
-                    {{ } }}
-                    {{ }else if(it.columns[i].hiden !== true){ }}
-                    <i class="sort"></i>
-                    {{ } }}
+                        <i class="sort"></i>
+                    {{  } }}
                 </li>
                 {{ } }}
             </ul>

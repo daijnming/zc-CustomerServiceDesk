@@ -6,6 +6,7 @@ function Online(node,core,window) {
         $body;
     var that = {};
     var chatItemList = {};
+    var unreadList = require('./unreadlist.js');
     var global;
     var USOURCE = require('./source.json');
     var Item = require('./chatItem.js');
@@ -153,6 +154,9 @@ function Online(node,core,window) {
                     userOfflineMessage(data);
                     break;
                 case 103:
+                    if(!chatItemList[data.uid].getReady()) {
+                        unreadList.push(data.uid,data);
+                    }
                     if(!chatItemList[data.uid]) {
                         lostUserLog();
                     }
@@ -175,6 +179,7 @@ function Online(node,core,window) {
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
         getDefaultChatList();
+        loadFile.load(global.baseUrl + "views/leftside/chatitem.html");
     };
     var userOfflineMessage = function(data) {
         var uid = data.uid;

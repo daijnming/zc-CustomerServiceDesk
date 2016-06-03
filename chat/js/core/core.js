@@ -146,7 +146,7 @@ function Core(window) {
         })(data.uid);
         setTimeout(function() {
             noti.close();
-        },2000);
+        },300 * 1000);
     };
 
     var messageAdapter = function(list) {
@@ -202,7 +202,7 @@ function Core(window) {
 
     var initNotification = function() {
         if(Notification && Notification.permission !== 'granted') {
-            Notification.requestPermission().then(function() {
+            Notification.requestPermission(function() {
                 notificationPermission = Notification.requestPermission();
             });
         } else {

@@ -9,6 +9,13 @@ function Item(data,core,outer,from,manager) {
         $unRead,
         $lastMessage,
         $userName;
+    var TYPE_EMOTION = 0,
+        TYPE_IMAGE = 1,
+        TYPE_TEXT = 2,
+        AUDIO = 3,
+        RICH_TEXT = 4;
+    var isReady = false;
+    var unReadList = require('./unreadlist.js');
     var from = from || 'online';
     var global = core.getGlobal();
     var $body,
@@ -35,7 +42,12 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onReceive = function(evt,list) {
-        var lastMessage = list.length > 0 ? list[list.length - 1] : null;
+        var arr = [];
+        for(var i = 0;i < list.length;i++) {
+            if(list[i].type == 103)
+                arr.push(list[i]);
+        }
+        var lastMessage = arr.length > 0 ? arr[arr.length - 1] : null;
         if(data.uid !== manager.getCurrentUid()) {
             for(var i = 0,
                 len = list.length;i < len;i++) {
@@ -56,17 +68,31 @@ function Item(data,core,outer,from,manager) {
                 });
             }
         }
-        if(lastMessage.cid == data.cid) {
-            $lastMessage.text(!!lastMessage ? lastMessage.desc : '').addClass('orange');
+
+        if(lastMessage && lastMessage.cid == data.cid) {
+            if(lastMessage.message_type == TYPE_EMOTION) {
+                $lastMessage.html(lastMessage.desc).addClass("orange");
+            } else {
+                $lastMessage.text(lastMessage.desc).addClass("orange");
+            }
         }
     };
     var onOffLine = function() {
+        var $parent = $node.parent();
+        var offlineList = $parent.find("li.offline");
+        var firstOffline = offlineList.length > 0 ? offlineList[0] : null;
         $node.find(".js-icon").addClass("offline");
+        $node.addClass("offline");
         var $statusText = $node.find(".js-user-status");
         $statusText.css({
             'display' : 'inline-block'
         }).html('[离线]');
         status = 'offline';
+        if(firstOffline) {
+            $node.insertBefore(firstOffline);
+        } else {
+            $node.parent().append($node);
+        }
         if(manager.getCurrentUid() === data.uid) {
             manager.setCurrentUid(null);
         }
@@ -138,6 +164,7 @@ function Item(data,core,outer,from,manager) {
         data.cid = cid;
         var $statusText = $node.find(".js-user-status");
         $node.find(".js-icon").removeClass("offline");
+        $node.removeClass("offline");
         $statusText.css({
             'display' : 'none'
         });
@@ -162,6 +189,28 @@ function Item(data,core,outer,from,manager) {
         img.src = url;
     };
 
+    var getCacheList = function(value,promise) {
+        var list = unReadList.getList(data.uid);
+        if(!list) {
+            return;
+        }
+        var arr = [];
+        for(var i = 0;i < list.length;i++) {
+            if(list[i].type == 103) {
+                arr.push(list[i]);
+            }
+        }
+        var lastMessage = arr.length > 0 ? arr[arr.length - 1] : null;
+        if(lastMessage && lastMessage.cid == data.cid) {
+            if(lastMessage.message_type == TYPE_EMOTION) {
+                $lastMessage.html(lastMessage.desc).addClass("orange");
+            } else {
+                $lastMessage.text(lastMessage.desc).addClass("orange");
+            }
+        }
+        $unRead.html(arr.length).show();
+    };
+
     var initNode = function() {
         var promise = new Promise();
         var elm = $(outer).find('li[data-uid="' + data.uid + '"]');
@@ -174,6 +223,7 @@ function Item(data,core,outer,from,manager) {
             }
             initFace();
             setTimeout(function() {
+                isReady = true;
                 promise.resolve();
             },0);
         } else {
@@ -193,12 +243,16 @@ function Item(data,core,outer,from,manager) {
                 initFace();
                 insert($node);
                 $userName = $node.find(".js-user-name");
+                isReady = true;
                 promise.resolve();
             });
         }
         return promise;
     };
 
+    var getReady = function() {
+        return isReady;
+    };
     var getStatus = function() {
         return status;
     };
@@ -251,8 +305,8 @@ function Item(data,core,outer,from,manager) {
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,
                 'userData' : userData,
-                'unreadcount' : unreadTemp
-
+                'unreadcount' : unreadTemp,
+                'status' : status
             }]);
         });
 
@@ -288,7 +342,11 @@ function Item(data,core,outer,from,manager) {
     var onServerSend = function(evt,ret) {
         if(ret.uid == data.uid && ret.cid == data.cid) {
             messageAdapter(ret);
-            $lastMessage.text(ret.desc).removeClass("orange");
+            if(ret.message_type == TYPE_EMOTION) {
+                $lastMessage.html(ret.desc).removeClass("orange");
+            } else {
+                $lastMessage.text(ret.desc).removeClass("orange");
+            }
         }
     };
 
@@ -310,7 +368,7 @@ function Item(data,core,outer,from,manager) {
     var bindListener = function() {
         $body.on("scrollcontent.onUpdateUserState",onUserStatusChange);
         $body.on("scrollcontent.onTransfer",onTransfer);
-        $body.on("core.receive",onReceive);
+
         $body.on("rightside.onChatSmartReply",onChatSmartReplay);
         $body.on("textarea.send",onServerSend);
         $node.on("click",onNodeClickHandler);
@@ -318,7 +376,6 @@ function Item(data,core,outer,from,manager) {
 
     };
     var parseDOM = function() {
-        $body = $(document.body);
         $unRead = $node.find(".js-unread-count");
         $ulOuter = $(outer).find("ul.js-users-list");
         $lastMessage = $node.find(".js-last-message");
@@ -328,19 +385,32 @@ function Item(data,core,outer,from,manager) {
 
     };
 
+    var bindStaticListener = function() {
+        $body = $(document.body);
+        $body.on("core.receive", function(evt,list) {
+            setTimeout(function() {
+                onReceive(evt,list);
+            },1);
+        });
+    };
+
     var init = function() {
         parseDOM();
         bindListener();
         initPlugins();
     };
-    initNode().then(function() {
+    initNode().then(function(value,promise) {
         init();
-    });
+        setTimeout(promise.resolve,0);
+        return promise;
+    }).then(getCacheList);
+    bindStaticListener();
 
     this.onOnline = onOnline;
     this.getStatus = getStatus;
     this.onclick = onclick;
     this.onRemove = onRemove;
+    this.getReady = getReady;
     this.onOffLine = onOffLine;
 }
 

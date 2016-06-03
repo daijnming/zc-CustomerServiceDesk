@@ -57,6 +57,18 @@
     </div>
   {{ } }}
 
+  {{ if(it.list[i].action === 'loadmore') { }}
+    <div class="systeamTextBox js-zc-loadmore">
+      <p class="systeamText">点击加载更多</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[i].action === 'nomore') { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">没有更多</p>
+    </div>
+  {{ } }}
+
   {{ if(it.list[i].action === 4) { }}
     <div class="systeamTextBox">
       <p class="systeamText">用户和机器人建立会话</p>

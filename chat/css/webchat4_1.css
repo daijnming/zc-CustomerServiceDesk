@@ -1,3 +1,10 @@
+.table-bottomless .reqTdSpan {
+    width: 150px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 #user_menu i.connection_icon {
     height: 14px;
     width: 14px;

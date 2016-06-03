@@ -32,10 +32,10 @@ function Transfer(core,userInfo,callback) {
         'key' : 'nickname'
     },{
         'name' : '接待状态',
-        'key' : 'status'
+        'key' : 'count'
     },{
         'name' : '所属分组',
-        'key' : 'group'
+        'key' : 'groupName'
     },{
         'name' : '操作',
         'key' : "operate",
@@ -55,7 +55,7 @@ function Transfer(core,userInfo,callback) {
         } else {
             sortType = (sortType + 1) % 2;
             if(sortType == 0)
-                sortType == 2;
+                sortType = 2;
         }
         $outer.find(".sort").removeClass("up").removeClass("down");
         var $sort = $(elm).find(".sort");
@@ -73,12 +73,16 @@ function Transfer(core,userInfo,callback) {
     var fetchData = function(value,promise) {
         var promise = promise || new Promise();
         $ulOuter.html(loadingTemplate);
+        if(window.localStorage) {
+            window.localStorage.sortKey = sortKey;
+            window.localStorage.sortType = sortType;
+        }
         $.ajax({
             'url' : '/chat/admin/getOhterAdminList.action',
             'data' : {
                 'uid' : global.id,
                 'orderName' : sortKey,
-                'order' : sortKey,
+                'order' : sortType,
                 'keyword' : keyword
             },
             'dataType' : 'json',
