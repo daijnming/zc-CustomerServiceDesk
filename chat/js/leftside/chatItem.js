@@ -78,13 +78,21 @@ function Item(data,core,outer,from,manager) {
         }
     };
     var onOffLine = function() {
+        var $parent = $node.parent();
+        var offlineList = $parent.find("li.offline");
+        var firstOffline = offlineList.length > 0 ? offlineList[0] : null;
         $node.find(".js-icon").addClass("offline");
+        $node.addClass("offline");
         var $statusText = $node.find(".js-user-status");
         $statusText.css({
             'display' : 'inline-block'
         }).html('[离线]');
         status = 'offline';
-        $node.parent().append($node);
+        if(firstOffline) {
+            $node.insertBefore(firstOffline);
+        } else {
+            $node.parent().append($node);
+        }
         if(manager.getCurrentUid() === data.uid) {
             manager.setCurrentUid(null);
         }
@@ -156,6 +164,7 @@ function Item(data,core,outer,from,manager) {
         data.cid = cid;
         var $statusText = $node.find(".js-user-status");
         $node.find(".js-icon").removeClass("offline");
+        $node.removeClass("offline");
         $statusText.css({
             'display' : 'none'
         });
