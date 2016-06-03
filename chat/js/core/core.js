@@ -146,7 +146,7 @@ function Core(window) {
         })(data.uid);
         setTimeout(function() {
             noti.close();
-        },2000);
+        },300 * 1000);
     };
 
     var messageAdapter = function(list) {
