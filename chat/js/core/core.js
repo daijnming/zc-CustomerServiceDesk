@@ -133,6 +133,9 @@ function Core(window) {
     var createNotification = function(data,type) {
         var title = type == 103 ? '用户' + data.uname + '发送了一条消息' : '新用户上线了！';
         var desc = type == 103 ? data.desc : data.uname;
+        var temp = $("<div></div>");
+        temp.html(desc);
+        desc = temp.html();
         var noti = new Notification(title, {
             'body' : desc,
             'icon' : 'assets/images/logo.png',
