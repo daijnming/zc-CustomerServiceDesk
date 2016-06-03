@@ -102,11 +102,26 @@
 
   {{ if(it.list[i].action === 10) { }}
 
+
+    {{ if (it.list[i].offlineType === 1) { }}
+      <div class="systeamTextBox">
+        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+      </div>
+    {{ } }}
+
+    {{ if (it.list[i].offlineType === 2) { }}
+      <div class="systeamTextBox">
+        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+      </div>
+    {{ } }}
+
     {{ if (it.list[i].offlineType === 3) { }}
       <div class="systeamTextBox">
         <p class="systeamText">用户被客服 {{=it.list[i].receiverName}} 加入黑名单,本次会话结束 {{=it.list[i].ts.split(' ')[1]}}</p>
       </div>
     {{ } }}
+
+
 
     {{ if (it.list[i].offlineType === 5) { }}
       <div class="systeamTextBox">
