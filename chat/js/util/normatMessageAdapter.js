@@ -16,7 +16,7 @@ var normalMessageAdapter = function(value) {
         } else if(content.indexOf("webchat_img_upload") >= 0) {
             value.message_type = TYPE_IMAGE;
             value.desc = '[图片]';
-        } else if(content.indexOf("<a")) {
+        } else if(content.indexOf("</") >= 0 || content.indexOf("/>") >= 0) {
             value.message_type = RICH_TEXT;
             value.desc = '[富文本]';
         }
