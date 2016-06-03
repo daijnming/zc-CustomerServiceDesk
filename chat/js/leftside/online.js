@@ -92,7 +92,8 @@ function Online(node,core,window) {
                         }
                     }
                     var _html = doT.template(value)({
-                        'list' : ret.userList
+                        'list' : ret.userList,
+                        'type' : 'online'
                     });
                     $(node).find(".js-users-list").html(_html);
                     for(var i = 0,

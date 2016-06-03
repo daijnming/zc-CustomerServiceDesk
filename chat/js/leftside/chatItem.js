@@ -4,6 +4,8 @@
  */
 
 function Item(data,core,outer,from,manager) {
+    var from = from || 'online';
+    console.log(from);
     var node,
         $node,
         $unRead,
