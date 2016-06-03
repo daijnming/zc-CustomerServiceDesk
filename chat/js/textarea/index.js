@@ -10,7 +10,7 @@ function TextArea(node,core,window) {
     var ZC_Face = require('../util/qqFace.js');
     //上传附件
     var uploadImg = require('./uploadImg.js');
-
+    var inputCache = {};
     //模板引擎
     var template = require('./template.js');
     var apihost = "/chat/";
@@ -42,10 +42,14 @@ function TextArea(node,core,window) {
         }
     };
     var onSelected = function(evt,data) {
+        if(currentUid){
+            inputCache[currentUid] = $sendMessage.val();
+        }
         currentUid = data.data.uid;
         currentCid = data.data.cid;
-
         if(data.data.from == 'online') {
+            //输入内容做缓存
+            onTabSelectedSaveInner(currentUid);
             $botTextBox.show();
             $sendMessage.focus();
             botTextBoxPosition();
@@ -56,7 +60,14 @@ function TextArea(node,core,window) {
             //重新定义聊天体的高度
         }
     };
-
+    //输入内容做缓存
+    var onTabSelectedSaveInner=function(uid){
+        if(inputCache[uid]){
+            $sendMessage.val(inputCache[uid]);
+        }else{
+            $sendMessage.val('');
+        }
+    };
     var onImageUpload = function(evt,data) {
         onFileTypeHandler(data);
         //通过textarea.send事件将用户的数据传到显示台
