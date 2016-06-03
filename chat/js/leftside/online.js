@@ -128,15 +128,15 @@ function Online(node,core,window) {
     /**
      * 发送丢用户的错误日志
      */
-    var lostUserLog = function() {
+    var lostUserLog = function(data) {
         $.ajax({
             'url' : '/chat/admin/log.action',
             'type' : "post",
             'data' : {
                 'msg' : data.msgId,
-                'pid' : pid,
-                'uid' : myid,
-                'puid' : puid,
+                'pid' : global.pid,
+                'uid' : global.myid,
+                'puid' : global.puid,
                 'code' : '02',
                 "detail" : "推送消息时，页面没有这个用户"
             }
@@ -159,7 +159,7 @@ function Online(node,core,window) {
                         unreadList.push(data.uid,data);
                     }
                     if(!chatItemList[data.uid]) {
-                        lostUserLog();
+                        lostUserLog(data);
                     }
                     break;
             }
