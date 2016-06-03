@@ -489,7 +489,6 @@ function Content(node,core,window) {
                 var _html;
 
                 if (isPage) {
-                  console.log('loadmore');
                   appendList.unshift({
                     action: 'loadmore',
                   });
@@ -502,25 +501,29 @@ function Content(node,core,window) {
                     systemImage : systemImage,
                     list : appendList
                 });
+
+
                 // if(isToTop) {
                 //     $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
                 //     $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
                 // } else {
-                $rootNode.find('#' + type).find('.js-panel-body').append(_html);
-                console.log('isScrollBottom state => ' + isScrollBottom);
+
+                if (isPage) {
+                  $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
+                } else {
+                  $rootNode.find('#' + type).find('.js-panel-body').append(_html);
+                }
+
                 if(isScrollBottom) {
                     var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
-                    console.log('isScrollBottom true ');
+
                     if(img) {
-                        console.log('img init 1');
                         img.src = img.src + '?r=' + (new Date());
                         img.onload = function() {
-                            console.log('img success 1');
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
                         }
                     } else {
-                        console.log('no img init 1');
                         $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                         userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
                     }
@@ -529,21 +532,17 @@ function Content(node,core,window) {
                     var height = $('#' + type).find('.js-panel-body').height();
                     var scrollTop = $('#' + type).find('.scrollBoxParent').scrollTop();
                     if((height - scrollTop) > 700) {
-                        console.log('new chat');
                         if(typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                     } else {
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                         if(img) {
-                            console.log('img init 2');
                             img.src = img.src + '?r=' + (new Date());
                             img.onload = function() {
-                                console.log('img success 2');
                                 $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                                 userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
                             }
                         } else {
-                            console.log('no img init 2');
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
                         }
@@ -552,7 +551,7 @@ function Content(node,core,window) {
                 }
                 // }
 
-                if ($('.zc-c-chat-date-line-text').eq(1).length > 0) {
+                if ($('.zc-c-chat-date-line-text').eq(1).length > 0 && isPage) {
                   var offsetTop = $('.zc-c-chat-date-line-text').eq(1).parent().parent()[0].offsetTop;
                   $('#' + type).find('.scrollBoxParent').scrollTop(offsetTop - 180);
                 }
