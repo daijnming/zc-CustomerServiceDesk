@@ -4,6 +4,7 @@
  */
 
 function Item(data,core,outer,from,manager) {
+    var from = from || 'online';
     var node,
         $node,
         $unRead,
@@ -24,7 +25,7 @@ function Item(data,core,outer,from,manager) {
     var userDataCache = {};
     var baseUrl = global.baseUrl;
     var $ulOuter;
-    var status = (from == 'history') ? 'offline' : 'online';
+    var status = (from == 'history' || from == 'blacklist' || from == 'star') ? 'offline' : 'online';
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
@@ -41,6 +42,19 @@ function Item(data,core,outer,from,manager) {
         }
     };
 
+    var showLastMessage = function(lastMessage) {
+        if(lastMessage && lastMessage.cid == data.cid) {
+            if(lastMessage.message_type == TYPE_EMOTION) {
+                $lastMessage.html(lastMessage.desc).addClass("orange");
+            } else {
+                var str = (lastMessage.desc);
+                var temp = $('<div></div>');
+                temp.html(str);
+                str = temp.html();
+                $lastMessage.text(str).addClass("orange");
+            }
+        }
+    };
     var onReceive = function(evt,list) {
         var arr = [];
         for(var i = 0;i < list.length;i++) {
@@ -69,13 +83,7 @@ function Item(data,core,outer,from,manager) {
             }
         }
 
-        if(lastMessage && lastMessage.cid == data.cid) {
-            if(lastMessage.message_type == TYPE_EMOTION) {
-                $lastMessage.html(lastMessage.desc).addClass("orange");
-            } else {
-                $lastMessage.text(lastMessage.desc).addClass("orange");
-            }
-        }
+        showLastMessage(lastMessage);
     };
     var onOffLine = function() {
         var $parent = $node.parent();
@@ -108,6 +116,9 @@ function Item(data,core,outer,from,manager) {
         },300, function() {
             $node.remove();
         });
+        if(manager.getCurrentUid() == data.uid) {
+            manager.setCurentUid(null);
+        }
     };
 
     var onRemove = function() {
@@ -201,14 +212,10 @@ function Item(data,core,outer,from,manager) {
             }
         }
         var lastMessage = arr.length > 0 ? arr[arr.length - 1] : null;
-        if(lastMessage && lastMessage.cid == data.cid) {
-            if(lastMessage.message_type == TYPE_EMOTION) {
-                $lastMessage.html(lastMessage.desc).addClass("orange");
-            } else {
-                $lastMessage.text(lastMessage.desc).addClass("orange");
-            }
-        }
-        $unRead.html(arr.length).show();
+        showLastMessage(lastMessage);
+        $unRead.html(arr.length).css({
+            'visibility' : 'visible'
+        });
     };
 
     var initNode = function() {
@@ -327,10 +334,10 @@ function Item(data,core,outer,from,manager) {
         if(from == 'online' && ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             hide();
         }
-        if(ret.type == 'black' && ret.handleType == 'del' && ret.userId === data.uid) {
+        if(ret.type == 'black' && ret.handleType == 'del' && ret.userId === data.uid && from === 'blacklist') {
             hide();
         }
-        if(ret.type == "star" && from == 'history' && ret.handleType == 'del' && ret.userId === data.uid) {
+        if(ret.type == "star" && from == 'star' && ret.handleType == 'del' && ret.userId === data.uid) {
             hide();
         }
         if(ret.type == 'star') {

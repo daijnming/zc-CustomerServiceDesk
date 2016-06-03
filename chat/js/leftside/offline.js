@@ -47,8 +47,9 @@ function Offline(node,core,window) {
         }
     };
 
-    var fetchData = function(index) {
+    var fetchData = function(index,from) {
         var url = urlList[index];
+        var from = from || 'history';
         Promise.when(function() {
             var promise = new Promise();
             $.ajax({
@@ -72,13 +73,13 @@ function Offline(node,core,window) {
                 var className = CLASSNAME[index];
                 var _html = doT.template(value)({
                     'list' : list,
-                    'type' : 'history',
+                    'type' : from,
                     'className' : className
                 });
                 $ulOuter.html(_html);
                 for(var i = 0,
                     len = list.length;i < len;i++) {
-                    var item = new Item(list[i],core,node,'history',that);
+                    var item = new Item(list[i],core,node,from,that);
                     chatItemList[list[i].uid] = item;
                 }
                 if(currentUid) {
@@ -97,7 +98,8 @@ function Offline(node,core,window) {
         var $elm = $(e.currentTarget);
         $elm.addClass("active").siblings().removeClass("active");
         var index = $elm.index();
-        fetchData(index);
+        var key = $elm.attr("data-key");
+        fetchData(index,key);
     };
 
     var show = function() {

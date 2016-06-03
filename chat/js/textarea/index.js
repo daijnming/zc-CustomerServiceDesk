@@ -133,7 +133,8 @@ function TextArea(node,core,window) {
     //智能回复
     var onIntelligencereplyHandler = function(evt,data) {
         if(data.data.status == "2") {
-            $sendMessage.val(data.data.msg).focus();
+     
+            $sendMessage.val(data.data.txt).focus();
         }
 
     }
