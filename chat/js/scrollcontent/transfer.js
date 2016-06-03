@@ -10,7 +10,7 @@ function Transfer(core,userInfo,callback) {
     var loadFile = require('../util/load.js')();
     var dateUtil = require("../util/date.js");
     var $outer;
-    var loadingTemplate = '<li class="blank"><img src="img/loading.gif" /></li>';
+    var loadingTemplate = '<li class="blank"><img src="img/static/loading.gif" /></li>';
     var $ulOuter,
         $refreshTime,
         $clearBtn;
@@ -32,10 +32,10 @@ function Transfer(core,userInfo,callback) {
         'key' : 'nickname'
     },{
         'name' : '接待状态',
-        'key' : 'status'
+        'key' : 'count'
     },{
         'name' : '所属分组',
-        'key' : 'group'
+        'key' : 'groupName'
     },{
         'name' : '操作',
         'key' : "operate",
@@ -45,13 +45,17 @@ function Transfer(core,userInfo,callback) {
     var columnKeyClickHandler = function(e) {
         var elm = e.currentTarget;
         var key = $(elm).attr("data-type");
+        var hiden = $(elm).attr("data-hiden");
+        if(hiden === 'true') {
+            return;
+        }
         if(key !== sortKey) {
             sortKey = key;
             sortType = 1;
         } else {
             sortType = (sortType + 1) % 2;
             if(sortType == 0)
-                sortType == 2;
+                sortType = 2;
         }
         $outer.find(".sort").removeClass("up").removeClass("down");
         var $sort = $(elm).find(".sort");
@@ -69,12 +73,16 @@ function Transfer(core,userInfo,callback) {
     var fetchData = function(value,promise) {
         var promise = promise || new Promise();
         $ulOuter.html(loadingTemplate);
+        if(window.localStorage) {
+            window.localStorage.sortKey = sortKey;
+            window.localStorage.sortType = sortType;
+        }
         $.ajax({
             'url' : '/chat/admin/getOhterAdminList.action',
             'data' : {
                 'uid' : global.id,
                 'orderName' : sortKey,
-                'order' : sortKey,
+                'order' : sortType,
                 'keyword' : keyword
             },
             'dataType' : 'json',
@@ -166,14 +174,16 @@ function Transfer(core,userInfo,callback) {
                 $(elm).text('用户已离线');
                 new Toast(core, {
                     'icon' : 'alert',
-                    'text' : '用户已离线'
+                    'text' : '用户已离线，无法转接'
                 });
+                setTimeout(function() {
+                    _self.hide();
+                },2000);
             } else if(ret.status == 3) {
                 //客服已经离线
                 $(elm).text('客服已离线');
             }
         }).fail(function(ret) {
-            console.log(ret);
         });
     };
     var bindListener = function() {

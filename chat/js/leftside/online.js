@@ -6,6 +6,7 @@ function Online(node,core,window) {
         $body;
     var that = {};
     var chatItemList = {};
+    var unreadList = require('./unreadlist.js');
     var global;
     var USOURCE = require('./source.json');
     var Item = require('./chatItem.js');
@@ -123,6 +124,24 @@ function Online(node,core,window) {
 
     };
 
+    /**
+     * 发送丢用户的错误日志
+     */
+    var lostUserLog = function() {
+        $.ajax({
+            'url' : '/chat/admin/log.action',
+            'type' : "post",
+            'data' : {
+                'msg' : data.msgId,
+                'pid' : pid,
+                'uid' : myid,
+                'puid' : puid,
+                'code' : '02',
+                "detail" : "推送消息时，页面没有这个用户"
+            }
+        });
+    };
+
     var onReceive = function(value,list) {
         for(var i = 0,
             len = list.length;i < len;i++) {
@@ -133,6 +152,14 @@ function Online(node,core,window) {
                     break;
                 case 108:
                     userOfflineMessage(data);
+                    break;
+                case 103:
+                    if(!chatItemList[data.uid].getReady()) {
+                        unreadList.push(data.uid,data);
+                    }
+                    if(!chatItemList[data.uid]) {
+                        lostUserLog();
+                    }
                     break;
             }
         }
@@ -152,6 +179,7 @@ function Online(node,core,window) {
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
         getDefaultChatList();
+        loadFile.load(global.baseUrl + "views/leftside/chatitem.html");
     };
     var userOfflineMessage = function(data) {
         var uid = data.uid;

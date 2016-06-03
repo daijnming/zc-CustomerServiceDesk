@@ -10,6 +10,18 @@
     </div>
   {{ } }}
 
+  {{ if(it.list[prop].action === 'loadmore') { }}
+    <div class="systeamTextBox js-zc-loadmore">
+      <p class="systeamText">点击加载更多</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 'nomore') { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">没有更多</p>
+    </div>
+  {{ } }}
+
   {{ if(it.list[prop].action === 4) { }}
     <div class="systeamTextBox">
       <p class="systeamText">用户和机器人建立会话</p>
@@ -51,7 +63,7 @@
 
     {{ if (it.list[prop].offlineType === 5) { }}
       <div class="systeamTextBox">
-        <p class="systeamText">用户已和用户结束本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
       </div>
     {{ } }}
   {{ } }}

@@ -31,7 +31,6 @@ var FastMsgModal = function(node,core,config) {
     //点击快捷回复进行回复
     var onRightRepToOut = function() {
         var val = $(this).html();
-        // console.log(val);
         //暴露接口给文本框输入
         $(document.body).trigger("rightside.onSelectedByFastRelpy",[{
             'data' : val
@@ -50,9 +49,8 @@ var FastMsgModal = function(node,core,config) {
     };
     //加载右侧快捷分组
     var onRightGroup = function(data) {
-      // console.log(data);
-      $(oRightQuickLeft).html('');
-      $(oRightQuickRight).html('');
+        $(oRightQuickLeft).html('');
+        $(oRightQuickRight).html('');
         loadFile.load(global.baseUrl + 'views/rightside/fastreplyleft.html').then(function(value) {
             var _html = doT.template(value)({
                 'list' : data
@@ -67,19 +65,19 @@ var FastMsgModal = function(node,core,config) {
         });
     };
     //编辑重新加载
-    var onReloadFastReply = function(){
-      $.ajax({
-        type:'post',
-        cache:false,
-        data:{
-          'userId':config.id
-        },
-        url:'/chat/reply/replyGrouplist.action',
-        dataType:'json',
-        success:function(data){
-          onRightGroup(data);
-        }
-      });
+    var onReloadFastReply = function() {
+        $.ajax({
+            type : 'post',
+            cache : false,
+            data : {
+                'userId' : config.id
+            },
+            url : '/chat/reply/replyGrouplist.action',
+            dataType : 'json',
+            success : function(data) {
+                onRightGroup(data);
+            }
+        });
     };
 
     var onContentLoaded = function(ret) {
@@ -133,9 +131,10 @@ var FastMsgModal = function(node,core,config) {
         FastLayer(outer.shadowNode,core,config);
         outer.dialog.show();
     }
-    var initPlugsin = function(){
-      //点击快捷回复
-      onRightGroup(config.fastData);
+
+    var initPlugsin = function() {
+        //点击快捷回复
+        onRightGroup(config.fastData);
     };
     var bindLsitener = function() {
         $(oRightQuickLeft).on('click','li',onTapGetRightRep);

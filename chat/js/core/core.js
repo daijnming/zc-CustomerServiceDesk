@@ -98,7 +98,8 @@ function Core(window) {
                     for(var el in ret) {
                         global[el] = ret[el];
                     }
-                    global.baseUrl = location.protocol + "//" + location.host + "/chat/" + ((!value.success) ? 'admins/' : '');
+                    var path = location.href.indexOf("admins_new") < 0 ? "admins/" : "admins_new/";
+                    global.baseUrl = location.protocol + "//" + location.host + "/chat/" + ((!value.success) ? path : '');
                     if(!value.success) {
                         global.scriptPath = "//static.sobot.com/chat/admins/";
                     } else {
@@ -145,7 +146,7 @@ function Core(window) {
         })(data.uid);
         setTimeout(function() {
             noti.close();
-        },2000);
+        },300 * 1000);
     };
 
     var messageAdapter = function(list) {
@@ -195,14 +196,13 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             messageAdapter(list);
-            console.log(list.length + " core");
             $body.trigger('core.receive',[list]);
         });
     };
 
     var initNotification = function() {
         if(Notification && Notification.permission !== 'granted') {
-            Notification.requestPermission().then(function() {
+            Notification.requestPermission(function() {
                 notificationPermission = Notification.requestPermission();
             });
         } else {

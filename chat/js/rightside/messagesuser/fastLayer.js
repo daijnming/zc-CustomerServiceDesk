@@ -136,8 +136,8 @@ var Fastlayer = function(node,core,config) {
                 });
             }
             // }
-        } else{
-          $this.addClass('sureDel');
+        } else {
+            $this.addClass('sureDel');
         }
     };
 
@@ -169,14 +169,14 @@ var Fastlayer = function(node,core,config) {
         if(sendId) {
             $.ajax({
                 type : "post",
-                url :  url,
+                url : url,
                 data : data,
                 dataType : "json",
                 success : function(data) {
                     if(data.status) {
                         var oLi = $this.parent('li');
                         var oUl = $this.parents('ul');
-                        toTopAnimate(oUl,oLi,function(){
+                        toTopAnimate(oUl,oLi, function() {
                             onReLoadHandler(true);
                         });
                     }
@@ -189,7 +189,6 @@ var Fastlayer = function(node,core,config) {
         var key = e.which;
         if(key == 13 && !e.shiftKey) {
             $that.blur();
-            // console.log('e');
             return false;
         }
     };
@@ -212,7 +211,6 @@ var Fastlayer = function(node,core,config) {
             }
             return;
         }
-        // console.log($this.val()+":"+That.inputText);
         if($this.val() == That.inputText) {
             //未做任何修改
             return;
@@ -246,19 +244,19 @@ var Fastlayer = function(node,core,config) {
             clsDelName = 'js-delLeftGroup delLeftGroup';
             clsUpName = 'js-upLeftGroup upLeftGroup hide';
             utype = 'left';
-            maxlength=50;
+            maxlength = 50;
         } else {
             clsDelName = 'js-delRightRep delRightRep';
             clsUpName = 'js-upRightRep upRightRep hide';
             utype = 'right';
-            maxlength=2048;
+            maxlength = 2048;
         }
         var template = require('./template.js');
         var conf = $.extend({
             "utype" : utype,
             "clsDelName" : clsDelName,
             'clsUpName' : clsUpName,
-            'maxlength':maxlength
+            'maxlength' : maxlength
         });
         var _html = doT.template(template.zcReplyOuter)(conf);
         var oListInput = $(obj).find('li')[$(obj).find('li').length - 1];
@@ -315,7 +313,7 @@ var Fastlayer = function(node,core,config) {
                 //?groupName='+ groupName +'&&userId='+ myid +'&&companyId=' + This.companyId;
                 $.ajax({
                     type : "post",
-                    url :  addGroupUrl,
+                    url : addGroupUrl,
                     data : {
                         'groupName' : groupName,
                         'userId' : id
@@ -345,7 +343,7 @@ var Fastlayer = function(node,core,config) {
                 //?id='+ oQuickid +'&&value='+ oText;
                 $.ajax({
                     type : "post",
-                    url :  changeQuickUrl,
+                    url : changeQuickUrl,
                     data : {
                         'id' : oQuickid,
                         'value' : oText,
@@ -358,7 +356,7 @@ var Fastlayer = function(node,core,config) {
                         }
                     }
                 });
-            } else{
+            } else {
                 //添加
                 //获取分组id
                 var li = $(oFastLeft).find('li');
@@ -372,7 +370,7 @@ var Fastlayer = function(node,core,config) {
                 //?groupId='+ oGroupId +'&&value='+ oText;
                 $.ajax({
                     type : "post",
-                    url :  addQuickUrl,
+                    url : addQuickUrl,
                     data : {
                         'groupId' : oGroupId,
                         'value' : oText,

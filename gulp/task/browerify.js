@@ -3,7 +3,7 @@ var browserify = require('gulp-browserify');
 var config = require('../config.json');
 var notify = require('gulp-notify');
 gulp.task('browserify',function(){
-	gulp.src(config.baseDir+'js/**/entrance.js').
+return	gulp.src(config.baseDir+'js/**/entrance.js').
 	pipe(browserify({
 		'insertGlobals':false
 	})).

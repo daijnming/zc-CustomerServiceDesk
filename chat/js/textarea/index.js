@@ -10,7 +10,7 @@ function TextArea(node,core,window) {
     var ZC_Face = require('../util/qqFace.js');
     //上传附件
     var uploadImg = require('./uploadImg.js');
-
+    var inputCache = {};
     //模板引擎
     var template = require('./template.js');
     var apihost = "/chat/";
@@ -22,7 +22,6 @@ function TextArea(node,core,window) {
         currentUid,
         answer;
     //传给聊天的url
-
     var parseDOM = function() {
         $node = $(node);
         $uploadBtn = $node.find(".js-upload");
@@ -43,10 +42,14 @@ function TextArea(node,core,window) {
         }
     };
     var onSelected = function(evt,data) {
+        if(currentUid){
+            inputCache[currentUid] = $sendMessage.val();
+        }
         currentUid = data.data.uid;
         currentCid = data.data.cid;
-
         if(data.data.from == 'online') {
+            //输入内容做缓存
+            onTabSelectedSaveInner(currentUid);
             $botTextBox.show();
             $sendMessage.focus();
             botTextBoxPosition();
@@ -57,7 +60,14 @@ function TextArea(node,core,window) {
             //重新定义聊天体的高度
         }
     };
-
+    //输入内容做缓存
+    var onTabSelectedSaveInner=function(uid){
+        if(inputCache[uid]){
+            $sendMessage.val(inputCache[uid]);
+        }else{
+            $sendMessage.val('');
+        }
+    };
     var onImageUpload = function(evt,data) {
         onFileTypeHandler(data);
         //通过textarea.send事件将用户的数据传到显示台
@@ -179,6 +189,22 @@ function TextArea(node,core,window) {
         }
         $botTextBox.css("bottom","-232px")
     };
+    //用户正在输入
+    var changeingInput=function(evt){
+        if($sendMessage.val()==""&&evt.keyCode != 13)
+            $.ajax({
+                'url' : '/chat/admin/input.action',
+                'data' : {
+                    'cid' : currentCid,
+                    'uid' : currentUid
+                },
+                'type' : 'post',
+                'dataType' : "json"
+            }).success(function(res) {
+                //console.log("")
+            });
+     }
+
     var isHiddenBotTextBox = function() {
         $botTextBox.hide();
     };
@@ -196,9 +222,12 @@ function TextArea(node,core,window) {
         $(window || document.body).on("resize",botTextBoxPosition);
         //发送按钮
         $node.find(".js-btnSend").on("click",onbtnSendHandler);
+        //回车发送
         $sendMessage.on("keydown",onEnterSendHandler);
         //粘贴上传(只能传截屏)
         $sendMessage.on("paste",onFilePaste);
+        //正在输入
+        $sendMessage.on("keydown",changeingInput);
         /*
          *
          qq表情
