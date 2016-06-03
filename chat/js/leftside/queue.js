@@ -67,7 +67,7 @@ function Queue(core,window) {
                 $countSize.text(key);
             }
             $totalpage.html(totalPage);
-            $currentPage.html(currentPage);
+            $currentPage.html(totalPage == 0 ? 0 : currentPage);
             $refreshTime.html(dateTimeUtil.getTime(new Date()));
             var _html = doT.template(ret.html)({
                 'list' : ret.data.list
