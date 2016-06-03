@@ -61,9 +61,9 @@ var Fastlayer = function(node,core,config) {
     };
     //点击左侧快捷回复分组条
     var onFastTap = function() {
-        var _arr = [];
-        $(node).find('.js-rightContent li').addClass('hide');
         var $this = $(this);
+        // console.log($this);
+        var _arr = [];
         $this.addClass('activeLine').siblings('li').removeClass('activeLine');
         $this.find('input').addClass('activeLine').parent('li').siblings('li').find('input').removeClass('activeLine');
         //清空右侧回复
@@ -83,6 +83,12 @@ var Fastlayer = function(node,core,config) {
             $(oAddNewRep).hide();
         //快捷回复中第一条不显示置顶
         $(_arr[0]).find('.js-upRightRep').addClass('hide');
+    };
+    //点击右侧列表 停留样式
+    var onFastRightTap = function(){
+      var $this =$(this);
+      $this.addClass('activeLine').siblings('li').removeClass('activeLine');
+      $this.find('input').addClass('activeLine').parent('li').siblings('li').find('input').removeClass('activeLine');
     };
 
     //快捷删除
@@ -404,7 +410,7 @@ var Fastlayer = function(node,core,config) {
         $(oFastLeft).on('blur','input',onFastBlur);
         $(oFastLeft).on('focus','input',onFastFocus);
         ///
-        $(oFastRight).on('click','li',onFastTap);
+        $(oFastRight).on('click','li',onFastRightTap);
         $(oFastRight).on('click','.js-delRightRep',onDelFast);
         $(oFastRight).on('click','.js-upRightRep',onUpFast);
         $(oFastRight).on('keypress','input',onFastkeyParess);

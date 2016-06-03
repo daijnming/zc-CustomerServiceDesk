@@ -4,6 +4,7 @@
  */
 
 function Item(data,core,outer,from,manager) {
+    var from = from || 'online';
     var node,
         $node,
         $unRead,
@@ -24,7 +25,7 @@ function Item(data,core,outer,from,manager) {
     var userDataCache = {};
     var baseUrl = global.baseUrl;
     var $ulOuter;
-    var status = (from == 'history') ? 'offline' : 'online';
+    var status = (from == 'history' || from == 'blacklist' || from == 'star') ? 'offline' : 'online';
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
@@ -208,7 +209,9 @@ function Item(data,core,outer,from,manager) {
                 $lastMessage.text(lastMessage.desc).addClass("orange");
             }
         }
-        $unRead.html(arr.length).show();
+        $unRead.html(arr.length).css({
+            'visibility' : 'visible'
+        });
     };
 
     var initNode = function() {
@@ -327,10 +330,10 @@ function Item(data,core,outer,from,manager) {
         if(from == 'online' && ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             hide();
         }
-        if(ret.type == 'black' && ret.handleType == 'del' && ret.userId === data.uid) {
+        if(ret.type == 'black' && ret.handleType == 'del' && ret.userId === data.uid && from === 'blacklist') {
             hide();
         }
-        if(ret.type == "star" && from == 'history' && ret.handleType == 'del' && ret.userId === data.uid) {
+        if(ret.type == "star" && from == 'star' && ret.handleType == 'del' && ret.userId === data.uid) {
             hide();
         }
         if(ret.type == 'star') {

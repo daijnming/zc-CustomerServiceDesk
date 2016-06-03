@@ -41,6 +41,7 @@ function Queue(core,window) {
     var initContent = function(data,promise) {
         var html = data.html;
         var ret = data.data;
+        ret.currentPage = ret.countPage == 0 ? 0 : ret.currentPage;
         ret.isInvite = global.isInvite;
         userSize[currentTab] = ret.waitSize;
         totalPage = ret.countPage;
@@ -67,7 +68,7 @@ function Queue(core,window) {
                 $countSize.text(key);
             }
             $totalpage.html(totalPage);
-            $currentPage.html(currentPage);
+            $currentPage.html(totalPage == 0 ? 0 : currentPage);
             $refreshTime.html(dateTimeUtil.getTime(new Date()));
             var _html = doT.template(ret.html)({
                 'list' : ret.data.list

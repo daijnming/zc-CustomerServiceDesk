@@ -134,15 +134,13 @@ function Content(node,core,window) {
                             userChatCache[userId].date = ret.data[0].content[0].t;
                         }
 
-                        if(isRender)
-                            parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList);
+                        if(isRender) parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList, true);
                     } else {
                         parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList);
                     }
                 });
             } else {
-                if(isRender)
-                    parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
+                if(isRender) parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
             }
         } else {
 
@@ -352,7 +350,7 @@ function Content(node,core,window) {
         });
     }
     var sendSearchUserChat = function() {
-        $rootNode.on('click','.msg_content', function() {
+        $rootNode.on('click','.fl .msg_content', function() {
             var chatText = $(this).html();
 
             if(chatText.indexOf('webchat_img_upload') !== -1) {
@@ -478,7 +476,7 @@ function Content(node,core,window) {
             }
         });
     }
-    var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList) {
+    var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList, isPage) {
         $rootNode.find('.js-zc-loadmore').empty();
 
         if(appendList && appendList.length > 0) {
@@ -490,9 +488,11 @@ function Content(node,core,window) {
             loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
                 var _html;
 
-                appendList.unshift({
-                  action: 'loadmore',
-                });
+                if (isPage) {
+                  appendList.unshift({
+                    action: 'loadmore',
+                  });
+                }
 
                 _html = doT.template(tpl)({
                     adminName: global.name,
@@ -501,13 +501,39 @@ function Content(node,core,window) {
                     systemImage : systemImage,
                     list : appendList
                 });
-                if(isToTop) {
-                    $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
-                    $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
-                } else {
-                    $rootNode.find('#' + type).find('.js-panel-body').append(_html);
 
-                    if(isScrollBottom) {
+
+                // if(isToTop) {
+                //     $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
+                //     $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
+                // } else {
+
+                if (isPage) {
+                  $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
+                } else {
+                  $rootNode.find('#' + type).find('.js-panel-body').append(_html);
+                }
+
+                if(isScrollBottom) {
+                    var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
+
+                    if(img) {
+                        img.src = img.src + '?r=' + (new Date());
+                        img.onload = function() {
+                            $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                            userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                        }
+                    } else {
+                        $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                        userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                    }
+                } else {
+
+                    var height = $('#' + type).find('.js-panel-body').height();
+                    var scrollTop = $('#' + type).find('.scrollBoxParent').scrollTop();
+                    if((height - scrollTop) > 700) {
+                        if(typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
+                    } else {
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                         if(img) {
@@ -520,33 +546,12 @@ function Content(node,core,window) {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
                         }
-                    } else {
 
-                        var height = $('#' + type).find('.js-panel-body').height();
-                        var scrollTop = $('#' + type).find('.scrollBoxParent').scrollTop();
-                        if((height - scrollTop) > 700) {
-
-                            if(typeNo === 103)
-                                $rootNode.find('#' + type).find('.zc-newchat-tag').show();
-                        } else {
-                            var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
-
-                            if(img) {
-                                img.src = img.src + '?r=' + (new Date());
-                                img.onload = function() {
-                                    $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-                                    userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
-                                }
-                            } else {
-                                $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-                                userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
-                            }
-
-                        }
                     }
                 }
+                // }
 
-                if ($('.zc-c-chat-date-line-text').eq(1).length > 0) {
+                if ($('.zc-c-chat-date-line-text').eq(1).length > 0 && isPage) {
                   var offsetTop = $('.zc-c-chat-date-line-text').eq(1).parent().parent()[0].offsetTop;
                   $('#' + type).find('.scrollBoxParent').scrollTop(offsetTop - 180);
                 }
@@ -587,9 +592,11 @@ function Content(node,core,window) {
                     item.msg = item.msg ? App.getUrlRegex(item.msg) : null;
                 })
 
-                data.list.unshift({
-                  action: 'nomore',
-                });
+                if (appendList && appendList.length) {
+                  data.list.unshift({
+                    action: 'nomore',
+                  });
+                }
 
                 _html = doT.template(tpl)({
                     adminName: global.name,
