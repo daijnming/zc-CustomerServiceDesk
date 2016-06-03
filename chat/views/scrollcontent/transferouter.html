@@ -19,9 +19,9 @@
                     {{ if(item.hiden === true){ }}
                         &nbsp;
                     {{ }else if(item.key == it.sortKey){ }}
-                        {{ if(it.sortType == 2){ }}
+                        {{ if(it.sortType == 1){ }}
                             <i class="sort up"></i>
-                        {{ }else if(it.sortType == 1){ }}
+                        {{ }else if(it.sortType == 2){ }}
                             <i class="sort down"></i>
                         {{  } }}
                     {{ }else{ }}
