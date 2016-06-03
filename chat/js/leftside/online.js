@@ -155,11 +155,11 @@ function Online(node,core,window) {
                     userOfflineMessage(data);
                     break;
                 case 103:
-                    if(!chatItemList[data.uid].getReady()) {
-                        unreadList.push(data.uid,data);
-                    }
+
                     if(!chatItemList[data.uid]) {
                         lostUserLog(data);
+                    } else if(!chatItemList[data.uid].getReady()) {
+                        unreadList.push(data.uid,data);
                     }
                     break;
             }
