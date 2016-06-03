@@ -9,6 +9,7 @@ var TYPE_EMOTION = 0,
 var normalMessageAdapter = function(value) {
     var content = value.content || value.answer || '';
     var reg = /src=['"](.*?)['"]/;
+    console.log(content);
     if(content.indexOf("<img") >= 0) {
         if(content.indexOf("webchat_img_face") >= 0) {
             value.message_type = TYPE_EMOTION;
