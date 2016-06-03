@@ -202,7 +202,7 @@ function Core(window) {
 
     var initNotification = function() {
         if(Notification && Notification.permission !== 'granted') {
-            Notification.requestPermission().then(function() {
+            Notification.requestPermission(function() {
                 notificationPermission = Notification.requestPermission();
             });
         } else {
