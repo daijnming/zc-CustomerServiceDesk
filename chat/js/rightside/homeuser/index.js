@@ -11,12 +11,15 @@ var HomeUser = function(node,core,config) {
 			relevantSearchHideBtn,//相关搜索
 			robotAnswer,
 			sugguestions,
-			robotBack;//返回按钮
+			robotBack,//返回按钮
+			searchInput,//搜索框
+			timer;
 
 	var cnf={
 		uid:''
 	};//用户信息
 	var quickSearch=function(val){
+	if($(searchInput).val()=='')return;
 	$(robotDirectHideBtn).hide();
 	$(relevantSearchHideBtn).hide();
 	$(robotAnswer).find('a')[0].innerHTML='';
@@ -119,6 +122,16 @@ var onSuggestions= function(){
 		$(homeuser).find('.js-robotBackHideBtn').show();
 	},100);
 };
+//查询智能回复
+var onSerchChangeContent = function(){
+	var $this = $(this);
+	if($this.val().length === 0)return;
+	clearTimeout(timer);
+	timer = setTimeout (function(){
+		quickSearch($this.val());
+		$(homeuser).find('.js-robotBackHideBtn').hide();
+	},500);
+};
 	//查询智能回复
 var onSerchContent = function(evn){
 	var $this = $(this);
@@ -158,6 +171,7 @@ var parseDOM = function() {
 	robotAnswer = $(node).find('.js-robotAnswer');
 	sugguestions = $(node).find('.js-robotSugguestions');
 	robotBack = $(node).find('.js-robotBackHideBtn');
+	searchInput = $(node).find('.js-searchBot input');
 };
 var onReceive = function(value,data) {
 
@@ -170,6 +184,7 @@ var bindLitener = function() {
 	$(document.body).on('scrollcontent.onSearchUserChat',onGetReplyByChat);//点击聊天内容获取智能回复
 	$(document.body).on('rightside.onTabSwitch',onTabSwitch);
 	$(robotBack).on('click',onBackAnswer);
+	$(homeuser).delegate('#quickSerch','input propertychange',onSerchChangeContent);
 	$(homeuser).delegate('#quickSerch','keyup',onSerchContent);
 	$(robotDirectHideBtn).delegate('.js-quickSendBtn','click',onChatSmartReply);
 	$(robotAnswer).delegate('a','click',onChatSmartReply);

@@ -42,19 +42,10 @@ ul {
     height: 100%;
 
 }
-.shadowLayer.content .quickContent .leftContent {
+.shadowLayer.content .quickContent .leftContent,.shadowLayer.content .quickContent .rightContent {
 
     width: 100%;
     height: 385px;
-    /*overflow-y: scroll;*/
-    /*overflow: hidden;
-    outline: none;*/
-}
-.shadowLayer.content .quickContent .rightContent {
-
-    width: 100%;
-    height: 385px;
-    /*overflow: scroll;*/
     /*overflow-y: scroll;*/
     /*overflow: hidden;
     outline: none;*/
@@ -226,7 +217,7 @@ ul {
 /******profileuser 自定义字段值***********/
 .rightBox .custom-msg{
   width:100%;
-  overflow-y: scroll;
+  /*overflow-y: scroll;*/
   word-break: break-all;
   margin-bottom: 10px;
 }
