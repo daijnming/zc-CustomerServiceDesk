@@ -137,9 +137,6 @@ function Item(data,core,outer,from,manager) {
                         'type' : 'post',
                         'dataType' : "json"
                     }).success(function(ret) {
-                        if(manager.getCurrentUid() == data.uid) {
-                            manager.setCurrentUid(null);
-                        }
                         $body.trigger("leftside.onremove",[{
                             'cid' : data.cid,
                             'uid' : data.uid
