@@ -564,8 +564,12 @@ function Content(node,core,window) {
 
                 for(var i = 0;i < data.list.length;i++) {
 
-                    if(data.list[i].action === 'noReadLine')
-                        data.list.splice(i,1);
+                    if (data.list[i].action === 'noReadLine') {
+                      data.list.splice(i,1);
+                    }
+                    else if (data.list[i].action === 'loadmore') {
+                      data.list.splice(i,1);
+                    }
                 }
 
                 if(userInfo.unreadcount) {
@@ -587,12 +591,24 @@ function Content(node,core,window) {
                     }
                 }
 
+
+                // 
+                // $('#chatSwitch').click();
+                //
+                // setTimeout(function() {
+                //   window.$('#inputMsg').val('沧州明珠涨停');
+                // }, 300);
+                //
+                // setTimeout(function() {
+                //   window.$('#sendBtn').click();
+                // }, 5000);
+
                 data.list.map(function(item) {
                     item.msg = item.msg ? Face.analysis(item.msg) : null;
                     item.msg = item.msg ? App.getUrlRegex(item.msg) : null;
                 })
 
-                if (appendList && appendList.length) {
+                if (appendList) {
                   data.list.unshift({
                     action: 'nomore',
                   });
@@ -931,7 +947,20 @@ function Content(node,core,window) {
     };
 
     var onReceive = function(value,data) {
+        console.log('----- data -----');
+        console.log(data);
+        // data = [{"type":102,"uid":"a37fb1187fdd4900a89a3e5e4295e9f4","uname":"北京市联通","face":null,"usource":0,"aname":null,"aface":null,"cid":"dcda775206f2436f9a574142da81510a","chatType":0,"ismark":0,"tel":null,"groupId":"","groupName":null,"pid":"088ad376b6514ed0a191067308c284fe","t":1465184014221,"msgId":"2c73d07c67374e028aac2f10c56ec960","description":"用户接入","isTransfer":0},{"type":103,"uid":"a37fb1187fdd4900a89a3e5e4295e9f4","pid":"088ad376b6514ed0a191067308c284fe","uname":"北京市联通","face":null,"cid":"dcda775206f2436f9a574142da81510a","content":"1","msgType":0,"source":0,"ts":"2016-06-06 11:34:05","t":1465184045984,"msgId":"6527d2cfaa6a4f568600d9dd8fb3b86e","message_type":2,"desc":"1"}];
+        // console.log(data);
         userPushMessage(data);
+        //
+        $('#chatSwitch').click();
+
+        setTimeout(function() {
+          window.$('#inputMsg').val('tk最帅');
+          window.$('#sendBtn').click();
+        }, 300);
+
+
     };
 
     var onloadHandler = function(evt,data) {
