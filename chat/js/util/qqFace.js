@@ -92,11 +92,11 @@ var ZC_Face = {
         $(document.body).delegate(".faceIco",'click', function(e) {
             var elm = e.currentTarget;
             var src = $(elm).attr("data-src");
-            var currentSaytext = $(_this.saytext).val() + src;
+
+            //var currentSaytext = $(_this.saytext).val() + src;
             //将新表情追加到待发送框里
-            //$("#saytext").val("");
-            $(_this.saytext).val('');
-            $(_this.saytext).val(currentSaytext);
+            //$(_this.saytext).val('');
+            //$(_this.saytext).val(currentSaytext);
             $(_this.Group).hide();
             //隐藏表情集合
 
@@ -112,15 +112,39 @@ var ZC_Face = {
             var src = $(elm).attr("data-src");
             var reg = /u([0-9A-Za-z]{5})/;
 
-            var currentSaytext = $(_this.saytext).val() + src;
+            //var currentSaytext = $(_this.saytext).val() + src;
             //将新表情追加到待发送框里
-            $(_this.saytext).val('');
+            var oTxt1 = document.getElementById("js-sendMessage");
+            var cursurPosition=-1;
+            if(oTxt1.selectionStart||oTxt1.selectionStart==0){//非IE浏览器
+                cursurPosition= oTxt1.selectionStart;
+            }else{//IE
+               var range = document.selection.createRange();
+                range.moveStart("character",-oTxt1.value.length);
+                cursurPosition=range.text.length;
+            }
+            var currentSaytextBefore=$(_this.saytext).val().substring(0,cursurPosition);
+            var currentSaytextAfter=$(_this.saytext).val().substring(cursurPosition);
+            var currentSaytext=currentSaytextBefore+src+currentSaytextAfter;
             $(_this.saytext).val(currentSaytext);
+            //定位光标
+            var pos=(currentSaytextBefore+src).length;
+            if(oTxt1.setSelectionRange)
+                {
+                    oTxt1.setSelectionRange(pos,pos);
+                    oTxt1.focus();
+                }
+                else if (oTxt1.createTextRange) {
+                    var range = oTxt1.createTextRange();
+                    range.collapse(true);
+                    range.moveEnd('character', pos);
+                    range.moveStart('character', pos);
+                    range.select();
+                }
+
+            
             $(_this.Group).hide();
             //隐藏表情集合
-            $(_this.saytext).focus();
-            //
-            //cbk && cbk(src);
         });
 
     },
