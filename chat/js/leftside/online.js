@@ -162,10 +162,10 @@ function Online(node,core,window) {
             var data = list[i];
             switch(data.type) {
                 case 102:
-                    console.log(chatItemList[data.uid])
                     if(!chatItemList[data.uid]) {
                         newUserMessage(data);
-                    } else if(chatItemList[data.uid]) {
+                    } else if(chatItemList[data.uid].getStatus() === 'offline') {
+                        newUserMessage(data);
                     }
                     break;
                 case 108:
