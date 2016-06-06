@@ -101,9 +101,7 @@ function Item(data,core,outer,from,manager) {
         } else {
             $node.parent().append($node);
         }
-        if(manager.getCurrentUid() === data.uid) {
-            manager.setCurrentUid(null);
-        }
+
     };
 
     var hide = function() {
