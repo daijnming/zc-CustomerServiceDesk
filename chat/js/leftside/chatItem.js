@@ -101,9 +101,7 @@ function Item(data,core,outer,from,manager) {
         } else {
             $node.parent().append($node);
         }
-        if(manager.getCurrentUid() === data.uid) {
-            manager.setCurrentUid(null);
-        }
+
     };
 
     var hide = function() {
@@ -137,6 +135,9 @@ function Item(data,core,outer,from,manager) {
                         'type' : 'post',
                         'dataType' : "json"
                     }).success(function(ret) {
+                        if(manager.getCurrentUid() == data.uid) {
+                            manager.setCurrentUid(null);
+                        }
                         $body.trigger("leftside.onremove",[{
                             'cid' : data.cid,
                             'uid' : data.uid
