@@ -592,17 +592,6 @@ function Content(node,core,window) {
                 }
 
 
-                // 
-                // $('#chatSwitch').click();
-                //
-                // setTimeout(function() {
-                //   window.$('#inputMsg').val('沧州明珠涨停');
-                // }, 300);
-                //
-                // setTimeout(function() {
-                //   window.$('#sendBtn').click();
-                // }, 5000);
-
                 data.list.map(function(item) {
                     item.msg = item.msg ? Face.analysis(item.msg) : null;
                     item.msg = item.msg ? App.getUrlRegex(item.msg) : null;
@@ -753,7 +742,7 @@ function Content(node,core,window) {
             $rootNode.find('.js-transfer').addClass('hide');
           }
 
-          if(userChatCache[data.uid]) {
+          if(userChatCache[data.uid] && userChatCache[data.uid].list) {
               userChatCache[data.uid].list.push({
                   action : 10,
                   offlineType : 5,
@@ -825,10 +814,8 @@ function Content(node,core,window) {
 
           if(userChatCache[data.uid]) {
 
-              // for(var i = 0;i < data.length;i++) {
-                  // userChatCache[data[0].uid].list.push(data[i]);
-                  // 聊天
               if (data.type === 103) {
+                  userChatCache[data.uid].list = userChatCache[data.uid].list || [];
                   userChatCache[data.uid].list.push({
                       action : 5,
                       senderType : 0,
