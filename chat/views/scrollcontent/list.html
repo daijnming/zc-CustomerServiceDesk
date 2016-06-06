@@ -24,7 +24,7 @@
 
   {{ if(it.list[prop].action === 4) { }}
     <div class="systeamTextBox">
-      <p class="systeamText">用户和机器人建立会话</p>
+      <p class="systeamText">用户和机器人建立会话 {{=it.list[prop].ts.split(' ')[1]}}</p>
     </div>
   {{ } }}
 

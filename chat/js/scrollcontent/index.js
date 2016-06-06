@@ -392,7 +392,7 @@ function Content(node,core,window) {
                 });
             });
 
-            if(userInfo.unreadcount) {
+            if (userInfo.unreadcount) {
                 var count = 0;
 
                 for(var i = list.length - 1;i > -1;i--) {
@@ -479,7 +479,7 @@ function Content(node,core,window) {
     var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList, isPage) {
         $rootNode.find('.js-zc-loadmore').empty();
 
-        if(appendList && appendList.length > 0) {
+        if (appendList && appendList.length > 0) {
 
             appendList.map(function(item) {
                 item.msg = item.msg ? Face.analysis(item.msg) : null;
@@ -502,7 +502,6 @@ function Content(node,core,window) {
                     list : appendList
                 });
 
-
                 // if(isToTop) {
                 //     $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
                 //     $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
@@ -513,6 +512,8 @@ function Content(node,core,window) {
                 } else {
                   $rootNode.find('#' + type).find('.js-panel-body').append(_html);
                 }
+
+
 
                 if(isScrollBottom) {
                     var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
@@ -613,15 +614,43 @@ function Content(node,core,window) {
 
                 $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
 
-                setTimeout(function() {
+                if (userChatCache[userInfo.userId].errorChatTokens) {
+
+                  // 修改dom
+                  userChatCache[userInfo.userId].errorChatTokens.map(function(item) {
+
+                    data.list.map(function(listItem) {
+
+                      if (item === listItem.token) $rootNode.find('#chat').find('').find('[data-token="' + data.token + '"]').show();
+                    });
+                  });
+                }
+
+                // setTimeout(function() {
 
                   if (isScrollBottom) {
-                    $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-                    userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+
+
+
+                    var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
+
+                    if(lastImg) {
+                        lastImg.src = lastImg.src + '?r=' + (new Date());
+                        lastImg.onload = function() {
+                          $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                          userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                        }
+                    } else {
+                        $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                        userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                    }
+
+
                   }
-                },400);
+                // },400);
           });
         }
+
 
         if(userChatCache[userInfo.userId].isCall) {
             callUser();
@@ -893,6 +922,33 @@ function Content(node,core,window) {
 
         getChatListByOnline('chat',parseList,null,null,data,true,true,null,list);
     }
+
+    var adminPushMessageSendResult = function(data) {
+        var caches = userChatCache[data.uid];
+
+        if (caches) {
+          caches.errorChatTokens = caches.errorChatTokens || [];
+
+          // data.type = 'error';
+
+          if (data.type === 'success')  {
+            var arrIndex = caches.errorChatTokens.indexOf(data.token);
+
+            // 存在token
+            if (arrIndex !== -1) caches.errorChatTokens.splice(arrIndex, 1);
+          } else {
+
+            // 如果在当前user tab
+            if (data.uid === userInfo.userId) $rootNode.find('#chat').find('[data-token="' + data.token + '"]').show();
+
+
+            // 保存当前uid 发送失败的消息的token队列
+            caches.errorChatTokens.push(data.token);
+          }
+        }
+
+    }
+
     var adminPushMessage = function(data) {
         var list = [];
 
@@ -907,7 +963,8 @@ function Content(node,core,window) {
             senderType : 2,
             senderName : global.name,
             msg : App.getUrlRegex(data.answer),
-            ts : 'date ' + new Date().toTimeString().split(' ')[0]
+            ts : 'date ' + new Date().toTimeString().split(' ')[0] ,
+            token: data.date
         });
 
         list.push({
@@ -915,12 +972,12 @@ function Content(node,core,window) {
             senderType : 2,
             senderName : global.name,
             msg : App.getUrlRegex(data.answer),
-            ts : 'date ' + new Date().toTimeString().split(' ')[0]
+            ts : 'date ' + new Date().toTimeString().split(' ')[0] ,
+            token: data.date
         });
 
         var isRender = userInfo.userId === data.uid;
         getChatListByOnline('chat',parseList,null,null,data,isRender,true,null,list);
-        // }
     }
     var hideCallTag = function() {
         $(document.body).find('.zc-c-call-tag').hide();
@@ -934,12 +991,7 @@ function Content(node,core,window) {
     };
 
     var onReceive = function(value,data) {
-        console.log('----- data -----');
-        console.log(data);
-        // data = [{"type":102,"uid":"a37fb1187fdd4900a89a3e5e4295e9f4","uname":"北京市联通","face":null,"usource":0,"aname":null,"aface":null,"cid":"dcda775206f2436f9a574142da81510a","chatType":0,"ismark":0,"tel":null,"groupId":"","groupName":null,"pid":"088ad376b6514ed0a191067308c284fe","t":1465184014221,"msgId":"2c73d07c67374e028aac2f10c56ec960","description":"用户接入","isTransfer":0},{"type":103,"uid":"a37fb1187fdd4900a89a3e5e4295e9f4","pid":"088ad376b6514ed0a191067308c284fe","uname":"北京市联通","face":null,"cid":"dcda775206f2436f9a574142da81510a","content":"1","msgType":0,"source":0,"ts":"2016-06-06 11:34:05","t":1465184045984,"msgId":"6527d2cfaa6a4f568600d9dd8fb3b86e","message_type":2,"desc":"1"}];
-        // console.log(data);
         userPushMessage(data);
-        //
         $('#chatSwitch').click();
 
         setTimeout(function() {
@@ -961,6 +1013,10 @@ function Content(node,core,window) {
         $(window || document.body).on("resize", function() {
 
             $(document.body).find('.zc-c-call-tag').width($('.rightBox').width());
+        });
+
+        $body.on('core.sendresult', function(ev) {
+            adminPushMessageSendResult(arguments[1]);
         });
 
         $body.on('textarea.send', function(ev) {
@@ -1056,6 +1112,20 @@ function Content(node,core,window) {
         //         getChatListByOnline('chat',parseTpl,userChatCache[userInfo.userId].pageNo,null,data,true,false);
         //     }
         // });
+
+        $rootNode.find('#chat').on('click', '.zc-c-chat-admin-ready-error', function(event) {
+          var msg = $(event.target).attr('data-msg');
+
+          $(event.target).parents('.msg').remove();
+
+          $(document.body).trigger('textarea.send',[{
+              'answer' : msg,
+              'uid': userInfo.userId,
+              'cid': userInfo.cid,
+              'date': Date.parse(new Date)
+          }]);
+
+        });
 
         $rootNode.find('#chat').on('click', '.js-zc-loadmore', function(){
           var data = {
