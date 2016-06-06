@@ -25,7 +25,7 @@ ul.history-list {
 #user_menu i.connection_icon.buzy {
     background-image: url("../img/busy.png");
 }
-#chatonline .uname {
+ .uname {
     max-width: 110px;
     overflow: hidden;
     display: inline-block;
