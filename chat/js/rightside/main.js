@@ -171,12 +171,23 @@ function RightSide(node,core,window) {
     var onGetSearch1 = function() {
         setUid();
     };
-    var initData = function(data,userData) {
+    var initData = function(evn,userData) {
+      // console.log(userData);
         config.isShowBg = false;
+        config.from = userData.data.from;
         //初始化用户数据 -- 客户资料
         profileuser($('.js-tab-pane#profileuser'),core,userData);
         //初始化用户自定义配置
         client(node,core,userData);
+        //初始化智能回复
+        // homeuser(node,core,config);
+        //智能回复 历史记录不允许直接发送
+        if(userData.data.from=='history'){
+          $(node).find('.js-robotDirectHideBtn a').removeClass('js-quickSendBtn');
+        }else{
+          $(node).find('.js-robotDirectHideBtn a').addClass('js-quickSendBtn');
+        }
+        // homeuser(node,core,config);
         //获取用户偏好设置
         onSetRightPreferenceInfo(userData.data.uid);
         getPreferenceInfo(userData.data.uid);
@@ -216,6 +227,7 @@ function RightSide(node,core,window) {
         bindListener();
         initPlugsin();
     };
+
     $(document.body).on("core.onload", function(evt) {
         init();
     });

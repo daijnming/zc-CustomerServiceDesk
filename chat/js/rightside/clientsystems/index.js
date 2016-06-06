@@ -4,6 +4,7 @@ var mainJson={'showClientSys':null};
 
 var Client = function(node,core,data){
   var global = core.getGlobal();
+  // console.log(data);
   //TODO 预加载对象
   var clientNav,//自定义导航
       clientWrap,//自定义窗体
