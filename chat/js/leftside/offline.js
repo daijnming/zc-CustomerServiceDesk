@@ -153,6 +153,7 @@ function Offline(node,core,window) {
     that.hide = hide;
     that.onResize = onResize;
     that.getCurrentUid = getCurrentUid;
+    that.setCurrentUid = setCurrentUid;
     return that;
 };
 

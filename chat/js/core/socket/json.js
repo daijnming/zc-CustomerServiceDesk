@@ -29,12 +29,14 @@ function polling(global) {
         }).success(function() {
             $body.trigger("core.sendresult",[{
                 'token' : data.date,
-                'type' : "success"
+                'type' : "success",
+                'uid' : data.uid
             }]);
         }).fail(function() {
             $body.trigger("core.sendresult",[{
                 'token' : data.date,
-                'type' : "fail"
+                'type' : "fail",
+                'uid' : data.uid
             }]);
         });
     };
