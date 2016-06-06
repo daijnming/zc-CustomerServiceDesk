@@ -86,7 +86,9 @@ function Online(node,core,window) {
                             //微信
                             item.imgUrl = "img/weixinType.png";
                         }
-                        console.log(item.imgUrl);
+                        if(item.face && item.face.length) {
+                            item.imgUrl = item.face;
+                        }
                         item.source_type = USOURCE[item.usource];
                         if(item.face && item.face.length) {
                             item.source_type = 'face';
