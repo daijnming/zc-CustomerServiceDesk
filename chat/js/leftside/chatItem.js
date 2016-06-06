@@ -42,6 +42,19 @@ function Item(data,core,outer,from,manager) {
         }
     };
 
+    var showLastMessage = function(lastMessage) {
+        if(lastMessage && lastMessage.cid == data.cid) {
+            if(lastMessage.message_type == TYPE_EMOTION) {
+                $lastMessage.html(lastMessage.desc).addClass("orange");
+            } else {
+                var str = (lastMessage.desc);
+                var temp = $('<div></div>');
+                temp.html(str);
+                str = temp.html();
+                $lastMessage.text(str).addClass("orange");
+            }
+        }
+    };
     var onReceive = function(evt,list) {
         var arr = [];
         for(var i = 0;i < list.length;i++) {
@@ -70,13 +83,7 @@ function Item(data,core,outer,from,manager) {
             }
         }
 
-        if(lastMessage && lastMessage.cid == data.cid) {
-            if(lastMessage.message_type == TYPE_EMOTION) {
-                $lastMessage.html(lastMessage.desc).addClass("orange");
-            } else {
-                $lastMessage.text(lastMessage.desc).addClass("orange");
-            }
-        }
+        showLastMessage(lastMessage);
     };
     var onOffLine = function() {
         var $parent = $node.parent();
@@ -109,6 +116,9 @@ function Item(data,core,outer,from,manager) {
         },300, function() {
             $node.remove();
         });
+        if(manager.getCurrentUid() == data.uid) {
+            manager.setCurrentUid(null);
+        }
     };
 
     var onRemove = function() {
@@ -202,13 +212,7 @@ function Item(data,core,outer,from,manager) {
             }
         }
         var lastMessage = arr.length > 0 ? arr[arr.length - 1] : null;
-        if(lastMessage && lastMessage.cid == data.cid) {
-            if(lastMessage.message_type == TYPE_EMOTION) {
-                $lastMessage.html(lastMessage.desc).addClass("orange");
-            } else {
-                $lastMessage.text(lastMessage.desc).addClass("orange");
-            }
-        }
+        showLastMessage(lastMessage);
         $unRead.html(arr.length).css({
             'visibility' : 'visible'
         });
