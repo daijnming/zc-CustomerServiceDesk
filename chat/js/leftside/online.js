@@ -86,6 +86,7 @@ function Online(node,core,window) {
                             //微信
                             item.imgUrl = "img/weixinType.png";
                         }
+                        console.log(item.imgUrl);
                         item.source_type = USOURCE[item.usource];
                         if(item.face && item.face.length) {
                             item.source_type = 'face';
@@ -158,7 +159,9 @@ function Online(node,core,window) {
             var data = list[i];
             switch(data.type) {
                 case 102:
-                    newUserMessage(data);
+                    if(!chatItemList[data.uid]) {
+                        newUserMessage(data);
+                    }
                     break;
                 case 108:
                     userOfflineMessage(data);
