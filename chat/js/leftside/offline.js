@@ -43,6 +43,10 @@ function Offline(node,core,window) {
             if(item.source == 1) {
                 item.imgUrl = "img/weixinType.png";
             }
+            if(item.face && item.face.length) {
+                item.source_type = 'face';
+                item.imgUrl = item.face;
+            }
             item.uid = item.id;
         }
     };
@@ -71,6 +75,7 @@ function Offline(node,core,window) {
         }).then(function(list,promise) {
             loadFile.load(global.baseUrl + "views/leftside/chatlist.html").then(function(value) {
                 var className = CLASSNAME[index];
+
                 var _html = doT.template(value)({
                     'list' : list,
                     'type' : from,
@@ -153,6 +158,7 @@ function Offline(node,core,window) {
     that.hide = hide;
     that.onResize = onResize;
     that.getCurrentUid = getCurrentUid;
+    that.setCurrentUid = setCurrentUid;
     return that;
 };
 

@@ -86,6 +86,10 @@ function Online(node,core,window) {
                             //微信
                             item.imgUrl = "img/weixinType.png";
                         }
+                        if(item.face && item.face.length) {
+                            item.source_type = 'face';
+                            item.imgUrl = item.face;
+                        }
                         item.source_type = USOURCE[item.usource];
                         if(item.face && item.face.length) {
                             item.source_type = 'face';
@@ -158,7 +162,11 @@ function Online(node,core,window) {
             var data = list[i];
             switch(data.type) {
                 case 102:
-                    newUserMessage(data);
+                    if(!chatItemList[data.uid]) {
+                        newUserMessage(data);
+                    } else if(chatItemList[data.uid].getStatus() === 'offline') {
+                        newUserMessage(data);
+                    }
                     break;
                 case 108:
                     userOfflineMessage(data);
