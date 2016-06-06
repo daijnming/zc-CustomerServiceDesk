@@ -1,5 +1,5 @@
 function Core(window) {
-    alert('注意！这是新版页面！');
+    //alert('注意！这是新版页面！');
     var that = {};
     var token = '';
     var queryParam;
