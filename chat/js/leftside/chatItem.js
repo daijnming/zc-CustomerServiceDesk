@@ -117,7 +117,7 @@ function Item(data,core,outer,from,manager) {
             $node.remove();
         });
         if(manager.getCurrentUid() == data.uid) {
-            manager.setCurentUid(null);
+            manager.setCurrentUid(null);
         }
     };
 
