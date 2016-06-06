@@ -87,6 +87,7 @@ function Online(node,core,window) {
                             item.imgUrl = "img/weixinType.png";
                         }
                         if(item.face && item.face.length) {
+                            item.source_type = 'face';
                             item.imgUrl = item.face;
                         }
                         item.source_type = USOURCE[item.usource];
