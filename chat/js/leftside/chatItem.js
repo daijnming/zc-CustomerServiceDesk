@@ -117,7 +117,7 @@ function Item(data,core,outer,from,manager) {
             $node.remove();
         });
         if(manager.getCurrentUid() == data.uid) {
-            manager.setCurentUid(null);
+            manager.setCurrentUid(null);
         }
     };
 
@@ -241,6 +241,7 @@ function Item(data,core,outer,from,manager) {
                 }
                 if(data.face && data.face.length) {
                     data.source_type = 'face';
+                    data.imgUrl = data.face;
                 }
                 var _html = doT.template(value)(data);
                 $node = $(_html);

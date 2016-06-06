@@ -86,6 +86,10 @@ function Online(node,core,window) {
                             //微信
                             item.imgUrl = "img/weixinType.png";
                         }
+                        if(item.face && item.face.length) {
+                            item.source_type = 'face';
+                            item.imgUrl = item.face;
+                        }
                         item.source_type = USOURCE[item.usource];
                         if(item.face && item.face.length) {
                             item.source_type = 'face';
@@ -143,20 +147,31 @@ function Online(node,core,window) {
         });
     };
 
+    var exceptionHandler = function(msg) {
+        var cache = {};
+        for(var el in msg) {
+            cache[el] = msg[el];
+        }
+        cache.type = 102;
+        newUserMessage(cache);
+        unreadList.push(msg.uid,msg);
+    };
     var onReceive = function(value,list) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var data = list[i];
             switch(data.type) {
                 case 102:
-                    newUserMessage(data);
+                    if(!chatItemList[data.uid]) {
+                        newUserMessage(data);
+                    }
                     break;
                 case 108:
                     userOfflineMessage(data);
                     break;
                 case 103:
-
                     if(!chatItemList[data.uid]) {
+                        exceptionHandler(data);
                         lostUserLog(data);
                     } else if(!chatItemList[data.uid].getReady()) {
                         unreadList.push(data.uid,data);
