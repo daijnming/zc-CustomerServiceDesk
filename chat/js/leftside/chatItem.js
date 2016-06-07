@@ -185,6 +185,7 @@ function Item(data,core,outer,from,manager) {
         if($node.index() !== 0) {
             insert($node);
         }
+        alert();
     };
 
     var initFace = function() {
