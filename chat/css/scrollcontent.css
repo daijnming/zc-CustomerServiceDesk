@@ -159,3 +159,13 @@
 .js-zc-loadmore .systeamText {
   cursor: pointer;
 }
+
+.zc-c-chat-admin-ready-error {
+  float: right;
+  width: 18px;
+  height: 18px;
+  background-image: url('../img/replyAresend.png');
+  margin-top: 12px;
+  margin-right: 12px;
+  display: none;
+}

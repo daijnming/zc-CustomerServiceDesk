@@ -19,8 +19,6 @@ function LeftSide(node,core,window) {
         }
     };
 
-
-
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
         $(node).find("img.js-my-logo").attr("src",data.face);

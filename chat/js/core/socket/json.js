@@ -16,7 +16,8 @@ function polling(global) {
         eventCache[evt] = cbk;
     };
 
-    var onsend = function(evt,data) {
+    var onsend = function(evt,data,count) {
+        var count = count || 0;
         $.ajax({
             'url' : '/chat/admin/send1.action',
             'dataType' : 'json',
@@ -27,17 +28,21 @@ function polling(global) {
                 'uid' : global.id
             })
         }).success(function() {
-            $body.trigger("core.sendresult",[{
-                'token' : data.date,
-                'type' : "success",
-                'uid' : data.uid
-            }]);
+            setTimeout(function() {
+                $body.trigger("core.sendresult",[{
+                    'token' : data.date,
+                    'type' : "success",
+                    'uid' : data.uid
+                }]);
+            },10);
         }).fail(function() {
-            $body.trigger("core.sendresult",[{
-                'token' : data.date,
-                'type' : "fail",
-                'uid' : data.uid
-            }]);
+            setTimeout(function() {
+                $body.trigger("core.sendresult",[{
+                    'token' : data.date,
+                    'type' : "fail",
+                    'uid' : data.uid
+                }]);
+            },10);
         });
     };
 
@@ -54,6 +59,22 @@ function polling(global) {
                     'cid' : ret.data.cid,
                     'uid' : global.id
                 })
+            }).success(function() {
+                setTimeout(function() {
+                    $body.trigger("core.sendresult",[{
+                        'token' : data.date,
+                        'type' : "success",
+                        'uid' : data.uid
+                    }]);
+                },10);
+            }).fail(function() {
+                setTimeout(function() {
+                    $body.trigger("core.sendresult",[{
+                        'token' : data.date,
+                        'type' : "fail",
+                        'uid' : data.uid
+                    }]);
+                },10);
             });
         }
     };

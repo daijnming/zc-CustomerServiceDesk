@@ -9,6 +9,7 @@ function Content(node,core,window) {
     var global;
     // 保存用户对话消息缓存
     var userChatCache = {};
+    var msgCache = {};
     var hasCallState = false;
     var imageUrl = 'http://img.sobot.com/chatres/common/face/';
     var imageUrl2 = 'http://img.sobot.com/console/common/face/';
@@ -134,13 +135,15 @@ function Content(node,core,window) {
                             userChatCache[userId].date = ret.data[0].content[0].t;
                         }
 
-                        if(isRender) parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList, true);
+                        if(isRender)
+                            parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList,true);
                     } else {
                         parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList);
                     }
                 });
             } else {
-                if(isRender) parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
+                if(isRender)
+                    parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
             }
         } else {
 
@@ -350,7 +353,7 @@ function Content(node,core,window) {
         });
     }
     var sendSearchUserChat = function() {
-        $rootNode.on('click','.fl .msg_content', function() {
+        $rootNode.on('click','.msg_content', function() {
             var chatText = $(this).html();
 
             if(chatText.indexOf('webchat_img_upload') !== -1) {
@@ -419,7 +422,7 @@ function Content(node,core,window) {
             }
 
             list.unshift({
-              action: 'loadmore',
+                action : 'loadmore',
             });
 
             var isCall = userChatCache[userInfo.userId].isCall;
@@ -439,7 +442,7 @@ function Content(node,core,window) {
             }
 
             _html = doT.template(tpl)({
-                adminName: global.name,
+                adminName : global.name,
                 userSourceImage : userInfo.userSourceImage,
                 adminImage : global.face,
                 systemImage : systemImage,
@@ -476,7 +479,7 @@ function Content(node,core,window) {
             }
         });
     }
-    var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList, isPage) {
+    var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList,isPage) {
         $rootNode.find('.js-zc-loadmore').empty();
 
         if(appendList && appendList.length > 0) {
@@ -488,30 +491,29 @@ function Content(node,core,window) {
             loadFile.load(global.baseUrl + API.tpl.chatItem).then(function(tpl) {
                 var _html;
 
-                if (isPage) {
-                  appendList.unshift({
-                    action: 'loadmore',
-                  });
+                if(isPage) {
+                    appendList.unshift({
+                        action : 'loadmore',
+                    });
                 }
 
                 _html = doT.template(tpl)({
-                    adminName: global.name,
+                    adminName : global.name,
                     userSourceImage : userInfo.userSourceImage,
                     adminImage : global.face,
                     systemImage : systemImage,
                     list : appendList
                 });
 
-
                 // if(isToTop) {
                 //     $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
                 //     $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop(10);
                 // } else {
 
-                if (isPage) {
-                  $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
+                if(isPage) {
+                    $rootNode.find('#' + type).find('.js-panel-body').prepend(_html);
                 } else {
-                  $rootNode.find('#' + type).find('.js-panel-body').append(_html);
+                    $rootNode.find('#' + type).find('.js-panel-body').append(_html);
                 }
 
                 if(isScrollBottom) {
@@ -532,7 +534,8 @@ function Content(node,core,window) {
                     var height = $('#' + type).find('.js-panel-body').height();
                     var scrollTop = $('#' + type).find('.scrollBoxParent').scrollTop();
                     if((height - scrollTop) > 700) {
-                        if(typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
+                        if(typeNo === 103)
+                            $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                     } else {
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
@@ -551,9 +554,9 @@ function Content(node,core,window) {
                 }
                 // }
 
-                if ($('.zc-c-chat-date-line-text').eq(1).length > 0 && isPage) {
-                  var offsetTop = $('.zc-c-chat-date-line-text').eq(1).parent().parent()[0].offsetTop;
-                  $('#' + type).find('.scrollBoxParent').scrollTop(offsetTop - 180);
+                if($('.zc-c-chat-date-line-text').eq(1).length > 0 && isPage) {
+                    var offsetTop = $('.zc-c-chat-date-line-text').eq(1).parent().parent()[0].offsetTop;
+                    $('#' + type).find('.scrollBoxParent').scrollTop(offsetTop - 180);
                 }
 
             });
@@ -567,9 +570,9 @@ function Content(node,core,window) {
                     if (data.list[i].action === 'noReadLine') {
                       data.list.splice(i,1);
                     }
-                    else if (data.list[i].action === 'loadmore') {
-                      data.list.splice(i,1);
-                    }
+                    // } else if(data.list[i].action === 'loadmore') {
+                    //     data.list.splice(i,1);
+                    // }
                 }
 
                 if(userInfo.unreadcount) {
@@ -591,20 +594,18 @@ function Content(node,core,window) {
                     }
                 }
 
-
                 data.list.map(function(item) {
                     item.msg = item.msg ? Face.analysis(item.msg) : null;
                     item.msg = item.msg ? App.getUrlRegex(item.msg) : null;
                 })
-
-                if (appendList) {
-                  data.list.unshift({
-                    action: 'nomore',
-                  });
+                if(appendList) {
+                    data.list.unshift({
+                        action : 'nomore',
+                    });
                 }
 
                 _html = doT.template(tpl)({
-                    adminName: global.name,
+                    adminName : global.name,
                     userSourceImage : userInfo.userSourceImage,
                     adminImage : global.face,
                     systemImage : systemImage,
@@ -613,14 +614,39 @@ function Content(node,core,window) {
 
                 $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
 
-                setTimeout(function() {
+                if(userChatCache[userInfo.userId].errorChatTokens) {
 
-                  if (isScrollBottom) {
-                    $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
-                    userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
-                  }
-                },400);
-          });
+                    // 修改dom
+                    userChatCache[userInfo.userId].errorChatTokens.map(function(item) {
+
+                        data.list.map(function(listItem) {
+
+                            if(item === listItem.token)
+                                $rootNode.find('#chat').find('').find('[data-token="' + data.token + '"]').show();
+                        });
+                    });
+                }
+
+                // setTimeout(function() {
+
+                if(isScrollBottom) {
+
+                    var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
+
+                    if(lastImg) {
+                        lastImg.src = lastImg.src + '?r=' + (new Date());
+                        lastImg.onload = function() {
+                            $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                            userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                        }
+                    } else {
+                        $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
+                        userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
+                    }
+
+                }
+                // },400);
+            });
         }
 
         if(userChatCache[userInfo.userId].isCall) {
@@ -665,11 +691,10 @@ function Content(node,core,window) {
         // if()
         //     $rootNode.find('.js-addButton').children('.js-transfer').addClass('hide');
 
-
-        if (userInfo.status || !userInfo.from) {
-          $rootNode.find('.js-addButton').children('.js-transfer').addClass('hide');
+        if(userInfo.status || !userInfo.from) {
+            $rootNode.find('.js-addButton').children('.js-transfer').addClass('hide');
         } else {
-          $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
+            $rootNode.find('.js-addButton').children('.js-transfer').removeClass('hide');
         }
     }
     var parseChat = {
@@ -713,140 +738,137 @@ function Content(node,core,window) {
     }
     // --------------------------- socket ---------------------------
 
-
     var parseStack = function(data) {
 
-      if (data.type === 111) {
+        if(data.type === 111) {
 
-          if (userInfo.userId === data.uid) {
-            loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
-                var _html;
-                _html = doT.template(tpl)({
-                    data : data
+            if(userInfo.userId === data.uid) {
+                loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
+                    var _html;
+                    _html = doT.template(tpl)({
+                        data : data
+                    });
+
+                    $rootNode.find('#chat').find('.js-user-ready-input').show();
+                    $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
+
+                    setTimeout(function() {
+                        $rootNode.find('#chat').find('.js-user-ready-input').hide();
+                    },5000);
+                });
+            }
+        } else if(data.type === 108) {
+            // clearScrollContent();
+            var list = [];
+
+            if(userInfo.userId === data.uid) {
+                $rootNode.find('.js-transfer').addClass('hide');
+            }
+
+            if(userChatCache[data.uid] && userChatCache[data.uid].list) {
+                userChatCache[data.uid].list.push({
+                    action : 10,
+                    offlineType : 5,
+                    ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
+                })
+
+                list.push({
+                    action : 10,
+                    offlineType : 5,
+                    ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
                 });
 
-                $rootNode.find('#chat').find('.js-user-ready-input').show();
-                $rootNode.find('#chat').find('.js-user-ready-input').empty().append(_html);
+                // 是否渲染 isRender
+                var isRender = userInfo.userId === data.uid;
+                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
+            }
 
-                setTimeout(function() {
-                    $rootNode.find('#chat').find('.js-user-ready-input').hide();
-                },5000);
-            });
-          }
-      }
-      else if(data.type === 108) {
-          // clearScrollContent();
-          var list = [];
+        } else if(data.type === 112) {
 
-          if (userInfo.userId === data.uid) {
-            $rootNode.find('.js-transfer').addClass('hide');
-          }
+            var userId = userInfo.userId = data.uid;
+            var list = [];
 
-          if(userChatCache[data.uid] && userChatCache[data.uid].list) {
-              userChatCache[data.uid].list.push({
-                  action : 10,
-                  offlineType : 5,
-                  ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
-              })
+            userChatCache[userId] = userChatCache[userId] || {};
+            userChatCache[userId].isCall = true;
+            userChatCache[userId].called = data.called;
+            userChatCache[userId].uname = data.uname;
 
-              list.push({
-                  action : 10,
-                  offlineType : 5,
-                  ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
-              });
+            if(userChatCache[data.uid]) {
+                var ts = new Date().toLocaleString();
+                userChatCache[data.uid].list.push({
+                    action : 18,
+                    ts : ts
+                })
 
-              // 是否渲染 isRender
-              var isRender = userInfo.userId === data.uid;
-              getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
-          }
+                list.push({
+                    action : 18,
+                    ts : ts
+                });
 
-      }
-      else if(data.type === 112) {
+                // 是否渲染 isRender
+                var isRender = userInfo.userId === data.uid;
+                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
+            }
 
-          var userId = userInfo.userId = data.uid;
-          var list = [];
+            callUser();
+        } else if(data.type === 102) {
 
-          userChatCache[userId] = userChatCache[userId] || {};
-          userChatCache[userId].isCall = true;
-          userChatCache[userId].called = data.called;
-          userChatCache[userId].uname = data.uname;
+            if(userInfo.userId === data.uid) {
+                $rootNode.find('.js-transfer').removeClass('hide');
+            }
 
-          if(userChatCache[data.uid]) {
-              var ts = new Date().toLocaleString();
-              userChatCache[data.uid].list.push({
-                  action : 18,
-                  ts : ts
-              })
+            if(data.isTransfer) {
+                delete userChatCache[data.uid];
+            } else {
 
-              list.push({
-                  action : 18,
-                  ts : ts
-              });
+                if(userChatCache[data.uid]) {
+                    delete userChatCache[data.uid];
 
-              // 是否渲染 isRender
-              var isRender = userInfo.userId === data.uid;
-              getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
-          }
-
-          callUser();
-      } else if(data.type === 102) {
-
-        if (userInfo.userId === data.uid) {
-          $rootNode.find('.js-transfer').removeClass('hide');
-        }
-
-        if (data.isTransfer) {
-          delete userChatCache[data.uid];
+                    // 初始化历史记录
+                    getChatListByOnline('chat',parseTpl,null,null, {
+                        uid : userInfo.userId,
+                        pid : userInfo.pid
+                    },true,true);
+                }
+            }
         } else {
+            var list = [];
 
-          if (userChatCache[data.uid]) {
-            delete userChatCache[data.uid];
+            if(userChatCache[data.uid]) {
 
-            // 初始化历史记录
-            getChatListByOnline('chat', parseTpl, null, null, {
-              uid: userInfo.userId ,
-              pid: userInfo.pid
-            }, true, true);
-          }
+                if(data.type === 103) {
+                    userChatCache[data.uid].list = userChatCache[data.uid].list || [];
+                    userChatCache[data.uid].list.push({
+                        action : 5,
+                        senderType : 0,
+                        senderName : data.uname,
+                        msg : App.getUrlRegex(data.content),
+                        ts : data.ts
+                    })
+
+                    list.push({
+                        action : 5,
+                        senderType : 0,
+                        senderName : data.uname,
+                        msg : App.getUrlRegex(data.content),
+                        ts : data.ts
+                    });
+                }
+                // }
+
+                // 是否渲染 isRender
+                var isRender = userInfo.userId === data.uid;
+                getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
+            }
         }
-      } else {
-          var list = [];
-
-          if(userChatCache[data.uid]) {
-
-              if (data.type === 103) {
-                  userChatCache[data.uid].list = userChatCache[data.uid].list || [];
-                  userChatCache[data.uid].list.push({
-                      action : 5,
-                      senderType : 0,
-                      senderName : data.uname,
-                      msg : App.getUrlRegex(data.content),
-                      ts : data.ts
-                  })
-
-                  list.push({
-                      action : 5,
-                      senderType : 0,
-                      senderName : data.uname,
-                      msg : App.getUrlRegex(data.content),
-                      ts : data.ts
-                  });
-              }
-              // }
-
-              // 是否渲染 isRender
-              var isRender = userInfo.userId === data.uid;
-              getChatListByOnline('chat',parseList,null,null,data,isRender,false,data.type,list);
-          }
-      }
     }
-
     // 加入到某一个user的chche内
     var userPushMessage = function(data) {
         var len = data.length;
         parseChat[data.type] && parseChat[data.type](data);
 
-        for (var i = 0;i < len;i++) parseStack(data[i]);
+        for(var i = 0;i < len;i++)
+            parseStack(data[i]);
     };
 
     var adminPushMessageState = function(data) {
@@ -893,9 +915,35 @@ function Content(node,core,window) {
 
         getChatListByOnline('chat',parseList,null,null,data,true,true,null,list);
     }
+    var adminPushMessageSendResult = function(data) {
+        var caches = userChatCache[data.uid];
+
+        if(caches) {
+            caches.errorChatTokens = caches.errorChatTokens || [];
+
+            // data.type = 'error';
+
+            if(data.type === 'success') {
+                var arrIndex = caches.errorChatTokens.indexOf(data.token);
+
+                // 存在token
+                if(arrIndex !== -1)
+                    caches.errorChatTokens.splice(arrIndex,1);
+            } else {
+
+                // 如果在当前user tab
+                if(data.uid === userInfo.userId)
+                    $rootNode.find('#chat').find('[data-token="' + data.token + '"]').show();
+
+                // 保存当前uid 发送失败的消息的token队列
+                caches.errorChatTokens.push(data.token);
+            }
+        }
+
+    }
     var adminPushMessage = function(data) {
         var list = [];
-
+        msgCache[data.date] = data;
         userChatCache[data.uid] = userChatCache[data.uid] || {
             list : [],
             scrollTop : 0,
@@ -907,7 +955,8 @@ function Content(node,core,window) {
             senderType : 2,
             senderName : global.name,
             msg : App.getUrlRegex(data.answer),
-            ts : 'date ' + new Date().toTimeString().split(' ')[0]
+            ts : 'date ' + new Date().toTimeString().split(' ')[0],
+            token : data.date
         });
 
         list.push({
@@ -915,12 +964,12 @@ function Content(node,core,window) {
             senderType : 2,
             senderName : global.name,
             msg : App.getUrlRegex(data.answer),
-            ts : 'date ' + new Date().toTimeString().split(' ')[0]
+            ts : 'date ' + new Date().toTimeString().split(' ')[0],
+            token : data.date
         });
 
         var isRender = userInfo.userId === data.uid;
         getChatListByOnline('chat',parseList,null,null,data,isRender,true,null,list);
-        // }
     }
     var hideCallTag = function() {
         $(document.body).find('.zc-c-call-tag').hide();
@@ -934,19 +983,13 @@ function Content(node,core,window) {
     };
 
     var onReceive = function(value,data) {
-        console.log('----- data -----');
-        console.log(data);
-        // data = [{"type":102,"uid":"a37fb1187fdd4900a89a3e5e4295e9f4","uname":"北京市联通","face":null,"usource":0,"aname":null,"aface":null,"cid":"dcda775206f2436f9a574142da81510a","chatType":0,"ismark":0,"tel":null,"groupId":"","groupName":null,"pid":"088ad376b6514ed0a191067308c284fe","t":1465184014221,"msgId":"2c73d07c67374e028aac2f10c56ec960","description":"用户接入","isTransfer":0},{"type":103,"uid":"a37fb1187fdd4900a89a3e5e4295e9f4","pid":"088ad376b6514ed0a191067308c284fe","uname":"北京市联通","face":null,"cid":"dcda775206f2436f9a574142da81510a","content":"1","msgType":0,"source":0,"ts":"2016-06-06 11:34:05","t":1465184045984,"msgId":"6527d2cfaa6a4f568600d9dd8fb3b86e","message_type":2,"desc":"1"}];
-        // console.log(data);
         userPushMessage(data);
-        //
         $('#chatSwitch').click();
 
         setTimeout(function() {
-          window.$('#inputMsg').val('tk最帅');
-          window.$('#sendBtn').click();
-        }, 300);
-
+            window.$('#inputMsg').val('tk最帅');
+            window.$('#sendBtn').click();
+        },300);
 
     };
 
@@ -961,6 +1004,10 @@ function Content(node,core,window) {
         $(window || document.body).on("resize", function() {
 
             $(document.body).find('.zc-c-call-tag').width($('.rightBox').width());
+        });
+
+        $body.on('core.sendresult', function(ev) {
+            adminPushMessageSendResult(arguments[1]);
         });
 
         $body.on('textarea.send', function(ev) {
@@ -992,8 +1039,8 @@ function Content(node,core,window) {
                 userId : params.data.uid,
                 userSourceImage : userSourceImage,
                 from : params.data.from === 'online',
-                unreadcount : params.unreadcount ,
-                status: params.status === 'offline'
+                unreadcount : params.unreadcount,
+                status : params.status === 'offline'
             }
 
             $chatContent.show();
@@ -1057,18 +1104,33 @@ function Content(node,core,window) {
         //     }
         // });
 
-        $rootNode.find('#chat').on('click', '.js-zc-loadmore', function(){
-          var data = {
-              uid : userInfo.userId,
-              pid : userInfo.pid
-          };
+        $rootNode.find('#chat').on('click','.zc-c-chat-admin-ready-error', function(event) {
+            var token = $(event.target).attr('data-token') ,
+                msg;
 
-          //     if($(this).scrollTop() >= userChatCache[userInfo.userId].scrollBottom) {
-          //         $rootNode.find('#chat').find('.zc-newchat-tag').hide();
-          //     } else if($(this).scrollTop() === 0) {
-          userChatCache[userInfo.userId].pageNo++;
-          getChatListByOnline('chat',parseTpl,userChatCache[userInfo.userId].pageNo,null,data,true,false);
-          //     }
+            userChatCache[userInfo.userId].list.map(function(item) {
+
+              if (item.token === parseInt(token)) msg = item.msg;
+            });
+
+            $(event.target).parents('.msg').remove();
+            $(document.body).trigger('textarea.send',[{
+                'answer' : msg,
+                'uid' : userInfo.userId,
+                'cid' : userInfo.cid,
+                'date' : Date.parse(new Date)
+            }]);
+
+        });
+
+        $rootNode.find('#chat').on('click','.js-zc-loadmore', function() {
+            var data = {
+                uid : userInfo.userId,
+                pid : userInfo.pid
+            };
+
+            userChatCache[userInfo.userId].pageNo++;
+            getChatListByOnline('chat',parseTpl,userChatCache[userInfo.userId].pageNo,null,data,true,false);
         });
 
         $rootNode.find('#chat').on('click','.zc-newchat-tag', function() {

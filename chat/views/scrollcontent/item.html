@@ -33,6 +33,7 @@
             <i class="angleRight"></i>
             <div class="msg_content">{{=it.list[i].msg}} </div>
           </div>
+          <div class="zc-c-chat-admin-ready-error"  data-token="{{=it.list[i].token}}" ></div>
         </div>
       </div>
     {{ } }}
@@ -71,7 +72,7 @@
 
   {{ if(it.list[i].action === 4) { }}
     <div class="systeamTextBox">
-      <p class="systeamText">用户和机器人建立会话</p>
+      <p class="systeamText">用户和机器人建立会话 {{=it.list[i].ts.split(' ')[1]}}</p>
     </div>
   {{ } }}
 
