@@ -36,13 +36,19 @@ function polling(global) {
                 }]);
             },10);
         }).fail(function() {
-            setTimeout(function() {
-                $body.trigger("core.sendresult",[{
-                    'token' : data.date,
-                    'type' : "fail",
-                    'uid' : data.uid
-                }]);
-            },10);
+            if(count == 3) {
+                setTimeout(function() {
+                    $body.trigger("core.sendresult",[{
+                        'token' : data.date,
+                        'type' : "fail",
+                        'uid' : data.uid
+                    }]);
+                },10);
+            } else {
+                setTimeout(function() {
+                    onsend(evt,data,count + 1);
+                },1000);
+            }
         });
     };
 
