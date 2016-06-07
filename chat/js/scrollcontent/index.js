@@ -353,7 +353,7 @@ function Content(node,core,window) {
         });
     }
     var sendSearchUserChat = function() {
-        $rootNode.on('click','.fl .msg_content', function() {
+        $rootNode.on('click','.msg_content', function() {
             var chatText = $(this).html();
 
             if(chatText.indexOf('webchat_img_upload') !== -1) {
@@ -567,11 +567,12 @@ function Content(node,core,window) {
 
                 for(var i = 0;i < data.list.length;i++) {
 
-                    if(data.list[i].action === 'noReadLine') {
-                        data.list.splice(i,1);
-                    } else if(data.list[i].action === 'loadmore') {
-                        data.list.splice(i,1);
+                    if (data.list[i].action === 'noReadLine') {
+                      data.list.splice(i,1);
                     }
+                    // } else if(data.list[i].action === 'loadmore') {
+                    //     data.list.splice(i,1);
+                    // }
                 }
 
                 if(userInfo.unreadcount) {
@@ -1104,10 +1105,15 @@ function Content(node,core,window) {
         // });
 
         $rootNode.find('#chat').on('click','.zc-c-chat-admin-ready-error', function(event) {
-            var msg = $(event.target).attr('data-msg');
+            var token = $(event.target).attr('data-token') ,
+                msg;
+
+            userChatCache[userInfo.userId].list.map(function(item) {
+
+              if (item.token === parseInt(token)) msg = item.msg;
+            });
 
             $(event.target).parents('.msg').remove();
-
             $(document.body).trigger('textarea.send',[{
                 'answer' : msg,
                 'uid' : userInfo.userId,
@@ -1123,12 +1129,8 @@ function Content(node,core,window) {
                 pid : userInfo.pid
             };
 
-            //     if($(this).scrollTop() >= userChatCache[userInfo.userId].scrollBottom) {
-            //         $rootNode.find('#chat').find('.zc-newchat-tag').hide();
-            //     } else if($(this).scrollTop() === 0) {
             userChatCache[userInfo.userId].pageNo++;
             getChatListByOnline('chat',parseTpl,userChatCache[userInfo.userId].pageNo,null,data,true,false);
-            //     }
         });
 
         $rootNode.find('#chat').on('click','.zc-newchat-tag', function() {
