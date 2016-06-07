@@ -353,11 +353,7 @@ function Content(node,core,window) {
         $rootNode.on('click','.msg_content', function() {
             var chatText = $(this).html();
 
-            if(chatText.indexOf('webchat_img_upload') !== -1) {
-                window.open($(this).find('.webchat_img_upload').attr('src'));
-            } else {
-                onSearchUserChat(chatText);
-            }
+            if (chatText.indexOf('webchat_img_upload') === -1) onSearchUserChat(chatText);
         })
     }
     // --------------------------- dom操作 ---------------------------
