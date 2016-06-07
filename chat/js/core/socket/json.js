@@ -52,7 +52,8 @@ function polling(global) {
         });
     };
 
-    var onDirectSend = function(evt,ret) {
+    var onDirectSend = function(evt,ret,count) {
+        var count = count || 0;
         if(ret.data.status == 1) {
             $.ajax({
                 'url' : '/chat/admin/send1.action',
@@ -74,13 +75,19 @@ function polling(global) {
                     }]);
                 },10);
             }).fail(function() {
-                setTimeout(function() {
-                    $body.trigger("core.sendresult",[{
-                        'token' : data.date,
-                        'type' : "fail",
-                        'uid' : data.uid
-                    }]);
-                },10);
+                if(count == 3) {
+                    setTimeout(function() {
+                        $body.trigger("core.sendresult",[{
+                            'token' : data.date,
+                            'type' : "fail",
+                            'uid' : data.uid
+                        }]);
+                    },10);
+                } else {
+                    setTimeout(function() {
+                        onDirectSend(evt,ret,count + 1);
+                    },1000);
+                }
             });
         }
     };
