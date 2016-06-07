@@ -152,6 +152,38 @@ function TextArea(node,core,window) {
         }
 
     };
+    //定位光标
+    var gotoxyHandler=function(evt,data){
+        var src=data.answer;
+         //将新表情追加到待发送框里
+        var oTxt1 = document.getElementById("js-sendMessage");
+        var cursurPosition=-1;
+        if(oTxt1.selectionStart||oTxt1.selectionStart==0){//非IE浏览器
+            cursurPosition= oTxt1.selectionStart;
+        }else{//IE
+           var range = document.selection.createRange();
+            range.moveStart("character",-oTxt1.value.length);
+            cursurPosition=range.text.length;
+        }
+        var currentSaytextBefore=$sendMessage.val().substring(0,cursurPosition);
+        var currentSaytextAfter=$sendMessage.val().substring(cursurPosition);
+        var currentSaytext=currentSaytextBefore+src+currentSaytextAfter;
+        $($sendMessage).val(currentSaytext);
+        //定位光标
+        var pos=(currentSaytextBefore+src).length;
+        if(oTxt1.setSelectionRange)
+            {
+                oTxt1.setSelectionRange(pos,pos);
+                oTxt1.focus();
+            }
+            else if (oTxt1.createTextRange) {
+                var range = oTxt1.createTextRange();
+                range.collapse(true);
+                range.moveEnd('character', pos);
+                range.moveStart('character', pos);
+                range.select();
+            }
+    };
     var onloadHandler = function(evt,data) {
         $node.find("img.js-my-logo").attr("src",data.face);
         $node.find(".js-customer-service").html(data.name);
@@ -215,6 +247,8 @@ function TextArea(node,core,window) {
         $(document.body).on('leftside.onselected',onSelected);
         //监听历史用户、在线用户，控制输入框
         $(document.body).on("textarea.uploadImgUrl",onImageUpload);
+        //定位光标
+        $(document.body).on("textarea.gotoxy",gotoxyHandler);
         //监听快捷回复
         $(document.body).on('rightside.onSelectedByFastRelpy',onQuickreplyHandler);
         //监听智能回复
