@@ -27,12 +27,14 @@ function polling(global) {
                 'uid' : global.id
             })
         }).success(function() {
+            console.log(data.uid,data,"success");
             $body.trigger("core.sendresult",[{
                 'token' : data.date,
                 'type' : "success",
                 'uid' : data.uid
             }]);
         }).fail(function() {
+            console.log(data.uid,data,"fail");
             $body.trigger("core.sendresult",[{
                 'token' : data.date,
                 'type' : "fail",
