@@ -60,6 +60,11 @@ function TextArea(node,core,window) {
             //重新定义聊天体的高度
         }
     };
+    //更新cid;
+    var oncidchangeHandler=function(data){
+        console.log(data.id);
+        currentCid = data.id;
+    };
     //输入内容做缓存
     var onTabSelectedSaveInner=function(uid){
         if(inputCache[uid]){
@@ -245,6 +250,8 @@ function TextArea(node,core,window) {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("core.receive",onReceive);
         $(document.body).on('leftside.onselected',onSelected);
+        //监听cid变化，及时更新cid;
+        $(document.body).on('leftside.oncidchange',oncidchangeHandler);
         //监听历史用户、在线用户，控制输入框
         $(document.body).on("textarea.uploadImgUrl",onImageUpload);
         //定位光标
