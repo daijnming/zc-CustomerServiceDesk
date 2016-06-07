@@ -174,7 +174,6 @@ function Item(data,core,outer,from,manager) {
         var $statusText = $node.find(".js-user-status");
         $node.find(".js-icon").removeClass("offline");
         $node.removeClass("offline");
-        console.log(123);
         $statusText.css({
             'display' : 'none'
         });
@@ -187,8 +186,7 @@ function Item(data,core,outer,from,manager) {
             insert($node);
         }
         if(manager.getCurrentUid() == data.uid) {
-            manager.setCurrentUid(null);
-            $node.trigger('click');
+            $body.trigger("leftside.oncidchange",[data.cid]);
         }
     };
 
