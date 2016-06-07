@@ -47,6 +47,7 @@ function TextArea(node,core,window) {
         }
         currentUid = data.data.uid;
         currentCid = data.data.cid;
+      
         if(data.data.from == 'online') {
             //输入内容做缓存
             onTabSelectedSaveInner(currentUid);
@@ -61,9 +62,9 @@ function TextArea(node,core,window) {
         }
     };
     //更新cid;
-    var oncidchangeHandler=function(data){
-        console.log(data.id);
-        currentCid = data.id;
+    var oncidchangeHandler=function(evt,data){
+       
+        currentCid = data;
     };
     //输入内容做缓存
     var onTabSelectedSaveInner=function(uid){
