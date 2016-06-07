@@ -131,19 +131,16 @@ function Content(node,core,window) {
                         list = appendList.concat(userChatCache[userId].list);
                         userChatCache[userId].list = list;
 
-                        if(ret.data[0] && ret.data[0].content[0]) {
-                            userChatCache[userId].date = ret.data[0].content[0].t;
-                        }
+                        if (ret.data[0] && ret.data[0].content[0]) userChatCache[userId].date = ret.data[0].content[0].t;
 
-                        if(isRender)
-                            parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList,true);
+                        if (isRender) parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList,true);
                     } else {
-                        parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList);
+                        parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList, true);
                     }
                 });
             } else {
-                if(isRender)
-                    parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
+
+                if(isRender) parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
             }
         } else {
 
@@ -480,7 +477,11 @@ function Content(node,core,window) {
         });
     }
     var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList,isPage) {
+
+        // if ($rootNode.find('.js-zc-loadmore').length > 1) {
         $rootNode.find('.js-zc-loadmore').empty();
+        // }
+        // $rootNode.find('.js-zc-loadmore').empty();
 
         if(appendList && appendList.length > 0) {
 
@@ -492,7 +493,26 @@ function Content(node,core,window) {
                 var _html;
 
                 if(isPage) {
+
+                    // userChatCache[userInfo.userId].list.map(function(item) {
+                    //
+                    //   if (item.action === 'loadmore') {
+                    //
+                    //   }
+                    // })
+
+                    for (var i = 0;i < userChatCache[userInfo.userId].list.length;i++) {
+
+                      if (userChatCache[userInfo.userId].list[i].action === 'loadmore') {
+                        userChatCache[userInfo.userId].list.splice(i, 1);
+                      }
+                    }
+
                     appendList.unshift({
+                        action : 'loadmore',
+                    });
+
+                    userChatCache[userInfo.userId].list.unshift({
                         action : 'loadmore',
                     });
                 }
@@ -592,6 +612,16 @@ function Content(node,core,window) {
                             }
                         }
                     }
+                }
+
+                if (isPage) {
+
+                  for (var i = 0;i < data.list.length;i++) {
+
+                    if (data.list[i].action === 'loadmore') {
+                      data.list.splice(i, 1);
+                    }
+                  }
                 }
 
                 data.list.map(function(item) {
