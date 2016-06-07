@@ -174,6 +174,7 @@ function Item(data,core,outer,from,manager) {
         var $statusText = $node.find(".js-user-status");
         $node.find(".js-icon").removeClass("offline");
         $node.removeClass("offline");
+        console.log(123);
         $statusText.css({
             'display' : 'none'
         });
@@ -346,7 +347,7 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onServerSend = function(evt,ret) {
-        if(ret.uid == data.uid && ret.cid == data.cid) {
+        if(ret.uid == data.uid || ret.cid == data.cid) {
             messageAdapter(ret);
             if(ret.message_type == TYPE_EMOTION) {
                 $lastMessage.html(ret.desc).removeClass("orange");

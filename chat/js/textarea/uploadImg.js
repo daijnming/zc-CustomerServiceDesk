@@ -217,7 +217,6 @@ function uploadImg(uploadBtn,node,core,window) {//,oChat | uploadBtn上传图片
     var onCreateWaitingBoxHandler=function(extension,filename){
         //时间戳的作用为区分同一个用户同时上传多个文件;
         var date = +new Date();
-        console.log(date);
         var conf = $.extend({
             "filename" : filename,
             "extension" : extension,
