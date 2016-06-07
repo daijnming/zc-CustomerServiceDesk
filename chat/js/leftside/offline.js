@@ -75,7 +75,7 @@ function Offline(node,core,window) {
         }).then(function(list,promise) {
             loadFile.load(global.baseUrl + "views/leftside/chatlist.html").then(function(value) {
                 var className = CLASSNAME[index];
-
+                console.log(from);
                 var _html = doT.template(value)({
                     'list' : list,
                     'type' : from,
