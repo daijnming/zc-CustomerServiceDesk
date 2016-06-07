@@ -47,7 +47,11 @@ function TextArea(node,core,window) {
         }
         currentUid = data.data.uid;
         currentCid = data.data.cid;
+        <<<<<<< HEAD
 
+        =======
+
+        >>>>>>> b27c0ecd7f66aebaf8b1517223bff554f6a2021b
         if(data.data.from == 'online') {
             //输入内容做缓存
             onTabSelectedSaveInner(currentUid);
