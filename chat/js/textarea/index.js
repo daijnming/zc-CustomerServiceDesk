@@ -62,7 +62,6 @@ function TextArea(node,core,window) {
     };
     //更新cid;
     var oncidchangeHandler = function(evt,data) {
-        alert();
         currentCid = data;
     };
     //输入内容做缓存
