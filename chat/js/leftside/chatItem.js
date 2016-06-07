@@ -185,7 +185,10 @@ function Item(data,core,outer,from,manager) {
         if($node.index() !== 0) {
             insert($node);
         }
-        alert();
+        if(manager.getCurrentUid() == data.uid) {
+            manager.setCurrentUid(null);
+            $node.trigger('click');
+        }
     };
 
     var initFace = function() {
