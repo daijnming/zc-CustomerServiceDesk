@@ -164,6 +164,8 @@ function Online(node,core,window) {
                 case 102:
                     if(!chatItemList[data.uid]) {
                         newUserMessage(data);
+                    } else if(chatItemList[data.uid].getStatus() === 'offline') {
+                        newUserMessage(data);
                     }
                     break;
                 case 108:

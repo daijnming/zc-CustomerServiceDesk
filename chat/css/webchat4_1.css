@@ -25,7 +25,7 @@ ul.history-list {
 #user_menu i.connection_icon.buzy {
     background-image: url("../img/busy.png");
 }
- .uname {
+.uname {
     max-width: 110px;
     overflow: hidden;
     display: inline-block;
@@ -104,7 +104,7 @@ ul.history-list {
     display: inline-block;
 }
 
-.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img, .tab-content  li.user-list-item .icon.offline.app img {
+.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img, .tab-content  li.user-list-item .icon.offline.app img, .tab-content  li.user-list-item .icon.offline.face img {
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
@@ -127,7 +127,7 @@ ul.history-list {
 .tab-content  li.user-list-item.history .icon {
     background-color: #ccc !important;
 }
-.tab-content  li.user-list-item .icon.offline, .tab-content  li.user-list-item .icon.laptop.offline, .tab-content  li.user-list-item .icon.mobile.offline, .tab-content  li.user-list-item .icon.app.offline {
+.tab-content  li.user-list-item .icon.offline.face, .tab-content  li.user-list-item .icon.offline, .tab-content  li.user-list-item .icon.laptop.offline, .tab-content  li.user-list-item .icon.mobile.offline, .tab-content  li.user-list-item .icon.app.offline {
     background-color: #ccc;
 }
 
@@ -148,7 +148,7 @@ ul.history-list {
     background-position: -38px -234px;
     background-color: #f1c644;
 }
-.tab-content  li.user-list-item.history .user-del {
+.tab-content  li.user-list-item.history .user-del, .tab-content  li.user-list-item.blacklist .user-del, .tab-content  li.user-list-item.star .user-del {
     display: none !important;
 }
 .tab-content  li.user-list-item:hover {

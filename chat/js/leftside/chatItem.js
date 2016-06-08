@@ -101,9 +101,7 @@ function Item(data,core,outer,from,manager) {
         } else {
             $node.parent().append($node);
         }
-        if(manager.getCurrentUid() === data.uid) {
-            manager.setCurrentUid(null);
-        }
+
     };
 
     var hide = function() {
@@ -186,6 +184,9 @@ function Item(data,core,outer,from,manager) {
         }
         if($node.index() !== 0) {
             insert($node);
+        }
+        if(manager.getCurrentUid() == data.uid) {
+            $body.trigger("leftside.oncidchange",[data.cid]);
         }
     };
 
@@ -348,7 +349,7 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onServerSend = function(evt,ret) {
-        if(ret.uid == data.uid && ret.cid == data.cid) {
+        if(ret.uid == data.uid) {
             messageAdapter(ret);
             if(ret.message_type == TYPE_EMOTION) {
                 $lastMessage.html(ret.desc).removeClass("orange");

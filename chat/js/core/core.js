@@ -141,12 +141,13 @@ function Core(window) {
             'icon' : 'assets/images/logo.png',
             'tag' : type + data.uid
         });
-        noti.onclick = (function(id) {
+        noti.onclick = (function(id,noti) {
             return function() {
                 window.focus();
+                noti.close();
                 $body.trigger('notification.click',[id]);
             };
-        })(data.uid);
+        })(data.uid,noti);
         setTimeout(function() {
             noti.close();
         },300 * 1000);
