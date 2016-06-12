@@ -91,7 +91,8 @@ function Core(window) {
                     'way' : 1,
                     'st' : queryParam.st || 1,
                     'lt' : queryParam.lt || new Date().getTime(),
-                    'token' : token
+                    'token' : token,
+                    'ack':1//确认开启消息回执
                 }
             }).done(function(ret) {
                 if(ret.status == 1 || ret.status == 2) {
@@ -127,9 +128,7 @@ function Core(window) {
             createNotification(value,102);
         }
         value.description = messageTypeConfig[value.type];
-
     };
-
     var createNotification = function(data,type) {
         var title = type == 103 ? '用户' + data.uname + '发送了一条消息' : '新用户上线了！';
         var desc = type == 103 ? data.desc : data.uname;
@@ -161,7 +160,7 @@ function Core(window) {
                 audioNewMessage.play();
                 normalMessageAdapter(value);
                 createNotification(value,103);
-            } else if(value.type == 109 && value.status == 2) {
+            }else if(value.type == 109 && value.status == 2) {
                 alert('另外一个窗口已经登录，您被强迫下线！');
                 $(window).unbind("beforeunload");
                 window.close();
@@ -190,7 +189,27 @@ function Core(window) {
             return '';
         });
     };
-
+    //消息确认
+    var msgConfirmHandler = function(data){
+        if(data&&data.length>0){
+          for(var i=0;i<data.length;i++){
+            //https://www.sobot.com/chat/user/msg/ack?cid=xxx&msgId=xxxx&uid=xxx&utype=0
+            $.ajax({
+                'url' : 'http://test.sobot.com/chat/user/msg/ack',
+                'type' : 'get',
+                'dataType' : 'json',
+                'data' : {
+                    'cid':data[i]['cid'],
+                    'msgId':data[i]['msgId'],
+                    'uid' : data[i]['uid'],
+                    'utype':'2'//0 用户  2 客服
+                }
+            }).success(function(ret) {
+                console.log(ret);
+            });
+          }
+        }
+    };
     var socketFactory = function() {
         if(window.WebSocket && false) {
 
@@ -200,6 +219,8 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             messageAdapter(list);
+            //消息确认
+            msgConfirmHandler(list);
             $body.trigger('core.receive',[list]);
         });
     };
