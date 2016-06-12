@@ -143,9 +143,13 @@ function Content(node,core,window) {
                 if(isRender) parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
             }
         } else {
+            console.log('getChatListByOnline init');
+            var st = Date.now();
+            console.log(st);
+            $rootNode.find('#chat').find('.js-panel-body').addClass('hide');
+            $rootNode.find('#chat').find('.js-load-model').removeClass('hide');
 
-            if(!!!userChatCache[userId])
-                userChatCache[userId] = {}
+            if(!!!userChatCache[userId]) userChatCache[userId] = {}
             $.ajax({
                 'url' : API.http.chatList[type],
                 'dataType' : 'json',
@@ -158,7 +162,11 @@ function Content(node,core,window) {
                     pageSize : pageSize || 20
                 }
             }).success(function(ret) {
-
+                console.log('getChatListByOnline success');
+                var et = (Date.now() - st) / 1000;
+                console.log('接口消耗时间 => ' + et + ' 秒');
+                $rootNode.find('#chat').find('.js-panel-body').removeClass('hide');
+                $rootNode.find('#chat').find('.js-load-model').addClass('hide');
                 if(ret.data[0] && ret.data[0].content[0]) {
                     userChatCache[userId].date = ret.data[0].content[0].t;
                 }
@@ -374,6 +382,8 @@ function Content(node,core,window) {
         // }
     }
     var parseTpl = function(type,ret,uid,isScrollBottom) {
+        console.log('parseTpl init');
+        var st = Date.now();
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
             var list = [],
@@ -448,6 +458,10 @@ function Content(node,core,window) {
 
             $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
 
+            console.log('parseTpl success');
+            var et = (Date.now() - st ) / 1000;
+            console.log('渲染模版消耗 => ' + et + ' 秒 ');
+
             setTimeout(function() {
 
                 if(isScrollBottom) {
@@ -476,6 +490,16 @@ function Content(node,core,window) {
             }
         });
     }
+
+    var listenScroll = function() {
+      $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(){
+        var height = $('#chat').find('.js-panel-body').height();
+        var scrollTop = $('#chat').find('.scrollBoxParent').scrollTop();
+
+        if((height - scrollTop) < 700) $rootNode.find('#chat').find('.zc-newchat-tag').hide();
+      });
+    }
+
     var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList,isPage) {
 
         // if ($rootNode.find('.js-zc-loadmore').length > 1) {
@@ -550,13 +574,13 @@ function Content(node,core,window) {
                         userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
                     }
                 } else {
-
                     var height = $('#' + type).find('.js-panel-body').height();
                     var scrollTop = $('#' + type).find('.scrollBoxParent').scrollTop();
                     if((height - scrollTop) > 700) {
                         if(typeNo === 103)
                             $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                     } else {
+                        $rootNode.find('#' + type).find('.zc-newchat-tag').hide();
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                         if(img) {
@@ -1010,6 +1034,7 @@ function Content(node,core,window) {
     var parseDOM = function() {
         $rootNode = $(node);
         $body = $(document.body);
+        listenScroll();
     };
 
     var onReceive = function(value,data) {
