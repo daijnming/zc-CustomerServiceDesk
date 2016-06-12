@@ -490,6 +490,16 @@ function Content(node,core,window) {
             }
         });
     }
+
+    var listenScroll = function() {
+      $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(){
+        var height = $('#chat').find('.js-panel-body').height();
+        var scrollTop = $('#chat').find('.scrollBoxParent').scrollTop();
+
+        if((height - scrollTop) < 700) $rootNode.find('#chat').find('.zc-newchat-tag').hide();
+      });
+    }
+
     var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList,isPage) {
 
         // if ($rootNode.find('.js-zc-loadmore').length > 1) {
@@ -564,13 +574,13 @@ function Content(node,core,window) {
                         userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
                     }
                 } else {
-
                     var height = $('#' + type).find('.js-panel-body').height();
                     var scrollTop = $('#' + type).find('.scrollBoxParent').scrollTop();
                     if((height - scrollTop) > 700) {
                         if(typeNo === 103)
                             $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                     } else {
+                        $rootNode.find('#' + type).find('.zc-newchat-tag').hide();
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                         if(img) {
@@ -1024,6 +1034,7 @@ function Content(node,core,window) {
     var parseDOM = function() {
         $rootNode = $(node);
         $body = $(document.body);
+        listenScroll();
     };
 
     var onReceive = function(value,data) {
