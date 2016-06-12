@@ -130,6 +130,7 @@ function Core(window) {
         value.description = messageTypeConfig[value.type];
     };
     var createNotification = function(data,type) {
+        // var no = +new Date();
         var title = type == 103 ? '用户' + data.uname + '发送了一条消息' : '新用户上线了！';
         var desc = type == 103 ? data.desc : data.uname;
         var temp = $("<div></div>");
@@ -138,7 +139,7 @@ function Core(window) {
         var noti = new Notification(title, {
             'body' : desc,
             'icon' : 'assets/images/logo.png',
-            'tag' : type + data.uid
+            'tag' :  data.uid // 始终只弹一次 每次都是覆盖上一次桌面提示
         });
         noti.onclick = (function(id,noti) {
             return function() {
@@ -195,7 +196,7 @@ function Core(window) {
           for(var i=0;i<data.length;i++){
             //https://www.sobot.com/chat/user/msg/ack?cid=xxx&msgId=xxxx&uid=xxx&utype=0
             $.ajax({
-                'url' : 'http://test.sobot.com/chat/user/msg/ack',
+                'url' : 'http://test.sobot.com/chat/user/msg/ack.action',
                 'type' : 'get',
                 'dataType' : 'json',
                 'data' : {
@@ -220,7 +221,7 @@ function Core(window) {
         socket.on("receive", function(list) {
             messageAdapter(list);
             //消息确认
-            msgConfirmHandler(list);
+            // msgConfirmHandler(list);
             $body.trigger('core.receive',[list]);
         });
     };
