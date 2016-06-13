@@ -139,7 +139,7 @@ function Core(window) {
         var noti = new Notification(title, {
             'body' : desc,
             'icon' : 'assets/images/logo.png',
-            'tag' : type + data.uid
+            'tag' : '1'
         });
         noti.onclick = (function(id,noti) {
             return function() {
@@ -185,6 +185,8 @@ function Core(window) {
             $(window).unbind("beforeunload");
             window.close();
             window.location.href = "/console/login";
+        });
+        $(window).on("blur", function() {
         });
         $(window).on("beforeunload", function() {
             return '';
