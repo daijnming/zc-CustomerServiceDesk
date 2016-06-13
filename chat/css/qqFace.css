@@ -1,4 +1,4 @@
-li, ul, div, p, h1 {
+ul, div, p, h1 {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -31,6 +31,7 @@ li, ul, div, p, h1 {
     border-right: none;
     border-top: 1px solid #fff;
     font-size: 12px;
+    list-style: none;
 }
 .GroupTab li.active {
     background: #fff;
@@ -55,6 +56,7 @@ li, ul, div, p, h1 {
     text-align: center;
     line-height: 30px;
     cursor: pointer;
+    list-style: none;
 }
 #faceGroupTarea .groupChildren li .faceIco {
     width: 24px;

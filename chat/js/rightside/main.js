@@ -19,9 +19,6 @@ function RightSide(node,core,window) {
         switchDefaultLibrary = {};
     //存储模块默认设置
 
-    var height = $(window).height(),
-        newHeight = $(window).height() - 50;
-
     //TODO 预加载对象
     var tabSwitchNav,//右侧上方UL元素
         tabSwitchBody,//右侧对应内容展示区
@@ -46,6 +43,8 @@ function RightSide(node,core,window) {
     };
 
     var onloadHandler = function(evt,data) {
+        var height = $(window).height(),
+        newHeight = $(window).height() - 50;
         //用户资料
         $(node).find('.js-tab-pane-profileuser').css('height',newHeight - 52 + 'px');
         //快捷回复
@@ -56,6 +55,9 @@ function RightSide(node,core,window) {
         //iframe
         $(node).find('.js-clientSysIframe').css('height',newHeight - 52 + 'px');
     };
+    $(window).resize(function(){
+      onloadHandler();
+    });
     //tab切换
     var onSetSwitchTab = function(obj,val) {
         var $this = $(obj);
