@@ -91,8 +91,8 @@ function Core(window) {
                     'way' : 1,
                     'st' : queryParam.st || 1,
                     'lt' : queryParam.lt || new Date().getTime(),
-                    'token' : token,
-                    'ack' : 1//确认开启消息回执
+                    'token' : token
+                    // 'ack' : 1//确认开启消息回执
                 }
             }).done(function(ret) {
                 if(ret.status == 1 || ret.status == 2) {
