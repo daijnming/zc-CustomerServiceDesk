@@ -372,8 +372,7 @@ function Content(node,core,window) {
 
     // 清理聊天主体页面
     var clearScrollContent = function(uid,isHide) {
-        userChatCache[userInfo.userId | uid] = undefined;
-        delete userChatCache[userInfo.userId | uid];
+        delete userChatCache[userInfo.userId || uid];
         $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
 
         // if (!isHide) {
@@ -821,14 +820,7 @@ function Content(node,core,window) {
             }
 
             if(userChatCache[data.uid] && userChatCache[data.uid].list) {
-                console.log('用户离线');
 
-                console.log({
-                    action : 10,
-                    offlineType : 5,
-                    receiverName: global.name,
-                    ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
-                });
 
                 userChatCache[data.uid].list.push({
                     action : 10,
@@ -1063,6 +1055,7 @@ function Content(node,core,window) {
 
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
+        initPlugsin();
     };
 
     var bindLitener = function() {
@@ -1083,7 +1076,9 @@ function Content(node,core,window) {
         });
 
         $body.on("leftside.onhide", function() {
+            console.log('leftside.onhide')
             clearScrollContent(arguments[1].uid,true);
+            console.log(userChatCache[arguments[1].uid]);
         })
 
         $body.on("leftside.onselected", function() {
@@ -1223,13 +1218,13 @@ function Content(node,core,window) {
     };
 
     var initPlugsin = function() {
-
+      loadFile.load(global.baseUrl + API.tpl.chatItem);
     };
 
     var init = function() {
         parseDOM();
         bindLitener();
-        initPlugsin();
+        // initPlugsin();
     };
 
     init();
