@@ -1428,7 +1428,7 @@ body,html{
   padding: 40px 0 40px 0;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy .rightQuick .rightQuickLeft {
-  min-width: 94px;
+  /*min-width: 94px;*/
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy .rightQuick .rightQuickLeft li {
   /*border-left: 2px solid #fff;*/
@@ -1449,7 +1449,7 @@ body,html{
   border-left: 2px solid #09aeb0;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy .rightQuick .rightQuickRight {
-  min-width: 189px;
+  /*min-width: 189px;*/
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy .rightQuick .rightQuickRight li .quickClick {
   color: #555556;

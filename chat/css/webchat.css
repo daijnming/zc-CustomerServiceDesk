@@ -32,7 +32,9 @@ ul.mainNav ul li a .uname{  display: inline-block;height: 15px;line-height: 15px
 #offlineUser li .user{color: #f90}
  #waitNum{display: none;}
  #waitNum span{color: #ea8f57;}
-#main-container{overflow:hidden;}
+#main-container{
+	overflow:hidden;
+}
 ul.mainNav li {
 	border-top: 0px;
 	background: #4D394B;
