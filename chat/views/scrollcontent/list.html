@@ -57,13 +57,13 @@
 
     {{ if (it.list[prop].offlineType === 1) { }}
       <div class="systeamTextBox">
-        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
       </div>
     {{ } }}
 
     {{ if (it.list[prop].offlineType === 2) { }}
       <div class="systeamTextBox">
-        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
       </div>
     {{ } }}
 
@@ -73,9 +73,15 @@
       </div>
     {{ } }}
 
+    {{ if (it.list[prop].offlineType === 4) { }}
+      <div class="systeamTextBox">
+        <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+      </div>
+    {{ } }}
+
     {{ if (it.list[prop].offlineType === 5) { }}
       <div class="systeamTextBox">
-        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
       </div>
     {{ } }}
   {{ } }}
@@ -181,7 +187,7 @@
     {{ if (it.list[prop].senderType === 2) { }}
       <div class="msg workOrderCus">
         <div class="msg_user fr">
-          <img src="{{=it.adminImage}}" class="msg_user_img">
+          <img src="{{=it.list[prop].senderFace}}" class="msg_user_img">
         </div>
         <div class="msgContBox fr">
           <span class="msg_name">{{=it.list[prop].senderName}}</span>
