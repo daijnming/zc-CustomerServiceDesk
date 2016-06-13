@@ -821,6 +821,15 @@ function Content(node,core,window) {
             }
 
             if(userChatCache[data.uid] && userChatCache[data.uid].list) {
+                console.log('用户离线');
+
+                console.log({
+                    action : 10,
+                    offlineType : 5,
+                    receiverName: global.name,
+                    ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
+                });
+
                 userChatCache[data.uid].list.push({
                     action : 10,
                     offlineType : 5,
