@@ -382,6 +382,7 @@ function Content(node,core,window) {
         // }
     }
     var parseTpl = function(type,ret,uid,isScrollBottom) {
+        // console.log(global);
         console.log('parseTpl init');
         var st = Date.now();
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
@@ -823,12 +824,14 @@ function Content(node,core,window) {
                 userChatCache[data.uid].list.push({
                     action : 10,
                     offlineType : 5,
+                    receiverName: global.name,
                     ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
                 })
 
                 list.push({
                     action : 10,
                     offlineType : 5,
+                    receiverName: global.name,
                     ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
                 });
 
@@ -1008,6 +1011,7 @@ function Content(node,core,window) {
             action : 5,
             senderType : 2,
             senderName : global.name,
+            senderFace : global.face,
             msg : App.getUrlRegex(data.answer),
             ts : 'date ' + new Date().toTimeString().split(' ')[0],
             token : data.date
