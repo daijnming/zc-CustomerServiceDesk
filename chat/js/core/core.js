@@ -161,7 +161,6 @@ function Core(window) {
             var value = list[i];
             if(value.type === 103) {
                 normalMessageAdapter(value);
-                console.log(document.hidden)
                 if(document.hidden) {
                     audioNewMessage.play();
                     createNotification(value,103);
@@ -211,7 +210,6 @@ function Core(window) {
                         'utype' : '2'//0 用户  2 客服
                     }
                 }).success(function(ret) {
-                    console.log(ret);
                 });
             }
         }
