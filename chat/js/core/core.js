@@ -92,7 +92,7 @@ function Core(window) {
                     'st' : queryParam.st || 1,
                     'lt' : queryParam.lt || new Date().getTime(),
                     'token' : token,
-                    'ack':1//确认开启消息回执
+                    'ack' : 1//确认开启消息回执
                 }
             }).done(function(ret) {
                 if(ret.status == 1 || ret.status == 2) {
@@ -124,8 +124,10 @@ function Core(window) {
 
     var systemMessageAdpater = function(value) {
         if(value.type === 102) {
-            audioOnline.play();
-            createNotification(value,102);
+            if(document.hidden) {
+                audioOnline.play();
+                createNotification(value,102);
+            }
         }
         value.description = messageTypeConfig[value.type];
     };
@@ -139,7 +141,7 @@ function Core(window) {
         var noti = new Notification(title, {
             'body' : desc,
             'icon' : 'assets/images/logo.png',
-            'tag' :  data.uid // 始终只弹一次 每次都是覆盖上一次桌面提示
+            'tag' : '1'
         });
         noti.onclick = (function(id,noti) {
             return function() {
@@ -158,10 +160,12 @@ function Core(window) {
             len = list.length;i < len;i++) {
             var value = list[i];
             if(value.type === 103) {
-                audioNewMessage.play();
                 normalMessageAdapter(value);
-                createNotification(value,103);
-            }else if(value.type == 109 && value.status == 2) {
+                if(document.hidden) {
+                    audioNewMessage.play();
+                    createNotification(value,103);
+                }
+            } else if(value.type == 109 && value.status == 2) {
                 alert('另外一个窗口已经登录，您被强迫下线！');
                 $(window).unbind("beforeunload");
                 window.close();
@@ -191,24 +195,23 @@ function Core(window) {
         });
     };
     //消息确认
-    var msgConfirmHandler = function(data){
-        if(data&&data.length>0){
-          for(var i=0;i<data.length;i++){
-            //https://www.sobot.com/chat/user/msg/ack?cid=xxx&msgId=xxxx&uid=xxx&utype=0
-            $.ajax({
-                'url' : 'http://test.sobot.com/chat/user/msg/ack.action',
-                'type' : 'get',
-                'dataType' : 'json',
-                'data' : {
-                    'cid':data[i]['cid'],
-                    'msgId':data[i]['msgId'],
-                    'uid' : data[i]['uid'],
-                    'utype':'2'//0 用户  2 客服
-                }
-            }).success(function(ret) {
-                console.log(ret);
-            });
-          }
+    var msgConfirmHandler = function(data) {
+        if(data && data.length > 0) {
+            for(var i = 0;i < data.length;i++) {
+                //https://www.sobot.com/chat/user/msg/ack?cid=xxx&msgId=xxxx&uid=xxx&utype=0
+                $.ajax({
+                    'url' : 'http://test.sobot.com/chat/user/msg/ack.action',
+                    'type' : 'get',
+                    'dataType' : 'json',
+                    'data' : {
+                        'cid' : data[i]['cid'],
+                        'msgId' : data[i]['msgId'],
+                        'uid' : data[i]['uid'],
+                        'utype' : '2'//0 用户  2 客服
+                    }
+                }).success(function(ret) {
+                });
+            }
         }
     };
     var socketFactory = function() {
