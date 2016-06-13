@@ -17,7 +17,7 @@ function polling(global) {
     };
 
     var onsend = function(evt,data,count) {
-      // console.log(data);
+        // console.log(data);
         var count = count || 0;
         $.ajax({
             'url' : '/chat/admin/send1.action',
@@ -29,43 +29,15 @@ function polling(global) {
                 'uid' : global.id
             })
         }).success(function(res) {
-          // console.log(res);
+            // console.log(res);
             setTimeout(function() {
-              $body.trigger("core.sendresult",[{
-                  'token' : data.date,
-                  'type' : "success",
-                  'uid' : data.uid
-              }]);
-          },10);
-            //判断是否真的发送成功
-            // $.ajax({
-            //   'url':'/xxx',
-            //   'dataType':'json',
-            //   'type':'post',
-            //   'data':[]
-            // }).success(function(res){
-            //   setTimeout(function() {
-            //       $body.trigger("core.sendresult",[{
-            //           'token' : data.date,
-            //           'type' : "success",
-            //           'uid' : data.uid
-            //       }]);
-            //   },10);
-            // }).fail(function(){
-            //   if(count == 3) {
-            //       setTimeout(function() {
-            //           $body.trigger("core.sendresult",[{
-            //               'token' : data.date,
-            //               'type' : "fail",
-            //               'uid' : data.uid
-            //           }]);
-            //       },10);
-            //   } else {
-            //       setTimeout(function() {
-            //           onsend(evt,data,count + 1);
-            //       },1000);
-            //   }
-            // });
+                $body.trigger("core.sendresult",[{
+                    'token' : data.date,
+                    'type' : "success",
+                    'uid' : data.uid
+                }]);
+            },10);
+
         }).fail(function() {
             if(count == 3) {
                 setTimeout(function() {
@@ -149,7 +121,7 @@ function polling(global) {
                 'uid' : global.id
             }
         }).success(function(ret) {
-          // console.log(ret);
+            // console.log(ret);
             if(!ret || ret.length == 0) {
                 return;
             }
