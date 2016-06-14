@@ -160,6 +160,7 @@ function LeftSide(node,core,window) {
     var initPlugsin = function() {
         online = Online($node.find(".js-chatonline")[0],core,window);
         offline = Offline($node.find(".js-history-outer")[0],core,window);
+        onResize();
     };
 
     var init = function() {
