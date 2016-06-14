@@ -105,9 +105,16 @@
 
 
     {{ if (it.list[i].offlineType === 1) { }}
-      <div class="systeamTextBox">
-        <p class="systeamText">用户和客服 {{=it.list[i].receiverName}} 的会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
-      </div>
+
+      {{ if (it.list[i].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服 {{=it.list[i].receiverName}} 的会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服的会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
     {{ } }}
 
     {{ if (it.list[i].offlineType === 2) { }}
@@ -123,15 +130,29 @@
     {{ } }}
 
     {{ if (it.list[i].offlineType === 4) { }}
-      <div class="systeamTextBox">
-        <p class="systeamText">用户和机器人会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
-      </div>
+
+      {{ if (it.list[i].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服 {{=it.list[i].receiverName}} 的会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和机器人会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
     {{ } }}
 
     {{ if (it.list[i].offlineType === 5) { }}
-      <div class="systeamTextBox">
-        <p class="systeamText">用户和客服 {{=it.list[i].receiverName}} 的会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
-      </div>
+
+      {{ if (it.list[i].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服 {{=it.list[i].receiverName}} 的会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和机器人会话已结束 {{=it.list[i].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
     {{ } }}
   {{ } }}
 
