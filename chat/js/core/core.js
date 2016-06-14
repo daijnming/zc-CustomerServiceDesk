@@ -162,7 +162,6 @@ function Core(window) {
             var value = list[i];
             if(value.type === 103) {
                 normalMessageAdapter(value);
-                console.log(isWindowFocus)
                 if(document.hidden || !isWindowFocus) {
                     audioNewMessage.play();
                     createNotification(value,103);
