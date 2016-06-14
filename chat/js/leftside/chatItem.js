@@ -333,6 +333,7 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onUserStatusChange = function(evt,ret) {
+        delete userDataCache[data.uid];
         if(from == 'online' && ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             hide();
         }
@@ -343,7 +344,6 @@ function Item(data,core,outer,from,manager) {
             hide();
         }
         if(ret.type == 'star') {
-            delete userDataCache[data.uid];
             getUserData();
         }
     };
