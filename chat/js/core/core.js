@@ -4,6 +4,7 @@ function Core(window) {
     var token = '';
     var queryParam;
     var polling = require('./socket/json.js');
+    var WebSocket = require('./socket/websocket.js');
     var HearBeat = require("./socket/heartbeat.js");
     var normalMessageAdapter = require('../util/normatMessageAdapter.js');
     var messageTypeConfig = require('./messagetype.json');
@@ -100,6 +101,11 @@ function Core(window) {
                     }
                     var path = location.href.indexOf("admins_new") < 0 ? "admins/" : "admins_new/";
                     global.baseUrl = location.protocol + "//" + location.host + "/chat/" + ((!value.success) ? path : '');
+                    if(location.href.indexOf("www.sobot.com") >= 0) {
+                        global.socketBase = "";
+                    } else {
+                        global.socketBase = "ws://test.sobot.com/webchat";
+                    }
                     if(!value.success) {
                         global.scriptPath = "//static.sobot.com/chat/admins/";
                     } else {
@@ -194,8 +200,8 @@ function Core(window) {
     };
 
     var socketFactory = function() {
-        if(window.WebSocket && false) {
-
+        if(window.WebSocket) {
+            socket = new WebSocket(global);
         } else {
             socket = new polling(global);
         }
