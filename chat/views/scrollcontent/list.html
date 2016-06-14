@@ -189,7 +189,7 @@
     {{ if (it.list[prop].senderType === 1) { }}
       <div class="msg workOrderCus">
         <div class="msg_user fr">
-          <img src="{{=it.systemImage}}" class="msg_user_img">
+          <img src="{{= it.list[prop].senderFace || it.systemImage}}" class="msg_user_img">
         </div>
         <div class="msgContBox fr">
           <span class="msg_name">{{=it.list[prop].senderName}}</span>
