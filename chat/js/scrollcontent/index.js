@@ -1083,6 +1083,14 @@ function Content(node,core,window) {
             console.log(userChatCache[arguments[1].uid]);
         })
 
+        $body.on("leftside.cidchange", function() {
+          var params = arguments[1];
+          console.log(params);
+
+          if (params.uid === userInfo.userId) userInfo.cid = params.cid;
+          console.log(userInfo);
+        })
+
         $body.on("leftside.onselected", function() {
             var params = arguments[1],
                 $chatContent = $rootNode.find('#chat');
