@@ -171,6 +171,10 @@ function Item(data,core,outer,from,manager) {
     var onOnline = function(cid) {
         status = 'online';
         data.cid = cid;
+        $body.trigger("leftside.cidchange", {
+            'cid' : data.cid,
+            "uid" : data.uid
+        });
         var $statusText = $node.find(".js-user-status");
         $node.find(".js-icon").removeClass("offline");
         $node.removeClass("offline");
@@ -221,6 +225,7 @@ function Item(data,core,outer,from,manager) {
 
     var initNode = function() {
         var promise = new Promise();
+        console.log(data.cid,data.uid);
         var elm = $(outer).find('li[data-uid="' + data.uid + '"]');
         if(elm.length > 0) {
             node = elm[0];
