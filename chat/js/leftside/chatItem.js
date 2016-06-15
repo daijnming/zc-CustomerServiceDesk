@@ -309,7 +309,7 @@ function Item(data,core,outer,from,manager) {
         data.from = from;
         data.status = status;
         Promise.when(getUserData).then(function(userData) {
-            if(data.uid == manager.getCurrentUid())
+            if(data.uid === manager.getCurrentUid())
                 return;
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,

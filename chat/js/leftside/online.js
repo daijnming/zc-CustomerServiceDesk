@@ -125,6 +125,7 @@ function Online(node,core,window) {
         var uid = $(elm).attr("data-uid");
         if(!chatItemList[uid])
             return;
+        currentUid = uid;
         chatItemList[uid].onRemove();
 
     };
