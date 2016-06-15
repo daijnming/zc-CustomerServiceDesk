@@ -6,6 +6,7 @@ function Transfer(core,userInfo,callback) {
     var Toast = require('../util/modal/toast.js');
     var Promise = require('../util/promise.js');
     var _self = this;
+    var disabled = false;
     var global = core.getGlobal();
     var loadFile = require('../util/load.js')();
     var dateUtil = require("../util/date.js");
@@ -147,7 +148,7 @@ function Transfer(core,userInfo,callback) {
         var elm = e.currentTarget;
         var uname = $(elm).attr("data-uname");
         var joinId = $(elm).attr("data-uid");
-        if($(elm).hasClass("disabled")) {
+        if($(elm).hasClass("disabled") || disabled) {
             return;
         }
         $(elm).addClass("disabled").html('转接中...');
@@ -163,7 +164,8 @@ function Transfer(core,userInfo,callback) {
             'type' : "POST"
         }).success(function(ret) {
             if(ret.status == 1) {
-                $(elm).text("已转接");
+                $(elm).text("已转接").addClass("disabled");
+                disabled = true;
                 setTimeout(function() {
                     _self.hide();
                 },500);
