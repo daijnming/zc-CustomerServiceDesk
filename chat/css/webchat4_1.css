@@ -63,7 +63,7 @@ ul.history-list {
     background-image: url("../assets/images/noStarList.png");
 }
 .tab-content  li.fullscreen {
-    height: 3000px !important;
+    height: 300px !important;
     background-repeat: no-repeat;
     background-position: center 100px;
 }

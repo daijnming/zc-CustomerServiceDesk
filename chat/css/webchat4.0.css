@@ -620,7 +620,7 @@ body,html{
   margin-top: 2px;
 }
 #main-container #left-navigation   .tab-content #history .leftScroll {
-  overflow-y: hidden;
+  overflow-y: auto;
   padding: 0;
   outline: none;
   height: 549px;

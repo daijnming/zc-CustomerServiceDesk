@@ -9,6 +9,7 @@ function Core(window) {
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var notificationPermission;
+    var isWindowFocus = true;
     var $body;
     var socket,
         Notification = window.Notification || window.webkitNotifications;
@@ -91,8 +92,8 @@ function Core(window) {
                     'way' : 1,
                     'st' : queryParam.st || 1,
                     'lt' : queryParam.lt || new Date().getTime(),
-                    'token' : token,
-                    'ack' : 1//确认开启消息回执
+                    'token' : token
+                    // 'ack' : 1//确认开启消息回执
                 }
             }).done(function(ret) {
                 if(ret.status == 1 || ret.status == 2) {
@@ -124,7 +125,7 @@ function Core(window) {
 
     var systemMessageAdpater = function(value) {
         if(value.type === 102) {
-            if(document.hidden) {
+            if(document.hidden || !isWindowFocus) {
                 audioOnline.play();
                 createNotification(value,102);
             }
@@ -161,7 +162,7 @@ function Core(window) {
             var value = list[i];
             if(value.type === 103) {
                 normalMessageAdapter(value);
-                if(document.hidden) {
+                if(document.hidden || !isWindowFocus) {
                     audioNewMessage.play();
                     createNotification(value,103);
                 }
@@ -193,6 +194,12 @@ function Core(window) {
         $(window).on("beforeunload", function() {
             return '';
         });
+        window.onfocus = function() {
+            isWindowFocus = true;
+        };
+        window.onblur = function() {
+            isWindowFocus = false;
+        };
     };
     //消息确认
     var msgConfirmHandler = function(data) {

@@ -171,6 +171,10 @@ function Item(data,core,outer,from,manager) {
     var onOnline = function(cid) {
         status = 'online';
         data.cid = cid;
+        $body.trigger("leftside.cidchange", {
+            'cid' : data.cid,
+            "uid" : data.uid
+        });
         var $statusText = $node.find(".js-user-status");
         $node.find(".js-icon").removeClass("offline");
         $node.removeClass("offline");
@@ -221,6 +225,7 @@ function Item(data,core,outer,from,manager) {
 
     var initNode = function() {
         var promise = new Promise();
+        console.log(data.cid,data.uid);
         var elm = $(outer).find('li[data-uid="' + data.uid + '"]');
         if(elm.length > 0) {
             node = elm[0];
@@ -309,7 +314,7 @@ function Item(data,core,outer,from,manager) {
         data.from = from;
         data.status = status;
         Promise.when(getUserData).then(function(userData) {
-            if(data.uid == manager.getCurrentUid())
+            if(data.uid === manager.getCurrentUid())
                 return;
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,
@@ -333,6 +338,7 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onUserStatusChange = function(evt,ret) {
+        delete userDataCache[data.uid];
         if(from == 'online' && ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             hide();
         }
@@ -343,7 +349,6 @@ function Item(data,core,outer,from,manager) {
             hide();
         }
         if(ret.type == 'star') {
-            delete userDataCache[data.uid];
             getUserData();
         }
     };

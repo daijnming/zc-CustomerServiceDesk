@@ -372,8 +372,7 @@ function Content(node,core,window) {
 
     // 清理聊天主体页面
     var clearScrollContent = function(uid,isHide) {
-        userChatCache[userInfo.userId | uid] = undefined;
-        delete userChatCache[userInfo.userId | uid];
+        delete userChatCache[userInfo.userId || uid];
         $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
 
         // if (!isHide) {
@@ -504,7 +503,8 @@ function Content(node,core,window) {
     var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList,isPage) {
 
         // if ($rootNode.find('.js-zc-loadmore').length > 1) {
-        $rootNode.find('.js-zc-loadmore').empty();
+
+        if (typeNo !== 108) $rootNode.find('.js-zc-loadmore').empty();
         // }
         // $rootNode.find('.js-zc-loadmore').empty();
 
@@ -813,6 +813,7 @@ function Content(node,core,window) {
                 });
             }
         } else if(data.type === 108) {
+            console.log('data.type === 108');
             // clearScrollContent();
             var list = [];
 
@@ -821,6 +822,8 @@ function Content(node,core,window) {
             }
 
             if(userChatCache[data.uid] && userChatCache[data.uid].list) {
+
+
                 userChatCache[data.uid].list.push({
                     action : 10,
                     offlineType : 5,
@@ -1054,6 +1057,7 @@ function Content(node,core,window) {
 
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
+        initPlugsin();
     };
 
     var bindLitener = function() {
@@ -1074,7 +1078,17 @@ function Content(node,core,window) {
         });
 
         $body.on("leftside.onhide", function() {
+            console.log('leftside.onhide')
             clearScrollContent(arguments[1].uid,true);
+            console.log(userChatCache[arguments[1].uid]);
+        })
+
+        $body.on("leftside.cidchange", function() {
+          var params = arguments[1];
+          console.log(params);
+
+          if (params.uid === userInfo.userId) userInfo.cid = params.cid;
+          console.log(userInfo);
         })
 
         $body.on("leftside.onselected", function() {
@@ -1214,13 +1228,13 @@ function Content(node,core,window) {
     };
 
     var initPlugsin = function() {
-
+      loadFile.load(global.baseUrl + API.tpl.chatItem);
     };
 
     var init = function() {
         parseDOM();
         bindLitener();
-        initPlugsin();
+        // initPlugsin();
     };
 
     init();
