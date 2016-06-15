@@ -255,6 +255,7 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             messageConfirm(list);
+            console.log(list.length);
             list = messageFilter(list);
             messageAdapter(list);
             $body.trigger('core.receive',[list]);
