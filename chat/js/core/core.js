@@ -10,6 +10,7 @@ function Core(window) {
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var notificationPermission;
+    var messageCache = {};
     var $body;
     var socket,
         Notification = window.Notification || window.webkitNotifications;
@@ -31,7 +32,24 @@ function Core(window) {
             'success' : !!value.token
         });
     };
-
+    /**
+     * @category 消息的去重，排序
+     */
+    var messageFilter = function(list) {
+        var arr = [];
+        for(var i = 0,
+            len = list.length;i < len;i++) {
+            var item = list[i];
+            if(!messageCache[item.msgId]) {
+                arr.push(item);
+                messageCache[item.msgId] = 1;
+            }
+        }
+        arr = arr.sort(function(a,b) {
+            return a.t > b.t;
+        });
+        return arr;
+    };
     /**
      * 将url里面query字符串转换成对象
      */
@@ -200,13 +218,14 @@ function Core(window) {
     };
 
     var socketFactory = function() {
-        if(window.WebSocket) {
+        if(window.WebSocket && false) {
             socket = new WebSocket(global);
         } else {
             socket = new polling(global);
         }
 
         socket.on("receive", function(list) {
+            list = messageFilter(list);
             messageAdapter(list);
             $body.trigger('core.receive',[list]);
         });
