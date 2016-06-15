@@ -68,7 +68,7 @@ var Fastlayer = function(node,core,config) {
         $this.find('input').addClass('activeLine').parent('li').siblings('li').find('input').removeClass('activeLine');
         //清空右侧回复
         var oLi = $(oFastRight).find('li');
-        $(oLi).removeClass('show');
+        $(oLi).removeClass('show').addClass('hide');
         for(var i = 0;i < oLi.length;i++) {
             if($(oLi[i]).attr('gid') == $this.attr('gid')) {
                 _arr.push(oLi[i]);
