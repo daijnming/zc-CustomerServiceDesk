@@ -503,7 +503,8 @@ function Content(node,core,window) {
     var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList,isPage) {
 
         // if ($rootNode.find('.js-zc-loadmore').length > 1) {
-        $rootNode.find('.js-zc-loadmore').empty();
+
+        if (typeNo !== 108) $rootNode.find('.js-zc-loadmore').empty();
         // }
         // $rootNode.find('.js-zc-loadmore').empty();
 
@@ -812,6 +813,7 @@ function Content(node,core,window) {
                 });
             }
         } else if(data.type === 108) {
+            console.log('data.type === 108');
             // clearScrollContent();
             var list = [];
 
