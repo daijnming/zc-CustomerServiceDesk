@@ -10,6 +10,7 @@ function Core(window) {
     var messageTypeConfig = require('./messagetype.json');
     var Promise = require('../util/promise.js');
     var notificationPermission;
+    var SERVER_CLIENT = 2;
     var messageCache = {};
     var $body;
     var socket,
@@ -30,6 +31,33 @@ function Core(window) {
         token = value.token || window.sessionStorage.getItem('temp-id');
         promise.resolve({
             'success' : !!value.token
+        });
+    };
+
+    var messageConfirm = function(list) {
+        var arr = [];
+        for(var i = 0,
+            len = list.length;i < len;i++) {
+            var item = list[i];
+            var obj = {
+                'type' : 300,
+                'utype' : SERVER_CLIENT,
+                'cid' : item.cid,
+                'uid' : item.uid,
+                'msgId' : item.msgId
+            };
+            arr.push(obj);
+        }
+        $.ajax({
+            'url' : '/chat/user/msg/ack.action',
+            'dataType' : 'json',
+            'data' : {
+                'content' : JSON.stringify(arr)
+            },
+            'type' : 'POST'
+        }).success(function(ret) {
+            console.log(ret);
+        }).fail(function(ret) {
         });
     };
     /**
@@ -110,7 +138,8 @@ function Core(window) {
                     'way' : 1,
                     'st' : queryParam.st || 1,
                     'lt' : queryParam.lt || new Date().getTime(),
-                    'token' : token
+                    'token' : token,
+                    'ack' : 1
                 }
             }).done(function(ret) {
                 if(ret.status == 1 || ret.status == 2) {
@@ -225,6 +254,7 @@ function Core(window) {
         }
 
         socket.on("receive", function(list) {
+            messageConfirm(list);
             list = messageFilter(list);
             messageAdapter(list);
             $body.trigger('core.receive',[list]);
