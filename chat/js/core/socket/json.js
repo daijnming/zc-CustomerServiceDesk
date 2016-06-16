@@ -1,6 +1,7 @@
 function polling(global) {
     var eventCache = {};
     var unicode = require('../../util/unicode.js');
+    var success = true;
     var defaultParams = {
         answer : "",
         answerType : "",
