@@ -8,10 +8,10 @@ function Core(window) {
     var HearBeat = require("./socket/heartbeat.js");
     var normalMessageAdapter = require('../util/normatMessageAdapter.js');
     var messageTypeConfig = require('./messagetype.json');
+    var messageCache = require('./messageMap.js');
     var Promise = require('../util/promise.js');
     var notificationPermission;
     var SERVER_CLIENT = 2;
-    var messageCache = {};
     var $body;
     var socket,
         Notification = window.Notification || window.webkitNotifications;
@@ -56,7 +56,6 @@ function Core(window) {
             },
             'type' : 'POST'
         }).success(function(ret) {
-            console.log(ret);
         }).fail(function(ret) {
         });
     };
@@ -68,9 +67,9 @@ function Core(window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var item = list[i];
-            if(!messageCache[item.msgId]) {
+            if(!messageCache.has(item.msgId)) {
                 arr.push(item);
-                messageCache[item.msgId] = 1;
+                messageCache.push([item]);
             }
         }
         arr = arr.sort(function(a,b) {
@@ -255,7 +254,6 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             messageConfirm(list);
-            console.log(list.length);
             list = messageFilter(list);
             messageAdapter(list);
             $body.trigger('core.receive',[list]);
