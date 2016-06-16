@@ -173,10 +173,10 @@ function Transfer(core,userInfo,callback) {
 
             } else if(ret.status == 2) {
                 //用户已经离线
-                $(elm).text('用户已离线');
+                $(elm).text('会话已结束');
                 new Toast(core, {
                     'icon' : 'alert',
-                    'text' : '用户已离线，无法转接'
+                    'text' : '会话已结束，无法转接'
                 });
                 setTimeout(function() {
                     _self.hide();
