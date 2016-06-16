@@ -442,3 +442,10 @@ ul.history-list {
 .zc-toast button:hover {
 
 }
+.table-outer {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.table-responsive .reqBottom.spec{
+    margin-top:5px;
+}
