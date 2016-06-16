@@ -149,7 +149,7 @@ function Queue(core,window) {
                 $(elm).html('已邀请').addClass('disabled').css({
                     'color' : '#808080'
                 });
-            } else if(status == 2) {
+            } else if(ret.status == 2) {
                 userSize[currentTab];
                 $node.find(".js-size-btn").eq(currentTab).html(--userSize[currentTab]);
                 $(elm).html('邀请失败').addClass('disabled').css({
