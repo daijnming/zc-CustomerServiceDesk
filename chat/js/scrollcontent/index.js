@@ -143,6 +143,7 @@ function Content(node,core,window) {
                 if(isRender) parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
             }
         } else {
+            $rootNode.find('#chat').show();
             console.log('getChatListByOnline init');
             var st = Date.now();
             console.log(st);
@@ -376,8 +377,8 @@ function Content(node,core,window) {
         $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
 
         // if (!isHide) {
-        $rootNode.find('#chat').hide();
-        $rootNode.find('#chat').find('.js-panel-body').empty();
+          // $rootNode.find('#chat').hide();
+          $rootNode.find('#chat').find('.js-panel-body').empty();
         // }
     }
     var parseTpl = function(type,ret,uid,isScrollBottom) {
@@ -716,17 +717,16 @@ function Content(node,core,window) {
         $rootNode.find('.js-addButton').children('[data-type="' + type + '"]').removeClass('hide');
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
         onUpdateUserState(type,handleType);
-        // 如果是添加拉黑
-        if(type === 'black' && handleType === 'add') {
-            clearScrollContent(null,true);
-            return;
-        }
 
-        adminPushMessageState({
-            type : type,
-            handleType : handleType
-        });
-        // 加入聊天记录
+        console.log('userInfo');
+        var isShow = !!$('#chat').find('.js-panel-body').find('div').length;;
+
+        if (isShow) {
+          adminPushMessageState({
+              type : type,
+              handleType : handleType
+          });
+        }
 
     }
     var initUserState = function(data) {
@@ -933,7 +933,7 @@ function Content(node,core,window) {
             parseStack(data[i]);
     };
 
-    var adminPushMessageState = function(data) {
+    var adminPushMessageState = function(data, isAddBlack) {
 
         var messageMap = {
             star : {
@@ -947,7 +947,9 @@ function Content(node,core,window) {
             },
 
             black : {
-                add : {},
+                add : {
+                    action: 11
+                },
 
                 del : {
                     action : 12
@@ -965,17 +967,37 @@ function Content(node,core,window) {
             pid : userInfo.pid
         }
 
-        userChatCache[userInfo.userId] = userChatCache[userInfo.userId] || {
-            list : [],
-            scrollTop : 0,
-            pageNo : 1
-        }
+          userChatCache[userInfo.userId] = userChatCache[userInfo.userId] || {
+              list : [],
+              scrollTop : 0,
+              pageNo : 1
+          }
 
-        list.push(model);
+          list.push(model);
+          userChatCache[userInfo.userId].list.push(model);
 
-        userChatCache[userInfo.userId].list.push(model);
 
-        getChatListByOnline('chat',parseList,null,null,data,true,true,null,list);
+          getChatListByOnline('chat',parseChat,null,null,data,true,true,null,list);
+        // } else {
+        //
+        //   if ($('label.active').find('.c-redio').attr('value') == 1) {
+        //
+        //
+        //
+        //     getChatListByOnline('chat',parseChat,null,null,data,true,true,null,list);
+        //   }
+        //
+        //   // 初始化用户状态
+        //   initUserState({
+        //       star : userInfo.isStar,
+        //       black : false,
+        //       transfer : userInfo.isTransfer
+        //   });
+        //
+        // }
+
+
+
     }
     var adminPushMessageSendResult = function(data) {
         var caches = userChatCache[data.uid];
@@ -1097,6 +1119,8 @@ function Content(node,core,window) {
             var params = arguments[1],
                 $chatContent = $rootNode.find('#chat');
             var userSourceImage;
+
+            console.log(params);
 
             if(params.data.face) {
                 userSourceImage = params.data.face;
