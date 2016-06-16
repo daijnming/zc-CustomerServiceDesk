@@ -76,7 +76,6 @@ function LeftSide(node,core,window) {
                     'uid' : global.id
                 }
             }).success(function(ret) {
-
                 for(var i = 0;i < STATUSIMAGELIST.length;i++) {
                     $statusImage.removeClass(STATUSIMAGELIST[i]);
                 }
@@ -128,6 +127,10 @@ function LeftSide(node,core,window) {
         var height = $(window).outerHeight() - (HEADER_HEIGHT + TABCONTAINER_HEIGHT + RADIOBOX_HEIGHT);
         online.onResize(height);
         offline.onResize(height);
+
+        var $histroy = $("#historylist");
+        var parent = $histroy.parent();
+        $histroy.css('height',parent.outerHeight() - 47);
     };
     var onloadHandler = function(evt,data) {
         global = core.getGlobal();
