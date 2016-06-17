@@ -71,6 +71,9 @@ function Item(data,core,outer,from,manager) {
                 }
                 unReadCount++;
             }
+            if(unReadCount == 0) {
+                alert();
+            }
             var unReadText = (unReadCount > 99) ? "99+" : unReadCount;
             if(unReadCount > 0) {
                 $unRead.html(unReadText).css({
@@ -216,6 +219,7 @@ function Item(data,core,outer,from,manager) {
                 arr.push(list[i]);
             }
         }
+        unReadCount = arr.length;
         var lastMessage = arr.length > 0 ? arr[arr.length - 1] : null;
         showLastMessage(lastMessage);
         $unRead.html(arr.length).css({
@@ -225,7 +229,6 @@ function Item(data,core,outer,from,manager) {
 
     var initNode = function() {
         var promise = new Promise();
-        console.log(data.cid,data.uid);
         var elm = $(outer).find('li[data-uid="' + data.uid + '"]');
         if(elm.length > 0) {
             node = elm[0];
@@ -415,7 +418,7 @@ function Item(data,core,outer,from,manager) {
     };
     initNode().then(function(value,promise) {
         init();
-        setTimeout(promise.resolve,0);
+        setTimeout(promise.resolve,1);
         return promise;
     }).then(getCacheList);
     bindStaticListener();
