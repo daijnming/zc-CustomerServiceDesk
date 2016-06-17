@@ -10,6 +10,7 @@ function Content(node,core,window) {
     // 保存用户对话消息缓存
     var userChatCache = {};
     var msgCache = {};
+    var isClickPrevent = true;
     var hasCallState = false;
     var imageUrl = 'http://img.sobot.com/chatres/common/face/';
     var imageUrl2 = 'http://img.sobot.com/console/common/face/';
@@ -256,6 +257,7 @@ function Content(node,core,window) {
                     receiver : userInfo.userId
                 }
             }).success(function(ret) {
+                isClickPrevent = true;
                 callback && callback(type,handleType);
             });
         }
@@ -289,9 +291,14 @@ function Content(node,core,window) {
                 'title' : model.title,
                 'text' : model.content,
                 'OK' : function() {
-                    delete userChatCache[userInfo.userId];
-                    func();
-                    dialog.hide();
+
+                    // 防止重复点击
+                    if (isClickPrevent) {
+                      isClickPrevent = false;
+                      delete userChatCache[userInfo.userId];
+                      func();
+                      dialog.hide();
+                    }
                 }
             });
             dialog.show();
