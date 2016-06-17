@@ -49,7 +49,7 @@
 
   {{ if(it.list[prop].action === 9) { }}
     <div class="systeamTextBox">
-      <p class="systeamText">用户将客服的会话 , 被转移到客服 {{=it.list[prop].receiverName}} {{=it.list[prop].ts.split(' ')[1]}}</p>
+      <p class="systeamText">客服 {{=it.adminName}} 将用户转接给客服 {{=it.list[prop].receiverName}} {{=it.list[prop].ts.split(' ')[1]}}</p>
     </div>
   {{ } }}
 
@@ -76,7 +76,7 @@
     {{ if (it.list[prop].offlineType === 3) { }}
       {{ if (it.list[prop].receiverName) { }}
         <div class="systeamTextBox">
-          <p class="systeamText">用户被客服 {{=it.list[prop].receiverName}} 拉入黑名单,本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+          <p class="systeamText">用户被客服 {{=itc.list[prop].receiverName}} 拉入黑名单,本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
         </div>
       {{ } else { }}
         <div class="systeamTextBox">

@@ -97,7 +97,7 @@
 
   {{ if(it.list[i].action === 9) { }}
     <div class="systeamTextBox">
-      <p class="systeamText">用户将客服的会话 , 被转移到客服</p>
+      <p class="systeamText">客服 {{=it.adminName}} 将用户转接给客服 {{=it.list[i].receiverName}} {{=it.list[prop].ts.split(' ')[1]}}</p>
     </div>
   {{ } }}
 
