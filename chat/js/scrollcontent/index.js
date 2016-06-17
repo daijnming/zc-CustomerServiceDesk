@@ -145,9 +145,9 @@ function Content(node,core,window) {
             }
         } else {
             $rootNode.find('#chat').show();
-            console.log('getChatListByOnline init');
+            // console.log('getChatListByOnline init');
             var st = Date.now();
-            console.log(st);
+            // console.log(st);
             $rootNode.find('#chat').find('.js-panel-body').addClass('hide');
             $rootNode.find('#chat').find('.js-load-model').removeClass('hide');
 
@@ -164,9 +164,9 @@ function Content(node,core,window) {
                     pageSize : pageSize || 20
                 }
             }).success(function(ret) {
-                console.log('getChatListByOnline success');
+                // console.log('getChatListByOnline success');
                 var et = (Date.now() - st) / 1000;
-                console.log('接口消耗时间 => ' + et + ' 秒');
+                // console.log('接口消耗时间 => ' + et + ' 秒');
                 $rootNode.find('#chat').find('.js-panel-body').removeClass('hide');
                 $rootNode.find('#chat').find('.js-load-model').addClass('hide');
                 if(ret.data[0] && ret.data[0].content[0]) {
@@ -369,10 +369,14 @@ function Content(node,core,window) {
         $rootNode.on('click','.fl .msg_content', function() {
             var chatText = $(this).html();
 
-            if (chatText.indexOf('webchat_img_upload') !== -1) {
-              window.open($(this).children('img').attr('src'));
-            } else {
-              onSearchUserChat(chatText);
+            if (chatText.indexOf('http://img.sobot.com/yun/attachment/fileTypeImages/') === -1) {
+
+              if (chatText.indexOf('webchat_img_upload') !== -1) {
+                window.open($(this).children('img').attr('src'));
+              }
+              else {
+                onSearchUserChat(chatText);
+              }
             }
         })
     }
@@ -389,8 +393,7 @@ function Content(node,core,window) {
         // }
     }
     var parseTpl = function(type,ret,uid,isScrollBottom) {
-        // console.log(global);
-        console.log('parseTpl init');
+        // console.log('parseTpl init');
         var st = Date.now();
         loadFile.load(global.baseUrl + API.tpl.chatList).then(function(tpl) {
 
@@ -466,9 +469,9 @@ function Content(node,core,window) {
 
             $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
 
-            console.log('parseTpl success');
+            // console.log('parseTpl success');
             var et = (Date.now() - st ) / 1000;
-            console.log('渲染模版消耗 => ' + et + ' 秒 ');
+            // console.log('渲染模版消耗 => ' + et + ' 秒 ');
 
             setTimeout(function() {
 
@@ -725,7 +728,7 @@ function Content(node,core,window) {
         $rootNode.find('.js-addButton').children('.js-' + type + '-' + handleType).addClass('hide');
         onUpdateUserState(type,handleType);
 
-        console.log('userInfo');
+        // console.log('userInfo');
         var isShow = !!$('#chat').find('.js-panel-body').find('div').length;;
 
         if (isShow) {
@@ -822,8 +825,6 @@ function Content(node,core,window) {
                 });
             }
         } else if(data.type === 108) {
-            console.log('data.type === 108');
-            // clearScrollContent();
             var list = [];
 
             if(userInfo.userId === data.uid) {
@@ -1109,17 +1110,17 @@ function Content(node,core,window) {
         });
 
         $body.on("leftside.onhide", function() {
-            console.log('leftside.onhide')
+            // console.log('leftside.onhide')
             clearScrollContent(arguments[1].uid,true);
-            console.log(userChatCache[arguments[1].uid]);
+            // console.log(userChatCache[arguments[1].uid]);
         })
 
         $body.on("leftside.cidchange", function() {
           var params = arguments[1];
-          console.log(params);
+          // console.log(params);
 
           if (params.uid === userInfo.userId) userInfo.cid = params.cid;
-          console.log(userInfo);
+          // console.log(userInfo);
         })
 
         $body.on("leftside.onselected", function() {
@@ -1127,7 +1128,7 @@ function Content(node,core,window) {
                 $chatContent = $rootNode.find('#chat');
             var userSourceImage;
 
-            console.log(params);
+            // console.log(params);
 
             if(params.data.face) {
                 userSourceImage = params.data.face;
