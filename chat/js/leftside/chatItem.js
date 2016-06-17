@@ -15,7 +15,8 @@ function Item(data,core,outer,from,manager) {
         TYPE_TEXT = 2,
         AUDIO = 3,
         RICH_TEXT = 4;
-    var isReady = false;
+    var isReady = false,
+        isDestroy = false;
     var unReadList = require('./unreadlist.js');
     var from = from || 'online';
     var global = core.getGlobal();
@@ -342,10 +343,13 @@ function Item(data,core,outer,from,manager) {
 
     var onUserStatusChange = function(evt,ret) {
         delete userDataCache[data.uid];
+        if(isDestroy)
+            return;
         if(from == 'online' && ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             hide();
         }
         if(ret.type == 'black' && ret.handleType == 'del' && ret.userId === data.uid && from === 'blacklist') {
+            console.log(from,data.uid)
             hide();
         }
         if(ret.type == "star" && from == 'star' && ret.handleType == 'del' && ret.userId === data.uid) {
@@ -402,13 +406,17 @@ function Item(data,core,outer,from,manager) {
 
     };
 
+    var receive = function() {
+        if(isDestroy)
+            return;
+        setTimeout(function() {
+            onReceive(evt,list);
+        },1);
+    };
+
     var bindStaticListener = function() {
         $body = $(document.body);
-        $body.on("core.receive", function(evt,list) {
-            setTimeout(function() {
-                onReceive(evt,list);
-            },1);
-        });
+        $body.on("core.receive",receive);
     };
 
     var init = function() {
@@ -416,6 +424,12 @@ function Item(data,core,outer,from,manager) {
         bindListener();
         initPlugins();
     };
+
+    var destroy = function() {
+        isDestroy = true;
+        $body.unbind("core.receive",receive);
+    };
+
     initNode().then(function(value,promise) {
         init();
         setTimeout(promise.resolve,1);
@@ -424,6 +438,7 @@ function Item(data,core,outer,from,manager) {
     bindStaticListener();
 
     this.onOnline = onOnline;
+    this.destroy = destroy;
     this.getStatus = getStatus;
     this.onclick = onclick;
     this.onRemove = onRemove;
