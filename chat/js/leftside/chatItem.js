@@ -397,9 +397,7 @@ function Item(data,core,outer,from,manager) {
     var bindStaticListener = function() {
         $body = $(document.body);
         $body.on("core.receive", function(evt,list) {
-            setTimeout(function(evt,list) {
-                alert();
-                console.log("11111")
+            setTimeout(function() {
                 onReceive(evt,list);
             },1);
         });
