@@ -9,7 +9,6 @@ function WebSocket(global) {
     var start = function() {
         websocket = new window.WebSocket(global.socketBase);
         websocket.onopen = function() {
-            alert();
         };
         websocket.onerror = function() {
             console.log("err")
