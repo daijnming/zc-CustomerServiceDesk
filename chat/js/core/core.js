@@ -76,6 +76,12 @@ function Core(window) {
             }
         }
         arr = arr.sort(function(a,b) {
+            if(!a.t) {
+                a.t = +new Date();
+            }
+            if(!b.t) {
+                b.t = +new Date();
+            }
             return a.t > b.t;
         });
         return arr;
