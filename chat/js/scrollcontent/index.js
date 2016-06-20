@@ -10,7 +10,7 @@ function Content(node,core,window) {
     // 保存用户对话消息缓存
     var userChatCache = {};
     var msgCache = {};
-    var isClickPrevent = true;
+    // var isClickPrevent = true;
     var hasCallState = false;
     var imageUrl = 'http://img.sobot.com/chatres/common/face/';
     var imageUrl2 = 'http://img.sobot.com/console/common/face/';
@@ -246,7 +246,7 @@ function Content(node,core,window) {
 
     }
     // 改变用户状态
-    var updateUserState = function(type,handleType,callback) {
+    var updateUserState = function(type,handleType,callback, isClickPrevent) {
         var func = function() {
             $.ajax({
                 'url' : API.http.status[type][handleType],
@@ -257,7 +257,10 @@ function Content(node,core,window) {
                     receiver : userInfo.userId
                 }
             }).success(function(ret) {
-                isClickPrevent = true;
+                // setTimeout(function() {
+                //     isClickPrevent = true;
+                // }, 1000);
+
                 callback && callback(type,handleType);
             });
         }
@@ -292,6 +295,7 @@ function Content(node,core,window) {
                 'text' : model.content,
                 'OK' : function() {
 
+                    console.log(isClickPrevent);
                     // 防止重复点击
                     if (isClickPrevent) {
                       isClickPrevent = false;
@@ -1188,11 +1192,11 @@ function Content(node,core,window) {
             var $self = $(this),
                 type = $self.attr('data-type'),
                 handleType = $self.attr('data-handle');
-
+            var isClickPrevent = true;
             if(!!!type && !!!handleType) {
                 getAdminList(userInfo.sender,transfer);
             } else {
-                updateUserState(type,handleType,updateHeaderTag);
+                updateUserState(type,handleType,updateHeaderTag, isClickPrevent);
             }
         })
         // // 滚动加载分页
