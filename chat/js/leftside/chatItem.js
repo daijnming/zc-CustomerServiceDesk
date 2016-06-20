@@ -399,6 +399,7 @@ function Item(data,core,outer,from,manager) {
         $body.on("core.receive", function(evt,list) {
             setTimeout(function(evt,list) {
                 alert();
+                console.log("11111")
                 onReceive(evt,list);
             },1);
         });
