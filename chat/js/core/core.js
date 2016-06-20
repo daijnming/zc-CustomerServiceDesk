@@ -67,6 +67,9 @@ function Core(window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var item = list[i];
+            if(!item.msgId) {
+                item.msgId = +new Date();
+            }
             if(!messageCache.has(item.msgId)) {
                 arr.push(item);
                 messageCache.push([item]);
