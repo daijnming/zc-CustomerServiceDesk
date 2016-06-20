@@ -406,7 +406,7 @@ function Item(data,core,outer,from,manager) {
 
     };
 
-    var receive = function() {
+    var receive = function(evt,list) {
         if(isDestroy)
             return;
         setTimeout(function() {
