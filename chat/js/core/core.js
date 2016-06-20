@@ -252,7 +252,6 @@ function Core(window) {
             socket = new polling(global);
         }
 
-
         socket.on("receive", function(list) {
             if(window.confirm("是否进行消息确认？")) {
                 messageConfirm(list);
