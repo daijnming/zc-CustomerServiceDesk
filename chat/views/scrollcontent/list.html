@@ -49,7 +49,7 @@
 
   {{ if(it.list[prop].action === 9) { }}
     <div class="systeamTextBox">
-      <p class="systeamText">客服 {{=it.adminName}} 将用户转接给客服 {{=it.list[prop].receiverName}} {{=it.list[prop].ts.split(' ')[1]}}</p>
+      <p class="systeamText">客服 {{=it.senderName}} 将用户转接给客服 {{=it.list[prop].receiverName}} {{=it.list[prop].ts.split(' ')[1]}}</p>
     </div>
   {{ } }}
 
