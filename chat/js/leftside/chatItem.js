@@ -72,9 +72,6 @@ function Item(data,core,outer,from,manager) {
                 }
                 unReadCount++;
             }
-            if(unReadCount == 0) {
-                alert();
-            }
             var unReadText = (unReadCount > 99) ? "99+" : unReadCount;
             if(unReadCount > 0) {
                 $unRead.html(unReadText).css({
