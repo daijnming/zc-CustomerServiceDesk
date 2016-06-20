@@ -70,7 +70,7 @@ function Core(window) {
             if(!item.msgId) {
                 item.msgId = +new Date();
             }
-            if(!messageCache.has(item.msgId)) {
+            if(!messageCache.has(item.msgId) || item.type === 111) {
                 arr.push(item);
                 messageCache.push([item]);
             }
