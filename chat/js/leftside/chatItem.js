@@ -398,6 +398,7 @@ function Item(data,core,outer,from,manager) {
         $body = $(document.body);
         $body.on("core.receive", function(evt,list) {
             setTimeout(function(evt,list) {
+                alert();
                 onReceive(evt,list);
             },1);
         });
