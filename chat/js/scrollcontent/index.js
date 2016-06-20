@@ -5,7 +5,7 @@ function Content(node,core,window) {
     var Face = require('../util/qqFace.js');
     var App = require('../util/app.js');
     var Transfer = require('./transfer.js');
-    var MessageMap = require('./core/messageMap.js')
+    var MessageMap = require('../core/messageMap.js')
     var $rootNode;
     var global;
     // 保存用户对话消息缓存
