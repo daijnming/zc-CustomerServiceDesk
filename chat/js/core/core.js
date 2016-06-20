@@ -253,7 +253,7 @@ function Core(window) {
         }
 
         socket.on("receive", function(list) {
-            if(window.confirm("是否进行消息确认？")) {
+            if(window.confirm("是否进行消息确认？aaa")) {
                 messageConfirm(list);
             }
             list = messageFilter(list);
