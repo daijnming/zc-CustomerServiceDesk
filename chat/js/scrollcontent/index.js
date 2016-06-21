@@ -387,7 +387,7 @@ function Content(node,core,window) {
     // --------------------------- dom操作 ---------------------------
 
     // 清理聊天主体页面
-    var clearScrollContent = function(uid,isHide) {
+    var clearScrollContent = function(uid,isHide, isUserHide) {
         delete userChatCache[userInfo.userId || uid];
         $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
 
@@ -395,6 +395,8 @@ function Content(node,core,window) {
           // $rootNode.find('#chat').hide();
           $rootNode.find('#chat').find('.js-panel-body').empty();
         // }
+
+        if (isUserHide) $rootNode.find('#chat').hide();
     }
     var parseTpl = function(type,ret,uid,isScrollBottom) {
         // console.log('parseTpl init');
@@ -1114,8 +1116,8 @@ function Content(node,core,window) {
         });
 
         $body.on("leftside.onhide", function() {
-            // console.log('leftside.onhide')
-            clearScrollContent(arguments[1].uid,true);
+            console.log('leftside.onhide')
+            clearScrollContent(arguments[1].uid,true, true);
             // console.log(userChatCache[arguments[1].uid]);
         })
 
