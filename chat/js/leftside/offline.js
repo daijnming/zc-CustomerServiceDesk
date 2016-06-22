@@ -35,6 +35,8 @@ function Offline(node,core,window) {
         var scrollTop = $ulParent.scrollTop();
         var outerHeight = $ulParent.outerHeight();
         var innerHeight = $ulOuter.outerHeight();
+        console.log(scrollTop,outerHeight,innerHeight);
+        console.log(scrollTop + outerHeight,innerHeight);
         if(scrollTop + outerHeight >= innerHeight) {
             alert();
             pageNow++;
