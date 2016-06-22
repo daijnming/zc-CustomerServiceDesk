@@ -27,6 +27,7 @@ function Item(data,core,outer,from,manager) {
     var baseUrl = global.baseUrl;
     var $ulOuter;
     var status = (from == 'history' || from == 'blacklist' || from == 'star') ? 'offline' : 'online';
+    var temp;
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
