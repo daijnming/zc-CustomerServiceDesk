@@ -387,7 +387,7 @@ function Content(node,core,window) {
     // --------------------------- dom操作 ---------------------------
 
     // 清理聊天主体页面
-    var clearScrollContent = function(uid,isHide) {
+    var clearScrollContent = function(uid,isHide, isUserHide) {
         delete userChatCache[userInfo.userId || uid];
         $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
 
@@ -395,6 +395,8 @@ function Content(node,core,window) {
           // $rootNode.find('#chat').hide();
           $rootNode.find('#chat').find('.js-panel-body').empty();
         // }
+
+        if (isUserHide) $rootNode.find('#chat').hide();
     }
     var parseTpl = function(type,ret,uid,isScrollBottom) {
         // console.log('parseTpl init');
@@ -582,7 +584,7 @@ function Content(node,core,window) {
                     var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(img) {
-                        img.src = img.src + '?r=' + (new Date());
+                        img.src = img.src + '?r=' + (Date.parse(new Date()))
                         img.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -594,15 +596,16 @@ function Content(node,core,window) {
                 } else {
                     var height = $('#' + type).find('.js-panel-body').height();
                     var scrollTop = $('#' + type).find('.scrollBoxParent').scrollTop();
+
                     if((height - scrollTop) > 700) {
-                        if(typeNo === 103)
-                            $rootNode.find('#' + type).find('.zc-newchat-tag').show();
+
+                        if(typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                     } else {
                         $rootNode.find('#' + type).find('.zc-newchat-tag').hide();
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                         if(img) {
-                            img.src = img.src + '?r=' + (new Date());
+                            img.src = img.src + '?r=' + (Date.parse(new Date()))
                             img.onload = function() {
                                 $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                                 userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -1114,8 +1117,8 @@ function Content(node,core,window) {
         });
 
         $body.on("leftside.onhide", function() {
-            // console.log('leftside.onhide')
-            clearScrollContent(arguments[1].uid,true);
+            console.log('leftside.onhide')
+            clearScrollContent(arguments[1].uid,true, true);
             // console.log(userChatCache[arguments[1].uid]);
         })
 
