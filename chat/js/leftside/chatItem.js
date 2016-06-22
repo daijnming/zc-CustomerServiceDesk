@@ -27,6 +27,7 @@ function Item(data,core,outer,from,manager) {
     var baseUrl = global.baseUrl;
     var $ulOuter;
     var status = (from == 'history' || from == 'blacklist' || from == 'star') ? 'offline' : 'online';
+    var temp;
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
@@ -250,7 +251,11 @@ function Item(data,core,outer,from,manager) {
                     data.source_type = 'face';
                     data.imgUrl = data.face;
                 }
-                data.type = from; 
+                if(!data.source_type) {
+                    var src = data.usource || data.source;
+                    data.source_type = USOURCE[src];
+                }
+                data.type = from;
                 var _html = doT.template(value)(data);
                 $node = $(_html);
                 if(!$imageFace) {
