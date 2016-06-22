@@ -584,7 +584,7 @@ function Content(node,core,window) {
                     var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(img) {
-                        img.src = img.src + '?r=' + (new Date());
+                        img.src = img.src + '?r=' + (Date.parse(new Date()))
                         img.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -596,15 +596,16 @@ function Content(node,core,window) {
                 } else {
                     var height = $('#' + type).find('.js-panel-body').height();
                     var scrollTop = $('#' + type).find('.scrollBoxParent').scrollTop();
+
                     if((height - scrollTop) > 700) {
-                        if(typeNo === 103)
-                            $rootNode.find('#' + type).find('.zc-newchat-tag').show();
+
+                        if(typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                     } else {
                         $rootNode.find('#' + type).find('.zc-newchat-tag').hide();
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                         if(img) {
-                            img.src = img.src + '?r=' + (new Date());
+                            img.src = img.src + '?r=' + (Date.parse(new Date()))
                             img.onload = function() {
                                 $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                                 userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
