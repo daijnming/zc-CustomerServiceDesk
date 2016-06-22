@@ -36,6 +36,7 @@ function Offline(node,core,window) {
         var outerHeight = $ulParent.outerHeight();
         var innerHeight = $ulOuter.outerHeight();
         if(scrollTop + outerHeight >= innerHeight) {
+            alert();
             pageNow++;
             fetchData(currentIndex,currentKey,true);
         }
