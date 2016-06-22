@@ -5,6 +5,7 @@
 var initail = false;
 
 var ProfileUser = function(node,core,userData) {
+  console.log(userData);
     //TODO
     var global = core.getGlobal();
     //全局对象

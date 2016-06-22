@@ -79,7 +79,7 @@ ul.history-list {
 }
 .tab-content  li.user-list-item.active, .tab-content  li.user-list-item.active:hover {
     background-color: #d8ebea;
-    border-left: 5px solid #09aeb0;
+    border-left: 3px solid #09aeb0;
 }
 
 .tab-content  li.user-list-item .status {
@@ -123,12 +123,16 @@ ul.history-list {
     top: 0;
     visibility: hidden;
     right: -5px;
+    font-family: "Microsoft YaHei";
+    font-style: normal;
+    top:-9px;
+    padding-top: 5px;
 }
 .tab-content  li.user-list-item.history .icon {
     background-color: #ccc !important;
 }
 .tab-content  li.user-list-item .icon.offline.face, .tab-content  li.user-list-item .icon.offline, .tab-content  li.user-list-item .icon.laptop.offline, .tab-content  li.user-list-item .icon.mobile.offline, .tab-content  li.user-list-item .icon.app.offline,.tab-content  li.user-list-item .icon.weibo.offline {
-    background-color: #ccc;
+    background-color: #bac2c1;
 }
 
 .tab-content  li.user-list-item .icon.app {
@@ -156,7 +160,7 @@ ul.history-list {
     display: none !important;
 }
 .tab-content  li.user-list-item:hover {
-    background: #EEF6F4;
+    background: #e6f0ef;
 }
 .tab-content  li.user-list-item:hover .user-del {
     display: block;
@@ -188,7 +192,7 @@ ul.history-list {
     color: #000;
 }
 .tab-content  li.user-list-item .item-detail .chat-detail {
-    color: #ccc;
+    color: #999;
     display: block;
     width: 110px;
     overflow: hidden;
@@ -249,6 +253,7 @@ ul.history-list {
     width: 19px;
     cursor: pointer;
     margin: 0px 10px;
+    margin-top: -6px;
     height: 19px;
     background-image: url(../img/icon_spirite.png);
 }

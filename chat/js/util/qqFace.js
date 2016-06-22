@@ -82,6 +82,7 @@ var ZC_Face = {
         //当文本框获取焦点的时候隐藏表情集合
         $(_this.saytext).focus(function() {
             $(_this.Group).hide();
+            $('.js-emotion').removeClass('select');
         });
 
     },
@@ -92,7 +93,7 @@ var ZC_Face = {
             var elm = e.currentTarget;
             var src = $(elm).attr("data-src");
             var reg = /u([0-9A-Za-z]{5})/;
-           
+
             $(document.body).trigger('textarea.gotoxy',[{
                 'answer' : src
             }]);

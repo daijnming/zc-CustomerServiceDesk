@@ -22,6 +22,26 @@
     </li>
     <li>
         <div class="userTypeName">
+            IP地址：
+        </div><p  oType="ipaddr" class="" style="display:inline-block;">{{=it.item.userData["ipaddr"]?it.item.userData["ipaddr"]:'-'}}</p>
+    </li>
+    <li>
+        <div class="userTypeName">
+            接入渠道：
+        </div><p  oType="channeltype" class="" style="display:inline-block;">{{=it.item.userData["channeltype"]?it.item.userData["channeltype"]:'-'}}</p>
+    </li>
+    <li>
+        <div class="userTypeName">
+            7日咨询：
+        </div><p  oType=" 7dconsult" class="" style="display:inline-block;">{{=it.item.userData["7dconsult"]?it.item.userData["7dconsult"]:'-'}}</p>
+    </li>
+    <li>
+        <div class="userTypeName">
+            排队时长：
+        </div><p  oType="listtimelength" class="" style="display:inline-block;">{{=it.item.userData["listtimelength"]?it.item.userData["listtimelength"]:'-'}}</p>
+    </li>
+    <li>
+        <div class="userTypeName">
             浏览器：
         </div><p  oType="browser" class="" style="display:inline-block;">{{=it.item.userData["browser"]?it.item.userData["browser"]:'-'}}</p>
     </li>
@@ -58,7 +78,7 @@
         <div class="userTypeName">
             性别：
         </div>
-        <select class="js-sex userInp otherBorder" oType="sex" id="sex" data-uid="{{=it.item.userData.uid}}" style="width:150px;">
+        <select class="js-sex userInp otherBorder" oType="sex" id="sex" data-uid="{{=it.item.userData.uid}}" style="width:79%;">
             <option value="">未知</option>
             <option value="0">男</option>
             <option value="1">女</option>
@@ -100,6 +120,12 @@
         </div>
         <input text="text" data-uid="{{=it.item.userData.uid}}" class="js-userTnp userInpHover userInp otherBorder" oType="weibo" value="{{=it.item.userData["weibo"]?it.item.userData["weibo"]:''}}" placeholder="-">
             <span class="js-tip tip"><span class="js-alerticon alerticon"></span><!--不能超过28个字符--><i class="js-closeicon closeicon"></i></span>
+    </li>
+    <li>
+        <div class="userTypeName">
+            对接ID：
+        </div>
+        <input text="text" readonly data-uid="{{=it.item.userData.joinid}}" class="js-userTnp userInpHover userInp otherBorder" oType="joinid" style="width:75%;" value="{{=it.item.userData["joinid"]?it.item.userData["joinid"]:''}}" placeholder="-">
     </li>
     <li class="clearfix">
         <div class="userTypeName remarkTip">
