@@ -18,6 +18,8 @@
 ul.history-list {
     overflow-y: auto;
     overflow-x: hidden;
+    height: 100%;
+    width: 100%;
 }
 #user_menu i.connection_icon.online {
     background-image: url("../img/online.png");
@@ -63,9 +65,9 @@ ul.history-list {
     background-image: url("../assets/images/noStarList.png");
 }
 .tab-content  li.fullscreen {
-    height: 300px !important;
+    height: 100% !important;
     background-repeat: no-repeat;
-    background-position: center 100px;
+    /*background-position: center center;*/
 }
 .tab-content  li.user-list-item {
     width: 100%;

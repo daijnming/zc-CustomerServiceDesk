@@ -54,6 +54,15 @@ function RightSide(node,core,window) {
         $(node).find('.js-tab-pane-homeuser .js-homeUserBox').css('height',newHeight - 52 - 40 - 52 + 'px');
         //iframe
         $(node).find('.js-clientSysIframe').css('height',newHeight - 52 + 'px');
+
+        //背景图片定位计算
+        var h = $('#left-navigation').height();
+        var oh = $('.js-chatonline').height();
+        var ah = h/2 - (h-oh)-32.5;
+        $('.js-chatonline').css('background-position','center '+ah+'px');
+        var listH =  $("#historylist").height();
+        var aListH = h/2 -(h-listH) - 32.5;
+        $('.js-history-list li').css('background-position','center '+aListH+'px');
     };
     $(window).resize(function(){
       onloadHandler();
