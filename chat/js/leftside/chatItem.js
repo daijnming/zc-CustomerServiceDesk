@@ -250,13 +250,21 @@ function Item(data,core,outer,from,manager) {
                     data.source_type = 'face';
                     data.imgUrl = data.face;
                 }
+                data.type = from; 
                 var _html = doT.template(value)(data);
                 $node = $(_html);
                 if(!$imageFace) {
                     $imageFace = $node.find(".js-image-face");
                 }
                 initFace();
-                insert($node);
+                if(from == 'online') {
+                    insert($node);
+                } else {
+                    if(!$ulOuter) {
+                        $ulOuter = $(outer).find("ul.js-users-list");
+                    }
+                    $ulOuter.append($node);
+                }
                 $userName = $node.find(".js-user-name");
                 isReady = true;
                 promise.resolve();
@@ -346,7 +354,6 @@ function Item(data,core,outer,from,manager) {
             hide();
         }
         if(ret.type == 'black' && ret.handleType == 'del' && ret.userId === data.uid && from === 'blacklist') {
-            console.log(from,data.uid)
             hide();
         }
         if(ret.type == "star" && from == 'star' && ret.handleType == 'del' && ret.userId === data.uid) {

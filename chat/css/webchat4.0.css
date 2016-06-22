@@ -26,13 +26,23 @@ body,html{
   width: 36px;
   height: 36px;
 }
-#top-bar .top-bar-logo span {
+#top-bar .top-bar-logo span{
   position: absolute;
   left: 47px;
-  top: 13px;
+  top: 10px;
   font-weight: normal;
   color: #fff;
   font-size: 18px;
+	font-family: 'Microsoft YaHei';
+}
+#top-bar .top-bar-logo span:last-child{
+	position: absolute;
+	font-size: 6px;
+	left: 35px;
+	top:28px;
+	font-weight: normal;
+	font-family: 'Microsoft YaHei';
+	transform:scale(0.7);
 }
 #main-container #left-navigation {
   background: #fff;
@@ -47,7 +57,7 @@ body,html{
   height: 80px;
   background: #f2f7f7;
   position: relative;
-  border-bottom: 1px solid #e5eeec;
+  border-bottom: 1px solid #e0e8e8;
 }
 #main-container #left-navigation .header-box-yy #user_menu {
   font-size: 16px;
@@ -78,11 +88,12 @@ body,html{
   height: 40px;
 }
 #main-container #left-navigation .header-box-yy #user_menu .menuDropdown #current_user_name {
-  color: #000;
+  color: #555556;
   /*font-size: 16px;*/
-  font-size: 13px;
-  font-weight: 900;
-  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  /*font-weight: 900;*/
+  /*font-family: 'Lato', sans-serif;*/
+	font-family: 'Microsoft YaHei';
   position: absolute;
   left: 53px;
   top: 3px;
@@ -93,6 +104,7 @@ body,html{
   left: 53px;
   bottom: 2px;
   font-size: 12px;
+	font-family: 'Microsoft YaHei';
   color: #999;
 }
 #main-container #left-navigation .header-box-yy #user_menu .menuDropdown #connection_icon {
@@ -196,7 +208,7 @@ body,html{
   clear: none;
 }
 #main-container #left-navigation .mainNav li #main_tab li a {
-  font-size: 12px;
+  font-size: 14px;
   width: 145px;
   height: 40px;
   line-height: 40px;
@@ -205,6 +217,7 @@ body,html{
   padding: 0;
   color: #565657;
   border: 0;
+	font-weight: bold;
 }
 #main-container #left-navigation .mainNav li #main_tab li.active a {
   color: #09aeaf;
@@ -423,7 +436,7 @@ body,html{
   height: 80px;
   padding: 20px 0;
   position: relative;
-  border-bottom: 1px solid #e5eeec;
+  border-bottom: 1px solid #e0e8e8;
 }
 #main-container #left-navigation .mainNav  .tab-content #chatonline #offlineUser li .user .fa-laptop {
   width: 40px;
@@ -608,7 +621,7 @@ body,html{
   line-height: 18px;
   width: 290px;
   text-align: center;
-  border-bottom: 1px solid #e5eeec;
+  border-bottom: 1px solid #e0e8e8;
 }
 #main-container #left-navigation   .tab-content #history .radio-box-yy label {
   /*padding-left: 18px;*/
@@ -633,7 +646,7 @@ body,html{
   height: 80px;
   padding: 20px 0;
   position: relative;
-  border-bottom: 1px solid #e5eeec;
+  border-bottom: 1px solid #e0e8e8;
   color: #ccc;
 }
 #main-container #left-navigation   .tab-content #history .leftScroll ul li .user .fa-laptop {
@@ -890,21 +903,21 @@ body,html{
   padding: 30px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent .scrollBox .systeamText {
-  color: #0d81c0;
+  /*color: #0d81c0;*/
   font-size: 12px;
   text-align: center;
   background: #e6eef0;
   display: inline-block;
   margin: 0 auto;
   padding: 2px 15px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent .scrollBox .workOrderCus .fr {
   float: right;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent .scrollBox .workOrderCus .msg_user {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent .scrollBox .workOrderCus .msg_user .msg_user_img {
   width: 100%;
@@ -982,8 +995,8 @@ body,html{
   float: left;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent .scrollBox .userCus .msg_user {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent .scrollBox .userCus .msg_user .msg_user_img {
   width: 100%;
@@ -1078,6 +1091,15 @@ body,html{
   height: 20px;
   background-position: -221px -371px;
   display: inline-block;
+	cursor: pointer;
+}
+#main-container #min-wrapper #main-content .container-fluid #chatlist .chat .botTextBox .picButton i.photoTag:hover{
+  background: url("../assets/images/newChat2.png");
+  width: 25px;
+  height: 20px;
+  background-position: -221px -415px;
+  display: inline-block;
+	cursor: pointer;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .botTextBox .picButton #maskPhoto{
   width:30px;
@@ -1102,6 +1124,20 @@ body,html{
   background-position: -182px -371px;
   display: inline-block;
 }
+#main-container #min-wrapper #main-content .container-fluid #chatlist .chat .botTextBox .faceButton i.faceIcon:hover{
+  background: url("../assets/images/newChat2.png");
+  width: 30px;
+  height: 20px;
+  background-position: -182px -415px;
+  display: inline-block;
+}
+#main-container #min-wrapper #main-content .container-fluid #chatlist .chat .botTextBox .faceButton i.faceIcon.select{
+	background: url("../assets/images/newChat2.png");
+  width: 30px;
+  height: 20px;
+  background-position: -182px -415px;
+  display: inline-block;
+}
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .botTextBox .faceButton #maskFace{
   width:35px;
   height:30px;
@@ -1124,7 +1160,16 @@ body,html{
   height: 120px;
   min-height: 130px;
   resize: none;
+	outline: none;
   border: 0;
+}
+.form-control{
+	box-shadow: none;
+	-webkit-box-shadow:none;
+}
+.form-control:focus{
+	box-shadow:none;
+	-webkit-box-shadow:none;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .chat .botTextBox .sendBtn {
   position: absolute;
@@ -1144,6 +1189,7 @@ body,html{
   padding: 0;
   float: right;
   height:100%;
+	background: #f2f7f7;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-header-other {
   height: 52px;
@@ -1175,8 +1221,8 @@ body,html{
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs {
   /*border-left: 1px solid #e6eeec;*/
-  background-color: #f7fafa;
-  border-bottom: 0;
+  background-color: #f2f7f7;
+  border-bottom: 2px solid #e6eeec;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li.js-menu {
   height: 52px;
@@ -1202,7 +1248,10 @@ body,html{
   text-align: center;
   padding: 8px;
   border: 0;
-  background-color: #f7fafa;
+  /*background-color: #f7fafa;*/
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+	background-color: #f2f7f7;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .nav-tabs li a i {
   font-size: 16px;
@@ -1359,16 +1408,18 @@ body,html{
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane h4 {
   font-size: 14px;
   font-weight: 500;
+	margin-bottom: 30px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul {
   padding: 0;
+	margin-top: 8px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane  ul li.rightLeftBtn {
   margin-left: 0;
   height: 30px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .userTypeName {
-  color: #8d8d8d;
+  color: #555556;
   font-size: 14px;
   line-height: 14px;
   display: inline-block;
@@ -1377,16 +1428,20 @@ body,html{
 	border:1px solid #ddd;
 	margin: 0;
 	padding: 0;
+	/*padding: 0 0 0 5px;*/
 	outline:none;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .userInp {
   color: #333;
   border: 0;
   font-size: 14px;
-  background-color: #f7fafa;
+  background-color: #f2f7f7;
   font-family: 'microsoft yahei';
-  font-weight: bold;
-	width:200px;
+  /*font-weight: bold;*/
+	/*width:200px;*/
+	width: 79%;
+	height: 30px;
+	/*padding: 5px;*/
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .tip{
   display: none;
@@ -1410,13 +1465,13 @@ body,html{
 	border:1px solid red;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li .remark {
-  background-color: #f7fafa;
+  background-color: #f2f7f7;
   height: 106px;
   font-size: 14px;
   resize: none;
   margin-left: 0;
   border: 1px solid #ccc;
-  width:90%;
+  width:100%;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-pane ul li span {
   /*color: #f90;*/
@@ -1435,7 +1490,7 @@ body,html{
   color: #555556;
   font-size: 14px;
   font-weight: bold;
-	padding-left: 5px;
+	padding-left: 10px;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content .tab-home-yy .rightQuick .rightQuickLeft li:hover {
   background-color: #eff4f5;
@@ -1470,12 +1525,12 @@ body,html{
   line-height: 40px;
   color: #09aeb0;
   font-size: 16px;
-  border-top: 1px solid #e5eeec;
+  border-top: 1px solid #e0e8e8;
   position: absolute;
   left: 0;
   bottom: 0;
   /*background-color: #fff;*/
-  border-left: 1px solid #e5eeec;
+  border-left: 1px solid #e0e8e8;
   z-index: 1;
 }
 #main-container #min-wrapper #main-content .container-fluid #chatlist .right .rightBox .panel-body .tab-content #messagesuser .quickBtnP #shortcut:hover {
@@ -1792,7 +1847,7 @@ body,html{
 }
 .noOnline{
   background: url("../assets/images/noOnlinePerson.png") no-repeat;
-  background-color:#F7FAFA;
+  background-color:#f2f7f7;
   background-position:center 34%;
 }
 .chatCont{
@@ -1903,4 +1958,8 @@ body,html{
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
   box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+
+#main-container #min-wrapper #main-content .container-fluid #chatlist .chat .scrollBoxParent .scrollBox .systeamText.loadmore{
+	background: none;
 }
