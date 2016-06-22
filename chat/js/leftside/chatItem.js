@@ -250,6 +250,7 @@ function Item(data,core,outer,from,manager) {
                     data.source_type = 'face';
                     data.imgUrl = data.face;
                 }
+                data.type = from; 
                 var _html = doT.template(value)(data);
                 $node = $(_html);
                 if(!$imageFace) {
