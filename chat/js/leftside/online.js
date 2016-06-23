@@ -134,6 +134,8 @@ function Online(node,core,window) {
      * 发送丢用户的错误日志
      */
     var lostUserLog = function(data) {
+        console.log('丢用户' + data.uid);
+        return;
         $.ajax({
             'url' : '/chat/admin/log.action',
             'type' : "post",
@@ -175,6 +177,7 @@ function Online(node,core,window) {
                 case 103:
                     if(!chatItemList[data.uid]) {
                         exceptionHandler(data);
+
                         lostUserLog(data);
                     } else if(!chatItemList[data.uid].getReady()) {
                         unreadList.push(data.uid,data);
