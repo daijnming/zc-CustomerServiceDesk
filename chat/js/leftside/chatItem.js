@@ -245,7 +245,7 @@ function Item(data,core,outer,from,manager) {
             loadFile.load(global.baseUrl + "views/leftside/chatitem.html").then(function(value) {
                 data['source_type'] = USOURCE[data.usource];
                 if(data.isTransfer != 0) {
-                    console.log('转接' + data.uid);
+                    console.log('转接' + data.uid + " chattype=" + data.isTransfer);
                 }
                 if(data.usource == 1) {
                     data.imgUrl = "img/weixinType.png";
