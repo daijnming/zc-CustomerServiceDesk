@@ -53,7 +53,8 @@ function Core(window) {
             'url' : '/chat/user/msg/ack.action',
             'dataType' : 'json',
             'data' : {
-                'content' : JSON.stringify(arr)
+                'content' : JSON.stringify(arr),
+		'tnk':+new Date()
             },
             'type' : 'POST'
         }).success(function(ret) {
