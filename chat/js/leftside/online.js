@@ -177,8 +177,9 @@ function Online(node,core,window) {
                 case 103:
                     if(!chatItemList[data.uid]) {
                         exceptionHandler(data);
-
                         lostUserLog(data);
+                        console.log(list);
+                        alert();
                     } else if(!chatItemList[data.uid].getReady()) {
                         unreadList.push(data.uid,data);
                     }
