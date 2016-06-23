@@ -8,7 +8,7 @@
             <span class="uname  js-user-name">{{=item.uname}}</span>
              {{ if(item.isTransfer == 0) { }}
                         <span class="status js-user-status">[离线]</span></span>
-                    {{  }else{ }}
+                    {{  }else if(item.isTransfer == 1){ }}
                         <span class="status js-user-status show">[转接]</span></span>
                     {{  } }}
             </span>
