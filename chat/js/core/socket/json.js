@@ -116,7 +116,8 @@ function polling(global) {
             'type' : "get",
             'data' : {
                 'puid' : global.puid,
-                'uid' : global.id
+                'uid' : global.id,
+		'token':+new Date()
             }
         }).success(function(ret) {
             if(!ret || ret.length == 0) {
