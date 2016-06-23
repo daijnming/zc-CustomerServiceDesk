@@ -11,6 +11,7 @@ function HeartBeat(core) {
             'type' : 'post',
             'data' : {
                 'pid' : global.pid,
+                'token' : +new Date(),
                 'uid' : global.id
             },
             'dataType' : 'json'

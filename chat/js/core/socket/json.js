@@ -25,7 +25,8 @@ function polling(global) {
             'data' : $.extend(defaultParams, {
                 'answer' : data.answer,
                 'cid' : data.cid,
-                'uid' : global.id
+                'uid' : global.id,
+                'token' : +new Date()
             })
         }).success(function(res) {
             setTimeout(function() {
