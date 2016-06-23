@@ -213,6 +213,7 @@ function Transfer(core,userInfo,callback) {
             },0);
             parseDOM();
             bindListener();
+            $outer.find("input").focus();
             return promise;
         }).then(fetchData);
         getDefaultParam();

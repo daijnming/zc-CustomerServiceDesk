@@ -125,10 +125,9 @@ function Offline(node,core,window) {
                 }
                 //FIXME 为空时定位空背景图片
                 var h = $('#left-navigation').height();
-                var listH = $ulOuter.height();
-                var aListH = h / 2 - (h - listH) - 32.5;
-                //32.5 背景图/2
-                $ulOuter.find('li.fullscreen').css('background-position','center ' + aListH + 'px');
+                var listH =  $ulOuter.height();
+                var aListH = h/2 -(h-listH) - 32.5;//32.5 背景图/2
+                $ulOuter.find('li.fullscreen').css('background-position','center '+aListH+'px');
             });
         });
     };

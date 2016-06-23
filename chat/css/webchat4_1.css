@@ -16,9 +16,8 @@
     overflow-x: hidden;
 }
 ul.history-list {
-    overflow-y: auto;
     overflow-x: hidden;
-    height: 100%;
+    
     width: 100%;
 }
 #user_menu i.connection_icon.online {

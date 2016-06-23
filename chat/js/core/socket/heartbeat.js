@@ -14,7 +14,11 @@ function HeartBeat(core) {
                 'uid' : global.id
             },
             'dataType' : 'json'
-        }).success(function() {
+        }).success(function(ret) {
+            if(ret.ustatus == 0) {
+                //客服已离线
+                $(document.body).trigger("emergency.netclose");
+            }
             setTimeout(send,TEN_SECOND);
         }).fail(function(ret) {
             count++;
