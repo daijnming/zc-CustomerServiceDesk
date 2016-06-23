@@ -15,7 +15,8 @@ function Item(data,core,outer,from,manager) {
         TYPE_TEXT = 2,
         AUDIO = 3,
         RICH_TEXT = 4;
-    var isReady = false;
+    var isReady = false,
+        isDestroy = false;
     var unReadList = require('./unreadlist.js');
     var from = from || 'online';
     var global = core.getGlobal();
@@ -26,6 +27,7 @@ function Item(data,core,outer,from,manager) {
     var baseUrl = global.baseUrl;
     var $ulOuter;
     var status = (from == 'history' || from == 'blacklist' || from == 'star') ? 'offline' : 'online';
+    var temp;
     var unReadCount = 0;
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
@@ -171,6 +173,10 @@ function Item(data,core,outer,from,manager) {
     var onOnline = function(cid) {
         status = 'online';
         data.cid = cid;
+        $body.trigger("leftside.cidchange", {
+            'cid' : data.cid,
+            "uid" : data.uid
+        });
         var $statusText = $node.find(".js-user-status");
         $node.find(".js-icon").removeClass("offline");
         $node.removeClass("offline");
@@ -212,6 +218,7 @@ function Item(data,core,outer,from,manager) {
                 arr.push(list[i]);
             }
         }
+        unReadCount = arr.length;
         var lastMessage = arr.length > 0 ? arr[arr.length - 1] : null;
         showLastMessage(lastMessage);
         $unRead.html(arr.length).css({
@@ -244,13 +251,25 @@ function Item(data,core,outer,from,manager) {
                     data.source_type = 'face';
                     data.imgUrl = data.face;
                 }
+                if(!data.source_type) {
+                    var src = data.usource || data.source;
+                    data.source_type = USOURCE[src];
+                }
+                data.type = from;
                 var _html = doT.template(value)(data);
                 $node = $(_html);
                 if(!$imageFace) {
                     $imageFace = $node.find(".js-image-face");
                 }
                 initFace();
-                insert($node);
+                if(from == 'online') {
+                    insert($node);
+                } else {
+                    if(!$ulOuter) {
+                        $ulOuter = $(outer).find("ul.js-users-list");
+                    }
+                    $ulOuter.append($node);
+                }
                 $userName = $node.find(".js-user-name");
                 isReady = true;
                 promise.resolve();
@@ -309,7 +328,7 @@ function Item(data,core,outer,from,manager) {
         data.from = from;
         data.status = status;
         Promise.when(getUserData).then(function(userData) {
-            if(data.uid == manager.getCurrentUid())
+            if(data.uid === manager.getCurrentUid())
                 return;
             $(document.body).trigger("leftside.onselected",[{
                 'data' : data,
@@ -333,6 +352,9 @@ function Item(data,core,outer,from,manager) {
     };
 
     var onUserStatusChange = function(evt,ret) {
+        delete userDataCache[data.uid];
+        if(isDestroy)
+            return;
         if(from == 'online' && ret.type == "black" && ret.handleType == 'add' && ret.userId === data.uid) {
             hide();
         }
@@ -343,7 +365,6 @@ function Item(data,core,outer,from,manager) {
             hide();
         }
         if(ret.type == 'star') {
-            delete userDataCache[data.uid];
             getUserData();
         }
     };
@@ -394,13 +415,17 @@ function Item(data,core,outer,from,manager) {
 
     };
 
+    var receive = function(evt,list) {
+        if(isDestroy)
+            return;
+        setTimeout(function() {
+            onReceive(evt,list);
+        },1);
+    };
+
     var bindStaticListener = function() {
         $body = $(document.body);
-        $body.on("core.receive", function(evt,list) {
-            setTimeout(function() {
-                onReceive(evt,list);
-            },1);
-        });
+        $body.on("core.receive",receive);
     };
 
     var init = function() {
@@ -408,14 +433,21 @@ function Item(data,core,outer,from,manager) {
         bindListener();
         initPlugins();
     };
+
+    var destroy = function() {
+        isDestroy = true;
+        $body.unbind("core.receive",receive);
+    };
+
     initNode().then(function(value,promise) {
         init();
-        setTimeout(promise.resolve,0);
+        setTimeout(promise.resolve,1);
         return promise;
     }).then(getCacheList);
     bindStaticListener();
 
     this.onOnline = onOnline;
+    this.destroy = destroy;
     this.getStatus = getStatus;
     this.onclick = onclick;
     this.onRemove = onRemove;

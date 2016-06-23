@@ -28,7 +28,7 @@ var Client = function(node,core,data){
   		url:'/chat/admin/getIframe.action',
   		data:{
   		 uid:global.id,
-  		 userId:data.uid
+  		 userId:data.userData.uid
   	  },
   		dataType:"json",
   		success:function(data){

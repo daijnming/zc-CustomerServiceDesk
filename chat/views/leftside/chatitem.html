@@ -1,6 +1,6 @@
 {{ var item = it;}}
-<li titemle="{{=item.uname}}" class="user-list-item " data-uid="{{=item.uid}}">
-    <i class="icon {{=item.source_type || ''}} js-icon">
+<li titemle="{{=item.uname}}" class="user-list-item {{=item.type}}" data-uid="{{=item.uid}}">
+    <i class="icon {{=item.source_type || ''}} js-icon {{=(it.type != 'online'?'offline':'')}}">
             <img src="{{=item.imgUrl || 'assets/images/newChat1.png'}}" class="js-image-face"/>
             <span class="badge badge-red js-unread-count">1</span></i>
     <div class="item-detail">

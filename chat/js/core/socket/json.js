@@ -26,9 +26,10 @@ function polling(global) {
             'data' : $.extend(defaultParams, {
                 'answer' : data.answer,
                 'cid' : data.cid,
-                'uid' : global.id
+                'uid' : global.id,
+                'token' : +new Date()
             })
-        }).success(function() {
+        }).success(function(res) {
             setTimeout(function() {
                 $body.trigger("core.sendresult",[{
                     'token' : data.date,
@@ -36,6 +37,7 @@ function polling(global) {
                     'uid' : data.uid
                 }]);
             },10);
+
         }).fail(function() {
             if(count == 3) {
                 setTimeout(function() {
@@ -120,6 +122,7 @@ function polling(global) {
 		'token':+new Date()
             }
         }).success(function(ret) {
+            // console.log(ret);
             if(!ret || ret.length == 0) {
                 return;
             }

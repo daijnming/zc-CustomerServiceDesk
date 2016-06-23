@@ -4,6 +4,7 @@
  */
 function TextArea(node,core,window) {
     var global = core.getGlobal();
+    var $faceGroupTarea;//表情选择按钮
     //var that = {};
     var loadFile = require('../util/load.js')();
     //表情
@@ -28,6 +29,7 @@ function TextArea(node,core,window) {
         //btn
         $sendMessage = $node.find(".js-sendMessage");
         $botTextBox = $node.find(".js-botTextBox");
+        $faceGroupTarea = $node.find('#faceGroupTarea');
     };
     var newUserMessage = function(data) {
         var _html = doT.template(template.listItem)(data);
@@ -305,7 +307,7 @@ function TextArea(node,core,window) {
         //打开集合,默认qq表情为显示状态
         ZC_Face.show(global);
         ZC_Face.emojiShow(global);
-
+        $($faceGroupTarea).css('display')=='block'?$(this).addClass('select'):$(this).removeClass('select');
     };
     var onEmotionIcoClickHandler = function() {
         //qq表情tab
