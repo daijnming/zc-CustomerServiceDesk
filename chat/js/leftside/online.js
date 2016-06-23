@@ -179,7 +179,7 @@ function Online(node,core,window) {
                         exceptionHandler(data);
                         lostUserLog(data);
                         console.log(list);
-                        alert();
+                        //alert();
                     } else if(!chatItemList[data.uid].getReady()) {
                         unreadList.push(data.uid,data);
                     }
