@@ -87,7 +87,7 @@ ul.history-list {
   width: 100px;
   height: 65px;
   background-image: url("../assets/images/bgspirt.png");
-  background-position-x:8px;
+  background-position:8px;
 }
 .tab-content .onlineBg.hide{
   display: none;

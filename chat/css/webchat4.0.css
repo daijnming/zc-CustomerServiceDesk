@@ -1863,7 +1863,7 @@ body,html{
 	top:390px;
 	left:280px;
 	background: url("../assets/images/bgspirt.png") no-repeat;
-	background-position-x:-286px;
+	background-position:-286px;
 }
 #clientSystems a:link {color: #a4b2b3} /* 未访问的链接 */
 #clientSystems a:visited {color: #a4b2b3} /* 已访问的链接 */
