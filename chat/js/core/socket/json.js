@@ -17,14 +17,37 @@ function polling(global) {
         eventCache[evt] = cbk;
     };
 
+    /**
+     *将图片消息的a标签去掉
+     * @param {Object} data
+     */
+    var imageMessageFilter = function(data) {
+        var $div = $("<div></div>");
+        $div.html(data.answer);
+        if($div.find("img.webchat_img_upload").length > 0) {
+            var $img = $div.find("img.webchat_img_upload");
+            var parent = $img.parent()[0];
+            if(parent && parent.tagName.toLowerCase() == 'a') {
+                var content = $img.parent().html();
+                return content;
+            } else {
+                return data.answer;
+            }
+        } else {
+            return data.answer;
+        }
+    };
+
     var onsend = function(evt,data,count) {
         var count = count || 0;
+        var content = imageMessageFilter(data);
+        console.log(content);
         $.ajax({
             'url' : '/chat/admin/send1.action',
             'dataType' : 'json',
             'type' : "post",
             'data' : $.extend(defaultParams, {
-                'answer' : data.answer,
+                'answer' : content,
                 'cid' : data.cid,
                 'uid' : global.id,
                 'token' : +new Date()
@@ -119,7 +142,7 @@ function polling(global) {
             'data' : {
                 'puid' : global.puid,
                 'uid' : global.id,
-		'token':+new Date()
+                'token' : +new Date()
             }
         }).success(function(ret) {
             // console.log(ret);
