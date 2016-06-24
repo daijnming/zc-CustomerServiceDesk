@@ -1858,10 +1858,10 @@ body,html{
 }
 .chatCont .chatContBg{
 	position: absolute;
-	width: 88px;
+	width:138px;
 	height: 65px;
 	top:390px;
-	left:310px;
+	left:280px;
 	background: url("../assets/images/bgspirt.png") no-repeat;
 	background-position-x:-286px;
 }

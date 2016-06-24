@@ -20,12 +20,10 @@ function Online(node,core,window) {
             count++;
         }
         if(count == 0) {
-            $(node).find('.onlineBg').removeClass('hide');
             $node.addClass("noOnline");
 
         } else {
             $node.removeClass("noOnline");
-            $(node).find('.onlineBg').addClass('hide');
         }
     };
     var clearSeleted = function() {
@@ -112,7 +110,6 @@ function Online(node,core,window) {
             } else {
                 var height = $(node).outerHeight();
                 $node.addClass("noOnline");
-                $(node).find('.onlineBg').removeClass('hide');
             }
         });
     };

@@ -76,7 +76,7 @@ ul.history-list {
     margin: 0 auto;
     /*background-position: center center;*/
 }
-.noOnline .tab-content .onlineBg{
+ .tab-content .noOnline .onlineBg{
     display:block;;
 }
 .tab-content .onlineBg{
