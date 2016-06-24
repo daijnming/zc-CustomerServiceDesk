@@ -76,10 +76,14 @@ ul.history-list {
     margin: 0 auto;
     /*background-position: center center;*/
 }
+.noOnline .tab-content .onlineBg{
+    display:block;;
+}
 .tab-content .onlineBg{
   position: absolute;
   top:395px;
   left: 100px;
+  display:none;
   width: 100px;
   height: 65px;
   background-image: url("../assets/images/bgspirt.png");
