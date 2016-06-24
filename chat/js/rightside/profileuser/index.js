@@ -5,7 +5,7 @@
 var initail = false;
 
 var ProfileUser = function(node,core,userData) {
-  console.log(userData);
+  // console.log(userData);
     //TODO
     var global = core.getGlobal();
     //全局对象
@@ -86,8 +86,10 @@ var ProfileUser = function(node,core,userData) {
                 //如果编辑的是姓名字段 则要传值给左侧栏显示
                 if($(elm).hasClass('userNameDyy')) {
                     reviceData.name = val;
+                    reviceData.update=1;
                 } else {
                     reviceData.name = '';
+                    reviceData.update=0;
                 }
                 // console.log(sendData);
                 $(document.body).trigger('rightside.onProfileUserInfo',[{
