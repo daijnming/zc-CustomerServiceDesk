@@ -1,6 +1,7 @@
 function polling(global) {
     var eventCache = {};
     var unicode = require('../../util/unicode.js');
+    var success = true;
     var defaultParams = {
         answer : "",
         answerType : "",
@@ -25,9 +26,10 @@ function polling(global) {
             'data' : $.extend(defaultParams, {
                 'answer' : data.answer,
                 'cid' : data.cid,
-                'uid' : global.id
+                'uid' : global.id,
+                'token' : +new Date()
             })
-        }).success(function() {
+        }).success(function(res) {
             setTimeout(function() {
                 $body.trigger("core.sendresult",[{
                     'token' : data.date,
@@ -35,18 +37,26 @@ function polling(global) {
                     'uid' : data.uid
                 }]);
             },10);
+
         }).fail(function() {
-            setTimeout(function() {
-                $body.trigger("core.sendresult",[{
-                    'token' : data.date,
-                    'type' : "fail",
-                    'uid' : data.uid
-                }]);
-            },10);
+            if(count == 3) {
+                setTimeout(function() {
+                    $body.trigger("core.sendresult",[{
+                        'token' : data.date,
+                        'type' : "fail",
+                        'uid' : data.uid
+                    }]);
+                },10);
+            } else {
+                setTimeout(function() {
+                    onsend(evt,data,count + 1);
+                },1000);
+            }
         });
     };
 
-    var onDirectSend = function(evt,ret) {
+    var onDirectSend = function(evt,ret,count) {
+        var count = count || 0;
         if(ret.data.status == 1) {
             $.ajax({
                 'url' : '/chat/admin/send1.action',
@@ -68,13 +78,19 @@ function polling(global) {
                     }]);
                 },10);
             }).fail(function() {
-                setTimeout(function() {
-                    $body.trigger("core.sendresult",[{
-                        'token' : data.date,
-                        'type' : "fail",
-                        'uid' : data.uid
-                    }]);
-                },10);
+                if(count == 3) {
+                    setTimeout(function() {
+                        $body.trigger("core.sendresult",[{
+                            'token' : data.date,
+                            'type' : "fail",
+                            'uid' : data.uid
+                        }]);
+                    },10);
+                } else {
+                    setTimeout(function() {
+                        onDirectSend(evt,ret,count + 1);
+                    },1000);
+                }
             });
         }
     };
@@ -102,9 +118,11 @@ function polling(global) {
             'type' : "get",
             'data' : {
                 'puid' : global.puid,
-                'uid' : global.id
+                'uid' : global.id,
+		'token':+new Date()
             }
         }).success(function(ret) {
+            // console.log(ret);
             if(!ret || ret.length == 0) {
                 return;
             }

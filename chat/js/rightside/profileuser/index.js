@@ -5,6 +5,7 @@
 var initail = false;
 
 var ProfileUser = function(node,core,userData) {
+  // console.log(userData);
     //TODO
     var global = core.getGlobal();
     //全局对象
@@ -41,6 +42,7 @@ var ProfileUser = function(node,core,userData) {
         if(data) {
             //客户资料背景清除
             $(node).html('').parents('.js-panel-body').removeClass('showBg');
+            $(node).html('').parents('.js-panel-body .js-tab-profilebg').addClass('hide');
             loadFile.load(global.baseUrl + 'views/rightside/profileUser.html').then(function(value) {
                 //组装对话页
                 data.userData["visit"] = onVisitHandle(data.userData['visitUrl'],data.userData['visitTitle']);
@@ -84,8 +86,10 @@ var ProfileUser = function(node,core,userData) {
                 //如果编辑的是姓名字段 则要传值给左侧栏显示
                 if($(elm).hasClass('userNameDyy')) {
                     reviceData.name = val;
+                    reviceData.update=1;
                 } else {
                     reviceData.name = '';
+                    reviceData.update=0;
                 }
                 // console.log(sendData);
                 $(document.body).trigger('rightside.onProfileUserInfo',[{

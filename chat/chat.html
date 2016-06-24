@@ -19,8 +19,9 @@
         <link rel="apple-touch-icon-precomposed" href="assets/images/ios/fickle-logo-72.png" />
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/ios/fickle-logo-72.png" />
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/ios/fickle-logo-114.png" />
-
+        <link rel="shortcut icon" href="img/static/favicon.ico" mce_href="img/static/favicon.ico" type="image/x-icon">
         <!--<link rel="shortcut icon" href="assets/images/ico/fab.ico">-->
+        <link rel="shortcut icon" href="img/static/favicon.ico" mce_href="images/favicon.ico" type="image/x-icon">
         <title>人工客服工作台</title>
         <style>
             @font-face {
@@ -74,6 +75,7 @@
             <div class="top-bar-logo">
                 <img src="assets/images/logo.png" alt=""/>
                 <span>智齿客服</span>
+                <span>www.sobot.com</span>
             </div>
         </section>
         <section id="main-container" >
@@ -129,18 +131,19 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active leftScroll  js-chatonline"  id="chatonline">
-                        <ul id="users" class="js-users-list"></ul>
+                    <div class="tab-pane active leftScroll  js-chatonline zc-scroll"  id="chatonline">
+                        <i class="js-onlineBg onlineBg"></i>
+                        <ul id="users" class="js-users-list js-list"></ul>
                         <ul id="offlineUser"></ul>
                     </div>
-                    <div class="tab-pane js-history-outer zc-scroll" id="history" style="overflow-y: auto; outline: none;  padding: 0px; ">
+                    <div class="tab-pane js-history-outer zc-scroll" id="history" style="overflow-y: hidden; outline: none;  padding: 0px; ">
                         <div class="radio-inline radio-box-yy">
                             <label class="radio-inline js-switch-label active" data-key="history"> <div class="c-redio c-redio-noActive" id="optionsRadios3" value="1" ></div> <!-- <input type="radio" name="utypeRadios" id="optionsRadios3" value="1"  > --> <span>全部</span> </label>
                             <label class="radio-inline  js-switch-label"  data-key="star"> <div class="c-redio c-redio-noActive" id="optionsRadios3" value="2" ></div> <!-- <input type="radio" name="utypeRadios" id="optionsRadios4" value="2"  > --> 星标 </label>
                             <label class="radio-inline  js-switch-label"  data-key="blacklist"> <div class="c-redio c-redio-noActive" id="optionsRadios3" value="3" ></div> <!-- <input type="radio" name="utypeRadios" id="optionsRadios5" value="3"  > --> 黑名单 </label>
                         </div>
                         <div id="historylist" class="leftScroll  zc-scroll" tabindex="1">
-                            <ul class="history-list js-history-list" style="border-top: 0px solid #ddd;">
+                            <ul class="history-list js-history-list js-users-list zc-scroll" style="border-top: 0px solid #ddd;">
 
                             </ul>
                         </div>
@@ -156,6 +159,7 @@
                 <div id="main-content">
                     <div class="container-fluid" >
                         <div class="row chatCont" id="chatlist">
+                          <i class="chatContBg js-chatContBg"></i>
                             <div class="col-md-8 col-xs-8 chat js-TextArea" style="padding: 0px;display:none;min-width: 575px;" id="chat">
                                 <header class='clearfix'>
                                     <span style="margin-left: 15px;cursor: pointer;color: #555459;font-weight: 900;float:left" class="chat_user_title"></span>
@@ -175,7 +179,10 @@
 
                                 </header>
                                 <div class="scrollBoxParent zc-scroll" id="chat_daijm" style="overflow: auto;outline: none;">
-                                    <div class="js-panel-body panel-body scrollBox"></div>
+                                    <div class="js-panel-body panel-body scrollBox hide"></div>
+                                    <div class="js-load-model zc-c-chat-body-load-model">
+                                        <div class="zc-c-chat-body-load-model-icon"></div>
+                                    </div>
                                 </div>
                                 <div class="js-user-ready-input" style="position:absolute;width:100%;background-color: red;" ></div>
                                 <div class="zc-noRead-tag"></div>
@@ -275,7 +282,10 @@
                                         <div class="js-tab-content tab-content tab-border" style="border:0;">
                                             <!--客户资料-->
                                             <div class="js-tab-pane-profileuser js-tab-pane tab-pane fade active in" id="profileuser">
-
+                                              <!-- <div class="js-tab-profilebg tab-profilebg" >
+                                                <img src="./assets/images/bgspirt.png" alt="" />
+                                              </div> -->
+                                              <i class="js-tab-profilebg tab-profilebg"></i>
                                                 <!--改版：  客户资料 通过模板加载-->
 
                                             </div>

@@ -1,5 +1,5 @@
 body{
-  overflow: hidden;
+  overflow-x: auto;
   outline: none;
 }
 ul {
@@ -54,13 +54,14 @@ ul {
     bottom: 0;
     display: inline-block;
     height: 40px;
-    text-align: center;
+    /*text-align: center;*/
+    padding-left: 20px;
     color: #38bfbc;
     text-decoration: none;
     font-family: 'Armata', sans-serif;
     line-height: 40px;
     border-top: 1px solid #e6eded;
-    font-size: 15px;
+    font-size: 13px;
 }
 .shadowLayer.content .quickContent  a {
     width: 100%;
@@ -70,11 +71,11 @@ ul {
 }
 .shadowLayer.content .quickContent  ul li:hover {
     background-color: #eee;
-    border-left: 3px solid #08ced1;
+    /*border-left: 3px solid #09aeb0;*/
 }
 .shadowLayer.content .quickContent  ul li.activeLine {
-    background-color: #eee;
-    border-left: 3px solid #08ced1;
+    background-color: #eeeeea;
+    border-left: 3px solid #09aeb0;
 }
 .shadowLayer.content .quickContent  .detalBar input:hover {
     background-color: #eee;
@@ -92,7 +93,7 @@ ul {
 }
 .shadowLayer.content .quickContent  .detalBar input {
     display: inline-block;
-    padding-left: 10px;
+    padding-left: 20px;
     height: 35px;
     font-size: 14px;
     border: 0;
@@ -124,14 +125,27 @@ ul {
   background-color: #fff;
 }
 /****homeuser css***/
-.tab-pane#profileuser.showBg {
+/*.tab-pane#profileuser.showBg {
     background: url(../assets/images/noProfileUserInfo.png) center  no-repeat
 }
 .panel-body.showBg{
   background: url(../assets/images/noProfileUserInfo.png) center no-repeat
-}
+}*/
 .rightBox .panel-body .tab-pane#homeuser p.searchBot {
     margin: 0 0 10px;
+}
+.rightBox .panel-body .tab-profilebg {
+  width: 90px;
+  height: 65px;
+  margin: 0 auto;
+  margin-top: 300px;
+  /*position: relative;*/
+  display: block;
+  background: url(../assets/images/noProfileUserInfo.png) no-repeat;
+  background-position-x: -27px;
+}
+.rightBox .panel-body .tab-profilebg.hide{
+  display: none;
 }
 
 /****clientSystem*****/

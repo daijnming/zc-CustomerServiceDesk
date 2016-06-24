@@ -3,15 +3,19 @@
  */
 function Offline(node,core,window) {
     var $node;
-    var $ulOuter;
+    var $ulOuter,
+        $ulParent;
     var that = {};
     var USOURCE = require('./source.json');
     var Item = require('./chatItem.js');
-    var CLASSNAME = ['','noStar','noBlack'];
+    var CLASSNAME = ['noAll','noStar','noBlack'];
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
     var normalMessageAdapter = require('../util/normatMessageAdapter.js');
     var prevCursor = 0;
+    var pageNow = 1,
+    //用来标记是不是已经滚动到最底部
+        end = false;
     var HEADER_HEIGHT = 79,
         TABCONTAINER_HEIGHT = 41,
         RADIOBOX_HEIGHT = 47;
@@ -22,9 +26,24 @@ function Offline(node,core,window) {
     var parseDOM = function() {
         $node = $(node);
         $ulOuter = $node.find(".js-history-list");
+        $ulParent = $ulOuter.parent();
     };
 
-    var currentUid;
+    var onParentScroll = function(evt) {
+        if(end)
+            return;
+        var scrollTop = $ulParent.scrollTop();
+        var outerHeight = $ulParent.outerHeight();
+        var innerHeight = $ulOuter.outerHeight();
+        var dis = Math.abs((scrollTop + outerHeight) - innerHeight);
+        if(dis < 1) {
+            pageNow++;
+            fetchData(currentIndex,currentKey,true);
+        }
+    };
+    var currentUid,
+        currentKey,
+        currentIndex;
 
     var setCurrentUid = function(uid) {
         currentUid = uid;
@@ -51,9 +70,12 @@ function Offline(node,core,window) {
         }
     };
 
-    var fetchData = function(index,from) {
+    var fetchData = function(index,from,append) {
+        var append = append === true;
         var url = urlList[index];
         var from = from || 'history';
+        currentKey = from;
+        currentIndex = index;
         Promise.when(function() {
             var promise = new Promise();
             $.ajax({
@@ -61,10 +83,15 @@ function Offline(node,core,window) {
                 'type' : 'get',
                 'dataType' : 'json',
                 'data' : {
-                    'uid' : global.id
+                    'uid' : global.id,
+                    'pageNow' : pageNow
                 }
             }).success(function(ret) {
+                // ret=[];
                 dataAdapter(ret);
+                if(ret.length == 0) {
+                    end = true;
+                }
                 for(var i = 0;i < ret.length;i++) {
                     var item = ret[i];
                     dataCache[item.uid] = item;
@@ -74,24 +101,34 @@ function Offline(node,core,window) {
             return promise;
         }).then(function(list,promise) {
             loadFile.load(global.baseUrl + "views/leftside/chatlist.html").then(function(value) {
-                var className = CLASSNAME[index];
-                console.log(from);
-                var _html = doT.template(value)({
-                    'list' : list,
-                    'type' : from,
-                    'className' : className
-                });
-                $ulOuter.html(_html);
+                for(var el in chatItemList) {
+                    chatItemList[el].destroy();
+                }
+                if(!append) {
+                    var className = CLASSNAME[index];
+                    var _html = doT.template(value)({
+                        'list' : list,
+                        'type' : from,
+                        'className' : className
+                    });
+                    $ulOuter.html(_html);
+                }
                 for(var i = 0,
                     len = list.length;i < len;i++) {
                     var item = new Item(list[i],core,node,from,that);
                     chatItemList[list[i].uid] = item;
                 }
+
                 if(currentUid) {
                     setTimeout(function() {
                         chatItemList[currentUid].onclick();
                     },10);
                 }
+                //FIXME 为空时定位空背景图片
+                // var h = $('#left-navigation').height();
+                // var listH =  $ulOuter.height();
+                // var aListH = h/2 -(h-listH) - 32.5;//32.5 背景图/2
+                // $ulOuter.find('li.fullscreen').css('background-position','center '+aListH+'px');
             });
         });
     };
@@ -104,6 +141,8 @@ function Offline(node,core,window) {
         $elm.addClass("active").siblings().removeClass("active");
         var index = $elm.index();
         var key = $elm.attr("data-key");
+        pageNow = 1;
+        end = false;
         fetchData(index,key);
     };
 
@@ -138,6 +177,7 @@ function Offline(node,core,window) {
     var bindListener = function() {
         $(document.body).on("core.onload",onloadHandler);
         $(document.body).on("leftside.onselected",onLeftSideItemClickHandler);
+        $ulParent.on("scroll",onParentScroll);
         $node.delegate(".js-switch-label",'click',labelItemClickHandler);
     };
 

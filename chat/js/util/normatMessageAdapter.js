@@ -26,7 +26,7 @@ var normalMessageAdapter = function(value) {
     } else if(content.indexOf("<audio") >= 0) {
         value.message_type = AUDIO;
         value.desc = '[语音]';
-    } else if(content.indexOf("<a") >= 0) {
+    } else if(content.indexOf("</") >= 0 || content.indexOf("</") >= 0) {
         value.message_type = RICH_TEXT;
         value.desc = '[富文本]';
     } else {

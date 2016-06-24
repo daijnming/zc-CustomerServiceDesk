@@ -68,7 +68,7 @@ var Fastlayer = function(node,core,config) {
         $this.find('input').addClass('activeLine').parent('li').siblings('li').find('input').removeClass('activeLine');
         //清空右侧回复
         var oLi = $(oFastRight).find('li');
-        $(oLi).removeClass('show');
+        $(oLi).removeClass('show').addClass('hide');
         for(var i = 0;i < oLi.length;i++) {
             if($(oLi[i]).attr('gid') == $this.attr('gid')) {
                 _arr.push(oLi[i]);
@@ -238,6 +238,7 @@ var Fastlayer = function(node,core,config) {
     };
 
     var onAddNewFast = function(evn) {
+        $(oAddNewRep).show();//显示添加新回复
         //清除新加框 class
         $(node).find('.js-content ul li').find('input').removeClass('newInput');
         var obj = evn.target.className === 'js-addNewGroup' ? oFastLeft : oFastRight;
@@ -251,11 +252,17 @@ var Fastlayer = function(node,core,config) {
             clsUpName = 'js-upLeftGroup upLeftGroup hide';
             utype = 'left';
             maxlength = 50;
+            $(oFastLeft).find('li').removeClass('activeLine');
+            $(oFastLeft).find('input').removeClass('activeLine');
+            //清空右侧回复
+            $(oFastRight).find('li').removeClass('show').addClass('hide');
         } else {
             clsDelName = 'js-delRightRep delRightRep';
             clsUpName = 'js-upRightRep upRightRep hide';
             utype = 'right';
             maxlength = 2048;
+            $(oFastRight).find('li').removeClass('activeLine');
+            $(oFastLeft).find('input').removeClass('activeLine');
         }
         var template = require('./template.js');
         var conf = $.extend({

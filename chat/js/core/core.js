@@ -4,11 +4,15 @@ function Core(window) {
     var token = '';
     var queryParam;
     var polling = require('./socket/json.js');
+    var WebSocket = require('./socket/websocket.js');
     var HearBeat = require("./socket/heartbeat.js");
     var normalMessageAdapter = require('../util/normatMessageAdapter.js');
     var messageTypeConfig = require('./messagetype.json');
+    var messageCache = require('./messageMap.js');
     var Promise = require('../util/promise.js');
     var notificationPermission;
+    var SERVER_CLIENT = 2;
+    var isWindowFocus = true;
     var $body;
     var socket,
         Notification = window.Notification || window.webkitNotifications;
@@ -31,6 +35,59 @@ function Core(window) {
         });
     };
 
+    var messageConfirm = function(list) {
+        var arr = [];
+        for(var i = 0,
+            len = list.length;i < len;i++) {
+            var item = list[i];
+            var obj = {
+                'type' : 300,
+                'utype' : SERVER_CLIENT,
+                'cid' : item.cid,
+                'uid' : item.uid,
+                'msgId' : item.msgId
+            };
+            arr.push(obj);
+        }
+        $.ajax({
+            'url' : '/chat/user/msg/ack.action',
+            'dataType' : 'json',
+            'data' : {
+                'content' : JSON.stringify(arr),
+		'tnk':+new Date()
+            },
+            'type' : 'POST'
+        }).success(function(ret) {
+        }).fail(function(ret) {
+        });
+    };
+    /**
+     * @category 消息的去重，排序
+     */
+    var messageFilter = function(list) {
+        var arr = [];
+        for(var i = 0,
+            len = list.length;i < len;i++) {
+            var item = list[i];
+            if(!item.msgId) {
+                item.msgId = +new Date();
+            }
+            if(!messageCache.has(item.msgId) || item.type === 111) {
+                arr.push(item);
+                messageCache.push([item]);
+            }
+        }
+        arr = arr.sort(function(a,b) {
+            if(!a.t) {
+                a.t = +new Date();
+            }
+            if(!b.t) {
+                b.t = +new Date();
+            }
+            return a.t > b.t;
+        });
+        return arr;
+    };
     /**
      * 将url里面query字符串转换成对象
      */
@@ -91,7 +148,8 @@ function Core(window) {
                     'way' : 1,
                     'st' : queryParam.st || 1,
                     'lt' : queryParam.lt || new Date().getTime(),
-                    'token' : token
+                    'token' : token,
+                    'ack' : 1
                 }
             }).done(function(ret) {
                 if(ret.status == 1 || ret.status == 2) {
@@ -100,6 +158,11 @@ function Core(window) {
                     }
                     var path = location.href.indexOf("admins_new") < 0 ? "admins/" : "admins_new/";
                     global.baseUrl = location.protocol + "//" + location.host + "/chat/" + ((!value.success) ? path : '');
+                    if(location.href.indexOf("www.sobot.com") >= 0) {
+                        global.socketBase = "";
+                    } else {
+                        global.socketBase = "ws://test.sobot.com/webchat";
+                    }
                     if(!value.success) {
                         global.scriptPath = "//static.sobot.com/chat/admins/";
                     } else {
@@ -123,14 +186,15 @@ function Core(window) {
 
     var systemMessageAdpater = function(value) {
         if(value.type === 102) {
-            audioOnline.play();
-            createNotification(value,102);
+            if(document.hidden || !isWindowFocus) {
+                audioOnline.play();
+                createNotification(value,102);
+            }
         }
         value.description = messageTypeConfig[value.type];
-
     };
-
     var createNotification = function(data,type) {
+        // var no = +new Date();
         var title = type == 103 ? '用户' + data.uname + '发送了一条消息' : '新用户上线了！';
         var desc = type == 103 ? data.desc : data.uname;
         var temp = $("<div></div>");
@@ -139,7 +203,7 @@ function Core(window) {
         var noti = new Notification(title, {
             'body' : desc,
             'icon' : 'assets/images/logo.png',
-            'tag' : type + data.uid
+            'tag' : '1'
         });
         noti.onclick = (function(id,noti) {
             return function() {
@@ -158,9 +222,11 @@ function Core(window) {
             len = list.length;i < len;i++) {
             var value = list[i];
             if(value.type === 103) {
-                audioNewMessage.play();
                 normalMessageAdapter(value);
-                createNotification(value,103);
+                if(document.hidden || !isWindowFocus) {
+                    audioNewMessage.play();
+                    createNotification(value,103);
+                }
             } else if(value.type == 109 && value.status == 2) {
                 alert('另外一个窗口已经登录，您被强迫下线！');
                 $(window).unbind("beforeunload");
@@ -186,20 +252,54 @@ function Core(window) {
             window.close();
             window.location.href = "/console/login";
         });
+        $(window).on("blur", function() {
+        });
         $(window).on("beforeunload", function() {
             return '';
         });
+        window.onfocus = function() {
+            isWindowFocus = true;
+        };
+        window.onblur = function() {
+            isWindowFocus = false;
+        };
     };
-
+    //消息确认
+    var msgConfirmHandler = function(data) {
+        if(data && data.length > 0) {
+            for(var i = 0;i < data.length;i++) {
+                //https://www.sobot.com/chat/user/msg/ack?cid=xxx&msgId=xxxx&uid=xxx&utype=0
+                $.ajax({
+                    'url' : 'http://test.sobot.com/chat/user/msg/ack.action',
+                    'type' : 'get',
+                    'dataType' : 'json',
+                    'data' : {
+                        'cid' : data[i]['cid'],
+                        'msgId' : data[i]['msgId'],
+                        'uid' : data[i]['uid'],
+                        'utype' : '2'//0 用户  2 客服
+                    }
+                }).success(function(ret) {
+                });
+            }
+        }
+    };
     var socketFactory = function() {
         if(window.WebSocket && false) {
-
+            socket = new WebSocket(global);
         } else {
             socket = new polling(global);
         }
 
         socket.on("receive", function(list) {
+            var str = JSON.stringify(list);
+                    //    if(window.confirm("是否进行消息确认？   "+str)) {
+            messageConfirm(list);
+                   //   }
+            list = messageFilter(list);
             messageAdapter(list);
+            //消息确认
+            // msgConfirmHandler(list);
             $body.trigger('core.receive',[list]);
         });
     };

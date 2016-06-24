@@ -4,6 +4,7 @@
  */
 function TextArea(node,core,window) {
     var global = core.getGlobal();
+    var $faceGroupTarea;//表情选择按钮
     //var that = {};
     var loadFile = require('../util/load.js')();
     //表情
@@ -28,6 +29,7 @@ function TextArea(node,core,window) {
         //btn
         $sendMessage = $node.find(".js-sendMessage");
         $botTextBox = $node.find(".js-botTextBox");
+        $faceGroupTarea = $node.find('#faceGroupTarea');
     };
     var newUserMessage = function(data) {
         var _html = doT.template(template.listItem)(data);
@@ -42,7 +44,7 @@ function TextArea(node,core,window) {
         }
     };
     var onSelected = function(evt,data) {
-        if(currentUid){
+        if(currentUid) {
             inputCache[currentUid] = $sendMessage.val();
         }
         currentUid = data.data.uid;
@@ -61,14 +63,14 @@ function TextArea(node,core,window) {
         }
     };
     //更新cid;
-    var oncidchangeHandler=function(evt,data){
+    var oncidchangeHandler = function(evt,data) {
         currentCid = data;
     };
     //输入内容做缓存
-    var onTabSelectedSaveInner=function(uid){
-        if(inputCache[uid]){
+    var onTabSelectedSaveInner = function(uid) {
+        if(inputCache[uid]) {
             $sendMessage.val(inputCache[uid]);
-        }else{
+        } else {
             $sendMessage.val('');
         }
     };
@@ -137,7 +139,7 @@ function TextArea(node,core,window) {
     //智能回复
     var onIntelligencereplyHandler = function(evt,data) {
         if(data.data.status == "2") {
-     
+
             $sendMessage.val(data.data.txt).focus();
         }
 
@@ -157,36 +159,34 @@ function TextArea(node,core,window) {
 
     };
     //定位光标
-    var gotoxyHandler=function(evt,data){
-        var src=data.answer;
-         //将新表情追加到待发送框里
+    var gotoxyHandler = function(evt,data) {
+        var src = data.answer;
+        //将新表情追加到待发送框里
         var oTxt1 = document.getElementById("js-sendMessage");
-        var cursurPosition=-1;
-        if(oTxt1.selectionStart||oTxt1.selectionStart==0){//非IE浏览器
-            cursurPosition= oTxt1.selectionStart;
-        }else{//IE
-           var range = document.selection.createRange();
+        var cursurPosition = -1;
+        if(oTxt1.selectionStart || oTxt1.selectionStart == 0) {//非IE浏览器
+            cursurPosition = oTxt1.selectionStart;
+        } else {//IE
+            var range = document.selection.createRange();
             range.moveStart("character",-oTxt1.value.length);
-            cursurPosition=range.text.length;
+            cursurPosition = range.text.length;
         }
-        var currentSaytextBefore=$sendMessage.val().substring(0,cursurPosition);
-        var currentSaytextAfter=$sendMessage.val().substring(cursurPosition);
-        var currentSaytext=currentSaytextBefore+src+currentSaytextAfter;
+        var currentSaytextBefore = $sendMessage.val().substring(0,cursurPosition);
+        var currentSaytextAfter = $sendMessage.val().substring(cursurPosition);
+        var currentSaytext = currentSaytextBefore + src + currentSaytextAfter;
         $($sendMessage).val(currentSaytext);
         //定位光标
-        var pos=(currentSaytextBefore+src).length;
-        if(oTxt1.setSelectionRange)
-            {
-                oTxt1.setSelectionRange(pos,pos);
-                oTxt1.focus();
-            }
-            else if (oTxt1.createTextRange) {
-                var range = oTxt1.createTextRange();
-                range.collapse(true);
-                range.moveEnd('character', pos);
-                range.moveStart('character', pos);
-                range.select();
-            }
+        var pos = (currentSaytextBefore + src).length;
+        if(oTxt1.setSelectionRange) {
+            oTxt1.setSelectionRange(pos,pos);
+            oTxt1.focus();
+        } else if(oTxt1.createTextRange) {
+            var range = oTxt1.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character',pos);
+            range.moveStart('character',pos);
+            range.select();
+        }
     };
     var onloadHandler = function(evt,data) {
         $node.find("img.js-my-logo").attr("src",data.face);
@@ -227,8 +227,8 @@ function TextArea(node,core,window) {
         $botTextBox.css("bottom","-232px")
     };
     //用户正在输入
-    var changeingInput=function(evt){
-        if($sendMessage.val()==""&&evt.keyCode != 13)
+    var changeingInput = function(evt) {
+        if($sendMessage.val() == "" && evt.keyCode != 13)
             $.ajax({
                 'url' : '/chat/admin/input.action',
                 'data' : {
@@ -240,8 +240,7 @@ function TextArea(node,core,window) {
             }).success(function(res) {
                 //console.log("")
             });
-     }
-
+    }
     var isHiddenBotTextBox = function() {
         $botTextBox.hide();
     };
@@ -308,7 +307,7 @@ function TextArea(node,core,window) {
         //打开集合,默认qq表情为显示状态
         ZC_Face.show(global);
         ZC_Face.emojiShow(global);
-
+        $($faceGroupTarea).css('display')=='block'?$(this).addClass('select'):$(this).removeClass('select');
     };
     var onEmotionIcoClickHandler = function() {
         //qq表情tab

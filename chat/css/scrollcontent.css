@@ -169,3 +169,20 @@
   margin-right: 12px;
   display: none;
 }
+
+.zc-c-chat-body-load-model {
+  width: 100%;
+  height: 100%;
+  background-color: #f7fafa;
+  position: relative;
+}
+
+.zc-c-chat-body-load-model-icon {
+  background-image: url('../img/chatLoad.gif');
+  background-repeat: no-repeat;
+  width: 36px;
+  height: 36px;
+  top: 50%;
+  left: 47.5%;
+  position: absolute;
+}

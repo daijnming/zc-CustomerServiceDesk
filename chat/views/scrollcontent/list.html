@@ -12,13 +12,13 @@
 
   {{ if(it.list[prop].action === 'loadmore') { }}
     <div class="systeamTextBox js-zc-loadmore">
-      <p class="systeamText">点击加载更多</p>
+      <p class="systeamText loadmore">点击加载更多</p>
     </div>
   {{ } }}
 
   {{ if(it.list[prop].action === 'nomore') { }}
     <div class="systeamTextBox">
-      <p class="systeamText">没有更多</p>
+      <p class="systeamText loadmore">没有更多</p>
     </div>
   {{ } }}
 
@@ -49,34 +49,66 @@
 
   {{ if(it.list[prop].action === 9) { }}
     <div class="systeamTextBox">
-      <p class="systeamText">用户将客服的会话 , 被转移到客服 {{=it.list[prop].receiverName}} {{=it.list[prop].ts.split(' ')[1]}}</p>
+      <p class="systeamText">客服 {{=it.list[prop].senderName}} 将用户转接给客服 {{=it.list[prop].receiverName}} {{=it.list[prop].ts.split(' ')[1]}}</p>
     </div>
   {{ } }}
 
   {{ if(it.list[prop].action === 10) { }}
 
     {{ if (it.list[prop].offlineType === 1) { }}
-      <div class="systeamTextBox">
-        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
-      </div>
+      {{ if (it.list[prop].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
     {{ } }}
 
     {{ if (it.list[prop].offlineType === 2) { }}
       <div class="systeamTextBox">
-        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
       </div>
     {{ } }}
 
     {{ if (it.list[prop].offlineType === 3) { }}
-      <div class="systeamTextBox">
-        <p class="systeamText">用户被客服 {{=it.list[prop].receiverName}} 加入黑名单,本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
-      </div>
+      {{ if (it.list[prop].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户被客服 {{=it.list[prop].receiverName}} 拉入黑名单,本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户被客服拉入黑名单,本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
+    {{ } }}
+
+    {{ if (it.list[prop].offlineType === 4) { }}
+
+      {{ if (it.list[prop].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和机器人会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
     {{ } }}
 
     {{ if (it.list[prop].offlineType === 5) { }}
-      <div class="systeamTextBox">
-        <p class="systeamText">用户和客服 {{=it.adminName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
-      </div>
+
+      {{ if (it.list[prop].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和机器人会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
     {{ } }}
   {{ } }}
 
@@ -162,9 +194,17 @@
 
     {{ if (it.list[prop].senderType === 1) { }}
       <div class="msg workOrderCus">
-        <div class="msg_user fr">
-          <img src="{{=it.systemImage}}" class="msg_user_img">
-        </div>
+
+        {{ if (it.list[prop].senderFace) { }}
+          <div class="msg_user fr">
+            <img src="{{=it.list[prop].senderFace}}" class="msg_user_img">
+          </div>
+        {{ } else { }}
+          <div class="msg_user fr">
+            <img src="{{=it.systemImage}}" class="msg_user_img">
+          </div>
+        {{ } }}
+
         <div class="msgContBox fr">
           <span class="msg_name">{{=it.list[prop].senderName}}</span>
           <span class="msg_time">{{=it.list[prop].senderName}}</span>
@@ -181,7 +221,7 @@
     {{ if (it.list[prop].senderType === 2) { }}
       <div class="msg workOrderCus">
         <div class="msg_user fr">
-          <img src="{{=it.adminImage}}" class="msg_user_img">
+          <img src="{{=it.list[prop].senderFace}}" class="msg_user_img">
         </div>
         <div class="msgContBox fr">
           <span class="msg_name">{{=it.list[prop].senderName}}</span>
