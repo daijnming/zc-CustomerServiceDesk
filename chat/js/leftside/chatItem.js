@@ -244,6 +244,9 @@ function Item(data,core,outer,from,manager) {
         } else {
             loadFile.load(global.baseUrl + "views/leftside/chatitem.html").then(function(value) {
                 data['source_type'] = USOURCE[data.usource];
+                if(data.isTransfer != 0) {
+                    console.log('转接' + data.uid + " chattype=" + data.isTransfer);
+                }
                 if(data.usource == 1) {
                     data.imgUrl = "img/weixinType.png";
                 }
@@ -344,11 +347,9 @@ function Item(data,core,outer,from,manager) {
         $node.trigger('click');
     };
     var onProfileUserInfo = function(evt,ret) {
-        if(ret.data.uid == data.uid && ret.data.name) {
-            var name = ret.data.name;
-            $userName.html(name);
-            delete userDataCache[data.uid];
-        }
+        var name = ret.data.name;
+        $userName.html(name);
+        delete userDataCache[data.uid];
     };
 
     var onUserStatusChange = function(evt,ret) {
