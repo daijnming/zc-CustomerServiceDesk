@@ -1,6 +1,7 @@
 function polling(global) {
     var eventCache = {};
     var unicode = require('../../util/unicode.js');
+    var success = true;
     var defaultParams = {
         answer : "",
         answerType : "",
@@ -118,7 +119,7 @@ function polling(global) {
             'data' : {
                 'puid' : global.puid,
                 'uid' : global.id,
-		'token':+ new Date()
+		'token':+new Date()
             }
         }).success(function(ret) {
             // console.log(ret);
