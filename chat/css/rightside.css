@@ -125,14 +125,27 @@ ul {
   background-color: #fff;
 }
 /****homeuser css***/
-.tab-pane#profileuser.showBg {
+/*.tab-pane#profileuser.showBg {
     background: url(../assets/images/noProfileUserInfo.png) center  no-repeat
 }
 .panel-body.showBg{
   background: url(../assets/images/noProfileUserInfo.png) center no-repeat
-}
+}*/
 .rightBox .panel-body .tab-pane#homeuser p.searchBot {
     margin: 0 0 10px;
+}
+.rightBox .panel-body .tab-profilebg {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto;
+  margin-top: 300px;
+  /*position: relative;*/
+  display: block;
+  background: url(../assets/images/noProfileUserInfo.png) no-repeat;
+  background-position-x: -27px;
+}
+.rightBox .panel-body .tab-profilebg.hide{
+  display: none;
 }
 
 /****clientSystem*****/

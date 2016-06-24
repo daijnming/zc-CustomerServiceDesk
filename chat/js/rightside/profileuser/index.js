@@ -42,6 +42,7 @@ var ProfileUser = function(node,core,userData) {
         if(data) {
             //客户资料背景清除
             $(node).html('').parents('.js-panel-body').removeClass('showBg');
+            $(node).html('').parents('.js-panel-body .js-tab-profilebg').addClass('hide');
             loadFile.load(global.baseUrl + 'views/rightside/profileUser.html').then(function(value) {
                 //组装对话页
                 data.userData["visit"] = onVisitHandle(data.userData['visitUrl'],data.userData['visitTitle']);

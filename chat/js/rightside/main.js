@@ -56,13 +56,13 @@ function RightSide(node,core,window) {
         $(node).find('.js-clientSysIframe').css('height',newHeight - 52 + 'px');
 
         //背景图片定位计算
-        var h = $('#left-navigation').height();
-        var oh = $('.js-chatonline').height();
-        var ah = h/2 - (h-oh)-32.5;
-        $('.js-chatonline').css('background-position','center '+ah+'px');
-        var listH =  $("#historylist").height();
-        var aListH = h/2 -(h-listH) - 32.5;
-        $('.js-history-list li').css('background-position','center '+aListH+'px');
+        // var h = $('#left-navigation').height();
+        // var oh = $('.js-chatonline').height();
+        // var ah = h/2 - (h-oh)-32.5;
+        // $('.js-chatonline').css('background-position','center '+ah+'px');
+        // var listH =  $("#historylist").height();
+        // var aListH = h/2 -(h-listH) - 32.5;
+        // $('.js-history-list li').css('background-position','center '+aListH+'px');
     };
     $(window).resize(function(){
       onloadHandler();
@@ -210,7 +210,8 @@ function RightSide(node,core,window) {
     var onHideProfileInfo = function() {
         config.isShowBg = true;
         //是否显示用户资料模块背景图片
-        $(node).find('.js-panel-body').addClass('showBg').find('.js-tab-pane#profileuser').html('');
+        // $(node).find('.js-panel-body').addClass('showBg').find('.js-tab-pane#profileuser').html('');
+        $(node).find('.js-tab-pane#profileuser').html('<i class="js-tab-profilebg tab-profilebg"></i>').find('.js-tab-profilebg').removeClass('hide');
     };
     var parseDOM = function() {
         tabSwitchNav = $(node).find('.js-panel-body .js-nav-tabs');

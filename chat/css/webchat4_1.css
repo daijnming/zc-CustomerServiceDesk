@@ -17,7 +17,7 @@
 }
 ul.history-list {
     overflow-x: hidden;
-    
+
     width: 100%;
 }
 #user_menu i.connection_icon.online {
@@ -58,15 +58,35 @@ ul.history-list {
     overflow-y: auto;
 }
 .tab-content  li.fullscreen.noBlack {
-    background-image: url("../assets/images/noBlockList.png");
+    background-image: url("../assets/images/bgspirt.png");
+    background-position: -510px;
 }
 .tab-content  li.fullscreen.noStar {
-    background-image: url("../assets/images/noStarList.png");
+    background-image: url("../assets/images/bgspirt.png");
+    background-position: -188px;
+}
+.tab-content  li.fullscreen.noAll {
+    background-image: url("../assets/images/bgspirt.png");
+    background-position: -88px;
 }
 .tab-content  li.fullscreen {
-    height: 100% !important;
+    width: 100px !important;
+    height: 510px !important;
     background-repeat: no-repeat;
+    margin: 0 auto;
     /*background-position: center center;*/
+}
+.tab-content .onlineBg{
+  position: absolute;
+  top:395px;
+  left: 100px;
+  width: 100px;
+  height: 65px;
+  background-image: url("../assets/images/bgspirt.png");
+  background-position-x:8px;
+}
+.tab-content .onlineBg.hide{
+  display: none;
 }
 .tab-content  li.user-list-item {
     width: 100%;

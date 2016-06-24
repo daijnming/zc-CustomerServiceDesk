@@ -8,7 +8,7 @@ function Offline(node,core,window) {
     var that = {};
     var USOURCE = require('./source.json');
     var Item = require('./chatItem.js');
-    var CLASSNAME = ['','noStar','noBlack'];
+    var CLASSNAME = ['noAll','noStar','noBlack'];
     var loadFile = require('../util/load.js')();
     var Promise = require('../util/promise.js');
     var normalMessageAdapter = require('../util/normatMessageAdapter.js');
@@ -87,6 +87,7 @@ function Offline(node,core,window) {
                     'pageNow' : pageNow
                 }
             }).success(function(ret) {
+                // ret=[];
                 dataAdapter(ret);
                 if(ret.length == 0) {
                     end = true;
@@ -124,10 +125,10 @@ function Offline(node,core,window) {
                     },10);
                 }
                 //FIXME 为空时定位空背景图片
-                var h = $('#left-navigation').height();
-                var listH =  $ulOuter.height();
-                var aListH = h/2 -(h-listH) - 32.5;//32.5 背景图/2
-                $ulOuter.find('li.fullscreen').css('background-position','center '+aListH+'px');
+                // var h = $('#left-navigation').height();
+                // var listH =  $ulOuter.height();
+                // var aListH = h/2 -(h-listH) - 32.5;//32.5 背景图/2
+                // $ulOuter.find('li.fullscreen').css('background-position','center '+aListH+'px');
             });
         });
     };
