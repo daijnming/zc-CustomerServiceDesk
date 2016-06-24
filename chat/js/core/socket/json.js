@@ -28,6 +28,7 @@ function polling(global) {
             var $img = $div.find("img.webchat_img_upload");
             var parent = $img.parent()[0];
             if(parent && parent.tagName.toLowerCase() == 'a') {
+                $img.removeClass("upNowImg").removeClass("uploadedFile");
                 var content = $img.parent().html();
                 return content;
             } else {
@@ -41,7 +42,6 @@ function polling(global) {
     var onsend = function(evt,data,count) {
         var count = count || 0;
         var content = imageMessageFilter(data);
-        console.log(content);
         $.ajax({
             'url' : '/chat/admin/send1.action',
             'dataType' : 'json',
