@@ -13,6 +13,7 @@ function Core(window) {
     var notificationPermission;
     var SERVER_CLIENT = 2;
     var isWindowFocus = true;
+    var showTitleTimer;
     var $body;
     var socket,
         Notification = window.Notification || window.webkitNotifications;
@@ -54,7 +55,7 @@ function Core(window) {
             'dataType' : 'json',
             'data' : {
                 'content' : JSON.stringify(arr),
-		'tnk':+new Date()
+                'tnk' : +new Date()
             },
             'type' : 'POST'
         }).success(function(ret) {
@@ -193,6 +194,22 @@ function Core(window) {
         }
         value.description = messageTypeConfig[value.type];
     };
+
+    var showTitle = function(name,content) {
+        if(showTitleTimer) {
+            clearInterval(showTitleTimer);
+        }
+        var count = 0;
+        showTitleTimer = setInterval(function() {
+            if(count % 2 == 0) {
+                document.title = '用户' + name + '发送了一条消息';
+            } else {
+                document.title = content;
+            }
+            count++;
+        },1000);
+    };
+
     var createNotification = function(data,type) {
         // var no = +new Date();
         var title = type == 103 ? '用户' + data.uname + '发送了一条消息' : '新用户上线了！';
@@ -205,6 +222,9 @@ function Core(window) {
             'icon' : 'assets/images/logo.png',
             'tag' : '1'
         });
+        if(document.hidden) {
+            showTitle(data.uname,desc);
+        }
         noti.onclick = (function(id,noti) {
             return function() {
                 window.focus();
@@ -254,6 +274,12 @@ function Core(window) {
         });
         $(window).on("blur", function() {
         });
+        $(window).on("focus", function() {
+            if(showTitleTimer) {
+                clearInterval(showTitleTimer);
+                document.title = "人工客服工作台";
+            }
+        });
         $(window).on("beforeunload", function() {
             return '';
         });
@@ -293,9 +319,9 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             var str = JSON.stringify(list);
-                    //    if(window.confirm("是否进行消息确认？   "+str)) {
+            //    if(window.confirm("是否进行消息确认？   "+str)) {
             messageConfirm(list);
-                   //   }
+            //   }
             list = messageFilter(list);
             messageAdapter(list);
             //消息确认
