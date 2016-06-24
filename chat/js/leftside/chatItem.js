@@ -347,9 +347,11 @@ function Item(data,core,outer,from,manager) {
         $node.trigger('click');
     };
     var onProfileUserInfo = function(evt,ret) {
-        var name = ret.data.name;
-        $userName.html(name);
-        delete userDataCache[data.uid];
+     if(ret.data.uid == data.uid && ret.data.name) {
+         var name = ret.data.name;
+         $userName.html(name);
+         delete userDataCache[data.uid];
+	}
     };
 
     var onUserStatusChange = function(evt,ret) {

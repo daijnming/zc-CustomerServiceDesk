@@ -293,9 +293,9 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             var str = JSON.stringify(list);
-                        if(window.confirm("是否进行消息确认？   "+str)) {
+                    //    if(window.confirm("是否进行消息确认？   "+str)) {
             messageConfirm(list);
-                      }
+                   //   }
             list = messageFilter(list);
             messageAdapter(list);
             //消息确认
