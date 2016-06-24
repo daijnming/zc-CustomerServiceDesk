@@ -30,7 +30,7 @@ function polling(global) {
             if(parent && parent.tagName.toLowerCase() == 'a') {
                 $img.removeClass("upNowImg").removeClass("uploadedFile");
                 var content = $img.parent().html();
-                return content;
+                return content.replace('>','/>');
             } else {
                 return data.answer;
             }
