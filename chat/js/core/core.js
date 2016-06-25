@@ -70,9 +70,11 @@ function Core(window) {
         for(var i = 0,
             len = list.length;i < len;i++) {
             var item = list[i];
+            console.log(item);
             if(!item.msgId) {
-                item.msgId = +new Date();
+                item.msgId = (+new Date()) + item.cid + item.type;
             }
+            console.log(item.msgId);
             if(!messageCache.has(item.msgId) || item.type === 111) {
                 arr.push(item);
                 messageCache.push([item]);
