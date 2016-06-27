@@ -138,7 +138,7 @@ function polling(global) {
         $.ajax({
             'url' : '/chat/admin/msg.action',
             'dataType' : "json",
-            'type' : "get",
+            'type' : "POST",
             'data' : {
                 'puid' : global.puid,
                 'uid' : global.id,

@@ -144,7 +144,7 @@ function Core(window) {
             $.ajax({
                 'url' : '/chat/admin/connect.action',
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'POST',
                 'data' : {
                     'uid' : queryParam.id,
                     'way' : 1,
@@ -298,7 +298,7 @@ function Core(window) {
                 //https://www.sobot.com/chat/user/msg/ack?cid=xxx&msgId=xxxx&uid=xxx&utype=0
                 $.ajax({
                     'url' : 'http://test.sobot.com/chat/user/msg/ack.action',
-                    'type' : 'get',
+                    'type' : 'POST',
                     'dataType' : 'json',
                     'data' : {
                         'cid' : data[i]['cid'],

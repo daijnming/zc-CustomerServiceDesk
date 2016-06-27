@@ -105,7 +105,7 @@ function Content(node,core,window) {
                 $.ajax({
                     'url' : API.http.chatList[type],
                     'dataType' : 'json',
-                    'type' : 'get',
+                    'type' : 'post',
                     'data' : {
                         t : userChatCache[userId].date || Date.parse(new Date()),
                         uid : userId,
@@ -158,7 +158,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.chatList[type],
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     t : userChatCache[userId].date || Date.parse(new Date()),
                     uid : userId,
@@ -200,7 +200,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.call,
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     sender : userInfo.sender,
                     cid : userInfo.cid,
@@ -254,7 +254,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.status[type][handleType],
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     sender : userInfo.sender,
                     receiver : userInfo.userId
@@ -317,7 +317,7 @@ function Content(node,core,window) {
         $.ajax({
             'url' : API.http.getOtherAdmin,
             'dataType' : 'json',
-            'type' : 'get',
+            'type' : 'post',
             'data' : {
                 uid : sender
             }
@@ -356,7 +356,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.userTransfer,
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     uid : userInfo.sender,
                     cid : userInfo.cid,
