@@ -72,7 +72,7 @@ function Core(window) {
             var item = list[i];
             if(!item.msgId) {
                 var str = Math.random().toString(36).substr(2);
-                item.msgId = (+new Date()) + item.cid + item.type + str;
+                item.msgId = (+new Date()) + "" + item.cid + item.type + str;
             }
             if(!messageCache.has(item.msgId) || item.type === 111) {
                 arr.push(item);
