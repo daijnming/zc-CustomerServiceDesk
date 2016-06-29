@@ -129,7 +129,7 @@ ul.history-list {
     display: inline-block;
 }
 
-.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img, .tab-content  li.user-list-item .icon.offline.app img, .tab-content  li.user-list-item .icon.offline.face img,.tab-content  li.user-list-item .icon.offline.weibo img {
+.tab-content  li.user-list-item .icon.offline img, .tab-content  li.user-list-item .icon.offline.weixin img, .tab-content  li.user-list-item .icon.offline.app img, .tab-content  li.user-list-item .icon.offline.face img,.tab-content  li.user-list-item .icon.offline.weibo img,.tab-content  li.user-list-item .icon.offline.rongyun img {
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
@@ -156,7 +156,7 @@ ul.history-list {
 .tab-content  li.user-list-item.history .icon {
     background-color: #ccc !important;
 }
-.tab-content  li.user-list-item .icon.offline.face, .tab-content  li.user-list-item .icon.offline, .tab-content  li.user-list-item .icon.laptop.offline, .tab-content  li.user-list-item .icon.mobile.offline, .tab-content  li.user-list-item .icon.app.offline,.tab-content  li.user-list-item .icon.weibo.offline {
+.tab-content  li.user-list-item .icon.offline.face, .tab-content  li.user-list-item .icon.offline, .tab-content  li.user-list-item .icon.laptop.offline, .tab-content  li.user-list-item .icon.mobile.offline, .tab-content  li.user-list-item .icon.app.offline,.tab-content  li.user-list-item .icon.weibo.offline,.tab-content  li.user-list-item .icon.rongyun.offline {
     background-color: #bac2c1;
 }
 
@@ -168,9 +168,13 @@ ul.history-list {
     background-color: #60adf6;
     background-position: -98px -235px;
 }
+.tab-content  li.user-list-item .icon.rongyun{
+    background-color:#0098fe;
+    background-position: -155px -200px;
+}
 .tab-content  li.user-list-item .icon.weibo {
     background-color: #e87962;
-    background-position: -219px -194px;
+    background-position: -219px -200px;
 }
 .tab-content  li.user-list-item .icon.laptop {
 

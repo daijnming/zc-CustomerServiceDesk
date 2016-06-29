@@ -80,7 +80,7 @@ function Offline(node,core,window) {
             var promise = new Promise();
             $.ajax({
                 'url' : url,
-                'type' : 'get',
+                'type' : 'POST',
                 'dataType' : 'json',
                 'data' : {
                     'uid' : global.id,

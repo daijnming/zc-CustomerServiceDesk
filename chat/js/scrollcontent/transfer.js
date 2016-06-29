@@ -87,7 +87,7 @@ function Transfer(core,userInfo,callback) {
                 'keyword' : keyword
             },
             'dataType' : 'json',
-            'type' : 'get'
+            'type' : 'post'
         }).success(function(ret) {
             loadFile.load(global.baseUrl + 'views/scrollcontent/transferlist.html').then(function(html) {
                 $refreshTime.text(dateUtil.formatTime(new Date()));

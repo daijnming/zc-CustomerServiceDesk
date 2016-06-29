@@ -20,19 +20,16 @@ function HeartBeat(core) {
                 //客服已离线
                 $(document.body).trigger("emergency.netclose");
             }
-            setTimeout(send,TEN_SECOND);
         }).fail(function(ret) {
             count++;
             if(count >= 6) {
                 $(document.body).trigger("emergency.netclose");
-            } else {
-                setTimeout(send,TEN_SECOND);
             }
         });
     };
 
     this.start = function() {
-        send();
+        setInterval(send,TEN_SECOND);
     };
 };
 

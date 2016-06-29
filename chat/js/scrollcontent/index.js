@@ -104,7 +104,7 @@ function Content(node,core,window) {
                 $.ajax({
                     'url' : API.http.chatList[type],
                     'dataType' : 'json',
-                    'type' : 'get',
+                    'type' : 'post',
                     'data' : {
                         t : userChatCache[userId].date || Date.parse(new Date()),
                         uid : userId,
@@ -155,7 +155,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.chatList[type],
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     t : userChatCache[userId].date || Date.parse(new Date()),
                     uid : userId,
@@ -197,7 +197,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.call,
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     sender : userInfo.sender,
                     cid : userInfo.cid,
@@ -251,7 +251,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.status[type][handleType],
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     sender : userInfo.sender,
                     receiver : userInfo.userId
@@ -314,7 +314,7 @@ function Content(node,core,window) {
         $.ajax({
             'url' : API.http.getOtherAdmin,
             'dataType' : 'json',
-            'type' : 'get',
+            'type' : 'post',
             'data' : {
                 uid : sender
             }
@@ -353,7 +353,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.userTransfer,
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     uid : userInfo.sender,
                     cid : userInfo.cid,
@@ -485,7 +485,8 @@ function Content(node,core,window) {
                     var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(lastImg) {
-                        lastImg.src = lastImg.src + '?r=' + (new Date());
+                        var src = lastImg.src; 
+                        lastImg.src = lastImg.src + (src.indexOf("?") <0 ? '?':'&')+'r=' + (+new Date());
                         lastImg.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             // 获取当前窗口最低scrollTop
@@ -710,7 +711,8 @@ function Content(node,core,window) {
                     var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(lastImg) {
-                        lastImg.src = lastImg.src + '?r=' + (new Date());
+                        var src = lastImg.src; 
+                        lastImg.src = lastImg.src + (src.indexOf("?") <0 ? '?':'&')+'r=' + (+new Date());
                         lastImg.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();

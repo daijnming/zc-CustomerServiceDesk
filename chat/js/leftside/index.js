@@ -38,7 +38,7 @@ function LeftSide(node,core,window) {
     var initQueueInfo = function() {
         $.ajax({
             'url' : '/chat/admin/getAdminChats.action',
-            'type' : 'get',
+            'type' : 'POST',
             'dataType' : 'json',
             'data' : {
                 'uid' : global.id
