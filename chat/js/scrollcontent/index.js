@@ -490,7 +490,8 @@ function Content(node,core,window) {
                     var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(lastImg) {
-                        lastImg.src = lastImg.src + '?r=' + (new Date());
+                        var src = lastImg.src; 
+                        lastImg.src = lastImg.src + (src.indexOf("?") <0 ? '?':'&')+'r=' + (+new Date());
                         lastImg.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             // 获取当前窗口最低scrollTop
@@ -714,7 +715,8 @@ function Content(node,core,window) {
                     var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(lastImg) {
-                        lastImg.src = lastImg.src + '?r=' + (new Date());
+                        var src = lastImg.src; 
+                        lastImg.src = lastImg.src + (src.indexOf("?") <0 ? '?':'&')+'r=' + (+new Date());
                         lastImg.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
