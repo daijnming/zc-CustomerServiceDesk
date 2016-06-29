@@ -5,7 +5,6 @@ function Content(node,core,window) {
     var Face = require('../util/qqFace.js');
     var App = require('../util/app.js');
     var Transfer = require('./transfer.js');
-    var MessageMap = require('../core/messageMap.js')
     var $rootNode;
     var global;
     // 保存用户对话消息缓存
@@ -129,8 +128,6 @@ function Content(node,core,window) {
                                 appendList.push(obj);
                             });
                         });
-
-                        MessageMap.push(appendList);
 
                         list = appendList.concat(userChatCache[userId].list);
                         userChatCache[userId].list = list;
@@ -476,8 +473,6 @@ function Content(node,core,window) {
                 list : list
             });
 
-            MessageMap.push(list);
-
             $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
 
             // console.log('parseTpl success');
@@ -589,7 +584,8 @@ function Content(node,core,window) {
                     var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(img) {
-                        img.src = img.src + '?r=' + (Date.parse(new Date()))
+                        img.src = img.src + '?r=' + (new Date());
+                        img.src = img.src + '?r=' +  dDate.parse(new Date())
                         img.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -610,7 +606,7 @@ function Content(node,core,window) {
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                         if(img) {
-                            img.src = img.src + '?r=' + (Date.parse(new Date()))
+                            img.src = img.src + '?r=' + (new Date());
                             img.onload = function() {
                                 $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                                 userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
