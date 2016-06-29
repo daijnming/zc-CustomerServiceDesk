@@ -197,7 +197,8 @@ function Core(window) {
         if(value.type === 102) {
             if(document.hidden || !isWindowFocus) {
                 audioOnline.play();
-                createNotification(value,102);
+                if(Notification)
+                    createNotification(value,102);
             }
         }
         value.description = messageTypeConfig[value.type];
@@ -253,7 +254,8 @@ function Core(window) {
                 normalMessageAdapter(value);
                 if(document.hidden || !isWindowFocus) {
                     audioNewMessage.play();
-                    createNotification(value,103);
+                    if(Notification)
+                        createNotification(value,103);
                 }
             } else if(value.type == 109 && value.status == 2) {
                 alert('另外一个窗口已经登录，您被强迫下线！');
