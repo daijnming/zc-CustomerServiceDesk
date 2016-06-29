@@ -171,6 +171,13 @@ function Core(window) {
                         global.scriptPath = global.baseUrl;
                     }
                     $(".js-loading-layer").hide();
+                    if(global.chatLogo) {
+                        $(".js-company-logo").attr("src",global.chatLogo).show();
+                    } else {
+                        $(".js-company-logo").attr("src","//static.sobot.com/chat/admins/assets/images/logo.png").show();
+                        $(".js-company-name").show();
+                        $(".js-company-domain").show();
+                    }
                     promise.resolve(ret);
                 } else {
                     alert('当前窗口登录失效，请重新登录');
