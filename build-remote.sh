@@ -29,6 +29,9 @@ cp -r chat/img/weixinType.png dist/img
 cp -r chat/img/static dist/img
 if [ "$TEST"x = ""x ];then
 	replaceScript dist/chat.html
+	echo "正式环境"
+else
+	echo "测试环境"
 fi
 #git status -s | egrep "^[ ]*D" | sed 's`^[ ]*D``' | xargs git rm
 #git status -s | egrep "^[ ]*M" | sed 's`^[ ]*M``' | xargs git add
