@@ -71,7 +71,8 @@ function Core(window) {
             len = list.length;i < len;i++) {
             var item = list[i];
             if(!item.msgId) {
-                item.msgId = +new Date();
+                var str = Math.random().toString(36).substr(2);
+                item.msgId = (+new Date()) + "" + item.cid + item.type + str;
             }
             if(!messageCache.has(item.msgId) || item.type === 111) {
                 arr.push(item);
@@ -143,7 +144,7 @@ function Core(window) {
             $.ajax({
                 'url' : '/chat/admin/connect.action',
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'POST',
                 'data' : {
                     'uid' : queryParam.id,
                     'way' : 1,
@@ -170,6 +171,13 @@ function Core(window) {
                         global.scriptPath = global.baseUrl;
                     }
                     $(".js-loading-layer").hide();
+                    if(global.chatLogo) {
+                        $(".js-company-logo").attr("src",global.chatLogo).show();
+                    } else {
+                        $(".js-company-logo").attr("src","//static.sobot.com/chat/admins/assets/images/logo.png").show();
+                        $(".js-company-name").show();
+                        $(".js-company-domain").show();
+                    }
                     promise.resolve(ret);
                 } else {
                     alert('当前窗口登录失效，请重新登录');
@@ -189,7 +197,8 @@ function Core(window) {
         if(value.type === 102) {
             if(document.hidden || !isWindowFocus) {
                 audioOnline.play();
-                createNotification(value,102);
+                if(Notification)
+                    createNotification(value,102);
             }
         }
         value.description = messageTypeConfig[value.type];
@@ -245,7 +254,8 @@ function Core(window) {
                 normalMessageAdapter(value);
                 if(document.hidden || !isWindowFocus) {
                     audioNewMessage.play();
-                    createNotification(value,103);
+                    if(Notification)
+                        createNotification(value,103);
                 }
             } else if(value.type == 109 && value.status == 2) {
                 alert('另外一个窗口已经登录，您被强迫下线！');
@@ -297,7 +307,7 @@ function Core(window) {
                 //https://www.sobot.com/chat/user/msg/ack?cid=xxx&msgId=xxxx&uid=xxx&utype=0
                 $.ajax({
                     'url' : 'http://test.sobot.com/chat/user/msg/ack.action',
-                    'type' : 'get',
+                    'type' : 'POST',
                     'dataType' : 'json',
                     'data' : {
                         'cid' : data[i]['cid'],
