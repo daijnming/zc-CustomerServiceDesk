@@ -295,7 +295,6 @@ function Content(node,core,window) {
                 'text' : model.content,
                 'OK' : function() {
 
-                    console.log(isClickPrevent);
                     // 防止重复点击
                     if (isClickPrevent) {
                       isClickPrevent = false;
@@ -585,8 +584,9 @@ function Content(node,core,window) {
                     var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(img) {
-                        img.src = img.src + '?r=' + (new Date());
-                        img.src = img.src + '?r=' +  dDate.parse(new Date())
+                        var src = img.src;
+                        img.src = img.src + (src.indexOf("?") < 0 ? "?":"&" )+'r=' + (+new Date());
+                        //img.src = img.src + (src.indexOf("?") < 0 ? "?":"&" )+'r=' +  dDate.parse(+new Date())
                         img.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -607,7 +607,8 @@ function Content(node,core,window) {
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                         if(img) {
-                            img.src = img.src + '?r=' + (new Date());
+                            var src= img.src;
+                            img.src = img.src + (src.indexOf("?") < 0 ? "?":"&" )+'r=' + (+new Date());
                             img.onload = function() {
                                 $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                                 userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -913,7 +914,6 @@ function Content(node,core,window) {
             }
         } else {
             var list = [];
-
             if(userChatCache[data.uid]) {
 
                 if(data.type === 103) {
@@ -1089,7 +1089,6 @@ function Content(node,core,window) {
     var onReceive = function(value,data) {
         userPushMessage(data);
         $('#chatSwitch').click();
-
         setTimeout(function() {
             window.$('#inputMsg').val('tk最帅');
             window.$('#sendBtn').click();
@@ -1120,7 +1119,6 @@ function Content(node,core,window) {
         });
 
         $body.on("leftside.onhide", function() {
-            console.log('leftside.onhide')
             clearScrollContent(arguments[1].uid,true, true);
             // console.log(userChatCache[arguments[1].uid]);
         })
