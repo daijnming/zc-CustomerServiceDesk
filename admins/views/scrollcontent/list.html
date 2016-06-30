@@ -1,0 +1,240 @@
+{{ for (var prop in it.list) { }}
+
+  {{ if(it.list[prop].action === 'dateline') { }}
+    <div class="day_divider">
+      <p class="systeamText" style="background-color: transparent">
+        <span class="zc-c-chat-date-line-left"></span>
+        <span class="zc-c-chat-date-line-text">{{=it.list[prop].date}}</span>
+        <span class="zc-c-chat-date-line-right"></span>
+      </p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 'loadmore') { }}
+    <div class="systeamTextBox js-zc-loadmore">
+      <p class="systeamText loadmore">点击加载更多</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 'nomore') { }}
+    <div class="systeamTextBox">
+      <p class="systeamText loadmore">没有更多</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 4) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户和机器人建立会话 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+
+  {{ if(it.list[prop].action === 6) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户转人工服务 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 7) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户排队 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 8) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 建立了会话 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 9) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">客服 {{=it.list[prop].senderName}} 将用户转接给客服 {{=it.list[prop].receiverName}} {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 10) { }}
+
+    {{ if (it.list[prop].offlineType === 1) { }}
+      {{ if (it.list[prop].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
+    {{ } }}
+
+    {{ if (it.list[prop].offlineType === 2) { }}
+      <div class="systeamTextBox">
+        <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+      </div>
+    {{ } }}
+
+    {{ if (it.list[prop].offlineType === 3) { }}
+      {{ if (it.list[prop].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户被客服 {{=it.list[prop].receiverName}} 拉入黑名单,本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户被客服拉入黑名单,本次会话结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
+    {{ } }}
+
+    {{ if (it.list[prop].offlineType === 4) { }}
+
+      {{ if (it.list[prop].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和机器人会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
+    {{ } }}
+
+    {{ if (it.list[prop].offlineType === 5) { }}
+
+      {{ if (it.list[prop].receiverName) { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和客服 {{=it.list[prop].receiverName}} 的会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } else { }}
+        <div class="systeamTextBox">
+          <p class="systeamText">用户和机器人会话已结束 {{=it.list[prop].ts.split(' ')[1]}}</p>
+        </div>
+      {{ } }}
+    {{ } }}
+  {{ } }}
+
+  {{ if(it.list[prop].action === 11) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户已被客服 {{=it.list[prop].senderName}} 拉入黑名单 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 12) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户已被客服 {{=it.list[prop].senderName}} 取消拉黑 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 16) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户已被客服 {{=it.list[prop].senderName}} 添加星标 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 17) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户已被客服 {{=it.list[prop].senderName}} 取消星标 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 18) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户已向客服申请语音通话 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 19) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">客服给用户回拨语音通话 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 20) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">用户访问了页面</p>
+    </div>
+  {{ } }}
+
+  {{ if(it.list[prop].action === 21) { }}
+    <div class="systeamTextBox">
+      <p class="systeamText">客服 {{=it.list[prop].senderName}} 主动邀请会话 {{=it.list[prop].ts.split(' ')[1]}}</p>
+    </div>
+  {{ } }}
+
+
+    {{ if(it.list[prop].action === 'noReadLine') { }}
+      <div class="systeamTextBox">
+        <p class="systeamText" style="background-color: transparent">
+          <span class="zc-c-chat-noread-line-left"></span>
+          <span class="zc-c-chat-noread-line-text">以下为未读消息</span>
+          <span class="zc-c-chat-noread-line-right"></span>
+        </p>
+      </div>
+    {{ } }}
+
+  {{ if(it.list[prop].action === 5) { }}
+
+
+    {{ if (it.list[prop].senderType === 0) { }}
+      <div class="msg userCus">
+        <div class="msg_user fl">
+          <img src="{{=it.userSourceImage}}" class="msg_user_img">
+        </div>
+        <div class="msgContBox fl">
+          <span class="msg_name">{{=it.list[prop].senderName}}</span>
+          <span class="msg_time ml">{{=it.list[prop].senderName}}</span>
+          <span class="msg_time" style="margin-left: 0px;">{{=it.list[prop].ts.split(' ')[1] }}</span>
+          <div style="clear:both;"></div>
+          <div class="msgBg fl" style="display: inline-flex;margin: 0px;max-width: 100%;">
+            <i class="angleLeft"></i>
+            <div class="msg_content formUser">{{=it.list[prop].msg}} </div>
+          </div>
+        </div>
+      </div>
+    {{ } }}
+
+    {{ if (it.list[prop].senderType === 1) { }}
+      <div class="msg workOrderCus">
+
+        {{ if (it.list[prop].senderFace) { }}
+          <div class="msg_user fr">
+            <img src="{{=it.list[prop].senderFace}}" class="msg_user_img">
+          </div>
+        {{ } else { }}
+          <div class="msg_user fr">
+            <img src="{{=it.systemImage}}" class="msg_user_img">
+          </div>
+        {{ } }}
+
+        <div class="msgContBox fr">
+          <span class="msg_name">{{=it.list[prop].senderName}}</span>
+          <span class="msg_time">{{=it.list[prop].senderName}}</span>
+          <span class="msg_time">{{=it.list[prop].ts.split(' ')[1] }}</span>
+          <div style="clear:both;"></div>
+          <div class="msgBg" style="display: inline-flex;float: right;margin: 0px;max-width: 100%;">
+            <i class="angleRight"></i>
+            <div class="msg_content">{{=it.list[prop].msg}} </div>
+          </div>
+        </div>
+      </div>
+    {{ } }}
+
+    {{ if (it.list[prop].senderType === 2) { }}
+      <div class="msg workOrderCus">
+        <div class="msg_user fr">
+          <img src="{{=it.list[prop].senderFace}}" class="msg_user_img">
+        </div>
+        <div class="msgContBox fr">
+          <span class="msg_name">{{=it.list[prop].senderName}}</span>
+          <span class="msg_time">{{=it.list[prop].senderName}}</span>
+          <span class="msg_time">{{=it.list[prop].ts.split(' ')[1] }}</span>
+          <div style="clear:both;"></div>
+          <div class="msgBg" style="display: inline-flex;float: right;margin: 0px;max-width: 100%;">
+            <i class="angleRight"></i>
+            <div class="msg_content">{{=it.list[prop].msg}} </div>
+          </div>
+        </div>
+      </div>
+    {{ } }}
+  {{ } }}
+
+{{ } }}

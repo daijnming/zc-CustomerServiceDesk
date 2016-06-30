@@ -1,0 +1,42 @@
+<div class="zc-transfer-outer">
+    <div class="zc-transfer-title">
+        <div class="zc-input-outer">
+            <span class="zc-search-icon js-search-icon"></span>
+            <input type="text" placeholder="搜索姓名、昵称、分组"/>
+            <span class="zc-clear-btn js-clear-btn">×</span>
+        </div>
+        <div class="zc-refresh-outer">
+            <span>刷新于<span class="js-refresh-time">{{=it.dateStr}}</span></span>&nbsp;&nbsp;&nbsp; <a href="#0" class="js-refresh-btn"><span class=" refresh-btn"></span><span >刷新</span></a>
+        </div>
+    </div>
+    <div class="zc-transfer-innner">
+        <div class="zc-transfer-inner-title">
+            <ul class="sub-nav">
+                {{for(var i=0;i < it.columns.length;i++)  { }}
+                <li class="item-{{=(i+1)}} js-column-key" data-type="{{=it.columns[i].key}}" data-hiden="{{=it.columns[i].hiden}}">
+                    {{=it.columns[i].name}}
+                    {{ var item = it.columns[i];}}
+                    {{ if(item.hiden === true){ }}
+                        &nbsp;
+                    {{ }else if(item.key == it.sortKey){ }}
+                        {{ if(it.sortType == 1){ }}
+                            <i class="sort up"></i>
+                        {{ }else if(it.sortType == 2){ }}
+                            <i class="sort down"></i>
+                        {{  } }}
+                    {{ }else{ }}
+                        <i class="sort"></i>
+                    {{  } }}
+                </li>
+                {{ } }}
+            </ul>
+            <ul class="list-detail js-list-detail">
+
+                <li class="blank">
+                    <img src="img/static/loading.gif" />
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>

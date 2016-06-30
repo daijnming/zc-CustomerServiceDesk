@@ -5,3 +5,4 @@ dest/
 bower_components/
 selfinfo.conf
 rev-manifest.json
+dist/
