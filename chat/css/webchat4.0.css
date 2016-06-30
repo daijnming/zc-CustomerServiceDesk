@@ -95,6 +95,11 @@ body,html{
   /*font-family: 'Lato', sans-serif;*/
 	font-family: 'Microsoft YaHei';
   position: absolute;
+  display:inline-block;
+  max-width:100px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
   left: 53px;
   top: 3px;
   line-height: 16px;

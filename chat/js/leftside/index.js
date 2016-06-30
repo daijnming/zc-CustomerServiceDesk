@@ -139,7 +139,7 @@ function LeftSide(node,core,window) {
         }
         $statusImage.addClass(STATUSIMAGELIST[global.status]);
         $(node).find("img.js-my-logo").attr("src",data.face);
-        $(node).find(".js-customer-service").html(data.name);
+        $(node).find(".js-customer-service").html(data.name).attr("title",data.name);
         $serverGroup.html(global.cusRoleName);
     };
 
