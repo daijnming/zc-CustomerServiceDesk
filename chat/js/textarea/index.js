@@ -21,7 +21,8 @@ function TextArea(node,core,window) {
         $uploadBtn;
     var currentCid,
         currentUid,
-        answer;
+        answer,
+        timer;
     //传给聊天的url
     var parseDOM = function() {
         $node = $(node);
@@ -228,18 +229,22 @@ function TextArea(node,core,window) {
     };
     //用户正在输入
     var changeingInput = function(evt) {
-        if($sendMessage.val() == "" && evt.keyCode != 13)
+       
+            //console.log(0)
+            //if($sendMessage.val() == "" && evt.keyCode != 13)
             $.ajax({
                 'url' : '/chat/admin/input.action',
+                'type' : 'post',
+                'dataType' : "json",
                 'data' : {
                     'cid' : currentCid,
                     'uid' : currentUid
                 },
-                'type' : 'post',
-                'dataType' : "json"
-            }).success(function(res) {
-                //console.log("")
+                success:function(res) {
+                    //console.log(res);
+                }
             });
+        
     }
     var isHiddenBotTextBox = function() {
         $botTextBox.hide();
