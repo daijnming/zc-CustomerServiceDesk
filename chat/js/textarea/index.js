@@ -15,8 +15,7 @@ function TextArea(node,core,window) {
     //模板引擎
     var template = require('./template.js');
     var apihost = "/chat/";
-    var global,
-        uploadFun;
+    var uploadFun;
     var $node,
         $uploadBtn;
     var currentCid,
@@ -229,22 +228,25 @@ function TextArea(node,core,window) {
     };
     //用户正在输入
     var changeingInput = function(evt) {
-       
-            //console.log(0)
+        clearInterval(timer);
+        timer = setTimeout(function(){
             //if($sendMessage.val() == "" && evt.keyCode != 13)
             $.ajax({
-                'url' : '/chat/admin/input.action',
-                'type' : 'post',
-                'dataType' : "json",
-                'data' : {
-                    'cid' : currentCid,
-                    'uid' : currentUid
+                url : '/chat/admin/input.action',
+                type : 'post',
+                dataType : "JSONP",
+                data : {
+                    'uid' : global.id,
+                    'cid' : currentCid
                 },
-                success:function(res) {
-                    //console.log(res);
+                success:function(data) {
+                    if(data.status == 1)
+                    {
+                        //this.pressd = 0;
+                    }
                 }
             });
-        
+        },500)
     }
     var isHiddenBotTextBox = function() {
         $botTextBox.hide();
