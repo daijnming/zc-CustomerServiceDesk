@@ -304,6 +304,7 @@ function Item(data,core,outer,from,manager) {
         } else {
             $.ajax({
                 'url' : '/chat/admin/get_userinfo.action',
+                'type' : 'POST',
                 'dataType' : "json",
                 'data' : {
                     'sender' : global.id,

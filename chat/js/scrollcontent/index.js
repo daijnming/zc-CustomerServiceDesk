@@ -5,7 +5,6 @@ function Content(node,core,window) {
     var Face = require('../util/qqFace.js');
     var App = require('../util/app.js');
     var Transfer = require('./transfer.js');
-    var MessageMap = require('../core/messageMap.js')
     var $rootNode;
     var global;
     // 保存用户对话消息缓存
@@ -105,7 +104,7 @@ function Content(node,core,window) {
                 $.ajax({
                     'url' : API.http.chatList[type],
                     'dataType' : 'json',
-                    'type' : 'get',
+                    'type' : 'post',
                     'data' : {
                         t : userChatCache[userId].date || Date.parse(new Date()),
                         uid : userId,
@@ -130,21 +129,22 @@ function Content(node,core,window) {
                             });
                         });
 
-                        MessageMap.push(appendList);
-
                         list = appendList.concat(userChatCache[userId].list);
                         userChatCache[userId].list = list;
 
-                        if (ret.data[0] && ret.data[0].content[0]) userChatCache[userId].date = ret.data[0].content[0].t;
+                        if(ret.data[0] && ret.data[0].content[0])
+                            userChatCache[userId].date = ret.data[0].content[0].t;
 
-                        if (isRender) parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList,true);
+                        if(isRender)
+                            parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList,true);
                     } else {
-                        parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList, true);
+                        parseList(type,userChatCache[userId],isScrollBottom,true,typeNo,appendList,true);
                     }
                 });
             } else {
 
-                if(isRender) parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
+                if(isRender)
+                    parseList(type,userChatCache[userId],isScrollBottom,false,typeNo,appendList);
             }
         } else {
             $rootNode.find('#chat').show();
@@ -154,11 +154,12 @@ function Content(node,core,window) {
             $rootNode.find('#chat').find('.js-panel-body').addClass('hide');
             $rootNode.find('#chat').find('.js-load-model').removeClass('hide');
 
-            if(!!!userChatCache[userId]) userChatCache[userId] = {}
+            if(!!!userChatCache[userId])
+                userChatCache[userId] = {}
             $.ajax({
                 'url' : API.http.chatList[type],
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     t : userChatCache[userId].date || Date.parse(new Date()),
                     uid : userId,
@@ -200,7 +201,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.call,
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     sender : userInfo.sender,
                     cid : userInfo.cid,
@@ -249,12 +250,12 @@ function Content(node,core,window) {
 
     }
     // 改变用户状态
-    var updateUserState = function(type,handleType,callback, isClickPrevent) {
+    var updateUserState = function(type,handleType,callback,isClickPrevent) {
         var func = function() {
             $.ajax({
                 'url' : API.http.status[type][handleType],
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     sender : userInfo.sender,
                     receiver : userInfo.userId
@@ -298,13 +299,12 @@ function Content(node,core,window) {
                 'text' : model.content,
                 'OK' : function() {
 
-                    console.log(isClickPrevent);
                     // 防止重复点击
-                    if (isClickPrevent) {
-                      isClickPrevent = false;
-                      delete userChatCache[userInfo.userId];
-                      func();
-                      dialog.hide();
+                    if(isClickPrevent) {
+                        isClickPrevent = false;
+                        delete userChatCache[userInfo.userId];
+                        func();
+                        dialog.hide();
                     }
                 }
             });
@@ -317,7 +317,7 @@ function Content(node,core,window) {
         $.ajax({
             'url' : API.http.getOtherAdmin,
             'dataType' : 'json',
-            'type' : 'get',
+            'type' : 'post',
             'data' : {
                 uid : sender
             }
@@ -356,7 +356,7 @@ function Content(node,core,window) {
             $.ajax({
                 'url' : API.http.userTransfer,
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'post',
                 'data' : {
                     uid : userInfo.sender,
                     cid : userInfo.cid,
@@ -376,30 +376,30 @@ function Content(node,core,window) {
         $rootNode.on('click','.fl .msg_content', function() {
             var chatText = $(this).html();
 
-            if (chatText.indexOf('http://img.sobot.com/yun/attachment/fileTypeImages/') === -1) {
+            if(chatText.indexOf('http://img.sobot.com/yun/attachment/fileTypeImages/') === -1) {
 
-              if (chatText.indexOf('webchat_img_upload') !== -1) {
-                window.open($(this).children('img').attr('src'));
-              }
-              else {
-                onSearchUserChat(chatText);
-              }
+                if(chatText.indexOf('webchat_img_upload') !== -1) {
+                    window.open($(this).children('img').attr('src'));
+                } else {
+                    onSearchUserChat(chatText);
+                }
             }
         })
     }
     // --------------------------- dom操作 ---------------------------
 
     // 清理聊天主体页面
-    var clearScrollContent = function(uid,isHide, isUserHide) {
+    var clearScrollContent = function(uid,isHide,isUserHide) {
         delete userChatCache[userInfo.userId || uid];
         $rootNode.find('.js-addButton').children('.js-goOut').addClass('hide');
 
         // if (!isHide) {
-          // $rootNode.find('#chat').hide();
-          $rootNode.find('#chat').find('.js-panel-body').empty();
+        // $rootNode.find('#chat').hide();
+        $rootNode.find('#chat').find('.js-panel-body').empty();
         // }
 
-        if (isUserHide) $rootNode.find('#chat').hide();
+        if(isUserHide)
+            $rootNode.find('#chat').hide();
     }
     var parseTpl = function(type,ret,uid,isScrollBottom) {
         // console.log('parseTpl init');
@@ -476,8 +476,6 @@ function Content(node,core,window) {
                 list : list
             });
 
-            MessageMap.push(list);
-
             $rootNode.find('#' + type).find('.js-panel-body').empty().html(_html);
 
             // console.log('parseTpl success');
@@ -490,7 +488,8 @@ function Content(node,core,window) {
                     var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(lastImg) {
-                        lastImg.src = lastImg.src + '?r=' + (new Date());
+                        var src = lastImg.src;
+                        lastImg.src = lastImg.src + (src.indexOf("?") < 0 ? '?' : '&') + 'r=' + (+new Date());
                         lastImg.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             // 获取当前窗口最低scrollTop
@@ -512,23 +511,23 @@ function Content(node,core,window) {
             }
         });
     }
-
     var listenScroll = function() {
-      $rootNode.find('#chat').find('.scrollBoxParent').scroll(function(){
-        var height = $('#chat').find('.js-panel-body').height();
-        var scrollTop = $('#chat').find('.scrollBoxParent').scrollTop();
+        $rootNode.find('#chat').find('.scrollBoxParent').scroll(function() {
+            var height = $('#chat').find('.js-panel-body').height();
+            var scrollTop = $('#chat').find('.scrollBoxParent').scrollTop();
 
-        if((height - scrollTop) < 700) $rootNode.find('#chat').find('.zc-newchat-tag').hide();
-      });
+            if((height - scrollTop) < 700)
+                $rootNode.find('#chat').find('.zc-newchat-tag').hide();
+        });
     }
-
     var parseList = function(type,data,isScrollBottom,isToTop,typeNo,appendList,isPage) {
 
         // if ($rootNode.find('.js-zc-loadmore').length > 1) {
 
         // if (typeNo !== 108) $rootNode.find('.js-zc-loadmore').empty();
 
-        if (isPage) $rootNode.find('.js-zc-loadmore').empty();
+        if(isPage)
+            $rootNode.find('.js-zc-loadmore').empty();
         // }
         // $rootNode.find('.js-zc-loadmore').empty();
 
@@ -550,11 +549,11 @@ function Content(node,core,window) {
                     //   }
                     // })
 
-                    for (var i = 0;i < userChatCache[userInfo.userId].list.length;i++) {
+                    for(var i = 0;i < userChatCache[userInfo.userId].list.length;i++) {
 
-                      if (userChatCache[userInfo.userId].list[i].action === 'loadmore') {
-                        userChatCache[userInfo.userId].list.splice(i, 1);
-                      }
+                        if(userChatCache[userInfo.userId].list[i].action === 'loadmore') {
+                            userChatCache[userInfo.userId].list.splice(i,1);
+                        }
                     }
 
                     appendList.unshift({
@@ -589,7 +588,9 @@ function Content(node,core,window) {
                     var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(img) {
-                        img.src = img.src + '?r=' + (Date.parse(new Date()))
+                        var src = img.src;
+                        img.src = img.src + (src.indexOf("?") < 0 ? "?" : "&" ) + 'r=' + (+new Date());
+                        //img.src = img.src + (src.indexOf("?") < 0 ? "?":"&" )+'r=' +  dDate.parse(+new Date())
                         img.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -604,13 +605,15 @@ function Content(node,core,window) {
 
                     if((height - scrollTop) > 700) {
 
-                        if(typeNo === 103) $rootNode.find('#' + type).find('.zc-newchat-tag').show();
+                        if(typeNo === 103)
+                            $rootNode.find('#' + type).find('.zc-newchat-tag').show();
                     } else {
                         $rootNode.find('#' + type).find('.zc-newchat-tag').hide();
                         var img = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                         if(img) {
-                            img.src = img.src + '?r=' + (Date.parse(new Date()))
+                            var src = img.src;
+                            img.src = img.src + (src.indexOf("?") < 0 ? "?" : "&" ) + 'r=' + (+new Date());
                             img.onload = function() {
                                 $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                                 userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -637,8 +640,8 @@ function Content(node,core,window) {
 
                 for(var i = 0;i < data.list.length;i++) {
 
-                    if (data.list[i].action === 'noReadLine') {
-                      data.list.splice(i,1);
+                    if(data.list[i].action === 'noReadLine') {
+                        data.list.splice(i,1);
                     }
                     // } else if(data.list[i].action === 'loadmore') {
                     //     data.list.splice(i,1);
@@ -664,14 +667,14 @@ function Content(node,core,window) {
                     }
                 }
 
-                if (isPage) {
+                if(isPage) {
 
-                  for (var i = 0;i < data.list.length;i++) {
+                    for(var i = 0;i < data.list.length;i++) {
 
-                    if (data.list[i].action === 'loadmore') {
-                      data.list.splice(i, 1);
+                        if(data.list[i].action === 'loadmore') {
+                            data.list.splice(i,1);
+                        }
                     }
-                  }
                 }
 
                 data.list.map(function(item) {
@@ -714,7 +717,8 @@ function Content(node,core,window) {
                     var lastImg = $rootNode.find('#' + type).find('.js-panel-body').find('.webchat_img_upload').last()[0];
 
                     if(lastImg) {
-                        lastImg.src = lastImg.src + '?r=' + (new Date());
+                        var src = lastImg.src;
+                        lastImg.src = lastImg.src + (src.indexOf("?") < 0 ? '?' : '&') + 'r=' + (+new Date());
                         lastImg.onload = function() {
                             $rootNode.find('#' + type).find('.js-panel-body')[0].scrollIntoView(false);
                             userChatCache[userInfo.userId].scrollBottom = $rootNode.find('#' + type).find('.js-panel-body').parent().scrollTop();
@@ -741,13 +745,14 @@ function Content(node,core,window) {
         onUpdateUserState(type,handleType);
 
         // console.log('userInfo');
-        var isShow = !!$('#chat').find('.js-panel-body').find('div').length;;
+        var isShow = !!$('#chat').find('.js-panel-body').find('div').length;
+        ;
 
-        if (isShow) {
-          adminPushMessageState({
-              type : type,
-              handleType : handleType
-          });
+        if(isShow) {
+            adminPushMessageState({
+                type : type,
+                handleType : handleType
+            });
         }
 
     }
@@ -845,18 +850,17 @@ function Content(node,core,window) {
 
             if(userChatCache[data.uid] && userChatCache[data.uid].list) {
 
-
                 userChatCache[data.uid].list.push({
                     action : 10,
                     offlineType : 5,
-                    receiverName: global.name,
+                    receiverName : global.name,
                     ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
                 })
 
                 list.push({
                     action : 10,
                     offlineType : 5,
-                    receiverName: global.name,
+                    receiverName : global.name,
                     ts : 'date ' + new Date(data.t).toTimeString().split(' ')[0]
                 });
 
@@ -915,7 +919,6 @@ function Content(node,core,window) {
             }
         } else {
             var list = [];
-
             if(userChatCache[data.uid]) {
 
                 if(data.type === 103) {
@@ -953,7 +956,7 @@ function Content(node,core,window) {
             parseStack(data[i]);
     };
 
-    var adminPushMessageState = function(data, isAddBlack) {
+    var adminPushMessageState = function(data,isAddBlack) {
 
         var messageMap = {
             star : {
@@ -968,7 +971,7 @@ function Content(node,core,window) {
 
             black : {
                 add : {
-                    action: 11
+                    action : 11
                 },
 
                 del : {
@@ -987,17 +990,16 @@ function Content(node,core,window) {
             pid : userInfo.pid
         }
 
-          userChatCache[userInfo.userId] = userChatCache[userInfo.userId] || {
-              list : [],
-              scrollTop : 0,
-              pageNo : 1
-          }
+        userChatCache[userInfo.userId] = userChatCache[userInfo.userId] || {
+            list : [],
+            scrollTop : 0,
+            pageNo : 1
+        }
 
-          list.push(model);
-          userChatCache[userInfo.userId].list.push(model);
+        list.push(model);
+        userChatCache[userInfo.userId].list.push(model);
 
-
-          getChatListByOnline('chat',parseChat,null,null,data,true,true,null,list);
+        getChatListByOnline('chat',parseChat,null,null,data,true,true,null,list);
         // } else {
         //
         //   if ($('label.active').find('.c-redio').attr('value') == 1) {
@@ -1015,8 +1017,6 @@ function Content(node,core,window) {
         //   });
         //
         // }
-
-
 
     }
     var adminPushMessageSendResult = function(data) {
@@ -1091,7 +1091,6 @@ function Content(node,core,window) {
     var onReceive = function(value,data) {
         userPushMessage(data);
         $('#chatSwitch').click();
-
         setTimeout(function() {
             window.$('#inputMsg').val('tk最帅');
             window.$('#sendBtn').click();
@@ -1122,17 +1121,17 @@ function Content(node,core,window) {
         });
 
         $body.on("leftside.onhide", function() {
-            console.log('leftside.onhide')
-            clearScrollContent(arguments[1].uid,true, true);
+            clearScrollContent(arguments[1].uid,true,true);
             // console.log(userChatCache[arguments[1].uid]);
         })
 
         $body.on("leftside.cidchange", function() {
-          var params = arguments[1];
-          // console.log(params);
+            var params = arguments[1];
+            // console.log(params);
 
-          if (params.uid === userInfo.userId) userInfo.cid = params.cid;
-          // console.log(userInfo);
+            if(params.uid === userInfo.userId)
+                userInfo.cid = params.cid;
+            // console.log(userInfo);
         })
 
         $body.on("leftside.onselected", function() {
@@ -1204,7 +1203,7 @@ function Content(node,core,window) {
             if(!!!type && !!!handleType) {
                 getAdminList(userInfo.sender,transfer);
             } else {
-                updateUserState(type,handleType,updateHeaderTag, isClickPrevent);
+                updateUserState(type,handleType,updateHeaderTag,isClickPrevent);
             }
         })
         // // 滚动加载分页
@@ -1224,12 +1223,13 @@ function Content(node,core,window) {
         // });
 
         $rootNode.find('#chat').on('click','.zc-c-chat-admin-ready-error', function(event) {
-            var token = $(event.target).attr('data-token') ,
+            var token = $(event.target).attr('data-token'),
                 msg;
 
             userChatCache[userInfo.userId].list.map(function(item) {
 
-              if (item.token === parseInt(token)) msg = item.msg;
+                if(item.token === parseInt(token))
+                    msg = item.msg;
             });
 
             $(event.target).parents('.msg').remove();
@@ -1274,7 +1274,7 @@ function Content(node,core,window) {
     };
 
     var initPlugsin = function() {
-      loadFile.load(global.baseUrl + API.tpl.chatItem);
+        loadFile.load(global.baseUrl + API.tpl.chatItem);
     };
 
     var init = function() {

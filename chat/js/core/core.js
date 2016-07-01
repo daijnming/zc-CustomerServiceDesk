@@ -13,6 +13,7 @@ function Core(window) {
     var notificationPermission;
     var SERVER_CLIENT = 2;
     var isWindowFocus = true;
+    var showTitleTimer;
     var $body;
     var socket,
         Notification = window.Notification || window.webkitNotifications;
@@ -54,7 +55,7 @@ function Core(window) {
             'dataType' : 'json',
             'data' : {
                 'content' : JSON.stringify(arr),
-		'tnk':+new Date()
+                'tnk' : +new Date()
             },
             'type' : 'POST'
         }).success(function(ret) {
@@ -70,7 +71,8 @@ function Core(window) {
             len = list.length;i < len;i++) {
             var item = list[i];
             if(!item.msgId) {
-                item.msgId = +new Date();
+                var str = Math.random().toString(36).substr(2);
+                item.msgId = (+new Date()) + "" + item.cid + item.type + str;
             }
             if(!messageCache.has(item.msgId) || item.type === 111) {
                 arr.push(item);
@@ -142,7 +144,7 @@ function Core(window) {
             $.ajax({
                 'url' : '/chat/admin/connect.action',
                 'dataType' : 'json',
-                'type' : 'get',
+                'type' : 'POST',
                 'data' : {
                     'uid' : queryParam.id,
                     'way' : 1,
@@ -169,6 +171,13 @@ function Core(window) {
                         global.scriptPath = global.baseUrl;
                     }
                     $(".js-loading-layer").hide();
+                    if(global.chatLogo) {
+                        $(".js-company-logo").attr("src",global.chatLogo).show();
+                    } else {
+                        $(".js-company-logo").attr("src","//static.sobot.com/chat/admins/assets/images/logo.png").show();
+                        $(".js-company-name").show();
+                        $(".js-company-domain").show();
+                    }
                     promise.resolve(ret);
                 } else {
                     alert('当前窗口登录失效，请重新登录');
@@ -188,11 +197,28 @@ function Core(window) {
         if(value.type === 102) {
             if(document.hidden || !isWindowFocus) {
                 audioOnline.play();
-                createNotification(value,102);
+                if(Notification)
+                    createNotification(value,102);
             }
         }
         value.description = messageTypeConfig[value.type];
     };
+
+    var showTitle = function(name,content) {
+        if(showTitleTimer) {
+            clearInterval(showTitleTimer);
+        }
+        var count = 0;
+        showTitleTimer = setInterval(function() {
+            if(count % 2 == 0) {
+                document.title = '用户' + name + '发送了一条消息';
+            } else {
+                document.title = content;
+            }
+            count++;
+        },1000);
+    };
+
     var createNotification = function(data,type) {
         // var no = +new Date();
         var title = type == 103 ? '用户' + data.uname + '发送了一条消息' : '新用户上线了！';
@@ -205,6 +231,9 @@ function Core(window) {
             'icon' : 'assets/images/logo.png',
             'tag' : '1'
         });
+        if(document.hidden) {
+            showTitle(data.uname,desc);
+        }
         noti.onclick = (function(id,noti) {
             return function() {
                 window.focus();
@@ -225,7 +254,8 @@ function Core(window) {
                 normalMessageAdapter(value);
                 if(document.hidden || !isWindowFocus) {
                     audioNewMessage.play();
-                    createNotification(value,103);
+                    if(Notification)
+                        createNotification(value,103);
                 }
             } else if(value.type == 109 && value.status == 2) {
                 alert('另外一个窗口已经登录，您被强迫下线！');
@@ -254,6 +284,12 @@ function Core(window) {
         });
         $(window).on("blur", function() {
         });
+        $(window).on("focus", function() {
+            if(showTitleTimer) {
+                clearInterval(showTitleTimer);
+                document.title = "人工客服工作台";
+            }
+        });
         $(window).on("beforeunload", function() {
             return '';
         });
@@ -271,7 +307,7 @@ function Core(window) {
                 //https://www.sobot.com/chat/user/msg/ack?cid=xxx&msgId=xxxx&uid=xxx&utype=0
                 $.ajax({
                     'url' : 'http://test.sobot.com/chat/user/msg/ack.action',
-                    'type' : 'get',
+                    'type' : 'POST',
                     'dataType' : 'json',
                     'data' : {
                         'cid' : data[i]['cid'],
@@ -293,9 +329,9 @@ function Core(window) {
 
         socket.on("receive", function(list) {
             var str = JSON.stringify(list);
-                    //    if(window.confirm("是否进行消息确认？   "+str)) {
+            //    if(window.confirm("是否进行消息确认？   "+str)) {
             messageConfirm(list);
-                   //   }
+            //   }
             list = messageFilter(list);
             messageAdapter(list);
             //消息确认

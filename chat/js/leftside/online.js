@@ -68,7 +68,7 @@ function Online(node,core,window) {
         $.ajax({
             'url' : '/chat/admin/getAdminChats.action',
             'dataType' : 'json',
-            'type' : 'get',
+            'type' : 'POST',
             'data' : {
                 'uid' : global.id
             }

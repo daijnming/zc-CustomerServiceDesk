@@ -98,7 +98,7 @@ function Queue(core,window) {
         $.ajax({
             'url' : urlList[currentTab],
             'dataType' : 'json',
-            'type' : 'get',
+            'type' : 'POST',
             'data' : {
                 'uid' : global.id,
                 'status' : 3,

@@ -73,9 +73,9 @@
     <body style="min-width: 1155px">
         <section id="top-bar">
             <div class="top-bar-logo">
-                <img src="assets/images/logo.png" alt=""/>
-                <span>智齿客服</span>
-                <span>www.sobot.com</span>
+                <img style="display:none;" class="js-company-logo" src="assets/images/logo.png" alt=""/>
+                <span class="js-company-name" style="display:none;">智齿客服</span>
+                <span class="js-company-domain" style="display:none;">www.sobot.com</span>
             </div>
         </section>
         <section id="main-container" >
@@ -159,7 +159,7 @@
                 <div id="main-content">
                     <div class="container-fluid" >
                         <div class="row chatCont" id="chatlist">
-                          <i class="chatContBg js-chatContBg"></i>
+                            <i class="chatContBg js-chatContBg"></i>
                             <div class="col-md-8 col-xs-8 chat js-TextArea" style="padding: 0px;display:none;min-width: 575px;" id="chat">
                                 <header class='clearfix'>
                                     <span style="margin-left: 15px;cursor: pointer;color: #555459;font-weight: 900;float:left" class="chat_user_title"></span>
@@ -282,10 +282,10 @@
                                         <div class="js-tab-content tab-content tab-border" style="border:0;">
                                             <!--客户资料-->
                                             <div class="js-tab-pane-profileuser js-tab-pane tab-pane fade active in" id="profileuser">
-                                              <!-- <div class="js-tab-profilebg tab-profilebg" >
+                                                <!-- <div class="js-tab-profilebg tab-profilebg" >
                                                 <img src="./assets/images/bgspirt.png" alt="" />
-                                              </div> -->
-                                              <i class="js-tab-profilebg tab-profilebg"></i>
+                                                </div> -->
+                                                <i class="js-tab-profilebg tab-profilebg"></i>
                                                 <!--改版：  客户资料 通过模板加载-->
 
                                             </div>
@@ -652,19 +652,5 @@
         <!-- build:js js/main.js -->
         <script src="dest/js/entrance.js"></script>
         <!-- endbuild -->
-        <div class="zc-shadow-layer" style="display:none;">
-            <div class="bootbox  fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block; width:855px;outline: none; opacity: 1;width:600px;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">
-                                ×
-                            </button><h4 class="modal-title">转接给新的客服</h4>
-                        </div>
-                        <div class="modal-body"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </body>
 </html>
