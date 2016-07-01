@@ -139,20 +139,23 @@
 </ul>
 <!--用户自定义字段 显示-->
 {{if(it.item.userData['params']){}}
-<h4 style="margin-top: 40px;">自定义字段</h4>
-<div class="customCnf">
- <ul>
-{{for(var key in it.item.userData['params']){}}
-{{var item = it.item.userData['params'][key];}}
-   <li class="clearfix">
-       <div class="userTypeName">
-           {{=key}}
-       </div>
-       <div class="custom-msg zc-scroll">
-           {{=item}}
-       </div>
-   </li>
- {{}}}
- </ul>
+
+<div>
+  <h4 style="margin-top: 40px;display:inline-block">自定义字段</h4>
+  <div class="customCnf">
+     <ul>
+    {{for(var key in it.item.userData['params']){}}
+    {{var item = it.item.userData['params'][key];}}
+       <li class="clearfix" style="height:auto;">
+           <div class="userTypeName">
+               {{=key}}
+           </div>
+           <div class="custom-msg zc-scroll">
+               {{= $('<div>'+item+'</div>').text()}}
+           </div>
+       </li>
+     {{}}}
+     </ul>
+  </div>
 </div>
 {{}}}
