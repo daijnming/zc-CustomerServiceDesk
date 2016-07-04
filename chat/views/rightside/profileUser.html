@@ -151,7 +151,21 @@
                {{=key}}
            </div>
            <div class="custom-msg zc-scroll">
-               {{= $('<div>'+item+'</div>').text()}}
+             {{console.log(item);}}
+             {{if(item.indexOf('http')>=0||item.indexOf('www.')>=0){}}
+                {{var num =0;}}
+                {{if(item.indexOf('http')>=0){}}
+                  {{num = item.indexOf('http');}}
+                {{}else{}}
+                  {{num = item.indexOf('www.');}}
+                {{}}}
+                {{var str1 = item.substring(0,num);}}
+                {{var str2 = item.substring(num,item.length);}}
+                {{var str3 =  str1+' <a href="'+str2+'" target="=_blank">'+str2+'</a>';}}
+                {{=str3}}
+             {{}else{}}
+              {{=item}}
+             {{}}}
            </div>
        </li>
      {{}}}
