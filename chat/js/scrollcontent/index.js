@@ -825,7 +825,6 @@ function Content(node,core,window) {
     var parseStack = function(data) {
 
         if(data.type === 111) {
-
             if(userInfo.userId === data.uid) {
                 loadFile.load(global.baseUrl + API.tpl.userReadySend).then(function(tpl) {
                     var _html;
@@ -838,7 +837,7 @@ function Content(node,core,window) {
 
                     setTimeout(function() {
                         $rootNode.find('#chat').find('.js-user-ready-input').hide();
-                    },5000);
+                    },60000);
                 });
             }
         } else if(data.type === 108) {
