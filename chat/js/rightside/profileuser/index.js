@@ -17,6 +17,7 @@ var ProfileUser = function(node,core,userData) {
     //加载模版
     var loadFile = require('../../util/load.js')();
     var Promise = require('../../util/promise.js');
+    var App = require('../../util/app.js');
 
     //TODO 处理对话页显示  此处只是页面显示 不影响页面重构 不需要使用模版
     var onVisitHandle = function(url,title) {
