@@ -49,6 +49,7 @@ var ProfileUser = function(node,core,userData) {
                 if( typeof data.userData['params'] === 'string') {
                     data.userData['params'] = $.parseJSON($('<div>' + data.userData['params'] + '</div>').html());
                 }
+                // console.log(data.userData['params']);
                 var _html = doT.template(value)({
                     'item' : data
                 });
