@@ -12,6 +12,9 @@ function LeftSide(node,core,window) {
         $(node).find(".js-users-list").append(li);
     };
     var onReceive = function(value,data) {
+
+
+      
         switch(data.type) {
             case 102:
                 newUserMessage(data);
