@@ -15,13 +15,13 @@ function TextArea(node,core,window) {
     //模板引擎
     var template = require('./template.js');
     var apihost = "/chat/";
-    var global,
-        uploadFun;
+    var uploadFun;
     var $node,
         $uploadBtn;
     var currentCid,
         currentUid,
-        answer;
+        answer,
+        timer;
     //传给聊天的url
     var parseDOM = function() {
         $node = $(node);
@@ -228,18 +228,25 @@ function TextArea(node,core,window) {
     };
     //用户正在输入
     var changeingInput = function(evt) {
-        if($sendMessage.val() == "" && evt.keyCode != 13)
+        clearInterval(timer);
+        timer = setTimeout(function(){
+            //if($sendMessage.val() == "" && evt.keyCode != 13)
             $.ajax({
-                'url' : '/chat/admin/input.action',
-                'data' : {
-                    'cid' : currentCid,
-                    'uid' : currentUid
+                url : '/chat/admin/input.action',
+                type : 'post',
+                dataType : "JSONP",
+                data : {
+                    'uid' : global.id,
+                    'cid' : currentCid
                 },
-                'type' : 'post',
-                'dataType' : "json"
-            }).success(function(res) {
-                //console.log("")
+                success:function(data) {
+                    if(data.status == 1)
+                    {
+                        //this.pressd = 0;
+                    }
+                }
             });
+        },500)
     }
     var isHiddenBotTextBox = function() {
         $botTextBox.hide();
