@@ -128,7 +128,12 @@ function polling(global) {
         if(!ret)
             return arr;
         for(var i = 0;i < ret.length;i++) {
-            var obj = JSON.parse(ret[i]);
+            var obj = null;
+            if( typeof ret[i] === 'string') {
+                obj = JSON.parse(ret[i]);
+            } else {
+                obj = ret[i];
+            }
             arr.push(obj);
         }
         return arr;

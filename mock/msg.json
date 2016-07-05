@@ -1,15 +1,33 @@
 [
     {
-        "type": 111,
-        "uid": "22e4b47f4ac3403d87f0c200a137725b",
-        "uname": "八个汉子吧个汉字八个汉字",
-        "cid": "ca4bcfb3a86a407683e77355b49b9774",
-        "content": "11111"
+        "type": 102,
+        "uid": "07c09682556641349aa284b2ac503340",
+        "uname": "北京市联通11sdfsf",
+        "face": "",
+        "usource": 0,
+        "aname": null,
+        "aface": null,
+        "cid": "722497a299af4071a009c9b3c658d5bd",
+        "chatType": 0,
+        "ismark": 0,
+        "tel": null,
+        "groupId": "a579fda899ae4b76a0317fb43f5096ff",
+        "groupName": null,
+        "pid": "d91f6d72bfb146e3bd22ea0262d52203",
+        "t": 1467700958491,
+        "msgId": "f1c9086acc5944f39aae0e0e8c4e68eb"
     }, {
         "type": 103,
-        "uid": "22e4b47f4ac3403d87f0c200a137725b",
-        "uname": "八个汉子吧个汉字八个汉字",
-        "cid": "ca4bcfb3a86a407683e77355b49b9774",
-        "content": "11111"
+        "uid": "07c09682556641349aa284b2ac503340",
+        "pid": "d91f6d72bfb146e3bd22ea0262d52203",
+        "uname": "北京市联通11sdfsf",
+        "face": "",
+        "cid": "722497a299af4071a009c9b3c658d5bd",
+        "content": "1",
+        "msgType": 0,
+        "source": 0,
+        "ts": "2016-07-05 14:43:07",
+        "t": 1467700987285,
+        "msgId": "7c8cb6e9396645b18ef3c0cd17f12c20"
     }
 ]
