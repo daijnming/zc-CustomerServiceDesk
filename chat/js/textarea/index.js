@@ -234,7 +234,7 @@ function TextArea(node,core,window) {
             $.ajax({
                 url : '/chat/admin/input.action',
                 type : 'post',
-                dataType : "JSONP",
+                dataType : "json",
                 data : {
                     'uid' : global.id,
                     'cid' : currentCid

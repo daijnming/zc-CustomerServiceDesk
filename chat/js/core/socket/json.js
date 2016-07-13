@@ -12,6 +12,7 @@ function polling(global) {
         uid : ""
     };
     var $body;
+    var DURATION = 2000;
 
     var on = function(evt,cbk) {
         eventCache[evt] = cbk;
@@ -128,7 +129,12 @@ function polling(global) {
         if(!ret)
             return arr;
         for(var i = 0;i < ret.length;i++) {
-            var obj = JSON.parse(ret[i]);
+            var obj = null;
+            if( typeof ret[i] === 'string') {
+                obj = JSON.parse(ret[i]);
+            } else {
+                obj = ret[i];
+            }
             arr.push(obj);
         }
         return arr;
@@ -151,9 +157,11 @@ function polling(global) {
             }
             var arr = messageAdapter(ret);
             eventCache['receive'] && eventCache['receive'](arr);
+            DURATION = 2000;
         }).fail(function(ret,err) {
+            DURATION = 10 * 1000;
         });
-        setTimeout(start,1500);
+        setTimeout(start,DURATION);
     };
 
     var parseDOM = function() {
